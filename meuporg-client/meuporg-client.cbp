@@ -58,6 +58,7 @@
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/lib" />
 			<Add directory="C:/MinGW/lib" />
 		</Linker>
+		<Unit filename="source/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
