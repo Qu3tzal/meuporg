@@ -1,0 +1,59 @@
+Protocole
+=========
+	Constantes
+	----------
+		Commence par 0 -> demande d'information
+		Commence par 1 -> inscription/connexion
+		Commence par 2 -> demande de données
+
+		VERSION							000
+		NUMBER_OF_PLAYERS				001
+		MAP_NAME						002
+
+		CONNECT							100
+		ACCOUNT_CREATED_RECONNECT		101
+		CONNECTION_SUCCESS				102
+		CONNECION_FAIL					103
+		CONNECTION_FAIL_VERSION_ERROR	104
+		CONNECTION_FAIL_SERVER_FULL		105
+		CONNECTION_FAIL_UNKNOWN_ERROR	106
+
+	Ports serveur
+	-------------
+		TCP:22624 -> données du jeu
+		TCP:22625 -> inscription/connexion
+		TCP:22626 -> informations
+
+	Version
+	-------
+		[client		TCP:22626]	VERSION
+		[serveur	TCP]		version
+
+	Nombre de joueurs
+	-----------------
+		[client 	TCP:22626]	NUMBER_OF_PLAYERS
+		[serveur	TCP]		number_of_players number_of_players_max
+
+	Nom de la map
+	-------------
+		[client		TCP:22626]	MAP_NAME
+		[serveur	TCP]		map_name
+
+
+	1ère Authentification
+	---------------------
+		[client		TCP:22625]	CONNECT identifiant
+		[serveur	TCP]		ACCOUNT_CREATED_RECONNECT
+
+	Authentification régulière
+	--------------------------
+		[client		TCP:22625]	CONNECT identifiant
+		[serveur	TCP]		CONNECTION_SUCCESS
+		ou
+		[serveur	TCP]		CONNECTION_FAIL_UNKNOWN_USER
+		ou
+		[serveur	TCP]		CONNECTION_FAIL_VERSION_ERROR
+		ou
+		[serveur	TCP]		CONNECTION_FAIL_SERVER_FULL
+		ou
+		[serveur	TCP]		CONNECTION_FAIL_UNKNOWN_ERROR
