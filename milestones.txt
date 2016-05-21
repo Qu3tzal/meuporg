@@ -1,0 +1,43 @@
+﻿0.1
+===
+	- Serveur :
+		- User management :
+			- Vérification de la compatibilité des versions client/serveur
+			- Première connexion (création d'un compte si inexistant)
+			- Connexion régulière (récupération des informations)
+			- Déconnexion régulière
+		- Loading :
+			- Chargement de la map au démarrage
+		- Fonctionnement régulier :
+			- Récupération des entrées utilisateurs
+			- Mise à jour de tous les objets du monde
+			- Physique du monde
+			- Envoi des objets du monde modifiés aux clients
+			- Vérification des états des clients
+	
+	- Client :
+		- User management :
+			- Vérification de la compatibilité des versions client/serveur
+			- Première connexion (création d'un compte si inexistant)
+			- Connexion régulière (récupération des informations)
+		- Loading :
+			- Chargement des ressources
+			- Récupération des données du serveur après connexion
+			- Chargement de la map après connexion
+		- États :
+			- Menu : récupération des données de connexion
+				-> chargement
+			- Chargement : connexion au serveur
+				-> erreur
+				ou
+				-> jeu
+			- Erreur : affichage d'une erreur si besoin
+				-> retour au menu
+			- Jeu
+		- Fonctionnement régulier :
+			- Envoi des entrées utilisateurs
+			- Récupération des objets du monde modifiés
+			- Animations
+			- Gestion de la musique
+			- Création des particules, sons, etc...
+			- Affichage du monde
