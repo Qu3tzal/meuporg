@@ -1,31 +1,33 @@
 #include <iostream>
 #include <SFML/Network.hpp>
 
+#include "ServerConfiguration.hpp"
+#include "Server/Server.hpp"
+
 int main()
 {
-    sf::UdpSocket socket;
-    if(socket.bind(22625) != sf::UdpSocket::Status::Done)
+    std::cout << "\t-*- #meuporg -*-" << std::endl;
+    std::cout << "Version " << ServerConfiguration::Version << "(" << ServerConfiguration::TickPerSec << " tick/sec)." << std::endl;
+
+    Server server;
+    server.init();
+
+    sf::Clock serverclock;
+    sf::Time elapsed(sf::Time::Zero);
+
+    while(server.isRunning())
     {
-        std::cerr << "Could not bind on port 22625." << std::endl;
-        return 1;
+        elapsed += serverclock.restart();
+
+        while(elapsed >= ServerConfiguration::Ticktime)
+        {
+            elapsed -= ServerConfiguration::Ticktime;
+
+            server.receiveInput();
+            server.update(ServerConfiguration::Ticktime);
+            server.sendUpdate();
+        }
     }
-
-    std::cout << "Waiting for client to connect..." << std::endl;
-
-    sf::Packet packet;
-    sf::IpAddress ipAddress;
-    short unsigned int port(0);
-
-    socket.receive(packet, ipAddress, port);
-
-    std::cout << "[" << ipAddress.toString() << "] connected." << std::endl;
-
-    sf::Packet answer;
-    answer << "HELLO";
-
-    socket.send(answer, ipAddress, port);
-
-    std::cout << "'HELLO' sent." << std::endl;
 
     return 0;
 }

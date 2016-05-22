@@ -1,7 +1,9 @@
 # depslib dependency file v1.0
-1463914401 source:c:\workspace\meuporg\meuporg-server\source\main.cpp
+1463961993 source:c:\workspace\meuporg\meuporg-server\source\main.cpp
 	<iostream>
 	<SFML/Network.hpp>
+	"ServerConfiguration.hpp"
+	"Server/Server.hpp"
 
 1448203194 c:\mingw\include\sfml\network.hpp
 	<SFML/System.hpp>
@@ -195,4 +197,13 @@
 	<SFML/Network/Export.hpp>
 	<SFML/Network/Socket.hpp>
 	<vector>
+
+1463947480 c:\workspace\meuporg\meuporg-server\source\server.hpp
+
+1463961751 c:\workspace\meuporg\meuporg-server\source\serverconfiguration.hpp
+	<SFML/System.hpp>
+
+1463961972 c:\workspace\meuporg\meuporg-server\source\server\server.hpp
+	<SFML/System.hpp>
+	"../ServerConfiguration.hpp"
 
