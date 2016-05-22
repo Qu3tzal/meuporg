@@ -3,29 +3,29 @@
 
 int main()
 {
-    sf::TcpListener listener;
-    if(listener.listen(22625) != sf::TcpListener::Status::Done)
+    sf::UdpSocket socket;
+    if(socket.bind(22625) != sf::UdpSocket::Status::Done)
     {
-        std::cerr << "Could not listen to port 22625." << std::endl;
+        std::cerr << "Could not bind on port 22625." << std::endl;
         return 1;
     }
 
-    std::cout << "Waiting for clients on port 22625..." << std::endl;
-
-    sf::TcpSocket socket;
-    listener.accept(socket);
-
-    std::cout << "[" << socket.getRemoteAddress().toString() << "] connected." << std::endl;
-    std::cout << "> ";
-
-    std::string message;
-    std::getline(std::cin, message);
+    std::cout << "Waiting for client to connect..." << std::endl;
 
     sf::Packet packet;
-    packet << message;
+    sf::IpAddress ipAddress;
+    short unsigned int port(0);
 
-    socket.send(packet);
-    socket.disconnect();
+    socket.receive(packet, ipAddress, port);
+
+    std::cout << "[" << ipAddress.toString() << "] connected." << std::endl;
+
+    sf::Packet answer;
+    answer << "HELLO";
+
+    socket.send(answer, ipAddress, port);
+
+    std::cout << "'HELLO' sent." << std::endl;
 
     return 0;
 }

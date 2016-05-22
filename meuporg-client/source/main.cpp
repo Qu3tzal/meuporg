@@ -8,28 +8,27 @@ int main()
     std::cout << "Enter server's IP address : ";
     std::cin >> serverIp;
 
-    std::cout << "Connecting to server " << serverIp << " on port 22625..." << std::endl;
+    std::cout << "Sending message to server " << serverIp << " on port 22625..." << std::endl;
 
-    sf::TcpSocket socket;
-
-    if(socket.connect(sf::IpAddress(serverIp), 22625, sf::seconds(10.f)) != sf::TcpSocket::Status::Done)
-    {
-        std::cerr << "Could not connect to server " << serverIp << "." << std::endl;
-        return 1;
-    }
-
-    std::cout << "Connected." << std::endl;
-
+    sf::UdpSocket socket;
     sf::Packet packet;
-    std::string message("");
+    packet << "HI";
 
-    socket.receive(packet);
-    packet >> message;
+    socket.send(packet, sf::IpAddress(serverIp), 22625);
+    std::cout << "Message sent." << std::endl;
+
+    sf::Packet answer;
+    std::string message("");
+    sf::IpAddress ip;
+    short unsigned int port;
+
+    socket.receive(answer, ip, port);
+    answer >> message;
     std::cout << "Message received : \"" << message << "\"." << std::endl;
     std::cout << "Press enter to quit..." << std::endl;
 
-    char c;
-    std::cin >> c;
+    std::cin.get();
+    std::cin.get();
 
     return 0;
 }

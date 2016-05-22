@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1463914401 source:c:\workspace\meuporg\meuporg-server\source\main.cpp
+1463914520 source:c:\workspace\meuporg\meuporg-client\source\main.cpp
 	<iostream>
 	<SFML/Network.hpp>
 
