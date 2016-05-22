@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="source/Server" />
 				</Compiler>
 				<Linker>
 					<Add library="glew32" />
@@ -30,6 +31,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="source/Server" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -58,7 +60,9 @@
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/lib" />
 			<Add directory="C:/MinGW/lib" />
 		</Linker>
-		<Unit filename="source/Server.hpp" />
+		<Unit filename="source/ServerConfiguration.hpp" />
+		<Unit filename="source/Server/Server.cpp" />
+		<Unit filename="source/Server/Server.hpp" />
 		<Unit filename="source/main.cpp" />
 		<Extensions>
 			<code_completion />
