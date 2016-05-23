@@ -7,7 +7,7 @@
 int main()
 {
     std::cout << "\t-*- #meuporg -*-" << std::endl;
-    std::cout << "Version " << ServerConfiguration::Version << "(" << ServerConfiguration::TickPerSec << " tick/sec)." << std::endl;
+    std::cout << "Version " << ServerConfiguration::Version << " (" << ServerConfiguration::TickPerSec << " tick/sec)." << std::endl;
 
     Server server;
     server.init();
