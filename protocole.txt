@@ -42,12 +42,12 @@ Protocole
 
 	1ère Authentification
 	---------------------
-		[client		TCP:22625]	CONNECT identifiant
+		[client		TCP:22625]	CONNECT identifiant version
 		[serveur	TCP]		ACCOUNT_CREATED_RECONNECT
 
 	Authentification régulière
 	--------------------------
-		[client		TCP:22625]	CONNECT identifiant
+		[client		TCP:22625]	CONNECT identifiant version
 		[serveur	TCP]		CONNECTION_SUCCESS
 		ou
 		[serveur	TCP]		CONNECTION_FAIL_UNKNOWN_USER

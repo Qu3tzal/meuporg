@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1463961993 source:c:\workspace\meuporg\meuporg-server\source\main.cpp
+1464012653 source:c:\workspace\meuporg\meuporg-server\source\main.cpp
 	<iostream>
 	<SFML/Network.hpp>
 	"ServerConfiguration.hpp"
@@ -206,4 +206,7 @@
 1463961972 c:\workspace\meuporg\meuporg-server\source\server\server.hpp
 	<SFML/System.hpp>
 	"../ServerConfiguration.hpp"
+
+1463961998 source:c:\workspace\meuporg\meuporg-server\source\server\server.cpp
+	"Server.hpp"
 

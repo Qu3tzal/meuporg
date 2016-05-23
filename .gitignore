@@ -49,3 +49,4 @@ Temporary Items
 *.o
 meuporg-client/bin/Debug.zip
 meuporg-client/bin/Debug_2.zip
+meuporg-server/meuporg-server.depend
