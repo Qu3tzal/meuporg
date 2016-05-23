@@ -1,6 +1,9 @@
 #ifndef GAME_HPP_INCLUDED
 #define GAME_HPP_INCLUDED
+#include <SFML/Network.hpp>
 #include <SFML/System.hpp>
+#include <iostream>
+#include <../NetworkValue.hpp>
 
 class Game
 {
@@ -18,6 +21,8 @@ class Game
         // Initialisation
         void init();
 
+        // Connect to the server
+        void serverConnection();
         // Update
         void update(sf::Time dt);
 
