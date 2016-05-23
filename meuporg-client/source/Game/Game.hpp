@@ -1,0 +1,29 @@
+#ifndef GAME_HPP_INCLUDED
+#define GAME_HPP_INCLUDED
+#include <SFML/System.hpp>
+
+class Game
+{
+    public:
+
+        // Constructor
+        Game();
+
+        // Destructor
+        virtual ~Game();
+
+        // Returns true if the server is running, false otherwise.
+        bool isRunning() const;
+
+        // Initialisation
+        void init();
+
+        // Update
+        void update(sf::Time dt);
+
+    protected:
+
+    private:
+};
+
+#endif // GAME_HPP_INCLUDED
