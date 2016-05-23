@@ -16,7 +16,6 @@
 					<Add directory="source/Server" />
 				</Compiler>
 				<Linker>
-					<Add library="glew32" />
 					<Add library="sfml-system-d" />
 					<Add library="sfml-graphics-d" />
 					<Add library="sfml-window-d" />
