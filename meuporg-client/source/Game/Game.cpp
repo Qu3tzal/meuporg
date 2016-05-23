@@ -31,21 +31,16 @@ void Game::serverConnection()
 
     sf::Packet packet;
     packet << NetworkValue::VERSION;
-
     socket.send(packet);
 
     sf::Packet serverVersionPacket;
-
     socket.receive(serverVersionPacket);
 
     packet.clear();
 
     packet << NetworkValue::NUMBER_OF_PLAYERS;
-
     socket.send(packet);
-
     sf::Packet playerNumberPacket;
-
     socket.receive(playerNumberPacket);
 
     std::string serverVersion;
@@ -55,7 +50,7 @@ void Game::serverConnection()
     serverVersionPacket >> serverVersion;
     playerNumberPacket >> playerNumber >> maximumPlayer;
 
-    std::cout << "Server version :" <<  serverVersion << "Number of player : " << playerNumber + "/" +  maximumPlayer<< std::endl;
+    std::cout << "Server version : " <<  serverVersion << std::endl <<" Number of player : " << playerNumber + "/" +  maximumPlayer<< std::endl;
 }
 
 bool Game::isRunning() const
