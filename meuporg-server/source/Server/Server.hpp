@@ -2,9 +2,14 @@
 #define SERVER_HPP_INCLUDED
 
 #include <iostream>
+#include <sstream>
+#include <map>
+
 #include <SFML/Network.hpp>
+
 #include "../ServerConfiguration.hpp"
 #include "../NetworkValues.hpp"
+#include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
 
 /*
     Server class.
@@ -24,8 +29,14 @@ class Server
             bool loggedIn = false;
 
             unsigned int gameVersion = 0;
-            std::string name = "";
-            unsigned int accountId = 0;
+            std::string username = "";
+        };
+
+        // Account structure.
+        struct Account
+        {
+            Client* linkedClient = nullptr;
+            std::string token = "";
         };
 
     public:
@@ -67,8 +78,14 @@ class Server
         // Login TCP listener.
         sf::TcpListener m_loginListener;
 
-        // List of the players.
+        // List of the clients.
         std::vector<Client*> m_clients;
+
+        // List of the accounts (indexed by the username).
+        std::map<std::string, Account*> m_accounts;
+
+        // Random number generator.
+        RandomNumberGenerator m_rng;
 };
 
 #endif // SERVER_HPP_INCLUDED

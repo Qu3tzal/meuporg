@@ -9,7 +9,8 @@ Server::Server()
 
 Server::~Server()
 {
-
+    for(auto pair : m_accounts)
+        delete pair.second;
 }
 
 void Server::init()
@@ -68,7 +69,7 @@ void Server::login(sf::Time dt)
             // Check timeout.
             if(client->timeout >= sf::seconds(5.f))
             {
-                std::cout << "[LOGIN_SERVER] '" << client->name << "' from (" << client->loginTcp.getRemoteAddress().toString() << ") timed out." << std::endl;
+                std::cout << "[LOGIN_SERVER] '" << client->username << "' from (" << client->loginTcp.getRemoteAddress().toString() << ") timed out." << std::endl;
                 delete client;
                 m_clients.erase(itr);
                 continue;
@@ -92,7 +93,7 @@ void Server::login(sf::Time dt)
                     continue;
                 }
 
-                packet >> client->name >> client->gameVersion;
+                packet >> client->username >> client->gameVersion;
 
                 // Check game version.
                 if(client->gameVersion != ServerConfiguration::Version)
@@ -102,31 +103,54 @@ void Server::login(sf::Time dt)
                     client->loginTcp.send(packet);
 
                     delete client;
+                    m_clients.erase(itr);
                     continue;
                 }
 
                 // Check if an account is linked to the username.
-                /*
-                    Check in accounts if username exists.
-                    If not:
+                auto accountIterator = m_accounts.find(client->username);
+
+                if(accountIterator == m_accounts.end())
+                {
+                    /*
                         -> account creation
                         -> send back ACCOUNT_CREATED_RECONNECT
                         -> disconnect login socket
-                    Else:
+                    */
+                    m_accounts[client->username] = new Account();
+                    std::cout << "[LOGIN_SERVER] Account '" << client->username << "' created for (" << client->loginTcp.getRemoteAddress().toString() << ")." << std::endl;
+
+                    // Send back ACCOUNT_CREATED_RECONNECT.
+                    sf::Packet packet;
+                    packet << NetworkValues::ACCOUNT_CREATED_RECONNECT;
+                    client->loginTcp.send(packet);
+
+                    delete client;
+                    m_clients.erase(itr);
+                    continue;
+                }
+                else
+                {
+                    /*
                         -> client->loggedIn = true;
-                        -> client->accountId = the account id
                         -> send back CONNECTION_SUCCESS with a random token
                         -> associate account with random token
-                */
+                    */
+                    client->loggedIn = true;
+                    std::cout << "[LOGIN_SERVER] '" << client->username << "' logged in from (" << client->loginTcp.getRemoteAddress().toString() << ")." << std::endl;
 
-                client->loggedIn = true;
+                    // Send back CONNECTION_SUCCESS with a random token.
+                    // Generate random token.
+                    std::stringstream tokenStream("");
+                    tokenStream << m_rng.generate() << client->loginTcp.getRemoteAddress().toString() << client->loginTcp.getLocalPort();
 
-                std::cout << "[LOGIN_SERVER] '" << client->name << "' logged in from (" << client->loginTcp.getRemoteAddress().toString() << ")." << std::endl;
+                    sf::Packet packet;
+                    packet << NetworkValues::CONNECTION_SUCCESS << tokenStream.str();
+                    client->loginTcp.send(packet);
 
-                // Answer connection success.
-                sf::Packet packet;
-                packet << NetworkValues::CONNECTION_SUCCESS;
-                client->loginTcp.send(packet);
+                    // Associate account with random token.
+                    (*accountIterator).second->token = tokenStream.str();
+                }
             }
             else
             {
