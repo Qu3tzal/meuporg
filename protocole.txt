@@ -21,6 +21,7 @@ Protocole
 
 	Ports serveur
 	-------------
+		UDP:22623 -> données du jeu
 		TCP:22624 -> données du jeu
 		TCP:22625 -> inscription/connexion
 		TCP:22626 -> informations
@@ -49,7 +50,7 @@ Protocole
 	Authentification régulière
 	--------------------------
 		[client		TCP:22625]	CONNECT identifiant version
-		[serveur	TCP]		CONNECTION_SUCCESS
+		[serveur	TCP]		CONNECTION_SUCCESS random_token
 		ou
 		[serveur	TCP]		CONNECTION_FAIL_UNKNOWN_USER
 		ou
@@ -58,3 +59,7 @@ Protocole
 		[serveur	TCP]		CONNECTION_FAIL_SERVER_FULL
 		ou
 		[serveur	TCP]		CONNECTION_FAIL_UNKNOWN_ERROR
+
+	Connexion au serveur de jeu
+	---------------------------
+		[client		TCP:22624]	CONNECT identifiant random_token
