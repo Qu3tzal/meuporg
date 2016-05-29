@@ -37,6 +37,9 @@ void InformationServer::update(sf::Time dt)
     {
         std::cout << "[INFORMATION_SERVER] Accepted new client (" << client->tcpsocket.getRemoteAddress().toString() << ")." << std::endl;
         m_clients.push_back(client);
+
+        client->tcpsocket.setBlocking(false);
+        client->timeout = sf::Time::Zero;
     }
     else
     {
@@ -48,14 +51,12 @@ void InformationServer::update(sf::Time dt)
     {
         // Alias.
         Client* client = (*itr);
-        client->tcpsocket.setBlocking(false);
-        client->timeout = sf::Time::Zero;
 
         // Timeout.
         client->timeout += dt;
 
         // If the client timed out, we delete it.
-        if(client->timeout >= sf::seconds(10.f))
+        if(client->timeout >= sf::seconds(5.f))
         {
             std::cout << "[INFORMATION_SERVER] Client timed out (" << client->tcpsocket.getRemoteAddress().toString() << ")." << std::endl;
             delete client;

@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1464012653 source:c:\workspace\meuporg\meuporg-server\source\main.cpp
+1464532168 source:c:\workspace\meuporg\meuporg-server\source\main.cpp
 	<iostream>
 	<SFML/Network.hpp>
 	"ServerConfiguration.hpp"
 	"Server/Server.hpp"
+	"InformationServer/InformationServer.hpp"
 
 1448203194 c:\mingw\include\sfml\network.hpp
 	<SFML/System.hpp>
@@ -200,14 +201,14 @@
 
 1463947480 c:\workspace\meuporg\meuporg-server\source\server.hpp
 
-1463961751 c:\workspace\meuporg\meuporg-server\source\serverconfiguration.hpp
+1464530047 c:\workspace\meuporg\meuporg-server\source\serverconfiguration.hpp
 	<SFML/System.hpp>
 
-1463961972 c:\workspace\meuporg\meuporg-server\source\server\server.hpp
-	<SFML/System.hpp>
+1464529167 c:\workspace\meuporg\meuporg-server\source\server\server.hpp
+	<SFML/Network.hpp>
 	"../ServerConfiguration.hpp"
 
-1463961998 source:c:\workspace\meuporg\meuporg-server\source\server\server.cpp
+1464532189 source:c:\workspace\meuporg\meuporg-server\source\server\server.cpp
 	"Server.hpp"
 
 1464011098 source:c:\users\louis\documents\github\meuporg\meuporg-server\source\server\server.cpp
@@ -336,5 +337,18 @@
 1429784053 c:\program files (x86)\codeblocks\mingw\include\sfml\system\vector3.inl
 
 1464011098 c:\users\louis\documents\github\meuporg\meuporg-server\source\serverconfiguration.hpp
+	<SFML/System.hpp>
+
+1464534211 source:c:\workspace\meuporg\meuporg-server\source\informationserver\informationserver.cpp
+	"InformationServer.hpp"
+	"../Server/Server.hpp"
+
+1464532680 c:\workspace\meuporg\meuporg-server\source\informationserver\informationserver.hpp
+	<iostream>
+	<SFML/Network.hpp>
+	"../ServerConfiguration.hpp"
+	"../NetworkValues.hpp"
+
+1464531759 c:\workspace\meuporg\meuporg-server\source\networkvalues.hpp
 	<SFML/System.hpp>
 
