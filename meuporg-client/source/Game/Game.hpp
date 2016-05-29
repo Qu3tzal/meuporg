@@ -3,7 +3,7 @@
 #include <SFML/Network.hpp>
 #include <SFML/System.hpp>
 #include <iostream>
-#include <../NetworkValue.hpp>
+#include <../NetworkValues.hpp>
 
 class Game
 {
@@ -29,6 +29,7 @@ class Game
     protected:
 
     private:
+        const unsigned int Version;
 };
 
 #endif // GAME_HPP_INCLUDED

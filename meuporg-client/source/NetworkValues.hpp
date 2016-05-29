@@ -1,9 +1,9 @@
-#ifndef NETWORKVALUE_HPP_INCLUDED
-#define NETWORKVALUE_HPP_INCLUDED
+#ifndef NETWORKVALUES_HPP_INCLUDED
+#define NETWORKVALUES_HPP_INCLUDED
 
 #include <SFML/System.hpp>
 
-namespace NetworkValue
+namespace NetworkValues
 {
     const unsigned int VERSION(000);
    	const unsigned int	NUMBER_OF_PLAYERS(001);
@@ -16,6 +16,7 @@ namespace NetworkValue
 	const unsigned int	CONNECTION_FAIL_VERSION_ERROR(104);
 	const unsigned int	CONNECTION_FAIL_SERVER_FULL(105);
 	const unsigned int	CONNECTION_FAIL_UNKNOWN_ERROR(106);
-} // namespace NetworkValue.
+	const unsigned int	CONNECTION_FAIL_UNKNOWN_USER(107);
+} // namespace NetworkValues.
 
-#endif // NETWORKVALUE_HPP_INCLUDED
+#endif // NETWORKVALUES_HPP_INCLUDED
