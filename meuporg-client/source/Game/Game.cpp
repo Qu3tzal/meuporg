@@ -58,10 +58,15 @@ void Game::serverConnection()
 
     std::cout << "Server version : " <<  serverVersion << std::endl <<" Number of player : " << playerNumber << "/" <<  maximumPlayer << std::endl;
 
-    connection:
-    packet.clear();
+    connectToServer(username, ip);
+}
+
+void Game::connectToServer(std::string username, sf::IpAddress ip)
+{
+    sf::Packet packet;
     sf::TcpSocket connectionSocket;
-    status = connectionSocket.connect(ip, 22625, sf::seconds(5.f));
+    sf::TcpSocket::Status status = connectionSocket.connect(ip, 22625, sf::seconds(5.f));
+
     if (status != sf::Socket::Done)
     {
         std::cout << "Connection timed out" << std::endl;
@@ -69,7 +74,7 @@ void Game::serverConnection()
         return;
     }
 
-    std::cout << "---------- Connection en cours ----------" << std::endl;
+    std::cout << "---------- Connexion en cours ----------" << std::endl;
 
     packet << NetworkValues::CONNECT << username << Version;
     connectionSocket.send(packet);
@@ -83,27 +88,27 @@ void Game::serverConnection()
     switch(answer)
     {
         case NetworkValues::ACCOUNT_CREATED_RECONNECT :
-            std::cout << "Compte cree !" << std::endl << "---------- Connection en cours ----------" << std::endl;
-            goto connection;
-        break;
+            std::cout << "Compte cree !" << std::endl << "---------- Connexion en cours ----------" << std::endl;
+
+            // Reconnect to the server.
+            connectToServer(username, ip);
+            break;
         case NetworkValues::CONNECTION_SUCCESS :
             std::cout << "Connection reussie !" << std::endl;
         break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_USER :
              std::cout << "Identifiant inconnu !" << std::endl;
-        break;
+            break;
         case NetworkValues::CONNECTION_FAIL_VERSION_ERROR :
             std::cout << "Version invalide !" << std::endl;
-        break;
+            break;
         case NetworkValues::CONNECTION_FAIL_SERVER_FULL :
             std::cout << "Le serveur est complet !" << std::endl;
-        break;
+            break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_ERROR :
            std::cout << "Erreur inconnue" << std::endl;
-        break;
-
+            break;
     }
-
 }
 
 bool Game::isRunning() const
