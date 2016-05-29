@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1463914520 source:c:\workspace\meuporg\meuporg-client\source\main.cpp
+1464024604 source:c:\workspace\meuporg\meuporg-client\source\main.cpp
 	<iostream>
 	<SFML/Network.hpp>
+	<Game.hpp>
 
 1448203194 c:\mingw\include\sfml\network.hpp
 	<SFML/System.hpp>
@@ -404,5 +405,14 @@
 	<SFML/System.hpp>
 
 1464533527 c:\users\louis\documents\github\meuporg\meuporg-client\source\networkvalues.hpp
+	<SFML/System.hpp>
+
+1464533767 c:\workspace\meuporg\meuporg-client\source\game\game.hpp
+	<SFML/Network.hpp>
+	<SFML/System.hpp>
+	<iostream>
+	<../NetworkValues.hpp>
+
+1464533767 c:\workspace\meuporg\meuporg-client\source\networkvalues.hpp
 	<SFML/System.hpp>
 
