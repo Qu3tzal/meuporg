@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game() : Version(001)
+Game::Game() : Version(001), running(true)
 {
     //ctor
 }
@@ -31,6 +31,8 @@ void Game::serverConnection()
     if (status != sf::Socket::Done)
     {
         std::cout << "Connection timed out" << std::endl;
+        running = false;
+        return;
     }
 
     sf::Packet packet;
@@ -63,6 +65,8 @@ void Game::serverConnection()
     if (status != sf::Socket::Done)
     {
         std::cout << "Connection timed out" << std::endl;
+        running = false;
+        return;
     }
 
     std::cout << "---------- Connection en cours ----------" << std::endl;
@@ -104,7 +108,7 @@ void Game::serverConnection()
 
 bool Game::isRunning() const
 {
-    return true;
+    return running;
 }
 
 void Game::update(sf::Time dt)

@@ -31,6 +31,7 @@ class Game
     private:
         const unsigned int Version;
         sf::Time timeout;
+        bool running;
 };
 
 #endif // GAME_HPP_INCLUDED
