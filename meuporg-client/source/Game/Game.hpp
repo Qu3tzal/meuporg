@@ -4,6 +4,7 @@
 #include <SFML/System.hpp>
 #include <iostream>
 #include <../NetworkValues.hpp>
+#include <../PlayerInput.hpp>
 
 class Game
 {
