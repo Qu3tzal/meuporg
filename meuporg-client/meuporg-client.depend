@@ -394,7 +394,7 @@
 	<SFML/Network/Socket.hpp>
 	<vector>
 
-1464532280 c:\users\louis\documents\github\meuporg\meuporg-client\source\game\game.hpp
+1464534780 c:\users\louis\documents\github\meuporg\meuporg-client\source\game\game.hpp
 	<SFML/Network.hpp>
 	<SFML/System.hpp>
 	<iostream>
@@ -403,6 +403,6 @@
 1464028215 c:\users\louis\documents\github\meuporg\meuporg-client\source\networkvalue.hpp
 	<SFML/System.hpp>
 
-1464533145 c:\users\louis\documents\github\meuporg\meuporg-client\source\networkvalues.hpp
+1464533527 c:\users\louis\documents\github\meuporg\meuporg-client\source\networkvalues.hpp
 	<SFML/System.hpp>
 

@@ -27,7 +27,11 @@ void Game::serverConnection()
     std::cin >> username;
 
     sf::TcpSocket socket;
-    socket.connect(ip, 22626);
+    sf::Socket::Status status = socket.connect(ip, 22626, sf::seconds(5.f));
+    if (status != sf::Socket::Done)
+    {
+        std::cout << "Connection timed out" << std::endl;
+    }
 
     sf::Packet packet;
     packet << NetworkValues::VERSION;
@@ -55,7 +59,11 @@ void Game::serverConnection()
     connection:
     packet.clear();
     sf::TcpSocket connectionSocket;
-    connectionSocket.connect(ip, 22625);
+    status = connectionSocket.connect(ip, 22625, sf::seconds(5.f));
+    if (status != sf::Socket::Done)
+    {
+        std::cout << "Connection timed out" << std::endl;
+    }
 
     std::cout << "---------- Connection en cours ----------" << std::endl;
 
