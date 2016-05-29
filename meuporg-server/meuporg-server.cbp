@@ -15,6 +15,7 @@
 					<Add option="-g" />
 					<Add directory="source/Server" />
 					<Add directory="source/InformationServer" />
+					<Add directory="source/RandomNumberGenerator" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-system-d" />
@@ -33,6 +34,7 @@
 					<Add option="-O2" />
 					<Add directory="source/Server" />
 					<Add directory="source/InformationServer" />
+					<Add directory="source/RandomNumberGenerator" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -64,6 +66,8 @@
 		<Unit filename="source/InformationServer/InformationServer.cpp" />
 		<Unit filename="source/InformationServer/InformationServer.hpp" />
 		<Unit filename="source/NetworkValues.hpp" />
+		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />
+		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.hpp" />
 		<Unit filename="source/ServerConfiguration.hpp" />
 		<Unit filename="source/Server/Server.cpp" />
 		<Unit filename="source/Server/Server.hpp" />
