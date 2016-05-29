@@ -46,6 +46,7 @@ int main()
         {
             elapsed -= ServerConfiguration::Ticktime;
 
+            server.login(ServerConfiguration::Ticktime);
             server.receiveInput();
             server.update(ServerConfiguration::Ticktime);
             server.sendUpdate();

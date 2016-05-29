@@ -101,9 +101,9 @@ void InformationServer::answerVersion(Client* client)
     packet << ServerConfiguration::Version;
 
     // Send it.
-    client->tcpsocket.setBlocking(true);
+    //client->tcpsocket.setBlocking(true);
     client->tcpsocket.send(packet);
-    client->tcpsocket.setBlocking(false);
+    //client->tcpsocket.setBlocking(false);
 }
 
 void InformationServer::answerNumberOfPlayers(Client* client)
@@ -113,7 +113,7 @@ void InformationServer::answerNumberOfPlayers(Client* client)
     packet << m_gameserver->getNumberOfPlayers() << m_gameserver->getMaximumPlayersCapacity();
 
     // Send it.
-    client->tcpsocket.setBlocking(true);
+    //client->tcpsocket.setBlocking(true);
     client->tcpsocket.send(packet);
-    client->tcpsocket.setBlocking(false);
+    //client->tcpsocket.setBlocking(false);
 }

@@ -1,8 +1,10 @@
 #ifndef SERVER_HPP_INCLUDED
 #define SERVER_HPP_INCLUDED
 
+#include <iostream>
 #include <SFML/Network.hpp>
 #include "../ServerConfiguration.hpp"
+#include "../NetworkValues.hpp"
 
 /*
     Server class.
@@ -10,6 +12,22 @@
 */
 class Server
 {
+    public:
+        // Client structure.
+        struct Client
+        {
+            sf::TcpSocket loginTcp;
+            sf::TcpSocket gameTcp;
+            sf::UdpSocket gameUdp;
+            sf::Time timeout = sf::Time::Zero;
+
+            bool loggedIn = false;
+
+            unsigned int gameVersion = 0;
+            std::string name = "";
+            unsigned int accountId = 0;
+        };
+
     public:
         // Constructor.
         Server();
@@ -22,6 +40,9 @@ class Server
 
         // Returns true if the server is running, false otherwise.
         bool isRunning() const;
+
+        // Logs in the new players.
+        void login(sf::Time dt);
 
         // Receives the input from the clients.
         void receiveInput();
@@ -39,8 +60,15 @@ class Server
         unsigned int getMaximumPlayersCapacity() const;
 
     protected:
+        // Number of players connected and maximum number of players.
         unsigned int m_numberOfPlayers;
         unsigned int m_maximumPlayersCapacity;
+
+        // Login TCP listener.
+        sf::TcpListener m_loginListener;
+
+        // List of the players.
+        std::vector<Client*> m_clients;
 };
 
 #endif // SERVER_HPP_INCLUDED

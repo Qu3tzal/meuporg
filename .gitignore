@@ -60,3 +60,5 @@ meuporg-client/meuporg-client.depend
 meuporg-client/meuporg-client.depend
 *.depend
 meuporg-server/meuporg-server.depend
+meuporg-server/meuporg-server.depend
+*.depend
