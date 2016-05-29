@@ -8,6 +8,8 @@ namespace ServerConfiguration
     const unsigned int Version(001);
     const float TickPerSec(60.f);
     const sf::Time Ticktime = sf::seconds(1.f / TickPerSec);
+
+    const unsigned int InformationPort(22626);
 } // namespace ServerConfiguration.
 
 #endif // SERVERCONFIGURATION_HPP_INCLUDED

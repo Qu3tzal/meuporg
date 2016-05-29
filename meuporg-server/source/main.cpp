@@ -3,6 +3,21 @@
 
 #include "ServerConfiguration.hpp"
 #include "Server/Server.hpp"
+#include "InformationServer/InformationServer.hpp"
+
+int informationServer_main(Server* server)
+{
+    InformationServer informationServer(server);
+    informationServer.init();
+
+    sf::Clock serverclock;
+    while(informationServer.isRunning())
+    {
+        informationServer.update(serverclock.restart());
+    }
+
+    return 0;
+}
 
 int main()
 {
@@ -10,6 +25,14 @@ int main()
     std::cout << "Version " << ServerConfiguration::Version << " (" << ServerConfiguration::TickPerSec << " tick/sec)." << std::endl;
 
     Server server;
+
+    // Launch the information server.
+    sf::Thread informationServer_thread(&informationServer_main, &server);
+    informationServer_thread.launch();
+
+    /*
+        Game server.
+    */
     server.init();
 
     sf::Clock serverclock;
@@ -28,6 +51,9 @@ int main()
             server.sendUpdate();
         }
     }
+
+    // Stop the information server.
+    informationServer_thread.terminate();
 
     return 0;
 }
