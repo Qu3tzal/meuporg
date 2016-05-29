@@ -94,8 +94,15 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
             connectToServer(username, ip);
             break;
         case NetworkValues::CONNECTION_SUCCESS :
-            std::cout << "Connection reussie !" << std::endl;
-        break;
+            {
+                std::cout << "Connexion reussie !" << std::endl;
+
+                std::string token("");
+                packet >> token;
+
+                std::cout << "[DEBUG] Token: " << token << std::endl;
+            }
+            break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_USER :
              std::cout << "Identifiant inconnu !" << std::endl;
             break;
