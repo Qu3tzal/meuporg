@@ -23,7 +23,7 @@ void Game::serverConnection()
     std::cout << "Rentrez l'ip du serveur : ";
     std::cin >> ip;
 
-    std::cout << "Rentrez votre indentifiant : ";
+    std::cout << "Rentrez votre identifiant : ";
     std::cin >> username;
 
     sf::TcpSocket socket;
@@ -83,11 +83,11 @@ void Game::serverConnection()
     switch(answer)
     {
         case NetworkValues::ACCOUNT_CREATED_RECONNECT :
-            std::cout << "Compte crée !" << std::endl << "---------- Connection en cours ----------" << std::endl;
+            std::cout << "Compte cree !" << std::endl << "---------- Connection en cours ----------" << std::endl;
             goto connection;
         break;
         case NetworkValues::CONNECTION_SUCCESS :
-            std::cout << "Connection réussi !" << std::endl;
+            std::cout << "Connection reussie !" << std::endl;
         break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_USER :
              std::cout << "Identifiant inconnu !" << std::endl;
@@ -99,7 +99,7 @@ void Game::serverConnection()
             std::cout << "Le serveur est complet !" << std::endl;
         break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_ERROR :
-           std::cout << "Erreur inconnu" << std::endl;
+           std::cout << "Erreur inconnue" << std::endl;
         break;
 
     }
