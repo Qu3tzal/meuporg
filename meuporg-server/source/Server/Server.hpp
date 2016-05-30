@@ -14,6 +14,8 @@
 #include "../LoginServer/LoginServer.hpp"
 #include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
 
+#include "../Kantan-2/kantan.hpp"
+
 /*
     Server class.
     This class manages the main functions of the server.
