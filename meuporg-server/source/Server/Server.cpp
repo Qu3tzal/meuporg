@@ -21,7 +21,10 @@ void Server::init()
 
     // Bind to the game ports.
     m_gameTcpListener.listen(ServerConfiguration::GameTCPPort);
+    m_gameTcpListener.setBlocking(false);
+
     m_gameUdpSocket.bind(ServerConfiguration::GameUDPPort);
+    m_gameUdpSocket.setBlocking(false);
 }
 
 bool Server::isRunning() const
