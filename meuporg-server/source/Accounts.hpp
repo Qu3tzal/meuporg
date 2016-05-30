@@ -2,16 +2,22 @@
 #define ACCOUNTS_HPP_INCLUDED
 
 #include <SFML/Network.hpp>
+#include <memory>
 
 // Client structure.
 struct Client
 {
     sf::TcpSocket loginTcp;
-    sf::TcpSocket gameTcp;
-    sf::UdpSocket gameUdp;
+    std::shared_ptr<sf::TcpSocket> gameTcp;
+
+    sf::IpAddress ip;
+    unsigned int udpPort;
+
     sf::Time timeout = sf::Time::Zero;
 
     bool loggedIn = false;
+    bool gameTcpConnected = false;
+    bool gameUdpConnected = false;
 
     unsigned int gameVersion = 0;
     std::string username = "";

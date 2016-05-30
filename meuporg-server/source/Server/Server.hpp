@@ -20,6 +20,14 @@
 class Server
 {
     public:
+        // Pending socket structure. Holds a pending socket and its timeout together.
+        struct PendingSocket
+        {
+            std::shared_ptr<sf::TcpSocket> tcpSocket;
+            sf::Time timeout = sf::Time::Zero;
+        };
+
+    public:
         // Constructor.
         Server();
 
@@ -73,6 +81,15 @@ class Server
 
         // The login server.
         LoginServer m_loginServer;
+
+        // The game TCP listener.
+        sf::TcpListener m_gameTcpListener;
+
+        // The game UDP socket.
+        sf::UdpSocket m_gameUdpSocket;
+
+        // Pending TCP connections.
+        std::vector<PendingSocket*> m_pendingTcpSockets;
 };
 
 #endif // SERVER_HPP_INCLUDED
