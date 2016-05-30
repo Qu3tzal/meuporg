@@ -44,7 +44,7 @@ void LoginServer::login(sf::Time dt)
         // If someone connected to the port.
         if(m_loginListener.accept(tempclient->loginTcp) == sf::TcpListener::Status::Done)
         {
-            m_clients.push_back(tempclient);
+            m_server->getClients()->push_back(tempclient);
         }
         else
         {
@@ -52,10 +52,14 @@ void LoginServer::login(sf::Time dt)
         }
 
         // Check all pending clients.
-        for(auto itr(m_clients.begin()) ; itr != m_clients.end() ;)
+        for(auto itr(m_server->getClients()->begin()) ; itr != m_server->getClients()->end() ;)
         {
             // Alias.
             Client* client = (*itr);
+
+            // Here we only worry about clients who are not logged in yet.
+            if(client->loggedIn)
+                continue;
 
             // Account timeout.
             client->timeout += dt;
@@ -70,7 +74,7 @@ void LoginServer::login(sf::Time dt)
                 (*accountItr).second->linkedClient = nullptr;
 
                 delete client;
-                m_clients.erase(itr);
+                m_server->getClients()->erase(itr);
                 continue;
             }
 
@@ -102,7 +106,7 @@ void LoginServer::login(sf::Time dt)
                     client->loginTcp.send(packet);
 
                     delete client;
-                    m_clients.erase(itr);
+                    m_server->getClients()->erase(itr);
                     continue;
                 }
 
@@ -116,7 +120,7 @@ void LoginServer::login(sf::Time dt)
                         -> send back ACCOUNT_CREATED_RECONNECT
                         -> disconnect login socket
                     */
-                    m_accounts[client->username] = new Account();
+                    m_server->getAccounts()->insert(std::pair<std::string, Account*>(client->username, new Account()));
                     std::cout << "[LOGIN_SERVER] Account '" << client->username << "' created for (" << client->loginTcp.getRemoteAddress().toString() << ")." << std::endl;
 
                     // Send back ACCOUNT_CREATED_RECONNECT.
@@ -125,7 +129,7 @@ void LoginServer::login(sf::Time dt)
                     client->loginTcp.send(packet);
 
                     delete client;
-                    m_clients.erase(itr);
+                    m_server->getClients()->erase(itr);
                     continue;
                 }
                 else
@@ -148,7 +152,7 @@ void LoginServer::login(sf::Time dt)
                         std::cout << "[LOGIN_SERVER] '" << client->username << "' tried to log in multiple times." << std::endl;
 
                         delete client;
-                        m_clients.erase(itr);
+                        m_server->getClients()->erase(itr);
                         continue;
                     }
 

@@ -32,12 +32,6 @@ class LoginServer
         // Login TCP listener.
         sf::TcpListener m_loginListener;
 
-        // List of the clients.
-        std::vector<Client*> m_clients;
-
-        // List of the accounts (indexed by the username).
-        std::map<std::string, Account*> m_accounts;
-
         // Random number generator.
         RandomNumberGenerator m_rng;
 };
