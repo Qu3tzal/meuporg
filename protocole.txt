@@ -20,6 +20,7 @@ Protocole
 		CONNECTION_FAIL_UNKNOWN_ERROR		106
 		CONNECTION_FAIL_UNKNOWN_USER		107
 		CONNECTION_FAIL_ALREADY_CONNECTED	108
+		CONNECTION_FAIL_WRONG_TOKEN			109
 		
 		KEEP_ALIVE							300
 		OKAY								301
@@ -46,7 +47,6 @@ Protocole
 		[client		TCP:22626]	MAP_NAME
 		[serveur	TCP]		map_name
 
-
 	1ère Authentification
 	---------------------
 		[client		TCP:22625]	CONNECT identifiant version
@@ -69,8 +69,12 @@ Protocole
 	---------------------------
 		[client		TCP:22624]	CONNECT identifiant random_token
 		[serveur	TCP]		OKAY
+		ou
+		[serveur	TCP]		CONNECTION_FAIL_WRONG_TOKEN
 		[client		UDP:22623]	CONNECT identifiant random_token
 		[serveur	TCP]		OKAY
+		ou
+		[serveur	TCP]		CONNECTION_FAIL_WRONG_TOKEN
 		[serveur	TCP]		number_of_players [name name name...]
 
 	Keep-Alive
