@@ -18,6 +18,10 @@ namespace NetworkValues
 	const unsigned int	CONNECTION_FAIL_UNKNOWN_ERROR(106);
 	const unsigned int	CONNECTION_FAIL_UNKNOWN_USER(107);
 	const unsigned int	CONNECTION_FAIL_ALREADY_CONNECTED(108);
+	const unsigned int  CONNECTION_FAIL_WRONG_TOKEN(109);
+
+	const unsigned int	KEEP_ALIVE(300);
+	const unsigned int	OKAY(301);
 } // namespace NetworkValues.
 
 #endif // NETWORKVALUES_HPP_INCLUDED

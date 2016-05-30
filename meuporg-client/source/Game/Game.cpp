@@ -26,8 +26,7 @@ void Game::serverConnection()
     std::cout << "Rentrez votre identifiant : ";
     std::cin >> username;
 
-    sf::TcpSocket socket;
-    sf::Socket::Status status = socket.connect(ip, 22626, sf::seconds(5.f));
+    sf::Socket::Status status = informationSocket.connect(ip, 22626, sf::seconds(5.f));
     if (status != sf::Socket::Done)
     {
         std::cout << "Connection timed out" << std::endl;
@@ -37,17 +36,17 @@ void Game::serverConnection()
 
     sf::Packet packet;
     packet << NetworkValues::VERSION;
-    socket.send(packet);
+    informationSocket.send(packet);
 
     sf::Packet serverVersionPacket;
-    socket.receive(serverVersionPacket);
+    informationSocket.receive(serverVersionPacket);
 
     packet.clear();
 
     packet << NetworkValues::NUMBER_OF_PLAYERS;
-    socket.send(packet);
+    informationSocket.send(packet);
     sf::Packet playerNumberPacket;
-    socket.receive(playerNumberPacket);
+    informationSocket.receive(playerNumberPacket);
 
     unsigned int serverVersion;
     unsigned int playerNumber;
@@ -64,8 +63,7 @@ void Game::serverConnection()
 void Game::connectToServer(std::string username, sf::IpAddress ip)
 {
     sf::Packet packet;
-    sf::TcpSocket connectionSocket;
-    sf::TcpSocket::Status status = connectionSocket.connect(ip, 22625, sf::seconds(5.f));
+    sf::TcpSocket::Status status = serverSocket.connect(ip, 22625, sf::seconds(5.f));
 
     if (status != sf::Socket::Done)
     {
@@ -77,10 +75,10 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
     std::cout << "---------- Connexion en cours ----------" << std::endl;
 
     packet << NetworkValues::CONNECT << username << Version;
-    connectionSocket.send(packet);
+    serverSocket.send(packet);
     packet.clear();
 
-    connectionSocket.receive(packet);
+    serverSocket.receive(packet);
 
     unsigned int answer;
     packet >> answer;
@@ -100,6 +98,7 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
                 packet >> token;
 
                 std::cout << "[DEBUG] Token: " << token << std::endl;
+                connectToGameServer(username, ip, token);
             }
             break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_USER :
@@ -118,6 +117,80 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
             std::cout << "Vous etes deja connecte(e)" << std::endl;
             break;
     }
+}
+
+void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::string token)
+{
+    std::cout << "Connection au serveur de jeu" << std::endl;
+    sf::TcpSocket::Status status = gameServerSocket.connect(ip, 22624, sf::seconds(5.f));
+
+    if (status != sf::Socket::Done)
+    {
+        std::cout << "Connection timed out" << std::endl;
+        running = false;
+        return;
+    }
+
+    sf::Packet packet;
+    packet << NetworkValues::CONNECT << username << token;
+
+    gameServerSocket.send(packet);
+    packet.clear();
+    gameServerSocket.receive(packet);
+
+    unsigned int answer;
+    packet >> answer;
+
+    if(answer == NetworkValues::OKAY)
+    {
+        packet.clear();
+        packet << username << token;
+
+        gameServerUdpSocket.send(packet, ip, 22623);
+        packet.clear();
+        gameServerSocket.receive(packet);
+
+        packet >> answer;
+
+        if(answer == NetworkValues::OKAY)
+        {
+            packet.clear();
+            gameServerSocket.receive(packet);
+            int playerNumber = 0;
+            packet >> playerNumber;
+
+            //std::vector<std::string> listOfPlayer;
+            std::cout << "Liste des joueurs : " << std::endl;
+            for(int i = 0 ; i < playerNumber ; i++)
+            {
+                std::cout << "\t" << "[" << i << "] " << packet;
+                //std::string playerName = "";
+                //packet >> playerName;
+                //listOfPlayer.push_back(playerName);
+            }
+        }
+        else if(answer == NetworkValues::CONNECTION_FAIL_WRONG_TOKEN)
+        {
+            std::cout << "Token invalide " << std::endl;
+            connectToGameServer(username, ip, token);
+        }
+        else if(answer == NetworkValues::CONNECTION_FAIL_UNKNOWN_USER)
+        {
+            std::cout << "Nom inconnu" << std::endl;
+            connectToGameServer(username, ip, token);
+        }
+    }
+    else if(answer == NetworkValues::CONNECTION_FAIL_WRONG_TOKEN)
+    {
+        std::cout << "Token invalide " << std::endl;
+        connectToGameServer(username, ip, token);
+    }
+    else if(answer == NetworkValues::CONNECTION_FAIL_UNKNOWN_USER)
+    {
+        std::cout << "Nom inconnu" << std::endl;
+        connectToGameServer(username, ip, token);
+    }
+
 }
 
 bool Game::isRunning() const
