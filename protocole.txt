@@ -69,7 +69,7 @@ Protocole
 	---------------------------
 		[client		TCP:22624]	CONNECT identifiant random_token
 		[serveur	TCP]		OKAY
-		[client		UDP:22624]	CONNECT identifiant random_token
+		[client		UDP:22623]	CONNECT identifiant random_token
 		[serveur	TCP]		OKAY
 		[serveur	TCP]		number_of_players [name name name...]
 
