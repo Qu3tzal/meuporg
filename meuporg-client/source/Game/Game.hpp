@@ -6,6 +6,8 @@
 #include <../NetworkValues.hpp>
 #include <../PlayerInput.hpp>
 #include <SFML/Graphics.hpp>
+#include <../RandomNumberGenerator/RandomNumberGenerator.hpp>
+#include <sstream>
 
 class Game
 {
