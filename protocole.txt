@@ -22,6 +22,8 @@ Protocole
 		CONNECTION_FAIL_ALREADY_CONNECTED	108
 		CONNECTION_FAIL_WRONG_TOKEN			109
 		
+		DISCONNECT							200
+		
 		KEEP_ALIVE							300
 		OKAY								301
 
@@ -81,5 +83,8 @@ Protocole
 
 	Keep-Alive
 	----------
-		[client		TCP:22625]	KEEP_ALIVE
 		[client		TCP:22624]	KEEP_ALIVE
+		
+	Déconnexion
+	-----------
+		[client		TCP:22624]	DISCONNECT

@@ -1,6 +1,7 @@
 #ifndef SERVER_HPP_INCLUDED
 #define SERVER_HPP_INCLUDED
 
+#include <exception>
 #include <iostream>
 #include <sstream>
 #include <map>
@@ -10,8 +11,8 @@
 #include "../Accounts.hpp"
 #include "../NetworkValues.hpp"
 #include "../ServerConfiguration.hpp"
-#include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
 #include "../LoginServer/LoginServer.hpp"
+#include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
 
 /*
     Server class.
@@ -65,8 +66,20 @@ class Server
         std::map<std::string, Account*>* getAccounts();
 
     protected:
+        // Disconnects the player for the given reason.
+        void disconnectPlayer(std::string username, std::string reason);
+
         // Updates the number of players.
         void updateNumberOfPlayers();
+
+        // Updates the timeout of the players.
+        void updateTimeoutPlayers(sf::Time dt);
+
+        // Receives the input from the clients TCP sockets.
+        void receiveInputThroughTCP();
+
+        // Receives the input by the UDP socket.
+        void receiveInputThroughUDP();
 
     protected:
         // Number of players connected and maximum number of players.

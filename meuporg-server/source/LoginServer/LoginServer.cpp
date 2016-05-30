@@ -4,12 +4,10 @@
 LoginServer::LoginServer(Server* server)
     : m_server(server)
 {
-    //ctor
 }
 
 LoginServer::~LoginServer()
 {
-    //dtor
 }
 
 void LoginServer::init()
@@ -61,7 +59,10 @@ void LoginServer::login(sf::Time dt)
 
             // Here we only worry about clients who are not logged in yet.
             if(client->loggedIn)
+            {
+                itr++;
                 continue;
+            }
 
             // Account timeout.
             client->timeout += dt;
@@ -176,10 +177,8 @@ void LoginServer::login(sf::Time dt)
                     account->linkedClient = client;
                 }
             }
-            else
-            {
-                itr++;
-            }
+
+            itr++;
         }
     }
 }

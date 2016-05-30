@@ -18,6 +18,7 @@ struct Client
     bool loggedIn = false;
     bool gameTcpConnected = false;
     bool gameUdpConnected = false;
+    bool ingame = false;
 
     unsigned int gameVersion = 0;
     std::string username = "";

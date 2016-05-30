@@ -76,7 +76,10 @@ void Server::login(sf::Time dt)
             packet >> networkCode;
 
             if(networkCode != NetworkValues::CONNECT)
+            {
+                std::cout << "[GAME_SERVER] Unknown network code : '" << networkCode << "'." << std::endl;
                 continue;
+            }
 
             // Extract username and random token.
             std::string username(""), token("");
@@ -107,6 +110,9 @@ void Server::login(sf::Time dt)
                 m_accounts.at(username)->linkedClient->gameTcp = pendingSocket->tcpSocket;
                 m_accounts.at(username)->linkedClient->gameTcpConnected = true;
 
+                // Reset timeout.
+                m_accounts.at(username)->linkedClient->timeout = sf::Time::Zero;
+
                 std::cout << "[GAME_SERVER] Game TCP connected from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ") for " << username << "." << std::endl;
 
                 // Delete the pending socket.
@@ -132,72 +138,14 @@ void Server::login(sf::Time dt)
 
 void Server::receiveInput()
 {
-    // Check if we received any UDP packet.
-    sf::Packet packet;
-    sf::IpAddress ip;
-    short unsigned int port;
-
-    while(m_gameUdpSocket.receive(packet, ip, port) == sf::UdpSocket::Status::Done)
-    {
-        // Treat the packet.
-        // Extract the network code.
-        unsigned int networkCode;
-        packet >> networkCode;
-
-        // Evaluate the network code.
-        switch(networkCode)
-        {
-            case NetworkValues::CONNECT:
-                {
-                    // Extract username and token.
-                    std::string username(""), token("");
-                    packet >> username >> token;
-
-                    // Check if username exists.
-                    if(m_accounts.find(username) != m_accounts.end())
-                    {
-                        // Check if the username and random token given are the same as ours.
-                        if(token == m_accounts.at(username)->token)
-                        {
-                            // OKAY
-                            sf::Packet answer;
-                            answer << NetworkValues::OKAY;
-                            m_accounts.at(username)->linkedClient->gameTcp->send(answer);
-
-                            // Affect the tcp socket to the client.
-                            m_accounts.at(username)->linkedClient->ip = ip;
-                            m_accounts.at(username)->linkedClient->udpPort = port;
-                            m_accounts.at(username)->linkedClient->gameUdpConnected = true;
-
-                            // Replie with the list of the players.
-                            answer.clear();
-
-                            answer << getNumberOfPlayers();
-                            for(auto accountEntry : m_accounts)
-                            {
-                                if(accountEntry.second->linkedClient != nullptr)
-                                    answer << accountEntry.second->linkedClient->username;
-                            }
-
-                            m_accounts.at(username)->linkedClient->gameTcp->send(answer);
-
-                            std::cout << "[GAME_SERVER] Game UDP connected from (" << ip.toString() << ") for " << username << "." << std::endl;
-                        }
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-
-        // Clear the packet.
-        packet.clear();
-    }
+    receiveInputThroughTCP();
+    receiveInputThroughUDP();
 }
 
 void Server::update(sf::Time dt)
 {
     updateNumberOfPlayers();
+    updateTimeoutPlayers(dt);
 }
 
 void Server::sendUpdate()
@@ -225,6 +173,33 @@ std::map<std::string, Account*>* Server::getAccounts()
     return &m_accounts;
 }
 
+void Server::disconnectPlayer(std::string username, std::string reason)
+{
+    // Dissociate the account and the client.
+    try
+    {
+        // Find the client associated to the username.
+        auto clientItr = std::find_if(m_clients.begin(), m_clients.end(), [username](Client* client){
+                                        return client->username == username;
+                                    });
+
+        // Alias.
+        Client* client = (*clientItr);
+
+        m_accounts.at(username)->linkedClient = nullptr;
+
+        std::cout << "[GAME_SERVER] " << username << " has left the game (" << reason << ")." << std::endl;
+
+        // Erase the client.
+        delete client;
+        m_clients.erase(clientItr);
+    }
+    catch(std::exception& e)
+    {
+        std::cerr << "[GAME_SERVER][ERROR] " << e.what() << std::endl;
+    }
+}
+
 void Server::updateNumberOfPlayers()
 {
     unsigned int numberOfPlayers(0);
@@ -236,4 +211,157 @@ void Server::updateNumberOfPlayers()
                     });
 
     m_numberOfPlayers = numberOfPlayers;
+}
+
+void Server::updateTimeoutPlayers(sf::Time dt)
+{
+    // Check each client connected to the game server.
+    for(auto clientItr(m_clients.begin()) ; clientItr != m_clients.end() ;)
+    {
+        // Alias.
+        Client* client = (*clientItr);
+
+        // Timeout only if in game.
+        if(client->ingame)
+        {
+            // Update timer.
+            client->timeout += dt;
+
+            // Check the timeout.
+            if(client->timeout >= sf::seconds(5.f))
+            {
+                disconnectPlayer(client->username, "timed out");
+                continue;
+            }
+            else
+            {
+                clientItr++;
+            }
+        }
+        else
+        {
+            clientItr++;
+        }
+    }
+}
+
+void Server::receiveInputThroughTCP()
+{
+    // Check if we received any TCP packet.
+    for(auto clientItr(m_clients.begin()) ; clientItr != m_clients.end() ;)
+    {
+        // Alias.
+        Client* client = (*clientItr);
+
+        // Timeout only if in game.
+        if(client->ingame)
+        {
+            bool deletedClient(false);
+
+            // Check if we received a packet.
+            sf::Packet packet;
+            while(client->gameTcp->receive(packet) == sf::TcpSocket::Status::Done)
+            {
+                // Extract network code.
+                unsigned int networkCode;
+                packet >> networkCode;
+
+                switch(networkCode)
+                {
+                    case NetworkValues::DISCONNECT:
+                        // Disconnect the player.
+                        disconnectPlayer(client->username, "disconnected");
+
+                        // Tag we deleted a client.
+                        deletedClient = true;
+                        break;
+                    default:
+                        std::cout << "Pnice" << std::endl;
+                        break;
+                }
+            }
+
+            // Do not increment if we deleted a client previously.
+            if(!deletedClient)
+                clientItr++;
+        }
+        else
+        {
+            clientItr++;
+        }
+    }
+}
+
+void Server::receiveInputThroughUDP()
+{
+    // Check if we received any UDP packet.
+    sf::Packet packet;
+    sf::IpAddress ip;
+    short unsigned int port;
+
+    while(m_gameUdpSocket.receive(packet, ip, port) == sf::UdpSocket::Status::Done)
+    {
+        // Treat the packet.
+        // Extract the network code.
+        unsigned int networkCode;
+        packet >> networkCode;
+
+        // Evaluate the network code.
+        switch(networkCode)
+        {
+            case NetworkValues::CONNECT:
+                {
+                    // Extract username and token.
+                    std::string username(""), token("");
+                    packet >> username >> token;
+
+                    // Check if username exists.
+                    if(m_accounts.find(username) != m_accounts.end())
+                    {
+                        // Ignore packet if already in game.
+                        if(m_accounts.at(username)->linkedClient->ingame)
+                            continue;
+
+                        // Check if the username and random token given are the same as ours.
+                        if(token == m_accounts.at(username)->token)
+                        {
+                            // OKAY
+                            sf::Packet answer;
+                            answer << NetworkValues::OKAY;
+                            m_accounts.at(username)->linkedClient->gameTcp->send(answer);
+
+                            // Affect the tcp socket to the client.
+                            m_accounts.at(username)->linkedClient->ip = ip;
+                            m_accounts.at(username)->linkedClient->udpPort = port;
+                            m_accounts.at(username)->linkedClient->gameUdpConnected = true;
+                            m_accounts.at(username)->linkedClient->ingame = true;
+
+                            // Reset timeout.
+                            m_accounts.at(username)->linkedClient->timeout = sf::Time::Zero;
+
+                            // Replie with the list of the players.
+                            answer.clear();
+
+                            answer << getNumberOfPlayers();
+                            for(auto accountEntry : m_accounts)
+                            {
+                                if(accountEntry.second->linkedClient != nullptr)
+                                    answer << accountEntry.second->linkedClient->username;
+                            }
+
+                            m_accounts.at(username)->linkedClient->gameTcp->send(answer);
+
+                            std::cout << "[GAME_SERVER] Game UDP connected from (" << ip.toString() << ") for " << username << "." << std::endl;
+                            std::cout << "[GAME_SERVER] " << username << " from (" << ip.toString() << ") is now in game !" << std::endl;
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        // Clear the packet.
+        packet.clear();
+    }
 }
