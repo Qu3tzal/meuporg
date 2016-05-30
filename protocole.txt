@@ -5,6 +5,7 @@ Protocole
 		Commence par 0 -> demande d'information
 		Commence par 1 -> inscription/connexion
 		Commence par 2 -> demande de données
+		Commence par 3 -> autre
 
 		VERSION								000
 		NUMBER_OF_PLAYERS					001
@@ -19,6 +20,9 @@ Protocole
 		CONNECTION_FAIL_UNKNOWN_ERROR		106
 		CONNECTION_FAIL_UNKNOWN_USER		107
 		CONNECTION_FAIL_ALREADY_CONNECTED	108
+		
+		KEEP_ALIVE							300
+		OKAY								301
 
 	Ports serveur
 	-------------
@@ -64,3 +68,12 @@ Protocole
 	Connexion au serveur de jeu
 	---------------------------
 		[client		TCP:22624]	CONNECT identifiant random_token
+		[serveur	TCP]		OKAY
+		[client		UDP:22624]	CONNECT identifiant random_token
+		[serveur	TCP]		OKAY
+		[serveur	TCP]		number_of_players [name name name...]
+
+	Keep-Alive
+	----------
+		[client		TCP:22625]	KEEP_ALIVE
+		[client		TCP:22624]	KEEP_ALIVE
