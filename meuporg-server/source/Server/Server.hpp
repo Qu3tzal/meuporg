@@ -71,6 +71,10 @@ class Server
         unsigned int getMaximumPlayersCapacity() const;
 
     protected:
+        // Updates the number of players.
+        void updateNumberOfPlayers();
+
+    protected:
         // Number of players connected and maximum number of players.
         unsigned int m_numberOfPlayers;
         unsigned int m_maximumPlayersCapacity;

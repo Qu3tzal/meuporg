@@ -70,6 +70,11 @@ void Server::login(sf::Time dt)
             if(client->timeout >= sf::seconds(5.f))
             {
                 std::cout << "[LOGIN_SERVER] '" << client->username << "' from (" << client->loginTcp.getRemoteAddress().toString() << ") timed out." << std::endl;
+
+                // Disconnect the account.
+                auto accountItr = m_accounts.find(client->username);
+                (*accountItr).second->linkedClient = nullptr;
+
                 delete client;
                 m_clients.erase(itr);
                 continue;
@@ -132,10 +137,28 @@ void Server::login(sf::Time dt)
                 else
                 {
                     /*
+                        -> check account->linkedClient == nullptr else CONNECTION_FAIL_ALREADY_CONNECTED
                         -> client->loggedIn = true;
                         -> send back CONNECTION_SUCCESS with a random token
-                        -> associate account with random token
+                        -> associate account with random token and client
                     */
+                    // Alias.
+                    Account* account = (*accountIterator).second;
+
+                    if(account->linkedClient != nullptr)
+                    {
+                        sf::Packet packet;
+                        packet << NetworkValues::CONNECTION_FAIL_ALREADY_CONNECTED;
+                        client->loginTcp.send(packet);
+
+                        std::cout << "[LOGIN_SERVER] '" << client->username << "' tried to log in multiple times." << std::endl;
+
+                        delete client;
+                        m_clients.erase(itr);
+                        continue;
+                    }
+
+                    // Mark the client as logged in.
                     client->loggedIn = true;
                     std::cout << "[LOGIN_SERVER] '" << client->username << "' logged in from (" << client->loginTcp.getRemoteAddress().toString() << ")." << std::endl;
 
@@ -148,8 +171,9 @@ void Server::login(sf::Time dt)
                     packet << NetworkValues::CONNECTION_SUCCESS << tokenStream.str();
                     client->loginTcp.send(packet);
 
-                    // Associate account with random token.
-                    (*accountIterator).second->token = tokenStream.str();
+                    // Associate account with random token and client.
+                    account->token = tokenStream.str();
+                    account->linkedClient = client;
                 }
             }
             else
@@ -167,7 +191,7 @@ void Server::receiveInput()
 
 void Server::update(sf::Time dt)
 {
-
+    updateNumberOfPlayers();
 }
 
 void Server::sendUpdate()
@@ -183,4 +207,17 @@ unsigned int Server::getNumberOfPlayers() const
 unsigned int Server::getMaximumPlayersCapacity() const
 {
     return m_maximumPlayersCapacity;
+}
+
+void Server::updateNumberOfPlayers()
+{
+    unsigned int numberOfPlayers(0);
+
+    // Count the number of accounts linked with a connected client.
+    std::for_each(m_accounts.begin(), m_accounts.end(), [&numberOfPlayers](std::pair<std::string, Account*> entry){
+                        if(entry.second->linkedClient == nullptr)
+                            numberOfPlayers++;
+                    });
+
+    m_numberOfPlayers = numberOfPlayers;
 }

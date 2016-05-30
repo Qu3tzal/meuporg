@@ -63,3 +63,5 @@ meuporg-server/meuporg-server.depend
 meuporg-server/meuporg-server.depend
 *.depend
 meuporg-client/bin/Debug/StessUltime.bat
+meuporg-server/meuporg-server.depend
+*.depend
