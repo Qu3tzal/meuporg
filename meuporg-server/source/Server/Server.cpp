@@ -16,7 +16,7 @@ Server::~Server()
 
 void Server::init()
 {
-
+    m_loginServer.init();
 }
 
 bool Server::isRunning() const
