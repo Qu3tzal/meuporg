@@ -20,7 +20,7 @@ int main()
     sf::Clock clientClock;
     sf::Time elapsed;
     sf::Time dt;
-    sf::Time time;
+    sf::Time fpsTimer;
 
     // Start the game loop
     while (window.isOpen())
@@ -36,7 +36,8 @@ int main()
         dt = clientClock.restart();
         elapsed += dt;
 
-        if(elapsed.asSeconds() > TickRate) {
+        if(elapsed.asSeconds() > TickRate)
+        {
             elapsed -= TickRateTime;
             game.update(TickRateTime);
             ticks++;
@@ -45,15 +46,15 @@ int main()
         game.render(window);
         frames++;
 
-        time += dt;
+        fpsTimer += dt;
 
-        if(time.asSeconds() > 1)
+        if(fpsTimer.asSeconds() > 1)
         {
             std::stringstream ss;
             ss << ticks << " " << frames;
             std::string strt, strf;
             ss >> strt >> strf;
-            time -=  sf::seconds(1.f);
+            fpsTimer -=  sf::seconds(1.f);
             window.setTitle(TITLE + " ticks : " + strt + " , FPS : " + strf);
             ticks = 0;
             frames = 0;

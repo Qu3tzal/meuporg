@@ -88,7 +88,7 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
     switch(answer)
     {
         case NetworkValues::ACCOUNT_CREATED_RECONNECT :
-
+            std::cout << "---------- Création du compte ----------" << std::endl;
             // Reconnect to the server.
             connectToServer(username, ip);
             break;
