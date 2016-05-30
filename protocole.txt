@@ -23,7 +23,13 @@ Protocole
 		CONNECTION_FAIL_WRONG_TOKEN			109
 		
 		DISCONNECT							200
-		
+		INPUT								201
+		ENTITY_REMOVED						202
+		PLAYER_CONNECTED					203
+		PLAYER_DISCONNECTED					204
+		RECEIVE_CHAT_MESSAGE				205
+		SEND_CHAT_MESSAGE					206
+
 		KEEP_ALIVE							300
 		OKAY								301
 
@@ -88,3 +94,31 @@ Protocole
 	Déconnexion
 	-----------
 		[client		TCP:22624]	DISCONNECT
+
+	Envoi des entrées utilisateur
+	-----------------------------
+		[client		UDP:22623]	INPUT token number input_data
+
+	Envoi des mises à jour
+	----------------------
+		[serveur	UDP]		UPDATE entity_id type name state position_vector velocity_vector
+
+	Notification du retrait d'une entité
+	------------------------------------
+		[serveur	TCP]		NOTIFY ENTITY_REMOVED entity_id
+
+	Notification de la connexion d'un joueur
+	----------------------------------------
+		[serveur	TCP]		NOTIFY PLAYER_CONNECTED username
+
+	Notification de la déconnexion d'un joueur
+	------------------------------------------
+		[serveur	TCP]		NOTIFY PLAYER_DISCONNECTED username
+
+	Notification d'un message du chat
+	---------------------------------
+		[serveur	TCP]		NOTIFY RECEIVE_CHAT_MESSAGE author_username message
+		
+	Envoi d'un message dans le chat
+	-------------------------------
+		[client		TCP:22624]	SEND_CHAT_MESSAGE message
