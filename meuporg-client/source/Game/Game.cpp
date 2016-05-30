@@ -116,7 +116,7 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
            std::cout << "Erreur inconnue" << std::endl;
             break;
         case NetworkValues::CONNECTION_FAIL_ALREADY_CONNECTED :
-            std::cout << "Vous êtes déjà connecté(e)" << std::endl;
+            std::cout << "Vous etes deja connecte(e)" << std::endl;
             break;
     }
 }
