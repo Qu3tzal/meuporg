@@ -36,10 +36,19 @@ class Game
         // Connects to the server.
         void connectToServer(std::string username, sf::IpAddress ip);
 
+        // Connects to the gameServer.
+        void connectToGameServer(std::string username, sf::IpAddress ip, std::string token);
+
     private:
         const unsigned int Version;
         sf::Time timeout;
         bool running;
+
+        sf::TcpSocket informationSocket;
+        sf::TcpSocket serverSocket;
+        sf::TcpSocket gameServerSocket;
+
+        sf::UdpSocket gameServerUdpSocket;
 };
 
 #endif // GAME_HPP_INCLUDED
