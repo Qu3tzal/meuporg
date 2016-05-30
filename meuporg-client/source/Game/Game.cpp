@@ -88,7 +88,6 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
     switch(answer)
     {
         case NetworkValues::ACCOUNT_CREATED_RECONNECT :
-            std::cout << "Compte cree !" << std::endl << "---------- Connexion en cours ----------" << std::endl;
 
             // Reconnect to the server.
             connectToServer(username, ip);
