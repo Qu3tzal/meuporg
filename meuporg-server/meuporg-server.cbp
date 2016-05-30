@@ -16,6 +16,8 @@
 					<Add directory="source/Server" />
 					<Add directory="source/InformationServer" />
 					<Add directory="source/RandomNumberGenerator" />
+					<Add directory="source/LoginServer" />
+					<Add directory="source" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-system-d" />
@@ -35,6 +37,8 @@
 					<Add directory="source/Server" />
 					<Add directory="source/InformationServer" />
 					<Add directory="source/RandomNumberGenerator" />
+					<Add directory="source/LoginServer" />
+					<Add directory="source" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -63,8 +67,11 @@
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/lib" />
 			<Add directory="C:/MinGW/lib" />
 		</Linker>
+		<Unit filename="source/Accounts.hpp" />
 		<Unit filename="source/InformationServer/InformationServer.cpp" />
 		<Unit filename="source/InformationServer/InformationServer.hpp" />
+		<Unit filename="source/LoginServer/LoginServer.cpp" />
+		<Unit filename="source/LoginServer/LoginServer.hpp" />
 		<Unit filename="source/NetworkValues.hpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.hpp" />
