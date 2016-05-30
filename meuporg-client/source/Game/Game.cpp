@@ -129,3 +129,10 @@ void Game::update(sf::Time dt)
 {
 
 }
+
+void Game::render(sf::RenderWindow& window)
+{
+    window.clear(sf::Color::White);
+
+    window.display();
+}

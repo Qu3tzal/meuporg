@@ -5,6 +5,7 @@
 #include <iostream>
 #include <../NetworkValues.hpp>
 #include <../PlayerInput.hpp>
+#include <SFML/Graphics.hpp>
 
 class Game
 {
@@ -27,6 +28,9 @@ class Game
 
         // Update
         void update(sf::Time dt);
+
+        // Render
+        void render(sf::RenderWindow& window);
 
     protected:
         // Connects to the server.
