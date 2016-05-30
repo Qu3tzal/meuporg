@@ -32,6 +32,8 @@ void LoginServer::login(sf::Time dt)
             sf::Packet packet;
             packet << NetworkValues::CONNECTION_FAIL_SERVER_FULL;
 
+            std::cout << "Someone tried to connect but we are full." << std::endl;
+
             tcpsocket.send(packet);
             tcpsocket.disconnect();
         }

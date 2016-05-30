@@ -45,6 +45,7 @@ void Server::login(sf::Time dt)
         // We still don't know to who belongs this socket.
         // We need to wait for the CONNECT packet.
         m_pendingTcpSockets.push_back(pendingSocket);
+        std::cout << "[GAME_SERVER] New pending socket from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ")." << std::endl;
     }
     else
     {
@@ -60,6 +61,8 @@ void Server::login(sf::Time dt)
         // Check timeout.
         if(pendingSocket->timeout >= sf::seconds(5.f))
         {
+            std::cout << "[GAME_SERVER] Pending socket from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ") timed out." << std::endl;
+
             delete pendingSocket;
             m_pendingTcpSockets.erase(pendingSocketItr);
             continue;
@@ -87,6 +90,8 @@ void Server::login(sf::Time dt)
                 answer << NetworkValues::CONNECTION_FAIL_UNKNOWN_USER;
                 pendingSocket->tcpSocket->send(answer);
 
+                std::cout << "[GAME_SERVER] CONNECTION_FAIL_UNKNOWN_USER from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ")." << std::endl;
+
                 continue;
             }
 
@@ -102,6 +107,8 @@ void Server::login(sf::Time dt)
                 m_accounts.at(username)->linkedClient->gameTcp = pendingSocket->tcpSocket;
                 m_accounts.at(username)->linkedClient->gameTcpConnected = true;
 
+                std::cout << "[GAME_SERVER] Game TCP connected from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ") for " << username << "." << std::endl;
+
                 // Delete the pending socket.
                 delete pendingSocket;
                 m_pendingTcpSockets.erase(pendingSocketItr);
@@ -113,6 +120,8 @@ void Server::login(sf::Time dt)
                 sf::Packet answer;
                 answer << NetworkValues::CONNECTION_FAIL_WRONG_TOKEN;
                 pendingSocket->tcpSocket->send(answer);
+
+                std::cout << "[GAME_SERVER] CONNECTION_FAIL_WRONG_TOKEN from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ")." << std::endl;
             }
         }
 
@@ -171,6 +180,8 @@ void Server::receiveInput()
                             }
 
                             m_accounts.at(username)->linkedClient->gameTcp->send(answer);
+
+                            std::cout << "[GAME_SERVER] Game UDP connected from (" << ip.toString() << ") for " << username << "." << std::endl;
                         }
                     }
                 }
