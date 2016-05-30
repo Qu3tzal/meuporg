@@ -82,11 +82,13 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
 
     unsigned int answer;
     packet >> answer;
-    std::cout << answer;
+    std::cout << answer << std::endl;
     switch(answer)
     {
         case NetworkValues::ACCOUNT_CREATED_RECONNECT :
             std::cout << "---------- Creation du compte ----------" << std::endl;
+            serverSocket.disconnect();
+
             // Reconnect to the server.
             connectToServer(username, ip);
             break;
