@@ -123,7 +123,7 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
 
 void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::string token)
 {
-    std::cout << "Connection au serveur de jeu" << std::endl;
+    std::cout << "---------- Attente de reponse du serveur ----------" << std::endl;
     sf::TcpSocket::Status status = gameServerSocket.connect(ip, 22624, sf::seconds(5.f));
 
     if (status != sf::Socket::Done)
@@ -132,7 +132,7 @@ void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::stri
         running = false;
         return;
     }
-
+    std::cout << "---------- Connexion en cours ----------" << std::endl;
     sf::Packet packet;
     packet << NetworkValues::CONNECT << username << token;
 
@@ -146,9 +146,16 @@ void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::stri
     if(answer == NetworkValues::OKAY)
     {
         packet.clear();
-        packet << username << token;
+        packet << NetworkValues::CONNECT <<username << token;
 
-        gameServerUdpSocket.send(packet, ip, 22623);
+        sf::UdpSocket::Status status;
+        gameServerUdpSocket.setBlocking(false);
+
+        while(status != sf::Socket::Done)
+        {
+             status = gameServerUdpSocket.send(packet, ip, 22623);
+        }
+
         packet.clear();
         gameServerSocket.receive(packet);
 
@@ -156,6 +163,7 @@ void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::stri
 
         if(answer == NetworkValues::OKAY)
         {
+            std::cout << "---------- Connexion reussi ----------" << std::endl;
             packet.clear();
             gameServerSocket.receive(packet);
             int playerNumber = 0;
@@ -165,7 +173,9 @@ void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::stri
             std::cout << "Liste des joueurs : " << std::endl;
             for(int i = 0 ; i < playerNumber ; i++)
             {
-                std::cout << "\t" << "[" << i << "] " << packet;
+                std::string playerName = "";
+                packet >> playerName;
+                std::cout << "\t" << "[" << i << "] " << playerName << std::endl;
                 //std::string playerName = "";
                 //packet >> playerName;
                 //listOfPlayer.push_back(playerName);
@@ -175,11 +185,13 @@ void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::stri
     else if(answer == NetworkValues::CONNECTION_FAIL_WRONG_TOKEN)
     {
         std::cout << "Token invalide " << std::endl;
+        gameServerSocket.disconnect();
         connectToGameServer(username, ip, token);
     }
     else if(answer == NetworkValues::CONNECTION_FAIL_UNKNOWN_USER)
     {
         std::cout << "Nom inconnu" << std::endl;
+        gameServerSocket.disconnect();
         connectToGameServer(username, ip, token);
     }
 
