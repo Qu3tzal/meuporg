@@ -82,7 +82,7 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
 
     unsigned int answer;
     packet >> answer;
-
+    std::cout << answer;
     switch(answer)
     {
         case NetworkValues::ACCOUNT_CREATED_RECONNECT :
