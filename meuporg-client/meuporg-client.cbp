@@ -63,6 +63,8 @@
 		<Unit filename="source/Game/Game.hpp" />
 		<Unit filename="source/NetworkValues.hpp" />
 		<Unit filename="source/PlayerInput.hpp" />
+		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />
+		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.hpp" />
 		<Unit filename="source/main.cpp" />
 		<Extensions>
 			<code_completion />
