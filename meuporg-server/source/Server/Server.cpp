@@ -113,7 +113,7 @@ void Server::login(sf::Time dt)
                 // Reset timeout.
                 m_accounts.at(username)->linkedClient->timeout = sf::Time::Zero;
 
-                std::cout << "[GAME_SERVER] Game TCP connected from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ") for " << username << "." << std::endl;
+                std::cout << "[GAME_SERVER] Game TCP connected from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ") for '" << username << "'." << std::endl;
 
                 // Delete the pending socket.
                 delete pendingSocket;
@@ -188,7 +188,7 @@ void Server::disconnectPlayer(std::string username, std::string reason)
 
         m_accounts.at(username)->linkedClient = nullptr;
 
-        std::cout << "[GAME_SERVER] " << username << " has left the game (" << reason << ")." << std::endl;
+        std::cout << "[GAME_SERVER] '" << username << "' has left the game (" << reason << ")." << std::endl;
 
         // Erase the client.
         delete client;
@@ -228,7 +228,7 @@ void Server::updateTimeoutPlayers(sf::Time dt)
             client->timeout += dt;
 
             // Check the timeout.
-            if(client->timeout >= sf::seconds(5.f))
+            if(client->timeout >= sf::seconds(5000.f))
             {
                 disconnectPlayer(client->username, "timed out");
                 continue;
@@ -351,8 +351,8 @@ void Server::receiveInputThroughUDP()
 
                             m_accounts.at(username)->linkedClient->gameTcp->send(answer);
 
-                            std::cout << "[GAME_SERVER] Game UDP connected from (" << ip.toString() << ") for " << username << "." << std::endl;
-                            std::cout << "[GAME_SERVER] " << username << " from (" << ip.toString() << ") is now in game !" << std::endl;
+                            std::cout << "[GAME_SERVER] Game UDP connected from (" << ip.toString() << ") for '" << username << "'." << std::endl;
+                            std::cout << "[GAME_SERVER] '" << username << "' from (" << ip.toString() << ") is now in game !" << std::endl;
                         }
                     }
                 }
