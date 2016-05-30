@@ -76,10 +76,6 @@ Protocole
 		
 		[client		UDP:22623]	CONNECT identifiant random_token
 		[serveur	TCP]		OKAY
-		ou
-		[serveur	TCP]		CONNECTION_FAIL_WRONG_TOKEN
-		ou
-		[serveur	TCP]		CONNECTION_FAIL_UNKNOWN_USER
 		
 		[serveur	TCP]		number_of_players [name name name...]
 
