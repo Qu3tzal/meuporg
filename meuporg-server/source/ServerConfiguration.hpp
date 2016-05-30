@@ -11,6 +11,8 @@ namespace ServerConfiguration
 
     const unsigned int InformationPort(22626);
     const unsigned int LoginPort(22625);
+    const unsigned int GameTCPPort(22624);
+    const unsigned int GameUDPPort(22623);
 } // namespace ServerConfiguration.
 
 #endif // SERVERCONFIGURATION_HPP_INCLUDED

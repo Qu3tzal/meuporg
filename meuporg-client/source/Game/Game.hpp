@@ -22,12 +22,15 @@ class Game
         // Initialisation
         void init();
 
-        // Connect to the server
+        // Establish the communication with the server.
         void serverConnection();
+
         // Update
         void update(sf::Time dt);
 
     protected:
+        // Connects to the server.
+        void connectToServer(std::string username, sf::IpAddress ip);
 
     private:
         const unsigned int Version;
