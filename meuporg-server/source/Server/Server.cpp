@@ -215,7 +215,7 @@ void Server::updateNumberOfPlayers()
 
     // Count the number of accounts linked with a connected client.
     std::for_each(m_accounts.begin(), m_accounts.end(), [&numberOfPlayers](std::pair<std::string, Account*> entry){
-                        if(entry.second->linkedClient == nullptr)
+                        if(entry.second->linkedClient != nullptr)
                             numberOfPlayers++;
                     });
 
