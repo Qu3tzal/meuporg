@@ -56,7 +56,7 @@ void InformationServer::update(sf::Time dt)
         client->timeout += dt;
 
         // If the client timed out, we delete it.
-        if(client->timeout >= sf::seconds(5.f))
+        if(client->timeout >= ServerConfiguration::InformationServerTimeout)
         {
             std::cout << "[INFORMATION_SERVER] Client timed out (" << client->tcpsocket.getRemoteAddress().toString() << ")." << std::endl;
             delete client;

@@ -68,7 +68,7 @@ void LoginServer::login(sf::Time dt)
             client->timeout += dt;
 
             // Check timeout.
-            if(client->timeout >= sf::seconds(5.f))
+            if(client->timeout >= ServerConfiguration::LoginServerTimeout)
             {
                 std::cout << "[LOGIN_SERVER] '" << client->username << "' from (" << client->loginTcp.getRemoteAddress().toString() << ") timed out." << std::endl;
 

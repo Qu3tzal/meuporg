@@ -9,6 +9,11 @@ namespace ServerConfiguration
     const float TickPerSec(60.f);
     const sf::Time Ticktime = sf::seconds(1.f / TickPerSec);
 
+    const sf::Time InformationServerTimeout = sf::seconds(5.f);
+    const sf::Time LoginServerTimeout = sf::seconds(5.f);
+    const sf::Time PendingSocketTimeout = sf::seconds(5.f);
+    const sf::Time GameServerTimeout = sf::seconds(5.f);
+
     const unsigned int InformationPort(22626);
     const unsigned int LoginPort(22625);
     const unsigned int GameTCPPort(22624);

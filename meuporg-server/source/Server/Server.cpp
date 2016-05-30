@@ -59,7 +59,7 @@ void Server::login(sf::Time dt)
         pendingSocket->timeout += dt;
 
         // Check timeout.
-        if(pendingSocket->timeout >= sf::seconds(5.f))
+        if(pendingSocket->timeout >= ServerConfiguration::PendingSocketTimeout)
         {
             std::cout << "[GAME_SERVER] Pending socket from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ") timed out." << std::endl;
 
@@ -228,7 +228,7 @@ void Server::updateTimeoutPlayers(sf::Time dt)
             client->timeout += dt;
 
             // Check the timeout.
-            if(client->timeout >= sf::seconds(5000.f))
+            if(client->timeout >= ServerConfiguration::GameServerTimeout)
             {
                 disconnectPlayer(client->username, "timed out");
                 continue;
