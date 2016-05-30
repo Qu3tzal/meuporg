@@ -163,7 +163,7 @@ void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::stri
             std::cout << "Liste des joueurs : " << std::endl;
             for(int i = 0 ; i < playerNumber ; i++)
             {
-                std::cout << "\t" << i << packet;
+                std::cout << "\t" << "[" << i << "] " << packet;
                 //std::string playerName = "";
                 //packet >> playerName;
                 //listOfPlayer.push_back(playerName);
