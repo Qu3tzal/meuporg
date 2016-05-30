@@ -39,15 +39,25 @@ class Game
         // Connects to the gameServer.
         void connectToGameServer(std::string username, sf::IpAddress ip, std::string token);
 
+        // Disconnect to the serveur
+        void disconnectToGameServer();
+
     private:
+        // The version of the client
         const unsigned int Version;
+
+        // Timer for the timeout
         sf::Time timeout;
+
+        // Client is running ?
         bool running;
 
+        // All tcp Socket
         sf::TcpSocket informationSocket;
         sf::TcpSocket serverSocket;
         sf::TcpSocket gameServerSocket;
 
+        // all udp Socket
         sf::UdpSocket gameServerUdpSocket;
 };
 

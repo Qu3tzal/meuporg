@@ -8,6 +8,7 @@ Game::Game() : Version(001), running(true)
 Game::~Game()
 {
     //dtor
+    disconnectToGameServer();
 }
 
 void Game::init()
@@ -195,6 +196,13 @@ void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::stri
         connectToGameServer(username, ip, token);
     }
 
+}
+
+void Game::disconnectToGameServer()
+{
+    sf::Packet packet;
+    packet << NetworkValues::DISCONNECT;
+    gameServerSocket.send(packet);
 }
 
 bool Game::isRunning() const
