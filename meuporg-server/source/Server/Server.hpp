@@ -50,6 +50,9 @@ class Server
         // Return the maximum players capacity of the server.
         unsigned int getMaximumPlayersCapacity() const;
 
+        // Returns the list of clients.
+        std::vector<Client*>* getClients();
+
         // Returns the list of accounts.
         std::map<std::string, Account*>* getAccounts();
 
@@ -61,6 +64,9 @@ class Server
         // Number of players connected and maximum number of players.
         unsigned int m_numberOfPlayers;
         unsigned int m_maximumPlayersCapacity;
+
+        // List of the clients.
+        std::vector<Client*> m_clients;
 
         // List of the accounts (indexed by the username).
         std::map<std::string, Account*> m_accounts;

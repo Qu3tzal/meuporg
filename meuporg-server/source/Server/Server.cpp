@@ -54,6 +54,11 @@ unsigned int Server::getMaximumPlayersCapacity() const
     return m_maximumPlayersCapacity;
 }
 
+std::vector<Client*>* Server::getClients()
+{
+    return &m_clients;
+}
+
 std::map<std::string, Account*>* Server::getAccounts()
 {
     return &m_accounts;
