@@ -7,9 +7,11 @@
 
 #include <SFML/Network.hpp>
 
-#include "../ServerConfiguration.hpp"
+#include "../Accounts.hpp"
 #include "../NetworkValues.hpp"
+#include "../ServerConfiguration.hpp"
 #include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
+#include "../LoginServer/LoginServer.hpp"
 
 /*
     Server class.
@@ -17,28 +19,6 @@
 */
 class Server
 {
-    public:
-        // Client structure.
-        struct Client
-        {
-            sf::TcpSocket loginTcp;
-            sf::TcpSocket gameTcp;
-            sf::UdpSocket gameUdp;
-            sf::Time timeout = sf::Time::Zero;
-
-            bool loggedIn = false;
-
-            unsigned int gameVersion = 0;
-            std::string username = "";
-        };
-
-        // Account structure.
-        struct Account
-        {
-            Client* linkedClient = nullptr;
-            std::string token = "";
-        };
-
     public:
         // Constructor.
         Server();
@@ -70,6 +50,9 @@ class Server
         // Return the maximum players capacity of the server.
         unsigned int getMaximumPlayersCapacity() const;
 
+        // Returns the list of accounts.
+        std::map<std::string, Account*>* getAccounts();
+
     protected:
         // Updates the number of players.
         void updateNumberOfPlayers();
@@ -79,17 +62,11 @@ class Server
         unsigned int m_numberOfPlayers;
         unsigned int m_maximumPlayersCapacity;
 
-        // Login TCP listener.
-        sf::TcpListener m_loginListener;
-
-        // List of the clients.
-        std::vector<Client*> m_clients;
-
         // List of the accounts (indexed by the username).
         std::map<std::string, Account*> m_accounts;
 
-        // Random number generator.
-        RandomNumberGenerator m_rng;
+        // The login server.
+        LoginServer m_loginServer;
 };
 
 #endif // SERVER_HPP_INCLUDED
