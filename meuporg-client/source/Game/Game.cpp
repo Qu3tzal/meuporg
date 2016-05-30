@@ -86,7 +86,7 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
     switch(answer)
     {
         case NetworkValues::ACCOUNT_CREATED_RECONNECT :
-            std::cout << "---------- Création du compte ----------" << std::endl;
+            std::cout << "---------- Creation du compte ----------" << std::endl;
             // Reconnect to the server.
             connectToServer(username, ip);
             break;
@@ -168,16 +168,6 @@ void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::stri
                 //packet >> playerName;
                 //listOfPlayer.push_back(playerName);
             }
-        }
-        else if(answer == NetworkValues::CONNECTION_FAIL_WRONG_TOKEN)
-        {
-            std::cout << "Token invalide " << std::endl;
-            connectToGameServer(username, ip, token);
-        }
-        else if(answer == NetworkValues::CONNECTION_FAIL_UNKNOWN_USER)
-        {
-            std::cout << "Nom inconnu" << std::endl;
-            connectToGameServer(username, ip, token);
         }
     }
     else if(answer == NetworkValues::CONNECTION_FAIL_WRONG_TOKEN)
