@@ -34,6 +34,9 @@ class Game
         // Render
         void render(sf::RenderWindow& window);
 
+        // Event handle
+        void EventHandle(sf::Event event);
+
     protected:
         // Connects to the server.
         void connectToServer(std::string username, sf::IpAddress ip);
