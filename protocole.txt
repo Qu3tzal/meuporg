@@ -98,7 +98,7 @@ Protocole
 
 	Envoi des entrées utilisateur
 	-----------------------------
-		[client		UDP:22623]	INPUT token number input_data
+		[client		UDP:22623]	INPUT username token number input_data
 
 	Envoi des mises à jour
 	----------------------
