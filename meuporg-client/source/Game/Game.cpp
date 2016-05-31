@@ -255,6 +255,10 @@ void Game::notificationPacket(sf::Packet* packet)
         std::string message("");
         std::string username("");
         std::string text("");
+
+        *packet >> username;
+        *packet >> message;
+
         message  = "[" + username + "] " + text;
         chat.write(message);
         break;
