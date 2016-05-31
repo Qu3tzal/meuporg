@@ -1,20 +1,21 @@
 #include "GUITextInputPool.hpp"
 
-GUITextInputPool::GUITextInputPool()
-    , m_focusedTextName("")
+GUITextInputPool::GUITextInputPool() :
+    m_focusedTextName("")
     , m_useCustomView(false)
 {
+    this->window = window;
 }
 
 GUITextInputPool::~GUITextInputPool()
 {
 }
 
-void GUITextInputPool::addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor)
+void GUITextInputPool::addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, FontLoader::FontId fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor)
 {
     sf::Text text, placeholderText;
-    text.setFont(m_context.fonts->get(fontId));
-    placeholderText.setFont(m_context.fonts->get(fontId));
+    text.setFont(fonts.get(fontId));
+    placeholderText.setFont(fonts.get(fontId));
 
     text.setCharacterSize(charSize);
     placeholderText.setCharacterSize(charSize);
@@ -70,11 +71,11 @@ void GUITextInputPool::update()
         sf::FloatRect hitbox = itr->second.shape.getGlobalBounds();
         hitbox.left += getPosition().x;
         hitbox.top += getPosition().y;
-        sf::Vector2i rawMousePosition = sf::Mouse::getPosition(*m_context.window);
-        sf::Vector2f mousePosition = m_context.window->mapPixelToCoords(rawMousePosition);
+        sf::Vector2i rawMousePosition = sf::Mouse::getPosition(*window);
+        sf::Vector2f mousePosition = window->mapPixelToCoords(rawMousePosition);
 
         if(m_useCustomView)
-            mousePosition = m_context.window->mapPixelToCoords(rawMousePosition, m_customView);
+            mousePosition = window->mapPixelToCoords(rawMousePosition, m_customView);
 
         if(hitbox.contains(mousePosition) || itr->first == m_focusedTextName)
             itr->second.shape.setOutlineColor(itr->second.focusedBorderLineColor);
@@ -97,11 +98,11 @@ void GUITextInputPool::handleEvent(sf::Event event)
             hitbox.top += getPosition().y;
 
             // Execute callback if the TextInput is clicked.
-            sf::Vector2i rawMousePosition = sf::Mouse::getPosition(*m_context.window);
-            sf::Vector2f mousePosition = m_context.window->mapPixelToCoords(rawMousePosition);
+            sf::Vector2i rawMousePosition = sf::Mouse::getPosition(*window);
+            sf::Vector2f mousePosition = window->mapPixelToCoords(rawMousePosition);
 
             if(m_useCustomView)
-                mousePosition = m_context.window->mapPixelToCoords(rawMousePosition, m_customView);
+                mousePosition = window->mapPixelToCoords(rawMousePosition, m_customView);
 
             if(hitbox.contains(mousePosition))
                 m_focusedTextName = b_pair.first;

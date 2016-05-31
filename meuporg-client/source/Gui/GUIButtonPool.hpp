@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GraphicsUtils.hpp"
-
+#include "FontLoader.hpp"
 /**
     Button struct.
     Stores the data relative to a button.
@@ -29,13 +29,13 @@ class GUIButtonPool : public sf::Drawable, public sf::Transformable
 {
     public:
         // Ctor.
-        GUIButtonPool();
+        GUIButtonPool(sf::RenderWindow* window);
 
         // Dtor.
         virtual ~GUIButtonPool();
 
         // Adds a button with the given parameters.
-        void addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn);
+        void addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, FontLoader::FontId fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn);
 
 		// Adds this button.
 		void addButton(std::string name, Button button);
@@ -65,6 +65,10 @@ class GUIButtonPool : public sf::Drawable, public sf::Transformable
 
         // Custom view flag.
         bool m_useCustomView;
+
+        sf::RenderWindow* window;
+
+        FontLoader fonts;
 };
 
 #endif // GUIBUTTONPOOL_HPP

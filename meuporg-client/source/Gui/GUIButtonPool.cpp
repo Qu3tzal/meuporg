@@ -1,18 +1,19 @@
 #include "GUIButtonPool.hpp"
 
-GUIButtonPool::GUIButtonPool()
-    , m_useCustomView(false)
+GUIButtonPool::GUIButtonPool(sf::RenderWindow* window) :
+    m_useCustomView(false)
 {
+    this->window = window;
 }
 
 GUIButtonPool::~GUIButtonPool()
 {
 }
 
-void GUIButtonPool::addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn)
+void GUIButtonPool::addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, FontLoader::FontId fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn)
 {
     sf::Text text;
-    text.setFont(m_context.fonts->get(fontId));
+    text.setFont(fonts.get(fontId));
     text.setCharacterSize(charSize);
     text.setString(textString);
     centerOrigin(text);
@@ -52,12 +53,12 @@ void GUIButtonPool::update()
         sf::FloatRect hitbox = itr->second.shape.getGlobalBounds();
         hitbox.left += getPosition().x;
         hitbox.top += getPosition().y;
-        sf::Vector2i rawMousePosition = sf::Mouse::getPosition(*m_context.window);
+        sf::Vector2i rawMousePosition = sf::Mouse::getPosition(*window);
 
-        sf::Vector2f mousePosition = m_context.window->mapPixelToCoords(rawMousePosition);
+        sf::Vector2f mousePosition = window->mapPixelToCoords(rawMousePosition);
 
         if(m_useCustomView)
-            mousePosition = m_context.window->mapPixelToCoords(rawMousePosition, m_customView);
+            mousePosition = window->mapPixelToCoords(rawMousePosition, m_customView);
 
         if(hitbox.contains(mousePosition))
             itr->second.shape.setFillColor(itr->second.hoverColor);

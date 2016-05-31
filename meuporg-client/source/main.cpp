@@ -1,8 +1,10 @@
+
 #include <iostream>
 #include <sstream>
 #include <SFML/Network.hpp>
 #include <Game.hpp>
 #include <SFML/Graphics.hpp>
+
 int main()
 {
     const float TickRate = 1/60.f;
@@ -44,7 +46,7 @@ int main()
             ticks++;
         }
 
-        game.render(window);
+        game.render(&window);
         frames++;
 
         fpsTimer += dt;

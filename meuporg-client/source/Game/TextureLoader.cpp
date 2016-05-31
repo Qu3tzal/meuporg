@@ -12,7 +12,7 @@ TextureLoader::~TextureLoader()
     //dtor
 }
 
-sf::Texture TextureLoader::getTexture(TextureId id) const
+sf::Texture TextureLoader::get(TextureId id) const
 {
     return textures.at(id);
 }

@@ -14,7 +14,7 @@ class TextureLoader
 
         enum TextureId {SAITAMA, SPARTIATE};
 
-        sf::Texture getTexture(TextureId id) const;
+        sf::Texture get(TextureId id) const;
 
         sf::Texture load(std::string path);
 

@@ -33,17 +33,17 @@ class Game
         void update(sf::Time dt);
 
         // Render
-        void render(sf::RenderWindow& window);
+        void render(sf::RenderWindow* window);
 
         // Event handle
         void EventHandle(sf::Event event);
 
     protected:
         // Connects to the server.
-        void connectToServer(std::string username);
+        void connectToServer();
 
         // Connects to the gameServer.
-        void connectToGameServer(std::string username);
+        void connectToGameServer();
 
         // Disconnect to the serveur
         void disconnectToGameServer();
@@ -89,6 +89,9 @@ class Game
 
         // TextureLoader
         TextureLoader textures;
+
+        // Username
+        std::string username;
 };
 
 #endif // GAME_HPP_INCLUDED

@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GraphicsUtils.hpp"
+#include "FontLoader.hpp"
 
 /**
     TextInput struct.
@@ -37,7 +38,7 @@ class GUITextInputPool : public sf::Drawable, public sf::Transformable
         virtual ~GUITextInputPool();
 
         // Adds a text input with the given parameters.
-        void addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor);
+        void addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, FontLoader::FontId fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor);
 
 		// Adds this text input.
 		void addTextInput(std::string name, TextInput textInput);
@@ -74,5 +75,9 @@ class GUITextInputPool : public sf::Drawable, public sf::Transformable
 
         // Custom view flag.
         bool m_useCustomView;
+
+        FontLoader fonts;
+
+        sf::RenderWindow* window;
 };
 #endif // GUITEXTINPUTPOOL_HPP
