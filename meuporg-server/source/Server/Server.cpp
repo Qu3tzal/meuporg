@@ -262,6 +262,9 @@ void Server::receiveInputThroughTCP()
             sf::Packet packet;
             while(client->gameTcp->receive(packet) == sf::TcpSocket::Status::Done)
             {
+                // Reset timeout.
+                client->timeout = sf::Time::Zero;
+
                 // Extract network code.
                 unsigned int networkCode;
                 packet >> networkCode;
@@ -394,6 +397,9 @@ void Server::receiveInputThroughUDP()
                         {
                             // Alias.
                             Client* client = m_accounts.at(username)->linkedClient;
+
+                            // Reset timeout.
+                            m_accounts.at(username)->linkedClient->timeout = sf::Time::Zero;
 
                             // Extract udp packet id.
                             unsigned long long udpPacketId(0);
