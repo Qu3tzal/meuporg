@@ -272,6 +272,8 @@ void Game::notificationPacket(sf::Packet* packet)
                 *packet >> username;
 
                 message = "[" + username + "] Viens de se connecter !";
+
+                chat.write(message);
             }
             break;
         case NetworkValues::PLAYER_DISCONNECTED :
@@ -282,6 +284,8 @@ void Game::notificationPacket(sf::Packet* packet)
                 *packet >> username;
 
                 message = "[" + username + "] Viens de se deconnecter !";
+
+                chat.write(message);
             }
             break;
         default:
