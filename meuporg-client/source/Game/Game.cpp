@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game() : Version(001), running(true)
+Game::Game() : Version(001), running(true), token(""), udpPacketNumber(0)
 {
     //ctor
 }
@@ -18,7 +18,6 @@ void Game::init()
 
 void Game::serverConnection()
 {
-    sf::IpAddress ip;
     std::string username;
 
     std::cout << "Rentrez l'ip du serveur : ";
@@ -58,10 +57,10 @@ void Game::serverConnection()
 
     std::cout << "Server version : " <<  serverVersion << std::endl <<" Number of player : " << playerNumber << "/" <<  maximumPlayer << std::endl;
 
-    connectToServer(username, ip);
+    connectToServer(username);
 }
 
-void Game::connectToServer(std::string username, sf::IpAddress ip)
+void Game::connectToServer(std::string username)
 {
     sf::Packet packet;
     sf::TcpSocket::Status status = serverSocket.connect(ip, 22625, sf::seconds(5.f));
@@ -90,17 +89,16 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
             serverSocket.disconnect();
 
             // Reconnect to the server.
-            connectToServer(username, ip);
+            connectToServer(username);
             break;
         case NetworkValues::CONNECTION_SUCCESS :
             {
                 std::cout << "Connexion reussie !" << std::endl;
 
-                std::string token("");
                 packet >> token;
 
                 std::cout << "[DEBUG] Token: " << token << std::endl;
-                connectToGameServer(username, ip, token);
+                connectToGameServer(username);
             }
             break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_USER :
@@ -121,7 +119,7 @@ void Game::connectToServer(std::string username, sf::IpAddress ip)
     }
 }
 
-void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::string token)
+void Game::connectToGameServer(std::string username)
 {
     std::cout << "---------- Attente de reponse du serveur ----------" << std::endl;
     sf::TcpSocket::Status status = gameServerSocket.connect(ip, 22624, sf::seconds(5.f));
@@ -186,13 +184,13 @@ void Game::connectToGameServer(std::string username, sf::IpAddress ip, std::stri
     {
         std::cout << "Token invalide " << std::endl;
         gameServerSocket.disconnect();
-        connectToGameServer(username, ip, token);
+        connectToGameServer(username);
     }
     else if(answer == NetworkValues::CONNECTION_FAIL_UNKNOWN_USER)
     {
         std::cout << "Nom inconnu" << std::endl;
         gameServerSocket.disconnect();
-        connectToGameServer(username, ip, token);
+        connectToGameServer(username);
     }
 
 }
@@ -211,12 +209,36 @@ bool Game::isRunning() const
 
 void Game::update(sf::Time dt)
 {
-
+    testInput();
+    sendInput();
+    receivePacket();
 }
 
 void Game::EventHandle(sf::Event event)
 {
 
+}
+
+void Game::receivePacket()
+{
+
+}
+
+void Game::sendInput()
+{
+    sf::Packet packet;
+    packet << NetworkValues::INPUT << token << udpPacketNumber << playerInput.MoveDown << playerInput.MoveLeft << playerInput.MoveRight << playerInput.MoveUp;
+
+    gameServerUdpSocket.send(packet, ip, 22623);
+    udpPacketNumber++;
+}
+
+void Game::testInput()
+{
+    playerInput.MoveUp = sf::Keyboard.isKeyPressed(sf::Keyboard::Z);
+    playerInput.MoveDown = sf::Keyboard.isKeyPressed(sf::Keyboard::S);
+    playerInput.MoveLeft = sf::Keyboard.isKeyPressed(sf::Keyboard::Q);
+    playerInput.MoveRight = sf::Keyboard.isKeyPressed(sf::Keyboard::D);
 }
 
 void Game::render(sf::RenderWindow& window)

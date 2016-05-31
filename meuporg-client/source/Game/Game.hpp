@@ -39,13 +39,22 @@ class Game
 
     protected:
         // Connects to the server.
-        void connectToServer(std::string username, sf::IpAddress ip);
+        void connectToServer(std::string username);
 
         // Connects to the gameServer.
-        void connectToGameServer(std::string username, sf::IpAddress ip, std::string token);
+        void connectToGameServer(std::string username);
 
         // Disconnect to the serveur
         void disconnectToGameServer();
+
+        // Receive all packet of the server
+        void receivePacket();
+
+        // Send all input state
+        void sendInput();
+
+        // Test all inputs
+        void testInput();
 
     private:
         // The version of the client
@@ -57,6 +66,12 @@ class Game
         // Client is running ?
         bool running;
 
+        // Token
+        std::string token;
+
+        // Udp packet nulber
+        unsigned long long udpPacketNumber;
+
         // All tcp Socket
         sf::TcpSocket informationSocket;
         sf::TcpSocket serverSocket;
@@ -64,6 +79,12 @@ class Game
 
         // all udp Socket
         sf::UdpSocket gameServerUdpSocket;
+
+        // PlayerInput
+        PlayerInput playerInput;
+
+        // ip of the seveur
+        sf::IpAddress ip;
 };
 
 #endif // GAME_HPP_INCLUDED

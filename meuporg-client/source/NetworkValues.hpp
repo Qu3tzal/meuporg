@@ -5,7 +5,7 @@
 
 namespace NetworkValues
 {
-    const unsigned int VERSION(000);
+    const unsigned int  VERSION(000);
    	const unsigned int	NUMBER_OF_PLAYERS(001);
 	const unsigned int	MAP_NAME(002);
 
@@ -20,7 +20,14 @@ namespace NetworkValues
 	const unsigned int	CONNECTION_FAIL_ALREADY_CONNECTED(108);
 	const unsigned int  CONNECTION_FAIL_WRONG_TOKEN(109);
 
-    const unsigned int DISCONNECT(200);
+    const unsigned int  DISCONNECT(200);
+    const unsigned int  NOTIFY(201);
+	const unsigned int	INPUT(202);
+	const unsigned int	ENTITY_REMOVED(203);
+	const unsigned int	PLAYER_CONNECTED(204);
+	const unsigned int	PLAYER_DISCONNECTED(205);
+	const unsigned int	RECEIVE_CHAT_MESSAGE(206);
+	const unsigned int	SEND_CHAT_MESSAGE(207);
 
 	const unsigned int	KEEP_ALIVE(300);
 	const unsigned int	OKAY(301);
