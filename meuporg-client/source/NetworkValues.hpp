@@ -20,8 +20,8 @@ namespace NetworkValues
 	const unsigned int	CONNECTION_FAIL_ALREADY_CONNECTED(108);
 	const unsigned int  CONNECTION_FAIL_WRONG_TOKEN(109);
 
-    const unsigned int  DISCONNECT(200);
-    const unsigned int  NOTIFY(201);
+    const unsigned int  NOTIFY(200);
+    const unsigned int  DISCONNECT(201);
 	const unsigned int	INPUT(202);
 	const unsigned int	ENTITY_REMOVED(203);
 	const unsigned int	PLAYER_CONNECTED(204);
