@@ -275,8 +275,19 @@ void Server::receiveInputThroughTCP()
                         // Tag we deleted a client.
                         deletedClient = true;
                         break;
+                    case NetworkValues::SEND_CHAT_MESSAGE:
+                        {
+                            // Extract message.
+                            std::string message("");
+                            packet >> message;
+
+                            std::cout << "[CHAT] " << client->username << ": " << message << std::endl;
+
+                            // Send chat message to everyone.
+                            sendChatMessage(client->username, message);
+                        }
+                        break;
                     default:
-                        std::cout << "Pnice" << std::endl;
                         break;
                 }
             }
@@ -363,5 +374,21 @@ void Server::receiveInputThroughUDP()
 
         // Clear the packet.
         packet.clear();
+    }
+}
+
+void Server::sendChatMessage(std::string username, std::string message)
+{
+    // Record the message.
+    m_chatLog.push_back(std::pair<std::string, std::string>(username, message));
+
+    // Prepare the packet.
+    sf::Packet packet;
+    packet << NetworkValues::NOTIFY << NetworkValues::RECEIVE_CHAT_MESSAGE << username << message;
+
+    // Send the message to all the in-game clients.
+    for(Client* client : m_clients)
+    {
+        client->gameTcp->send(packet);
     }
 }

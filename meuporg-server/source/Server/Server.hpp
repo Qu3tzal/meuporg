@@ -83,6 +83,9 @@ class Server
         // Receives the input by the UDP socket.
         void receiveInputThroughUDP();
 
+        // Send the chat message.
+        void sendChatMessage(std::string username, std::string message);
+
     protected:
         // Number of players connected and maximum number of players.
         unsigned int m_numberOfPlayers;
@@ -105,6 +108,9 @@ class Server
 
         // Pending TCP connections.
         std::vector<PendingSocket*> m_pendingTcpSockets;
+
+        // Chat log : (username, message).
+        std::vector<std::pair<std::string, std::string>> m_chatLog;
 };
 
 #endif // SERVER_HPP_INCLUDED
