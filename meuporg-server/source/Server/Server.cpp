@@ -146,19 +146,6 @@ void Server::update(sf::Time dt)
 {
     updateNumberOfPlayers();
     updateTimeoutPlayers(dt);
-
-    /// [DEBUG]
-    for(Client* client : m_clients)
-    {
-        if(client->ingame)
-        {
-            std::cout << "[INPUT] " << client->username << " (packet: " << client->lastPacketIdReceived << "): " << std::endl;
-            std::cout << "\t(UP): " << std::boolalpha << client->inputs.isMoveUpKeyPressed << std::endl;
-            std::cout << "\t(DOWN): " << std::boolalpha << client->inputs.isMoveDownKeyPressed << std::endl;
-            std::cout << "\t(LEFT): " << std::boolalpha << client->inputs.isMoveLeftKeyPressed << std::endl;
-            std::cout << "\t(RIGHT): " << std::boolalpha << client->inputs.isMoveRightKeyPressed << std::endl;
-        }
-    }
 }
 
 void Server::sendUpdate()
