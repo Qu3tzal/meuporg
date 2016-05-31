@@ -222,7 +222,7 @@ void Game::update(sf::Time dt)
 
 void Game::EventHandle(sf::Event event)
 {
-
+    chat.handleEvent(event);
 }
 
 void Game::receivePacket()

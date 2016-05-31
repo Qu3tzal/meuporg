@@ -14,12 +14,12 @@ Chat::~Chat()
 
 void Chat::init()
 {
-    buttons.setPosition(sf::Vector2f(50.f, 50.f));
-    textInputs.setPosition(sf::Vector2f(0.f, 50.f));
+    buttons.setPosition(sf::Vector2f(400.f, 50.f));
+    textInputs.setPosition(sf::Vector2f(200.f, 50.f));
     auto sendMessageLambda = [this](){
         this->sendMessage();};
-    buttons.addButton("Enter", sf::Vector2f(0.f, 0.f), sf::Vector2f(12, 24), "Entrer", FontLoader::FontId::SECRET_CODE, 12, sf::Color::White, sf::Color(10, 10, 10), sendMessageLambda);
-    textInputs.addTextInput("Chat", sf::Vector2f(0.f, 0.f), sf::Vector2f(12, 48), "Ecrivez votre message", FontLoader::FontId::SECRET_CODE, 12, sf::Color::White, sf::Color::Black, sf::Color::Black, sf::Color::Black);
+    buttons.addButton("Enter", sf::Vector2f(0.f, 0.f), sf::Vector2f(50, 50), "Entrer", FontLoader::FontId::SECRET_CODE, 12, sf::Color(128, 128, 128, 128), sf::Color(60, 60, 60, 128), sendMessageLambda);
+    textInputs.addTextInput("Chat", sf::Vector2f(0.f, 0.f), sf::Vector2f(150, 50), "Ecrivez votre message", FontLoader::FontId::SECRET_CODE, 12, sf::Color(128, 128, 128, 128), sf::Color::Black, sf::Color(128, 128, 128, 128), sf::Color::Red);
 }
 
 void Chat::write(std::string message)
@@ -29,8 +29,10 @@ void Chat::write(std::string message)
 
 void Chat::sendMessage()
 {
+    std::cout << "Send" << std::endl;
     std::string message("");
     message = textInputs.getText("Chat");
+    textInputs.getText("Chat") = "";
     sf::Packet packet;
 
     packet << NetworkValues::SEND_CHAT_MESSAGE << message;
@@ -42,6 +44,12 @@ void Chat::update()
 {
     buttons.update();
     textInputs.update();
+}
+
+void Chat::handleEvent(sf::Event e)
+{
+    buttons.handleEvent(e);
+    textInputs.handleEvent(e);
 }
 
 void Chat::draw(sf::RenderTarget& window, sf::RenderStates states) const

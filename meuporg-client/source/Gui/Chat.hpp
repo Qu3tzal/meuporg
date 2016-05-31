@@ -25,6 +25,8 @@ class Chat : public sf::Drawable, public sf::Transformable
 
         void sendMessage();
 
+        void handleEvent(sf::Event e);
+
     protected:
 
     // Draws the textInputs and button
