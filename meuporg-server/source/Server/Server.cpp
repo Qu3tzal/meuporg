@@ -146,6 +146,19 @@ void Server::update(sf::Time dt)
 {
     updateNumberOfPlayers();
     updateTimeoutPlayers(dt);
+
+    /// [DEBUG]
+    for(Client* client : m_clients)
+    {
+        if(client->ingame)
+        {
+            std::cout << "[INPUT] " << client->username << " (packet: " << client->lastPacketIdReceived << "): " << std::endl;
+            std::cout << "\t(UP): " << std::boolalpha << client->inputs.isMoveUpKeyPressed << std::endl;
+            std::cout << "\t(DOWN): " << std::boolalpha << client->inputs.isMoveDownKeyPressed << std::endl;
+            std::cout << "\t(LEFT): " << std::boolalpha << client->inputs.isMoveLeftKeyPressed << std::endl;
+            std::cout << "\t(RIGHT): " << std::boolalpha << client->inputs.isMoveRightKeyPressed << std::endl;
+        }
+    }
 }
 
 void Server::sendUpdate()
@@ -395,6 +408,17 @@ void Server::receiveInputThroughUDP()
                             // Alias.
                             Client* client = m_accounts.at(username)->linkedClient;
 
+                            // Extract udp packet id.
+                            unsigned long long udpPacketId(0);
+                            packet >> udpPacketId;
+
+                            // Skip packet if we already received newer inputs.
+                            if(udpPacketId < client->lastPacketIdReceived)
+                                break;
+
+                            // Update the last packet id.
+                            client->lastPacketIdReceived = udpPacketId;
+
                             // Extract client input.
                             packet  >> client->inputs.isMoveUpKeyPressed
                                     >> client->inputs.isMoveDownKeyPressed
@@ -425,6 +449,7 @@ void Server::sendChatMessage(std::string username, std::string message)
     // Send the message to all the in-game clients.
     for(Client* client : m_clients)
     {
-        client->gameTcp->send(packet);
+        if(client->ingame)
+            client->gameTcp->send(packet);
     }
 }
