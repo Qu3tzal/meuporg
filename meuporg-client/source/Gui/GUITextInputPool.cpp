@@ -166,6 +166,11 @@ void GUITextInputPool::setCustomView(const sf::View& v)
     m_customView = v;
 }
 
+void GUITextInputPool::clear(std::string name)
+{
+    m_texts[name].text.setString("");
+}
+
 void GUITextInputPool::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
     states.transform *= getTransform();

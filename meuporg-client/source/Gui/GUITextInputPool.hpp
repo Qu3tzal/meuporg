@@ -58,6 +58,9 @@ class GUITextInputPool : public sf::Drawable, public sf::Transformable
         // Sets the custom view to use.
         void setCustomView(const sf::View& v);
 
+        // clear the text in the textInput
+        void clear(std::string name);
+
     protected:
         // Draws the text inputs.
         void draw(sf::RenderTarget& window, sf::RenderStates states) const;

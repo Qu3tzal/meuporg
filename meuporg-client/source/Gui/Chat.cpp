@@ -27,10 +27,9 @@ void Chat::write(std::string message)
 
 void Chat::sendMessage()
 {
-    std::cout << "Send" << std::endl;
     std::string message("");
     message = textInputs.getText("Chat");
-    textInputs.getText("Chat") = "";
+    textInputs.clear("Chat");
     sf::Packet packet;
 
     packet << NetworkValues::SEND_CHAT_MESSAGE << message;
