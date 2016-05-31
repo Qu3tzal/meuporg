@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <../RandomNumberGenerator/RandomNumberGenerator.hpp>
 #include <sstream>
+#include <TextureLoader.hpp>
 
 class Game
 {
@@ -85,6 +86,9 @@ class Game
 
         // ip of the seveur
         sf::IpAddress ip;
+
+        // TextureLoader
+        TextureLoader textures;
 };
 
 #endif // GAME_HPP_INCLUDED

@@ -2,17 +2,26 @@
 #define ENTITY_HPP
 
 #include <SFML/System.hpp>
+#include <Animation.hpp>
+#include <TextureLoader.hpp>
 
 class Entity
 {
     public:
-        Entity(unsigned int id, std::string name);
+        Entity(unsigned int id, std::string name, TextureLoader textures);
         virtual ~Entity();
+
+        // Initiate the entity
+        void Init();
+
+        // Update the entity
+        void update(sf::Time dt);
+
 
     protected:
 
          // enum of type
-        enum Type {};
+        enum Type {SAITAMA, SPARTIATE};
 
         // enum of state
         enum State {};

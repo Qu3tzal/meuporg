@@ -63,12 +63,22 @@
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/lib" />
 			<Add directory="C:/MinGW/lib" />
 		</Linker>
+		<Unit filename="source/Entity/Animation.cpp" />
+		<Unit filename="source/Entity/Animation.hpp" />
 		<Unit filename="source/Entity/Entity.cpp" />
 		<Unit filename="source/Entity/Entity.hpp" />
 		<Unit filename="source/Game/Game.cpp" />
 		<Unit filename="source/Game/Game.hpp" />
+		<Unit filename="source/Game/TextureLoader.cpp" />
+		<Unit filename="source/Game/TextureLoader.hpp" />
+		<Unit filename="source/GraphicsUtils.inl" />
 		<Unit filename="source/Gui/Chat.cpp" />
 		<Unit filename="source/Gui/Chat.hpp" />
+		<Unit filename="source/Gui/GUIButtonPool.cpp" />
+		<Unit filename="source/Gui/GUIButtonPool.hpp" />
+		<Unit filename="source/Gui/GUITextInputPool.cpp" />
+		<Unit filename="source/Gui/GUITextInputPool.hpp" />
+		<Unit filename="source/Gui/GraphicsUtils.hpp" />
 		<Unit filename="source/NetworkValues.hpp" />
 		<Unit filename="source/PlayerInput.hpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />
