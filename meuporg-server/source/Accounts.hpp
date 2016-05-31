@@ -4,6 +4,8 @@
 #include <SFML/Network.hpp>
 #include <memory>
 
+#include "PlayerInput.hpp"
+
 // Client structure.
 struct Client
 {
@@ -22,6 +24,9 @@ struct Client
 
     unsigned int gameVersion = 0;
     std::string username = "";
+
+    PlayerInput inputs = {false, false, false, false};
+    unsigned long long lastPacketIdReceived = 0;
 };
 
 // Account structure.

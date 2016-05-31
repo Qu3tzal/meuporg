@@ -329,11 +329,15 @@ void Server::receiveInputThroughUDP()
                     // Check if username exists.
                     if(m_accounts.find(username) != m_accounts.end())
                     {
+                        // Ignore packet if client not connected.
+                        if(m_accounts.at(username)->linkedClient == nullptr)
+                            continue;
+
                         // Ignore packet if already in game.
                         if(m_accounts.at(username)->linkedClient->ingame)
                             continue;
 
-                        // Check if the username and random token given are the same as ours.
+                        // Check if the username and token given are the same as ours.
                         if(token == m_accounts.at(username)->token)
                         {
                             // OKAY
@@ -364,6 +368,38 @@ void Server::receiveInputThroughUDP()
 
                             std::cout << "[GAME_SERVER] Game UDP connected from (" << ip.toString() << ") for '" << username << "'." << std::endl;
                             std::cout << "[GAME_SERVER] '" << username << "' from (" << ip.toString() << ") is now in game !" << std::endl;
+                        }
+                    }
+                }
+                break;
+            case NetworkValues::INPUT:
+                {
+                    // Extract username and token.
+                    std::string username(""), token("");
+                    packet >> username >> token;
+
+                    // Check if username exists.
+                    if(m_accounts.find(username) != m_accounts.end())
+                    {
+                        // Ignore packet if client not connected.
+                        if(m_accounts.at(username)->linkedClient == nullptr)
+                            continue;
+
+                        // Ignore packet if not already in game.
+                        if(!m_accounts.at(username)->linkedClient->ingame)
+                            continue;
+
+                        // Check if the username and token given are the same as ours.
+                        if(token == m_accounts.at(username)->token)
+                        {
+                            // Alias.
+                            Client* client = m_accounts.at(username)->linkedClient;
+
+                            // Extract client input.
+                            packet  >> client->inputs.isMoveUpKeyPressed
+                                    >> client->inputs.isMoveDownKeyPressed
+                                    >> client->inputs.isMoveLeftKeyPressed
+                                    >> client->inputs.isMoveRightKeyPressed;
                         }
                     }
                 }
