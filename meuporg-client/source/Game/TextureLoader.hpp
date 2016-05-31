@@ -16,8 +16,6 @@ class TextureLoader
 
         sf::Texture get(TextureId id) const;
 
-        sf::Texture load(std::string path);
-
     protected:
 
         // Map who associate Texture id and texture

@@ -1,21 +1,25 @@
 #ifndef GAME_HPP_INCLUDED
 #define GAME_HPP_INCLUDED
+
 #include <SFML/Network.hpp>
 #include <SFML/System.hpp>
-#include <iostream>
-#include <../NetworkValues.hpp>
-#include <../PlayerInput.hpp>
 #include <SFML/Graphics.hpp>
-#include <../RandomNumberGenerator/RandomNumberGenerator.hpp>
+
+#include <iostream>
 #include <sstream>
-#include <TextureLoader.hpp>
+
+#include "../NetworkValues.hpp"
+#include "../PlayerInput.hpp"
+#include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
+#include "TextureLoader.hpp"
+#include "Chat.hpp"
 
 class Game
 {
     public:
 
         // Constructor
-        Game();
+        Game(sf::RenderWindow* window);
 
         // Destructor
         virtual ~Game();
@@ -37,6 +41,9 @@ class Game
 
         // Event handle
         void EventHandle(sf::Event event);
+
+        // Notification packet
+        void notificationPacket(sf::Packet* packet);
 
     protected:
         // Connects to the server.
@@ -92,6 +99,9 @@ class Game
 
         // Username
         std::string username;
+
+        // Chat
+        Chat chat;
 };
 
 #endif // GAME_HPP_INCLUDED

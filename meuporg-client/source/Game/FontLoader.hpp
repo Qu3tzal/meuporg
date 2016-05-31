@@ -11,17 +11,17 @@ class FontLoader
         FontLoader();
         virtual ~FontLoader();
 
-        enum FontId{};
+        enum FontId{SECRET_CODE};
 
+        // get the font with the fontId
         sf::Font get(FontId);
-
-        sf::Font load(std::string path);
 
     protected:
 
     private:
 
-         std::map <FontId, sf::Font> fonts;
+        // Associate font id and font
+        std::map<FontId, sf::Font> fonts;
 };
 
 #endif // FONTLOADER_HPP

@@ -32,7 +32,7 @@ class GUITextInputPool : public sf::Drawable, public sf::Transformable
 {
     public:
         // Ctor.
-        GUITextInputPool();
+        GUITextInputPool(sf::RenderWindow* window);
 
         // Dtor.
         virtual ~GUITextInputPool();

@@ -16,7 +16,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(800, 600), TITLE);
 
-    Game game;
+    Game game(&window);
     game.init();
 
     sf::Clock clientClock;

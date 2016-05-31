@@ -1,6 +1,6 @@
 #include "GUITextInputPool.hpp"
 
-GUITextInputPool::GUITextInputPool() :
+GUITextInputPool::GUITextInputPool(sf::RenderWindow* window) :
     m_focusedTextName("")
     , m_useCustomView(false)
 {

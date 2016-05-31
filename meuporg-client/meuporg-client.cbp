@@ -67,6 +67,8 @@
 		<Unit filename="source/Entity/Animation.hpp" />
 		<Unit filename="source/Entity/Entity.cpp" />
 		<Unit filename="source/Entity/Entity.hpp" />
+		<Unit filename="source/Game/FontLoader.cpp" />
+		<Unit filename="source/Game/FontLoader.hpp" />
 		<Unit filename="source/Game/Game.cpp" />
 		<Unit filename="source/Game/Game.hpp" />
 		<Unit filename="source/Game/TextureLoader.cpp" />

@@ -1,10 +1,11 @@
 #include "Game.hpp"
 
-Game::Game() : Version(001)
+Game::Game(sf::RenderWindow* window) : Version(001)
     , running(true)
     , token("")
     , udpPacketNumber(0)
     , username("")
+    , chat(window, &gameServerSocket)
 {
     //ctor
 }
@@ -22,7 +23,6 @@ void Game::init()
 
 void Game::serverConnection()
 {
-    std::string username;
 
     std::cout << "Rentrez l'ip du serveur : ";
     std::cin >> ip;
@@ -168,6 +168,7 @@ void Game::connectToGameServer()
             std::cout << "---------- Connexion reussi ----------" << std::endl;
             packet.clear();
             gameServerSocket.receive(packet);
+            gameServerSocket.setBlocking(false);
             int playerNumber = 0;
             packet >> playerNumber;
 
@@ -216,6 +217,7 @@ void Game::update(sf::Time dt)
     testInput();
     sendInput();
     receivePacket();
+    chat.update();
 }
 
 void Game::EventHandle(sf::Event event)
@@ -225,13 +227,44 @@ void Game::EventHandle(sf::Event event)
 
 void Game::receivePacket()
 {
+    sf::Packet packet;
+    sf::Socket::Status status = gameServerSocket.receive(packet);
 
+    if(status == sf::Socket::Status::Done)
+    {
+        unsigned int netCode(0);
+        packet >> netCode;
+
+        switch(netCode)
+        {
+        case NetworkValues::NOTIFY:
+            notificationPacket(&packet);
+            break;
+        }
+    }
+}
+
+void Game::notificationPacket(sf::Packet* packet)
+{
+    unsigned int notifyType(0);
+     *packet >> notifyType;
+
+     switch(notifyType)
+     {
+     case NetworkValues::RECEIVE_CHAT_MESSAGE:
+        std::string message("");
+        std::string username("");
+        std::string text("");
+        message  = "[" + username + "] " + text;
+        chat.write(message);
+        break;
+     }
 }
 
 void Game::sendInput()
 {
     sf::Packet packet;
-    packet << NetworkValues::INPUT << username << token << udpPacketNumber << playerInput.MoveDown << playerInput.MoveLeft << playerInput.MoveRight << playerInput.MoveUp;
+    packet << NetworkValues::INPUT << username << token << udpPacketNumber << playerInput.MoveUp << playerInput.MoveDown << playerInput.MoveLeft << playerInput.MoveRight;
 
     gameServerUdpSocket.send(packet, ip, 22623);
     udpPacketNumber++;
@@ -248,6 +281,8 @@ void Game::testInput()
 void Game::render(sf::RenderWindow* window)
 {
     window->clear(sf::Color::White);
+
+    window->draw(chat);
 
     window->display();
 }
