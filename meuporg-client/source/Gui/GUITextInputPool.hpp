@@ -79,5 +79,7 @@ class GUITextInputPool : public sf::Drawable, public sf::Transformable
         FontLoader fonts;
 
         sf::RenderWindow* window;
+
+        sf::Font font;
 };
 #endif // GUITEXTINPUTPOOL_HPP

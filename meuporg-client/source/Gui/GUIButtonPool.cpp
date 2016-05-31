@@ -4,6 +4,7 @@ GUIButtonPool::GUIButtonPool(sf::RenderWindow* window) :
     m_useCustomView(false)
 {
     this->window = window;
+    font.loadFromFile("assets/fonts/secrcode.ttf");
 }
 
 GUIButtonPool::~GUIButtonPool()
@@ -13,7 +14,8 @@ GUIButtonPool::~GUIButtonPool()
 void GUIButtonPool::addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, FontLoader::FontId fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn)
 {
     sf::Text text;
-    text.setFont(fonts.get(fontId));
+    //text.setFont(fonts.get(fontId));
+    text.setFont(font);
     text.setCharacterSize(charSize);
     text.setString(textString);
     centerOrigin(text);

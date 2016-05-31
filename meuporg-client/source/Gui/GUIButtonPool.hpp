@@ -69,6 +69,8 @@ class GUIButtonPool : public sf::Drawable, public sf::Transformable
         sf::RenderWindow* window;
 
         FontLoader fonts;
+
+        sf::Font font;
 };
 
 #endif // GUIBUTTONPOOL_HPP
