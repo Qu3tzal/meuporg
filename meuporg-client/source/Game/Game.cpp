@@ -247,22 +247,26 @@ void Game::receivePacket()
 void Game::notificationPacket(sf::Packet* packet)
 {
     unsigned int notifyType(0);
-     *packet >> notifyType;
+    *packet >> notifyType;
 
-     switch(notifyType)
-     {
-     case NetworkValues::RECEIVE_CHAT_MESSAGE:
-        std::string message("");
-        std::string username("");
-        std::string text("");
+    switch(notifyType)
+    {
+        case NetworkValues::RECEIVE_CHAT_MESSAGE:
+            {
+                std::string message("");
+                std::string username("");
+                std::string text("");
 
-        *packet >> username;
-        *packet >> message;
+                *packet >> username;
+                *packet >> message;
 
-        message  = "[" + username + "] " + text;
-        chat.write(message);
-        break;
-     }
+                message  = "[" + username + "] " + text;
+                chat.write(message);
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 void Game::sendInput()
