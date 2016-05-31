@@ -14,6 +14,8 @@ Chat::~Chat()
 
 void Chat::init()
 {
+    buttons.setPosition(sf::Vector2f(50.f, 50.f));
+    textInputs.setPosition(sf::Vector2f(0.f, 50.f));
     auto sendMessageLambda = [this](){
         this->sendMessage();};
     buttons.addButton("Enter", sf::Vector2f(0.f, 0.f), sf::Vector2f(12, 24), "Entrer", FontLoader::FontId::SECRET_CODE, 12, sf::Color::White, sf::Color(10, 10, 10), sendMessageLambda);
