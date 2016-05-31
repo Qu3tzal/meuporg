@@ -21,6 +21,12 @@ namespace NetworkValues
 	const unsigned int  CONNECTION_FAIL_WRONG_TOKEN(109);
 
 	const unsigned int  DISCONNECT(200);
+	const unsigned int  INPUT(201);
+	const unsigned int  ENTITY_REMOVED(202);
+	const unsigned int  PLAYER_CONNECTED(203);
+	const unsigned int  PLAYER_DISCONNECTED(204);
+	const unsigned int  RECEIVE_CHAT_MESSAGE(205);
+	const unsigned int  SEND_CHAT_MESSAGE(206);
 
 	const unsigned int  KEEP_ALIVE(300);
 	const unsigned int  OKAY(301);
