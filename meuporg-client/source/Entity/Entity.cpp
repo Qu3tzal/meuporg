@@ -1,8 +1,9 @@
 #include "Entity.hpp"
 
-Entity::Entity()
+Entity::Entity(unsigned int id, std::string name)
 {
-    //ctor
+    this->id = id;
+    this->name = name;
 }
 
 Entity::~Entity()

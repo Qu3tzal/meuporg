@@ -235,10 +235,10 @@ void Game::sendInput()
 
 void Game::testInput()
 {
-    playerInput.MoveUp = sf::Keyboard.isKeyPressed(sf::Keyboard::Z);
-    playerInput.MoveDown = sf::Keyboard.isKeyPressed(sf::Keyboard::S);
-    playerInput.MoveLeft = sf::Keyboard.isKeyPressed(sf::Keyboard::Q);
-    playerInput.MoveRight = sf::Keyboard.isKeyPressed(sf::Keyboard::D);
+    playerInput.MoveUp = sf::Keyboard::isKeyPressed(sf::Keyboard::Z);
+    playerInput.MoveDown = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
+    playerInput.MoveLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Q);
+    playerInput.MoveRight = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
 }
 
 void Game::render(sf::RenderWindow& window)
