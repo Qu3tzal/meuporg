@@ -2,13 +2,13 @@
 #define ENTITY_HPP
 
 #include <SFML/System.hpp>
-#include <Animation.hpp>
-#include <TextureLoader.hpp>
+#include "Animation.hpp"
 
 class Entity
 {
     public:
-        Entity(unsigned int id, std::string name, TextureLoader textures);
+        Entity(unsigned int id, std::string name
+               );
         virtual ~Entity();
 
         // Initiate the entity
@@ -33,9 +33,6 @@ class Entity
         Type type;
 
         std::string name;
-
-        // State
-        State state;
 
         // Position
         sf::Vector2f position;

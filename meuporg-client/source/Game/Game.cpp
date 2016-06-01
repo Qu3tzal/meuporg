@@ -174,7 +174,7 @@ void Game::connectToGameServer()
 
             //std::vector<std::string> listOfPlayer;
             std::cout << "Liste des joueurs : " << std::endl;
-            for(int i = 0 ; i < playerNumber ; i++)
+            for(int i = 1 ; i <= playerNumber ; i++)
             {
                 std::string playerName = "";
                 packet >> playerName;
