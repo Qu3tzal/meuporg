@@ -275,6 +275,9 @@ void Server::receiveInputThroughTCP()
                         // Disconnect the player.
                         disconnectPlayer(client->username, "disconnected");
 
+                        // Notify everyone the player disconnected.
+                        notifyPlayerDisconnected(client->username);
+
                         // Tag we deleted a client.
                         deletedClient = true;
                         break;
@@ -353,6 +356,9 @@ void Server::receiveInputThroughUDP()
                             m_accounts.at(username)->linkedClient->udpPort = port;
                             m_accounts.at(username)->linkedClient->gameUdpConnected = true;
                             m_accounts.at(username)->linkedClient->ingame = true;
+
+                            // Notify everyone the player connected.
+                            notifyPlayerConnected(username);
 
                             // Reset timeout.
                             m_accounts.at(username)->linkedClient->timeout = sf::Time::Zero;
@@ -440,6 +446,34 @@ void Server::sendChatMessage(std::string username, std::string message)
     packet << NetworkValues::NOTIFY << NetworkValues::RECEIVE_CHAT_MESSAGE << username << message;
 
     // Send the message to all the in-game clients.
+    for(Client* client : m_clients)
+    {
+        if(client->ingame)
+            client->gameTcp->send(packet);
+    }
+}
+
+void Server::notifyPlayerConnected(std::string username)
+{
+    // Prepare the packet.
+    sf::Packet packet;
+    packet << NetworkValues::NOTIFY << NetworkValues::PLAYER_CONNECTED << username;
+
+    // Send the notification to all the in-game clients.
+    for(Client* client : m_clients)
+    {
+        if(client->ingame)
+            client->gameTcp->send(packet);
+    }
+}
+
+void Server::notifyPlayerDisconnected(std::string username)
+{
+    // Prepare the packet.
+    sf::Packet packet;
+    packet << NetworkValues::NOTIFY << NetworkValues::PLAYER_DISCONNECTED << username;
+
+    // Send the notification to all the in-game clients.
     for(Client* client : m_clients)
     {
         if(client->ingame)

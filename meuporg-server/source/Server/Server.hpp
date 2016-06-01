@@ -83,8 +83,14 @@ class Server
         // Receives the input by the UDP socket.
         void receiveInputThroughUDP();
 
-        // Send the chat message.
+        // Sends the chat message.
         void sendChatMessage(std::string username, std::string message);
+
+        // Notifies everyone the player connected.
+        void notifyPlayerConnected(std::string username);
+
+        // Notifies everyone the player disconnected.
+        void notifyPlayerDisconnected(std::string username);
 
     protected:
         // Number of players connected and maximum number of players.
