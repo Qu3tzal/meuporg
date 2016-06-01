@@ -14,9 +14,9 @@ Chat::~Chat()
 
 void Chat::init()
 {
-    auto sendMessageLambda = [this](){
-        this->sendMessage();};
-    buttons.addButton("Enter", sf::Vector2f(400.f, 50.f), sf::Vector2f(50, 50), "Entrer", FontLoader::FontId::SECRET_CODE, 12, sf::Color(128, 128, 128, 128), sf::Color(60, 60, 60, 128), sendMessageLambda);
+    /*auto sendMessageLambda = [this](){
+        this->sendMessage();};*/
+    //buttons.addButton("Enter", sf::Vector2f(400.f, 50.f), sf::Vector2f(50, 50), "Entrer", FontLoader::FontId::SECRET_CODE, 12, sf::Color(128, 128, 128, 128), sf::Color(60, 60, 60, 128), sendMessageLambda);
     textInputs.addTextInput("Chat", sf::Vector2f(200.f, 50.f), sf::Vector2f(150, 50), "Ecrivez votre message", FontLoader::FontId::SECRET_CODE, 12, sf::Color(128, 128, 128, 128), sf::Color::Black, sf::Color(128, 128, 128, 128), sf::Color::Red);
 }
 
@@ -35,6 +35,8 @@ void Chat::sendMessage()
     packet << NetworkValues::SEND_CHAT_MESSAGE << message;
 
     socket->send(packet);
+
+
 }
 
 void Chat::update()
@@ -47,6 +49,13 @@ void Chat::handleEvent(sf::Event e)
 {
     buttons.handleEvent(e);
     textInputs.handleEvent(e);
+    if(textInputs.getFocusedName() == "Chat")
+    {
+        if(e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Return && textInputs.getText("Chat") != "")
+        {
+            sendMessage();
+        }
+    }
 }
 
 void Chat::draw(sf::RenderTarget& window, sf::RenderStates states) const

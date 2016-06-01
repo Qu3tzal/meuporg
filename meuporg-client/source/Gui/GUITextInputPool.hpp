@@ -61,6 +61,9 @@ class GUITextInputPool : public sf::Drawable, public sf::Transformable
         // clear the text in the textInput
         void clear(std::string name);
 
+        // Get the focuses input name
+        std::string getFocusedName();
+
     protected:
         // Draws the text inputs.
         void draw(sf::RenderTarget& window, sf::RenderStates states) const;

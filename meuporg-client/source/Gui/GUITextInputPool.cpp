@@ -126,6 +126,10 @@ void GUITextInputPool::handleEvent(sf::Event event)
             }
 
         }
+        else if(event.text.unicode == 13)
+        {
+
+        }
         else
         {
             sf::String str = m_texts[m_focusedTextName].text.getString();
@@ -169,6 +173,11 @@ void GUITextInputPool::setCustomView(const sf::View& v)
 void GUITextInputPool::clear(std::string name)
 {
     m_texts[name].text.setString("");
+}
+
+std::string GUITextInputPool::getFocusedName()
+{
+    return m_focusedTextName;
 }
 
 void GUITextInputPool::draw(sf::RenderTarget& window, sf::RenderStates states) const
