@@ -357,9 +357,6 @@ void Server::receiveInputThroughUDP()
                             m_accounts.at(username)->linkedClient->gameUdpConnected = true;
                             m_accounts.at(username)->linkedClient->ingame = true;
 
-                            // Notify everyone the player connected.
-                            notifyPlayerConnected(username);
-
                             // Reset timeout.
                             m_accounts.at(username)->linkedClient->timeout = sf::Time::Zero;
 
@@ -377,6 +374,9 @@ void Server::receiveInputThroughUDP()
 
                             std::cout << "[GAME_SERVER] Game UDP connected from (" << ip.toString() << ") for '" << username << "'." << std::endl;
                             std::cout << "[GAME_SERVER] '" << username << "' from (" << ip.toString() << ") is now in game !" << std::endl;
+
+                            // Notify everyone the player connected.
+                            notifyPlayerConnected(username);
                         }
                     }
                 }
