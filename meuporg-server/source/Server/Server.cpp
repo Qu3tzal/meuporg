@@ -415,6 +415,14 @@ void Server::receiveInputThroughUDP()
                             if(udpPacketId < client->lastPacketIdReceived)
                                 break;
 
+                            // Count how many packets were lost.
+                            if(udpPacketId - client->lastPacketIdReceived > 1)
+                            {
+                                client->lostPackets += (udpPacketId - 1) - client->lastPacketIdReceived;
+                                std::cout   << "[PACKET_LOSS] " << client->username << ": " << client->lostPackets << " / " << client->lastPacketIdReceived
+                                            << " (" << (client->lostPackets * 100.f) / (float)(client->lastPacketIdReceived) << "%)" << std::endl;
+                            }
+
                             // Update the last packet id.
                             client->lastPacketIdReceived = udpPacketId;
 

@@ -37,10 +37,14 @@ int main()
 
     sf::Clock serverclock;
     sf::Time elapsed(sf::Time::Zero);
+    sf::Time performancesTimer(sf::Time::Zero);
+    unsigned int ticks(0);
 
     while(server.isRunning())
     {
-        elapsed += serverclock.restart();
+        sf::Time dt = serverclock.restart();
+        elapsed += dt;
+        performancesTimer += dt;
 
         while(elapsed >= ServerConfiguration::Ticktime)
         {
@@ -50,6 +54,15 @@ int main()
             server.receiveInput();
             server.update(ServerConfiguration::Ticktime);
             server.sendUpdate();
+
+            ticks++;
+            if(performancesTimer >= sf::seconds(1.f))
+            {
+                if(ticks < ServerConfiguration::TickPerSec)
+                    std::cout << "[STATS] " << ticks << " tick/sec (goal: " << ServerConfiguration::TickPerSec << " tick/sec)." << std::endl;
+                performancesTimer = sf::Time::Zero;
+                ticks = 0;
+            }
         }
     }
 
