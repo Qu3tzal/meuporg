@@ -13,6 +13,7 @@
 #include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
 #include "TextureLoader.hpp"
 #include "Chat.hpp"
+#include "../ResourceHolder.hpp"
 
 class Game
 {
@@ -94,14 +95,17 @@ class Game
         // ip of the seveur
         sf::IpAddress ip;
 
-        // TextureLoader
-        TextureLoader textures;
-
         // Username
         std::string username;
 
         // Chat
         Chat chat;
+
+        // TextureHolder
+        kantan::TextureHolder textures;
+
+        // FontHolder
+        kantan::FontHolder fonts;
 };
 
 #endif // GAME_HPP_INCLUDED

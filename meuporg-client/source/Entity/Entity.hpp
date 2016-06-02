@@ -3,16 +3,16 @@
 
 #include <SFML/System.hpp>
 #include "Animation.hpp"
+#include "../ResourceHolder.hpp"
 
 class Entity
 {
     public:
-        Entity(unsigned int id, std::string name
-               );
+        Entity(unsigned int id, std::string name, kantan::TextureHolder* textures);
         virtual ~Entity();
 
         // Initiate the entity
-        void Init();
+        void init();
 
         // Update the entity
         void update(sf::Time dt);
@@ -22,9 +22,6 @@ class Entity
 
          // enum of type
         enum Type {SAITAMA, SPARTIATE};
-
-        // enum of state
-        enum State {};
 
         // id
         unsigned int id;
@@ -39,6 +36,9 @@ class Entity
 
         // Velocity
         sf::Vector2f velocity;
+
+        // ResouceHolder
+        kantan::TextureHolder* textures;
 
 
     private:

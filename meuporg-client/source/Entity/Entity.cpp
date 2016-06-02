@@ -1,10 +1,11 @@
 #include "Entity.hpp"
 
-Entity::Entity(unsigned int id, std::string name)
+Entity::Entity(unsigned int id, std::string name, kantan::TextureHolder* textures)
 {
     this->id = id;
     this->name = name;
-    Init();
+    this->textures = textures;
+    init();
 }
 
 Entity::~Entity()
@@ -12,7 +13,7 @@ Entity::~Entity()
     //dtor
 }
 
-void Entity::Init()
+void Entity::init()
 {
 
 }

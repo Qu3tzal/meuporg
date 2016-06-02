@@ -67,6 +67,10 @@
 		<Unit filename="source/Entity/Animation.hpp" />
 		<Unit filename="source/Entity/Entity.cpp" />
 		<Unit filename="source/Entity/Entity.hpp" />
+		<Unit filename="source/Entity/Npc.cpp" />
+		<Unit filename="source/Entity/Npc.hpp" />
+		<Unit filename="source/Entity/Player.cpp" />
+		<Unit filename="source/Entity/Player.hpp" />
 		<Unit filename="source/Game/FontLoader.cpp" />
 		<Unit filename="source/Game/FontLoader.hpp" />
 		<Unit filename="source/Game/Game.cpp" />
@@ -85,6 +89,8 @@
 		<Unit filename="source/PlayerInput.hpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.hpp" />
+		<Unit filename="source/ResourceHolder.hpp" />
+		<Unit filename="source/ResourceHolder.inl" />
 		<Unit filename="source/main.cpp" />
 		<Extensions>
 			<code_completion />
