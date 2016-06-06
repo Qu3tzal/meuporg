@@ -14,6 +14,7 @@
 #include "TextureLoader.hpp"
 #include "Chat.hpp"
 #include "../ResourceHolder.hpp"
+#include "World.hpp"
 
 class Game
 {
@@ -81,6 +82,8 @@ class Game
         // Udp packet nulber
         unsigned long long udpPacketNumber;
 
+        unsigned long long udpPacketNumberReceive;
+
         // All tcp Socket
         sf::TcpSocket informationSocket;
         sf::TcpSocket serverSocket;
@@ -106,6 +109,9 @@ class Game
 
         // FontHolder
         kantan::FontHolder fonts;
+
+        // World
+        World world;
 };
 
 #endif // GAME_HPP_INCLUDED

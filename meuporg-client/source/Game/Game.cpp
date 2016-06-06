@@ -4,6 +4,7 @@ Game::Game(sf::RenderWindow* window) : Version(001)
     , running(true)
     , token("")
     , udpPacketNumber(0)
+    , udpPacketNumberReceive(0)
     , username("")
     , chat(window, &gameServerSocket, &fonts)
 {
@@ -21,6 +22,7 @@ void Game::init()
 {
     chat.init();
     serverConnection();
+    world.init();
 }
 
 void Game::serverConnection()
@@ -171,6 +173,7 @@ void Game::connectToGameServer()
             packet.clear();
             gameServerSocket.receive(packet);
             gameServerSocket.setBlocking(false);
+            gameServerUdpSocket.setBlocking(false);
             int playerNumber = 0;
             packet >> playerNumber;
 
@@ -220,6 +223,7 @@ void Game::update(sf::Time dt)
     sendInput();
     receivePacket();
     chat.update();
+    world.update(dt);
 }
 
 void Game::EventHandle(sf::Event event)
@@ -241,6 +245,31 @@ void Game::receivePacket()
         {
         case NetworkValues::NOTIFY:
             notificationPacket(&packet);
+            break;
+        }
+    }
+
+    packet.clear();
+    sf::IpAddress ip;
+    unsigned short int remotePort(0);
+    status = gameServerUdpSocket.receive(packet, ip, remotePort);
+
+    if(status == sf::Socket::Status::Done)
+    {
+        unsigned int netCode(0);
+        packet >> netCode;
+
+        switch(netCode)
+        {
+        case NetworkValues::UPDATE:
+            unsigned long long number;
+            packet >> number;
+
+            if(number > udpPacketNumberReceive)
+            {
+                udpPacketNumberReceive = number;
+                world.updateEntity(&packet);
+            }
             break;
         }
     }
@@ -290,6 +319,13 @@ void Game::notificationPacket(sf::Packet* packet)
                 chat.write(message);
             }
             break;
+        case NetworkValues::ENTITY_REMOVED :
+            {
+                unsigned int entityId(0);
+                *packet >> entityId;
+                world.removeEntity(entityId);
+            }
+            break;
         default:
             break;
     }
@@ -317,6 +353,7 @@ void Game::render(sf::RenderWindow* window)
     window->clear(sf::Color::White);
 
     window->draw(chat);
+    window->draw(world);
 
     window->display();
 }
