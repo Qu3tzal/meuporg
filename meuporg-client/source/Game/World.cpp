@@ -1,13 +1,16 @@
 #include "World.hpp"
 
-World::World()
+World::World(kantan::TextureHolder* textures)
 {
-    //ctor
+    this->textures = textures;
 }
 
 World::~World()
 {
-    //dtor
+    for(Entity* e : entities)
+    {
+        delete e;
+    }
 }
 
 void World::init()
@@ -22,11 +25,12 @@ void World::update(sf::Time dt)
 
 void World::removeEntity(unsigned int entityId)
 {
-    std::vector<Entity>::iterator it;
+    std::vector<Entity*>::iterator it;
     for(it = entities.begin() ; it != entities.end() ; )
     {
-        if((*it).getId() == entityId)
+        if((*it)->getId() == entityId)
         {
+            delete *it;
             entities.erase(it);
         }
         else
@@ -38,13 +42,123 @@ void World::removeEntity(unsigned int entityId)
 
 void World::updateEntity(sf::Packet* packet)
 {
+    unsigned int id(0);
+    unsigned int type_ui;
+    std::string name("");
 
+    sf::Vector2f position;
+    sf::Vector2f velocity;
+
+    *packet >> id
+            >> type_ui;
+
+    Entity::Type type = static_cast<Entity::Type>(type_ui);
+    Entity* e = getEntityById(id);
+
+    if(e != nullptr)
+    {
+        switch(type)
+        {
+            case Entity::Type::PLAYER:
+                {
+                   unsigned int state_ui;
+                   Player* player = static_cast<Player*>(e);
+
+                   *packet >> state_ui;
+
+                   Player::STATE state = static_cast<Player::STATE>(state_ui);
+
+                   player->setState(state);
+                }
+                break;
+            case Entity::Type::NPC:
+                {
+                    unsigned int state_ui;
+                    Npc* npc = static_cast<Npc*>(e);
+
+                    *packet >> state_ui;
+
+                    Npc::State state = static_cast<Npc::State>(state_ui);
+
+                    npc->setState(state);
+                }
+                break;
+        }
+        *packet >> name
+                >> position
+                >> velocity;
+        e->setName(name);
+        e->setPosition(position);
+        e->setVelocity(velocity);
+    }
+    else
+    {
+        Entity* entity;
+        switch(type)
+        {
+            case Entity::Type::PLAYER:
+                {
+                    unsigned int state_ui;
+                    *packet >> state_ui
+                            >> name;
+
+                    entity = new Player(textures, name, id);
+                    Player::STATE state = static_cast<Player::STATE>(state_ui);
+
+                    Player* player = static_cast<Player*>(entity);
+
+                    player->setState(state);
+                }
+                break;
+            case Entity::Type::NPC:
+                {
+                    unsigned int state_ui;
+                    *packet >> state_ui
+                            >> name;
+
+                    entity = new Npc(textures, name, id);
+                    Npc::State state = static_cast<Npc::State>(state_ui);
+
+                    Npc* npc = static_cast<Npc*>(entity);
+
+                    npc->setState(state);
+                }
+                break;
+        }
+        *packet >> position
+                >> velocity;
+        entity->setPosition(position);
+        entity->setVelocity(velocity);
+
+        entities.push_back(entity);
+
+
+    }
+
+}
+
+void World::addEntity(unsigned int id, Entity::Type type, std::string name, sf::Vector2f position, sf::Vector2f velocity)
+{
+
+}
+
+Entity* World::getEntityById(unsigned int id)
+{
+    for(Entity* e : entities)
+    {
+        if(e->getId() == id)
+        {
+            return e;
+        }
+    }
+
+    return nullptr;
 }
 
 void World::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
     for(auto it = entities.begin() ; it != entities.end() ; it++)
     {
-        window.draw((*it));
+        window.draw((**it));
     }
 }

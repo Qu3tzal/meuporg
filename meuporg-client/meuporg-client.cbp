@@ -93,6 +93,9 @@
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.hpp" />
 		<Unit filename="source/ResourceHolder.hpp" />
 		<Unit filename="source/ResourceHolder.inl" />
+		<Unit filename="source/SFMLPacketUtils.cpp" />
+		<Unit filename="source/SFMLPacketUtils.hpp" />
+		<Unit filename="source/SFMLPacketUtils.inl" />
 		<Unit filename="source/main.cpp" />
 		<Extensions>
 			<code_completion />

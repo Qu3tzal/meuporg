@@ -7,9 +7,11 @@ Game::Game(sf::RenderWindow* window) : Version(001)
     , udpPacketNumberReceive(0)
     , username("")
     , chat(window, &gameServerSocket, &fonts)
+    , world(&textures)
 {
     //ctor
     fonts.load(1, "assets/fonts/secrcode.ttf");
+    textures.load(1, "assets/saitama_spritesheet.png");
 }
 
 Game::~Game()
