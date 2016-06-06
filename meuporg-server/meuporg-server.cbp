@@ -18,6 +18,7 @@
 					<Add directory="source/RandomNumberGenerator" />
 					<Add directory="source/LoginServer" />
 					<Add directory="source" />
+					<Add directory="source/World" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-system-d" />
@@ -39,6 +40,7 @@
 					<Add directory="source/RandomNumberGenerator" />
 					<Add directory="source/LoginServer" />
 					<Add directory="source" />
+					<Add directory="source/World" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -147,6 +149,8 @@
 		<Unit filename="source/ServerConfiguration.hpp" />
 		<Unit filename="source/Server/Server.cpp" />
 		<Unit filename="source/Server/Server.hpp" />
+		<Unit filename="source/World/World.cpp" />
+		<Unit filename="source/World/World.hpp" />
 		<Unit filename="source/main.cpp" />
 		<Extensions>
 			<code_completion />

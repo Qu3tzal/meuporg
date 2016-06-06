@@ -25,6 +25,9 @@ void Server::init()
 
     m_gameUdpSocket.bind(ServerConfiguration::GameUDPPort);
     m_gameUdpSocket.setBlocking(false);
+
+    // Init the world.
+    m_world.init();
 }
 
 bool Server::isRunning() const
@@ -146,6 +149,8 @@ void Server::update(sf::Time dt)
 {
     updateNumberOfPlayers();
     updateTimeoutPlayers(dt);
+
+    m_world.update(dt);
 }
 
 void Server::sendUpdate()

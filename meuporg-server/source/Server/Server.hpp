@@ -13,6 +13,7 @@
 #include "../ServerConfiguration.hpp"
 #include "../LoginServer/LoginServer.hpp"
 #include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
+#include "../World/World.hpp"
 
 #include "../Kantan-2/kantan.hpp"
 
@@ -117,6 +118,9 @@ class Server
 
         // Chat log : (username, message).
         std::vector<std::pair<std::string, std::string>> m_chatLog;
+
+        // World.
+        World m_world;
 };
 
 #endif // SERVER_HPP_INCLUDED
