@@ -77,6 +77,8 @@
 		<Unit filename="source/Game/Game.hpp" />
 		<Unit filename="source/Game/TextureLoader.cpp" />
 		<Unit filename="source/Game/TextureLoader.hpp" />
+		<Unit filename="source/Game/World.cpp" />
+		<Unit filename="source/Game/World.hpp" />
 		<Unit filename="source/GraphicsUtils.inl" />
 		<Unit filename="source/Gui/Chat.cpp" />
 		<Unit filename="source/Gui/Chat.hpp" />
