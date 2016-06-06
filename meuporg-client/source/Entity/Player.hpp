@@ -10,7 +10,7 @@
 class Player : public Entity
 {
     public:
-        Player(kantan::TextureHolder* textures);
+        Player(kantan::TextureHolder* textures, std::string name, unsigned int id);
         virtual ~Player();
 
         enum STATE {IDLS, WALKING};
@@ -18,6 +18,8 @@ class Player : public Entity
         virtual void init();
 
         virtual void update(sf::Time dt);
+
+        void setState(STATE state);
 
     protected:
 

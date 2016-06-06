@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-Player::Player(kantan::TextureHolder* textures) : Entity(0, "Player", textures)
+Player::Player(kantan::TextureHolder* textures, std::string name, unsigned int id) : Entity(id, name, Entity::Type::PLAYER, textures)
 {
 
 }
@@ -12,7 +12,7 @@ Player::~Player()
 
 void Player::init()
 {
-    textures->load(1, "assets/saitama_spritesheet.png");
+
     sprite.setTexture(textures->get(1));
 
     // Move down animation
@@ -48,6 +48,11 @@ void Player::init()
 void Player::update(sf::Time dt)
 {
 
+}
+
+void Player::setState(STATE state)
+{
+    this->state = state;
 }
 
 void Player::draw(sf::RenderTarget& window, sf::RenderStates states) const

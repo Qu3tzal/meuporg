@@ -7,10 +7,11 @@
 class Entity : public sf::Drawable, public sf::Transformable
 {
     public:
-        Entity(unsigned int id, std::string name, kantan::TextureHolder* textures);
 
         // enum of type
-        enum Type {SAITAMA, SPARTIATE};
+        enum Type {PLAYER, NPC};
+
+        Entity(unsigned int id, std::string name, Type type, kantan::TextureHolder* textures);
 
         virtual ~Entity();
 
@@ -29,6 +30,8 @@ class Entity : public sf::Drawable, public sf::Transformable
         void setName(std::string);
 
         Type getType() const;
+
+        void setType(Type type);
 
         sf::Vector2f getVelocity() const;
 
