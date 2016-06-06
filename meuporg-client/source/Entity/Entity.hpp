@@ -37,6 +37,8 @@ class Entity : public sf::Drawable, public sf::Transformable
 
         void setVelocity(sf::Vector2f);
 
+        sf::Vector2f normalize(sf::Vector2f vect);
+
     protected:
 
          virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const = 0;

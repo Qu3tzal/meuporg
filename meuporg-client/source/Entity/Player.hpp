@@ -15,11 +15,15 @@ class Player : public Entity
 
         enum STATE {IDLS, WALKING};
 
+        enum Direction{UP, DOWN, LEFT, RIGHT};
+
         virtual void init();
 
         virtual void update(sf::Time dt);
 
         void setState(STATE state);
+
+        void setDirection();
 
     protected:
 
@@ -32,7 +36,11 @@ class Player : public Entity
         Animation a_MoveLeft;
         Animation a_MoveRight;
 
+        Direction direction;
+
         sf::Sprite sprite;
+
+        sf::Vector2f velocityNormalized;
     private:
 };
 

@@ -47,6 +47,100 @@ void Player::init()
 
 void Player::update(sf::Time dt)
 {
+    setDirection();
+    switch(direction)
+    {
+        case Direction::UP :
+            if(state == STATE::WALKING)
+            {
+                a_MoveUp.update(dt);
+            }
+            else
+            {
+                a_MoveUp.reset();
+            }
+
+            a_MoveDown.reset();
+            a_MoveLeft.reset();
+            a_MoveRight.reset();
+
+            sprite.setTextureRect(a_MoveUp.getFrame().first);
+            break;
+        case Direction::DOWN :
+            if(state == STATE::WALKING)
+            {
+                a_MoveDown.update(dt);
+            }
+            else
+            {
+                a_MoveDown.reset();
+            }
+
+            a_MoveUp.reset();
+            a_MoveLeft.reset();
+            a_MoveRight.reset();
+
+            sprite.setTextureRect(a_MoveDown.getFrame().first);
+            break;
+        case Direction::LEFT :
+            if(state == STATE::WALKING)
+            {
+                a_MoveLeft.update(dt);
+            }
+            else
+            {
+                a_MoveLeft.reset();
+            }
+            a_MoveUp.reset();
+            a_MoveDown.reset();
+            a_MoveRight.reset();
+
+            sprite.setTextureRect(a_MoveLeft.getFrame().first);
+            break;
+        case Direction::RIGHT :
+            if(state == STATE::WALKING)
+            {
+                 a_MoveRight.update(dt);
+            }
+            else
+            {
+                a_MoveRight.reset();
+            }
+            a_MoveUp.reset();
+            a_MoveLeft.reset();
+            a_MoveDown.reset();
+
+            sprite.setTextureRect(a_MoveRight.getFrame().first);
+            break;
+    }
+}
+
+void Player::setDirection()
+{
+    velocityNormalized = Entity::normalize(velocity);
+
+    if(std::abs(velocityNormalized.x) > std::abs(velocityNormalized.y))
+    {
+        if(velocityNormalized.x > 0)
+        {
+            direction = Direction::RIGHT;
+        }
+        else
+        {
+            direction = Direction::LEFT;
+        }
+    }
+    else
+    {
+        if(velocityNormalized.y > 0 )
+        {
+            direction = Direction::DOWN;
+        }
+        else
+        {
+            direction = Direction::UP;
+        }
+    }
 
 }
 

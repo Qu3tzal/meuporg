@@ -15,12 +15,18 @@ World::~World()
 
 void World::init()
 {
-
+    for(Entity* e : entities)
+    {
+        e->init();
+    }
 }
 
 void World::update(sf::Time dt)
 {
-
+    for(Entity* e : entities)
+    {
+        e->update(dt);
+    }
 }
 
 void World::removeEntity(unsigned int entityId)
@@ -130,6 +136,7 @@ void World::updateEntity(sf::Packet* packet)
         entity->setPosition(position);
         entity->setVelocity(velocity);
 
+        entity->init();
         entities.push_back(entity);
 
 

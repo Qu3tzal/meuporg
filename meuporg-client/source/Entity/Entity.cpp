@@ -48,6 +48,12 @@ sf::Vector2f Entity::getVelocity() const
     return velocity;
 }
 
+sf::Vector2f Entity::normalize(sf::Vector2f vect)
+{
+    float norm = std::sqrt(std::pow(vect.x, 2) + std::pow(vect.y, 2));
+    return sf::Vector2f(vect.x / norm, vect.y / norm);
+}
+
 void Entity::setVelocity(sf::Vector2f velocity)
 {
     this->velocity = velocity;
