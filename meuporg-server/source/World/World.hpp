@@ -5,6 +5,10 @@
 
 #include "../Kantan-2/kantan.hpp"
 
+#include "../Accounts.hpp"
+#include "../Components/ClientLinkComponent.hpp"
+#include "../Systems/ClientInputSystem.hpp"
+
 /*
     World class.
     Manages the world for a single unit.
@@ -24,6 +28,12 @@ class World
         // Updates the world.
         void update(sf::Time dt);
 
+        // Creates a player instance.
+        void playerConnected(Client* client);
+
+        // Removes a player instance.
+        void playerDisconnected(Client* client);
+
     protected:
         // Removes the entities marked as to delete.
         void cleanEntities();
@@ -41,7 +51,11 @@ class World
         kantan::MovementComponent* createMovementComponent(std::size_t ownerId);
         kantan::RotationComponent* createRotationComponent(std::size_t ownerId);
 
+        ClientLinkComponent* createClientLinkComponent(std::size_t ownerId);
+
         // createXXX methods.
+        kantan::Entity* createPlayer(Client* client);
+        kantan::Entity* createNPC();
 
     protected:
         // Entities.
@@ -53,9 +67,13 @@ class World
         std::vector<kantan::MovementComponent*> m_movementComponents;
         std::vector<kantan::RotationComponent*> m_rotationComponents;
 
+        std::vector<ClientLinkComponent*> m_clientLinkComponents;
+
         // Systems.
         kantan::PolygonCollisionSystem m_collisionSystem;
         kantan::RotationSystem m_rotationSystem;
+
+        ClientInputSystem m_clientInputSystem;
 };
 
 template<typename T>

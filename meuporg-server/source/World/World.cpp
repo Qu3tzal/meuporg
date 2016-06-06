@@ -21,6 +21,9 @@ World::~World()
 
     for(kantan::RotationComponent* rc : m_rotationComponents)
         delete rc;
+
+    for(ClientLinkComponent* clc : m_clientLinkComponents)
+        delete clc;
 }
 
 void World::init()
@@ -30,14 +33,44 @@ void World::init()
 
 void World::update(sf::Time dt)
 {
+    // Client inputs.
+    m_clientInputSystem.update(m_clientLinkComponents, m_entities);
+
     // Rotations.
-    m_rotationSystem.update(dt, m_polygonHitboxComponents, m_rotationComponents);
+    //m_rotationSystem.update(dt, m_polygonHitboxComponents, m_rotationComponents);
 
     // Collision.
     m_collisionSystem.update(dt, m_polygonHitboxComponents, m_movementComponents);
 
     // Clean the entities.
     cleanEntities();
+}
+
+void World::playerConnected(Client* client)
+{
+    createPlayer(client);
+}
+
+void World::playerDisconnected(Client* client)
+{
+    for(ClientLinkComponent* clc : m_clientLinkComponents)
+    {
+        if(clc->client == client)
+        {
+            // Get the entity.
+            kantan::Entity* entity = kantan::Entity::getEntityWithId(clc->getOwnerId(), m_entities);
+
+            if(entity == nullptr)
+                continue;
+
+            // Mark as to delete.
+            kantan::DeletionMarkerComponent* dmc = entity->getComponent<kantan::DeletionMarkerComponent>("DeletionMarker");
+            dmc->marked = true;
+
+            // Null the client link.
+            clc->client = nullptr;
+        }
+    }
 }
 
 void World::cleanEntities()
@@ -69,6 +102,8 @@ void World::cleanEntities()
                         removeComponentFrom<kantan::MovementComponent>(component, m_movementComponents);
                     else if(component->getName() == "Rotation")
                         removeComponentFrom<kantan::RotationComponent>(component, m_rotationComponents);
+                    else if(component->getName() == "ClientLink")
+                        removeComponentFrom<ClientLinkComponent>(component, m_clientLinkComponents);
                 }
             }
             else
@@ -128,3 +163,72 @@ kantan::RotationComponent* World::createRotationComponent(std::size_t ownerId)
     return rc;
 }
 
+ClientLinkComponent* World::createClientLinkComponent(std::size_t ownerId)
+{
+    ClientLinkComponent* clc = new ClientLinkComponent(ownerId);
+    m_clientLinkComponents.push_back(clc);
+
+    return clc;
+}
+
+kantan::Entity* World::createPlayer(Client* client)
+{
+    // Create the entity.
+    kantan::Entity* player = createEntity("Player");
+
+    // Create the components.
+    kantan::PolygonHitboxComponent* phc = createPolygonHitboxComponent(player->getId());
+    kantan::MovementComponent* mc = createMovementComponent(player->getId());
+    ClientLinkComponent* clc = createClientLinkComponent(player->getId());
+
+    // Configure the components.
+    phc->points = {
+            sf::Vector2f(0.f, 0.f),
+            sf::Vector2f(31.f, 0.f),
+            sf::Vector2f(31.f, 48.f),
+            sf::Vector2f(0.f, 48.f)
+        };
+    phc->computeAxes();
+    phc->isBlocking = true;
+
+    mc->maximumSpeed = 1000.f;
+
+    clc->client = client;
+
+    // Add the components to the entity.
+    player->addComponent(phc);
+    player->addComponent(mc);
+    player->addComponent(clc);
+
+    // Return the entity.
+    return player;
+}
+
+kantan::Entity* World::createNPC()
+{
+    // Create the entity.
+    kantan::Entity* npc = createEntity("NPC");
+
+    // Create the components.
+    kantan::PolygonHitboxComponent* phc = createPolygonHitboxComponent(npc->getId());
+    kantan::MovementComponent* mc = createMovementComponent(npc->getId());
+
+    // Configure the components.
+    phc->points = {
+            sf::Vector2f(0.f, 0.f),
+            sf::Vector2f(31.f, 0.f),
+            sf::Vector2f(31.f, 48.f),
+            sf::Vector2f(0.f, 48.f)
+        };
+    phc->computeAxes();
+    phc->isBlocking = true;
+
+    mc->maximumSpeed = 1000.f;
+
+    // Add the components to the entity.
+    npc->addComponent(phc);
+    npc->addComponent(mc);
+
+    // Return the entity.
+    return npc;
+}

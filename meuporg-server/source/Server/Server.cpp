@@ -191,7 +191,11 @@ void Server::disconnectPlayer(std::string username, std::string reason)
         // Alias.
         Client* client = (*clientItr);
 
+        // Null the linked client.
         m_accounts.at(username)->linkedClient = nullptr;
+
+        // Notify the world.
+        m_world.playerDisconnected(client);
 
         std::cout << "[GAME_SERVER] '" << username << "' has left the game (" << reason << ")." << std::endl;
 
@@ -382,6 +386,9 @@ void Server::receiveInputThroughUDP()
 
                             // Notify everyone the player connected.
                             notifyPlayerConnected(username);
+
+                            // Notify the world.
+                            m_world.playerConnected(m_accounts.at(username)->linkedClient);
                         }
                     }
                 }
