@@ -2,6 +2,7 @@
 #define KANTAN_ENTITY
 
 #include <string>
+#include <vector>
 #include <unordered_map>
 
 namespace kantan
@@ -13,6 +14,11 @@ namespace kantan
 	**/
 	class Entity
 	{
+        public:
+            // Returns the entity with the given id.
+            // Returns nullptr if not found.
+            static Entity* getEntityWithId(std::size_t id, std::vector<Entity*>& entities);
+
 		public:
 			// Ctor.
 			Entity(std::string name);

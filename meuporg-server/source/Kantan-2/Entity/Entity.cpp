@@ -6,6 +6,18 @@ namespace kantan
     /// Static.
     std::size_t Entity::m_lastid = 0;
 
+    Entity* Entity::getEntityWithId(std::size_t id, std::vector<Entity*>& entities)
+    {
+        auto itr = std::find_if(entities.begin(), entities.end(), [id](kantan::Entity* e){
+                                    return e->getId() == id;
+                    });
+
+        if(itr == entities.end())
+            return nullptr;
+
+        return (*itr);
+    }
+
 	/// Ctor.
 	Entity::Entity(std::string name)
 		: m_id(m_lastid++)
