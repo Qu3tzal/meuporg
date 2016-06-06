@@ -5,7 +5,7 @@ Game::Game(sf::RenderWindow* window) : Version(001)
     , token("")
     , udpPacketNumber(0)
     , username("")
-    , chat(window, &gameServerSocket)
+    , chat(window, &gameServerSocket, &fonts)
 {
     //ctor
 }

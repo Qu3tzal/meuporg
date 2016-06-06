@@ -14,7 +14,7 @@
 class Chat : public sf::Drawable, public sf::Transformable
 {
     public:
-        Chat(sf::RenderWindow* window, sf::TcpSocket* socket);
+        Chat(sf::RenderWindow* window, sf::TcpSocket* socket, kantan::FontHolder* fonts);
         virtual ~Chat();
 
         void init();
@@ -33,6 +33,7 @@ class Chat : public sf::Drawable, public sf::Transformable
     void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 
     GUIButtonPool buttons;
+
     GUITextInputPool textInputs;
 
     sf::TcpSocket* socket;

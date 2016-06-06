@@ -1,24 +1,26 @@
 #include "GUITextInputPool.hpp"
 
-GUITextInputPool::GUITextInputPool(sf::RenderWindow* window) :
+GUITextInputPool::GUITextInputPool(sf::RenderWindow* window, kantan::FontHolder* fonts) :
     m_focusedTextName("")
     , m_useCustomView(false)
 {
     this->window = window;
-    font.loadFromFile("assets/fonts/secrcode.ttf");
+    this->fonts = fonts;
+    fonts->load(1, "assets/fonts/secrcode.ttf");
+    //font.loadFromFile("assets/fonts/secrcode.ttf");
 }
 
 GUITextInputPool::~GUITextInputPool()
 {
 }
 
-void GUITextInputPool::addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, FontLoader::FontId fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor)
+void GUITextInputPool::addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor)
 {
     sf::Text text, placeholderText;
     //text.setFont(fonts.get(fontId));
-    text.setFont(font);
+    text.setFont(fonts->get(fontId));
     //placeholderText.setFont(fonts.get(fontId));
-    placeholderText.setFont(font);
+    placeholderText.setFont(fonts->get(fontId));
 
     text.setCharacterSize(charSize);
     placeholderText.setCharacterSize(charSize);
