@@ -4,7 +4,7 @@ Chat::Chat(sf::RenderWindow* window, sf::TcpSocket* socket, kantan::FontHolder* 
     , textInputs(window, fonts)
 {
     this->socket = socket;
-    init();
+    //init();
 }
 
 Chat::~Chat()

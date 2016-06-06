@@ -8,6 +8,7 @@ Game::Game(sf::RenderWindow* window) : Version(001)
     , chat(window, &gameServerSocket, &fonts)
 {
     //ctor
+    fonts.load(1, "assets/fonts/secrcode.ttf");
 }
 
 Game::~Game()
@@ -18,6 +19,7 @@ Game::~Game()
 
 void Game::init()
 {
+    chat.init();
     serverConnection();
 }
 

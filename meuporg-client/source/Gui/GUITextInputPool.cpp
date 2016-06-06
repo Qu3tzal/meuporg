@@ -6,7 +6,7 @@ GUITextInputPool::GUITextInputPool(sf::RenderWindow* window, kantan::FontHolder*
 {
     this->window = window;
     this->fonts = fonts;
-    fonts->load(1, "assets/fonts/secrcode.ttf");
+    //fonts->load(1, "assets/fonts/secrcode.ttf");
     //font.loadFromFile("assets/fonts/secrcode.ttf");
 }
 
