@@ -27,6 +27,8 @@ class Player : public Entity
 
         void setDirection();
 
+        void calculatePrecision(sf::Vector2f vect);
+
     protected:
 
         virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;

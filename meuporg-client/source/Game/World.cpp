@@ -95,6 +95,8 @@ void World::updateEntity(sf::Packet* packet)
         *packet >> position
                 >> velocity;
         e->setName(name);
+        Player* player = static_cast<Player*>(e);
+        player->calculatePrecision(position);
         e->setPosition(position);
         e->setVelocity(velocity);
     }

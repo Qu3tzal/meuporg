@@ -160,6 +160,11 @@ void Player::setDirection()
 
 }
 
+void Player::calculatePrecision(sf::Vector2f vect)
+{
+    std::cout << distEucli(vect, getPosition()) << std::endl;
+}
+
 void Player::setState(State state)
 {
     this->state = state;

@@ -64,6 +64,11 @@ sf::Vector2f Entity::normalize(sf::Vector2f vect)
     return sf::Vector2f(vect.x / norm, vect.y / norm);
 }
 
+double Entity::distEucli(sf::Vector2f v1, sf::Vector2f v2)
+{
+    return std::sqrt(std::pow(v1.x - v1.y, 2) + std::pow(v2.x - v2.y, 2));
+}
+
 void Entity::setVelocity(sf::Vector2f velocity)
 {
     this->velocity = velocity;

@@ -40,6 +40,8 @@ class Entity : public sf::Drawable, public sf::Transformable
 
         sf::Vector2f normalize(sf::Vector2f vect);
 
+        double distEucli(sf::Vector2f v1, sf::Vector2f v2);
+
     protected:
 
          virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const = 0;
