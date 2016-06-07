@@ -27,6 +27,8 @@ class Chat : public sf::Drawable, public sf::Transformable
 
         void handleEvent(sf::Event e);
 
+        bool isActive();
+
     protected:
 
     // Draws the textInputs and button
@@ -37,6 +39,8 @@ class Chat : public sf::Drawable, public sf::Transformable
     GUITextInputPool textInputs;
 
     sf::TcpSocket* socket;
+
+    bool chatActiveFlag;
 
     private:
 };

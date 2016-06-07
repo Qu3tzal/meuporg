@@ -2,6 +2,7 @@
 
 Chat::Chat(sf::RenderWindow* window, sf::TcpSocket* socket, kantan::FontHolder* fonts) : buttons(window)
     , textInputs(window, fonts)
+    , chatActiveFlag(false)
 {
     this->socket = socket;
     //init();
@@ -43,6 +44,14 @@ void Chat::update()
 {
     buttons.update();
     textInputs.update();
+    if(textInputs.getFocusedName() == "Chat")
+    {
+        chatActiveFlag == true;
+    }
+    else
+    {
+        chatActiveFlag == false;
+    }
 }
 
 void Chat::handleEvent(sf::Event e)
@@ -56,6 +65,11 @@ void Chat::handleEvent(sf::Event e)
             sendMessage();
         }
     }
+}
+
+bool Chat::isActive()
+{
+    return chatActiveFlag;
 }
 
 void Chat::draw(sf::RenderTarget& window, sf::RenderStates states) const

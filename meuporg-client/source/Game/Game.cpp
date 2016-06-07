@@ -221,7 +221,8 @@ bool Game::isRunning() const
 
 void Game::update(sf::Time dt)
 {
-    testInput();
+    if(!chat.isActive())
+        testInput();
     sendInput();
     receivePacket();
     chat.update();
