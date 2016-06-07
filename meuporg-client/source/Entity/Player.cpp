@@ -124,7 +124,8 @@ void Player::update(sf::Time dt)
             sprite.setTextureRect(a_MoveDown.getFrame().first);
             break;
     }
-    nameText.setPosition(getPosition().x, getPosition().y - 30);
+
+    nameText.setPosition(0, -30);
 }
 
 void Player::setDirection()
