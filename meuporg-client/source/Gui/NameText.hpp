@@ -4,6 +4,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "../ResourceHolder.hpp"
+#include "../Gui/GraphicsUtils.hpp"
 
 class NameText : public sf::Drawable, public sf::Transformable
 {

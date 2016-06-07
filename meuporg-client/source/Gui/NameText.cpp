@@ -15,6 +15,8 @@ NameText::NameText(std::string name, kantan::FontHolder* fonts)
 
     text.setPosition(5, 5);
 
+    centerOrigin(text);
+    centerOrigin(shape);
 }
 
 NameText::~NameText()
