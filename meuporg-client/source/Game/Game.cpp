@@ -162,9 +162,14 @@ void Game::connectToGameServer()
         sf::Packet receivePacket;
 
         // While we didn't received anything, we keep sending on UDP.
+        sf::Clock clock;
         while(gameServerSocket.receive(receivePacket) != sf::Socket::Done)
         {
-            gameServerUdpSocket.send(packet, ip, 22623);
+            if(clock.getElapsedTime() >= sf::seconds(0.5f))
+            {
+                gameServerUdpSocket.send(packet, ip, 22623);
+                clock.restart();
+            }
         }
 
         gameServerSocket.setBlocking(true);
