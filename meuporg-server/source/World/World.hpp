@@ -7,6 +7,7 @@
 
 #include "../Accounts.hpp"
 #include "../Components/ClientLinkComponent.hpp"
+#include "../Components/StaticMarkerComponent.hpp"
 #include "../Systems/ClientInputSystem.hpp"
 #include "../Utils/SFMLPacketUtils.hpp"
 #include "../NetworkValues.hpp"
@@ -50,7 +51,7 @@ class World
         template<typename T>
         bool removeComponentFrom(kantan::Component* c, std::vector<T*>& components);
 
-        // Creates an entity with only the deletion marker component.
+        // Creates an entity with the deletion and static marker component.
         kantan::Entity* createEntity(std::string name);
 
         // createXXXComponent methods.
@@ -60,6 +61,7 @@ class World
         kantan::RotationComponent* createRotationComponent(std::size_t ownerId);
 
         ClientLinkComponent* createClientLinkComponent(std::size_t ownerId);
+        StaticMarkerComponent* createStaticMarkerComponent(std::size_t ownerId);
 
         // createXXX methods.
         kantan::Entity* createPlayer(Client* client);
@@ -76,6 +78,7 @@ class World
         std::vector<kantan::RotationComponent*> m_rotationComponents;
 
         std::vector<ClientLinkComponent*> m_clientLinkComponents;
+        std::vector<StaticMarkerComponent*> m_staticMarkerComponents;
 
         // Systems.
         kantan::PolygonCollisionSystem m_collisionSystem;

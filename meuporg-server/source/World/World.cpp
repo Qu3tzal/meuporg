@@ -25,6 +25,9 @@ World::~World()
 
     for(ClientLinkComponent* clc : m_clientLinkComponents)
         delete clc;
+
+    for(StaticMarkerComponent* smc : m_staticMarkerComponents)
+        delete smc;
 }
 
 void World::init()
@@ -204,7 +207,10 @@ kantan::Entity* World::createEntity(std::string name)
     kantan::Entity* e = new kantan::Entity(name);
 
     kantan::DeletionMarkerComponent* dmc = createDeletionMarkerComponent(e->getId());
+    StaticMarkerComponent* smc = createStaticMarkerComponent(e->getId());
+
     e->addComponent(dmc);
+    e->addComponent(smc);
 
     m_entities.push_back(e);
 
@@ -248,6 +254,14 @@ ClientLinkComponent* World::createClientLinkComponent(std::size_t ownerId)
 {
     ClientLinkComponent* clc = new ClientLinkComponent(ownerId);
     m_clientLinkComponents.push_back(clc);
+
+    return clc;
+}
+
+StaticMarkerComponent* World::createStaticMarkerComponent(std::size_t ownerId)
+{
+    StaticMarkerComponent* clc = new StaticMarkerComponent(ownerId);
+    m_staticMarkerComponents.push_back(clc);
 
     return clc;
 }
