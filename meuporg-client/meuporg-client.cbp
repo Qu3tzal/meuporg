@@ -88,6 +88,8 @@
 		<Unit filename="source/Gui/GUITextInputPool.cpp" />
 		<Unit filename="source/Gui/GUITextInputPool.hpp" />
 		<Unit filename="source/Gui/GraphicsUtils.hpp" />
+		<Unit filename="source/Gui/NameText.cpp" />
+		<Unit filename="source/Gui/NameText.hpp" />
 		<Unit filename="source/NetworkValues.hpp" />
 		<Unit filename="source/PlayerInput.hpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />
