@@ -51,7 +51,7 @@ void Player::update(sf::Time dt)
     switch(direction)
     {
         case Direction::UP :
-            if(state == STATE::WALKING)
+            if(state == State::WALKING)
             {
                 a_MoveUp.update(dt);
             }
@@ -67,7 +67,7 @@ void Player::update(sf::Time dt)
             sprite.setTextureRect(a_MoveUp.getFrame().first);
             break;
         case Direction::DOWN :
-            if(state == STATE::WALKING)
+            if(state == State::WALKING)
             {
                 a_MoveDown.update(dt);
             }
@@ -83,7 +83,7 @@ void Player::update(sf::Time dt)
             sprite.setTextureRect(a_MoveDown.getFrame().first);
             break;
         case Direction::LEFT :
-            if(state == STATE::WALKING)
+            if(state == State::WALKING)
             {
                 a_MoveLeft.update(dt);
             }
@@ -98,7 +98,7 @@ void Player::update(sf::Time dt)
             sprite.setTextureRect(a_MoveLeft.getFrame().first);
             break;
         case Direction::RIGHT :
-            if(state == STATE::WALKING)
+            if(state == State::WALKING)
             {
                  a_MoveRight.update(dt);
             }

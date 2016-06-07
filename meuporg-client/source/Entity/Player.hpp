@@ -13,7 +13,7 @@ class Player : public Entity
         Player(kantan::TextureHolder* textures, std::string name, unsigned int id);
         virtual ~Player();
 
-        enum STATE {IDLS, WALKING};
+        enum State {IDLE, WALKING};
 
         enum Direction{UP, DOWN, LEFT, RIGHT};
 
@@ -21,7 +21,7 @@ class Player : public Entity
 
         virtual void update(sf::Time dt);
 
-        void setState(STATE state);
+        void setState(State state);
 
         void setDirection();
 
@@ -29,7 +29,7 @@ class Player : public Entity
 
         virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 
-        STATE state;
+        State state;
 
         Animation a_MoveUp;
         Animation a_MoveDown;
