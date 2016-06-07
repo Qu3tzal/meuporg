@@ -13,6 +13,15 @@ Entity::~Entity()
     //dtor
 }
 
+void Entity::update(sf::Time dt)
+{
+    // Position prediction based on the movement.
+    if(velocity != sf::Vector2f(0.f, 0.f))
+    {
+        setPosition(getPosition() + velocity * dt.asSeconds());
+    }
+}
+
 unsigned int Entity::getId() const
 {
     return id;
