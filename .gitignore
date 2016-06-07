@@ -73,3 +73,7 @@ meuporg-client/bin/Debug/assets/map.png
 meuporg-client/bin/Debug/assets/fonts/secrcode.txt
 meuporg-client/bin/Debug/assets/saitama_spritesheet.png
 meuporg-client/bin/Debug/assets/spartan_spritesheet.png
+meuporg-client/bin/Release/assets/equipment.png
+meuporg-client/bin/Release/assets/fonts/license.txt
+meuporg-client/bin/Release/assets/fonts/secrcode.ttf
+meuporg-client/bin/Release/assets/fonts/secrcode.txt
