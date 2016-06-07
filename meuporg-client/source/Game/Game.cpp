@@ -8,6 +8,7 @@ Game::Game(sf::RenderWindow* window) : Version(001)
     , username("")
     , chat(window, &gameServerSocket, &fonts)
     , world(&textures, &fonts)
+    , loosedPacket(0)
 {
     //ctor
     fonts.load(1, "assets/fonts/secrcode.ttf");
@@ -231,9 +232,9 @@ void Game::update(sf::Time dt)
     if(!chat.isActive())
         testInput();
     sendInput();
+    world.update(dt);
     receivePacket();
     chat.update();
-    world.update(dt);
 }
 
 void Game::EventHandle(sf::Event event)
@@ -275,7 +276,12 @@ void Game::receivePacket()
         case NetworkValues::UPDATE:
             unsigned long long number;
             packet >> number;
-
+            if(number - udpPacketNumberReceive > 1)
+            {
+                loosedPacket += (number - 1) - udpPacketNumberReceive;
+                std::cout   << "[PACKET_LOSS] " << loosedPacket << " / " << udpPacketNumberReceive
+                                            << " (" << (loosedPacket * 100.f) / (float)(udpPacketNumberReceive) << "%)" << std::endl;
+            }
             if(number > udpPacketNumberReceive)
             {
                 udpPacketNumberReceive = number;

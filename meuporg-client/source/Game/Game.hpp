@@ -112,6 +112,8 @@ class Game
 
         // World
         World world;
+
+        unsigned long long loosedPacket;
 };
 
 #endif // GAME_HPP_INCLUDED
