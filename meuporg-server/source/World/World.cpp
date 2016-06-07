@@ -83,6 +83,13 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 
     for(kantan::Entity* e : m_entities)
     {
+        // Check if the entity is marked as static.
+        StaticMarkerComponent* smc = e->getComponent<StaticMarkerComponent>("StaticMarker");
+
+        // If static, do not send updates to client.
+        if(smc->isStatic)
+            continue;
+
         packetId++;
 
         sf::Packet packet;
@@ -202,12 +209,14 @@ void World::cleanEntities(Server* server)
     }
 }
 
-kantan::Entity* World::createEntity(std::string name)
+kantan::Entity* World::createEntity(std::string name, bool isStatic)
 {
     kantan::Entity* e = new kantan::Entity(name);
 
     kantan::DeletionMarkerComponent* dmc = createDeletionMarkerComponent(e->getId());
     StaticMarkerComponent* smc = createStaticMarkerComponent(e->getId());
+
+    smc->isStatic = isStatic;
 
     e->addComponent(dmc);
     e->addComponent(smc);

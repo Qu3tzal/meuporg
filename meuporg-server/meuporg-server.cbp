@@ -74,6 +74,8 @@
 		<Unit filename="source/ClientEntityEnums.hpp" />
 		<Unit filename="source/Components/ClientLinkComponent.cpp" />
 		<Unit filename="source/Components/ClientLinkComponent.hpp" />
+		<Unit filename="source/Components/StaticMarkerComponent.cpp" />
+		<Unit filename="source/Components/StaticMarkerComponent.hpp" />
 		<Unit filename="source/InformationServer/InformationServer.cpp" />
 		<Unit filename="source/InformationServer/InformationServer.hpp" />
 		<Unit filename="source/Kantan-2/Component/AABBHitboxComponent.cpp" />

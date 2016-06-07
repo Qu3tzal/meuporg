@@ -52,7 +52,7 @@ class World
         bool removeComponentFrom(kantan::Component* c, std::vector<T*>& components);
 
         // Creates an entity with the deletion and static marker component.
-        kantan::Entity* createEntity(std::string name);
+        kantan::Entity* createEntity(std::string name, bool isStatic = false);
 
         // createXXXComponent methods.
         kantan::DeletionMarkerComponent* createDeletionMarkerComponent(std::size_t ownerId);
