@@ -3,6 +3,7 @@
 
 #include <SFML/System.hpp>
 #include "../ResourceHolder.hpp"
+//#include "../GraphicsUtils.inl"
 
 class Entity : public sf::Drawable, public sf::Transformable
 {

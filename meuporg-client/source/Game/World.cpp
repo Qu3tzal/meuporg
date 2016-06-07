@@ -106,8 +106,8 @@ void World::updateEntity(sf::Packet* packet)
             case Entity::Type::PLAYER:
                 {
                     unsigned int state_ui;
-                    *packet >> state_ui
-                            >> name;
+                    *packet >> state_ui;
+
 
                     entity = new Player(textures, fonts, name, id);
                     Player::State state = static_cast<Player::State>(state_ui);
@@ -120,8 +120,7 @@ void World::updateEntity(sf::Packet* packet)
             case Entity::Type::NPC:
                 {
                     unsigned int state_ui;
-                    *packet >> state_ui
-                            >> name;
+                    *packet >> state_ui;
 
                     entity = new Npc(textures, fonts, name, id);
                     Npc::State state = static_cast<Npc::State>(state_ui);

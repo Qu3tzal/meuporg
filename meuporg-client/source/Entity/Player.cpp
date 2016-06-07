@@ -5,7 +5,7 @@ Player::Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::
     , direction(Direction::DOWN)
     , nameText(name, fonts)
 {
-
+    std::cout << "name : " << name << std::endl;
 }
 
 Player::~Player()
@@ -124,8 +124,8 @@ void Player::update(sf::Time dt)
             sprite.setTextureRect(a_MoveDown.getFrame().first);
             break;
     }
-
-    nameText.setPosition(0, -30);
+    //centerOrigin(nameText);
+    nameText.setPosition(sprite.getGlobalBounds().width / 2, -30);
 }
 
 void Player::setDirection()

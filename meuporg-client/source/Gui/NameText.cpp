@@ -9,10 +9,11 @@ NameText::NameText(std::string name, kantan::FontHolder* fonts)
     text.setCharacterSize(12);
     text.setColor(sf::Color::White);
     text.setString(this->nameText);
-    text.setPosition(0, 0);
 
     shape.setSize(sf::Vector2f(text.getGlobalBounds().width + 20, text.getGlobalBounds().height + 20));
     shape.setFillColor(sf::Color(128, 128, 128, 128));
+
+    text.setPosition(5, 5);
 
 }
 

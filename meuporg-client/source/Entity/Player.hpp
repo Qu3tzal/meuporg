@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "Animation.hpp"
 #include "Entity.hpp"
