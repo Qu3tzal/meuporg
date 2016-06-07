@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include "../Server/Server.hpp"
 
 World::World()
 {
@@ -31,7 +32,7 @@ void World::init()
 
 }
 
-void World::update(sf::Time dt)
+void World::update(sf::Time dt, Server* server)
 {
     // Client inputs.
     m_clientInputSystem.update(m_clientLinkComponents, m_entities);
@@ -43,7 +44,7 @@ void World::update(sf::Time dt)
     m_collisionSystem.update(dt, m_polygonHitboxComponents, m_movementComponents);
 
     // Clean the entities.
-    cleanEntities();
+    cleanEntities(server);
 }
 
 void World::playerConnected(Client* client)
@@ -148,7 +149,7 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
     client->lastPacketIdSent = packetId;
 }
 
-void World::cleanEntities()
+void World::cleanEntities(Server* server)
 {
     for(std::size_t i(0) ; i < m_deletionMarkerComponents.size() ;)
     {
@@ -180,6 +181,11 @@ void World::cleanEntities()
                     else if(component->getName() == "ClientLink")
                         removeComponentFrom<ClientLinkComponent>(component, m_clientLinkComponents);
                 }
+
+                m_entities.erase(itr);
+
+                // Notify the entity has been removed.
+                server->notifyEntityRemoved(entity->getId());
             }
             else
             {

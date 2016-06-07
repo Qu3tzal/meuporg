@@ -150,7 +150,7 @@ void Server::update(sf::Time dt)
     updateNumberOfPlayers();
     updateTimeoutPlayers(dt);
 
-    m_world.update(dt);
+    m_world.update(dt, this);
 }
 
 void Server::sendUpdate()
@@ -496,6 +496,21 @@ void Server::notifyPlayerDisconnected(std::string username)
     // Prepare the packet.
     sf::Packet packet;
     packet << NetworkValues::NOTIFY << NetworkValues::PLAYER_DISCONNECTED << username;
+
+    // Send the notification to all the in-game clients.
+    for(Client* client : m_clients)
+    {
+        if(client->ingame)
+            client->gameTcp->send(packet);
+    }
+}
+
+// Notifies everyone the entity has been removed.
+void Server::notifyEntityRemoved(unsigned int entityId)
+{
+    // Prepare the packet.
+    sf::Packet packet;
+    packet << NetworkValues::NOTIFY << NetworkValues::ENTITY_REMOVED << entityId;
 
     // Send the notification to all the in-game clients.
     for(Client* client : m_clients)

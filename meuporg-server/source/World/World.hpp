@@ -12,6 +12,8 @@
 #include "../NetworkValues.hpp"
 #include "../ClientEntityEnums.hpp"
 
+class Server;
+
 /*
     World class.
     Manages the world for a single unit.
@@ -29,7 +31,7 @@ class World
         void init();
 
         // Updates the world.
-        void update(sf::Time dt);
+        void update(sf::Time dt, Server* server);
 
         // Creates a player instance.
         void playerConnected(Client* client);
@@ -42,7 +44,7 @@ class World
 
     protected:
         // Removes the entities marked as to delete.
-        void cleanEntities();
+        void cleanEntities(Server* server);
 
         // Removes a component from the component list.
         template<typename T>

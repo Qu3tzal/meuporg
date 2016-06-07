@@ -69,6 +69,8 @@ class Server
         std::map<std::string, Account*>* getAccounts();
 
     protected:
+        friend World;
+
         // Disconnects the player for the given reason.
         void disconnectPlayer(std::string username, std::string reason);
 
@@ -92,6 +94,9 @@ class Server
 
         // Notifies everyone the player disconnected.
         void notifyPlayerDisconnected(std::string username);
+
+        // Notifies everyone the entity has been removed.
+        void notifyEntityRemoved(unsigned int entityId);
 
     protected:
         // Number of players connected and maximum number of players.
