@@ -254,9 +254,10 @@ void Game::receivePacket()
     packet.clear();
     sf::IpAddress ip;
     unsigned short int remotePort(0);
-    status = gameServerUdpSocket.receive(packet, ip, remotePort);
+    //status = gameServerUdpSocket.receive(packet, ip, remotePort);
 
-    if(status == sf::Socket::Status::Done)
+    //if(status == sf::Socket::Status::Done)
+    while(gameServerUdpSocket.receive(packet, ip, remotePort) == sf::Socket::Status::Done)
     {
         unsigned int netCode(0);
         packet >> netCode;
