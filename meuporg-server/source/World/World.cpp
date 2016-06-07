@@ -86,6 +86,9 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 
         if(e->getName() == "Player")
         {
+            // Set the entity type.
+            packet << ClientSide::EntityType::PLAYER;
+
             // Get the CLC.
             ClientLinkComponent* clc = e->getComponent<ClientLinkComponent>("ClientLink");
 
@@ -133,7 +136,8 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
         }
         else if(e->getName() == "NPC")
         {
-
+            // Set the entity type.
+            packet << ClientSide::EntityType::NPC;
         }
 
         // Send the packet.
