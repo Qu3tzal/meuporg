@@ -12,6 +12,7 @@ Game::Game(sf::RenderWindow* window) : Version(001)
 {
     //ctor
     fonts.load(1, "assets/fonts/secrcode.ttf");
+    textures.load(2, "assets/spartan_spritesheet.png");
     textures.load(1, "assets/saitama_spritesheet.png");
 }
 

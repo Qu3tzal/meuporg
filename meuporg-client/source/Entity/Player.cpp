@@ -20,41 +20,41 @@ void Player::init()
 
     // Move down animation
     a_MoveDown.addTextRect(sf::IntRect(16, 8, 31, 48));
-    a_MoveDown.addTextRect(sf::IntRect(81, 9, 30, 47));
+    a_MoveDown.addTextRect(sf::IntRect(81, 9, 30, 47), sf::Vector2f(-1.f, -1.f));
     a_MoveDown.addTextRect(sf::IntRect(144, 8, 31, 48));
-    a_MoveDown.addTextRect(sf::IntRect(208, 9, 30, 47));
+    a_MoveDown.addTextRect(sf::IntRect(208, 9, 30, 47), sf::Vector2f(0.f, -1.f));
     a_MoveDown.setLoop(true);
     a_MoveDown.setSpeed(12);
 
     // Move up animation
     a_MoveUp.addTextRect(sf::IntRect(16, 200, 31, 48));
-    a_MoveUp.addTextRect(sf::IntRect(83, 201, 26, 47));
+    a_MoveUp.addTextRect(sf::IntRect(83, 201, 26, 47), sf::Vector2f( -3.f, -1.f));
     a_MoveUp.addTextRect(sf::IntRect(144, 200, 31, 48));
-    a_MoveUp.addTextRect(sf::IntRect(210, 201, 26, 47));
+    a_MoveUp.addTextRect(sf::IntRect(210, 201, 26, 47), sf::Vector2f( -3.f, -1.f));
     a_MoveUp.setLoop(true);
     a_MoveUp.setSpeed(12);
 
     // Move Left animation
     a_MoveLeft.addTextRect(sf::IntRect(22, 72, 22, 48));
-    a_MoveLeft.addTextRect(sf::IntRect(85, 73, 27, 47));
+    a_MoveLeft.addTextRect(sf::IntRect(85, 73, 27, 47), sf::Vector2f(0.f, -1.f));
     a_MoveLeft.addTextRect(sf::IntRect(150, 72, 22, 48));
-    a_MoveLeft.addTextRect(sf::IntRect(212, 73, 27, 47));
+    a_MoveLeft.addTextRect(sf::IntRect(212, 73, 27, 47), sf::Vector2f(0.f, -1.f));
     a_MoveLeft.setLoop(true);
     a_MoveLeft.setSpeed(12);
 
     // Move Right animation
-    a_MoveRight.addTextRect(sf::IntRect(20, 136, 22, 48));
-    a_MoveRight.addTextRect(sf::IntRect(80, 137, 27, 47));
-    a_MoveRight.addTextRect(sf::IntRect(148, 136, 22, 48));
-    a_MoveRight.addTextRect(sf::IntRect(209, 137, 27, 47));
+    a_MoveRight.addTextRect(sf::IntRect(20, 136, 22, 48), sf::Vector2f(-5.f, 0.f));
+    a_MoveRight.addTextRect(sf::IntRect(80, 137, 27, 47), sf::Vector2f(0.f, -1.f));
+    a_MoveRight.addTextRect(sf::IntRect(148, 136, 22, 48), sf::Vector2f(-4.f, 0.f));
+    a_MoveRight.addTextRect(sf::IntRect(209, 137, 27, 47), sf::Vector2f(0.f, -1.f));
     a_MoveRight.setLoop(true);
     a_MoveRight.setSpeed(12);
 }
 
 void Player::update(sf::Time dt)
 {
-    Entity::update(dt);
-
+    //Entity::update(dt);
+    sprite.setOrigin(sf::Vector2f(0.f, 0.f));
     setDirection();
     switch(direction)
     {
@@ -73,6 +73,7 @@ void Player::update(sf::Time dt)
             a_MoveRight.reset();
 
             sprite.setTextureRect(a_MoveUp.getFrame().first);
+            sprite.setOrigin(a_MoveUp.getFrame().second);
             break;
         case Direction::DOWN :
             if(state == State::WALKING)
@@ -89,6 +90,7 @@ void Player::update(sf::Time dt)
             a_MoveRight.reset();
 
             sprite.setTextureRect(a_MoveDown.getFrame().first);
+            sprite.setOrigin(a_MoveDown.getFrame().second);
             break;
         case Direction::LEFT :
             if(state == State::WALKING)
@@ -104,6 +106,7 @@ void Player::update(sf::Time dt)
             a_MoveRight.reset();
 
             sprite.setTextureRect(a_MoveLeft.getFrame().first);
+            sprite.setOrigin(a_MoveLeft.getFrame().second);
             break;
         case Direction::RIGHT :
             if(state == State::WALKING)
@@ -119,13 +122,15 @@ void Player::update(sf::Time dt)
             a_MoveDown.reset();
 
             sprite.setTextureRect(a_MoveRight.getFrame().first);
+            sprite.setOrigin(a_MoveRight.getFrame().second);
             break;
         default:
             sprite.setTextureRect(a_MoveDown.getFrame().first);
+            sprite.setOrigin(a_MoveDown.getFrame().second);
             break;
     }
     //centerOrigin(nameText);
-    nameText.setPosition(sprite.getGlobalBounds().width / 2, -30);
+    nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, -30 - sprite.getOrigin().y);
 }
 
 void Player::setDirection()
@@ -162,7 +167,7 @@ void Player::setDirection()
 
 void Player::calculatePrecision(sf::Vector2f vect)
 {
-    std::cout << distEucli(vect, getPosition()) << std::endl;
+    //std::cout << distEucli(vect, getPosition()) << std::endl;
 }
 
 void Player::setState(State state)
