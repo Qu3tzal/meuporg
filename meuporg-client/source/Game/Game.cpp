@@ -269,7 +269,7 @@ void Game::receivePacket()
             unsigned long long number;
             packet >> number;
 
-            if(number > udpPacketNumberReceive)
+            if(number >= udpPacketNumberReceive)
             {
                 udpPacketNumberReceive = number;
                 world.updateEntity(&packet);
