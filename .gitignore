@@ -66,3 +66,10 @@ meuporg-client/bin/Debug/StessUltime.bat
 meuporg-server/meuporg-server.depend
 *.depend
 meuporg-client/bin/Debug_3.zip
+meuporg-client/bin/Debug/assets/equipment.png
+meuporg-client/bin/Debug/assets/fonts/license.txt
+meuporg-client/bin/Debug/assets/fonts/secrcode.ttf
+meuporg-client/bin/Debug/assets/map.png
+meuporg-client/bin/Debug/assets/fonts/secrcode.txt
+meuporg-client/bin/Debug/assets/saitama_spritesheet.png
+meuporg-client/bin/Debug/assets/spartan_spritesheet.png

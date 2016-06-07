@@ -46,11 +46,11 @@ void Chat::update()
     textInputs.update();
     if(textInputs.getFocusedName() == "Chat")
     {
-        chatActiveFlag == true;
+        chatActiveFlag = true;
     }
     else
     {
-        chatActiveFlag == false;
+        chatActiveFlag = false;
     }
 }
 
