@@ -36,11 +36,11 @@ void ClientInputSystem::update(std::vector<ClientLinkComponent*>& clientLinkComp
 
                 if(clc->client->inputs.isMoveLeftKeyPressed)
                 {
-                    mc->velocity.x += 100.f;
+                    mc->velocity.x -= 100.f;
                 }
                 else if(clc->client->inputs.isMoveRightKeyPressed)
                 {
-                    mc->velocity.x -= 100.f;
+                    mc->velocity.x += 100.f;
                 }
             }
         }
