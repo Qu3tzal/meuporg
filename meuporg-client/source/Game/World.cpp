@@ -73,7 +73,7 @@ void World::updateEntity(sf::Packet* packet)
 
                    *packet >> state_ui;
 
-                   Player::STATE state = static_cast<Player::STATE>(state_ui);
+                   Player::State state = static_cast<Player::State>(state_ui);
 
                    player->setState(state);
                 }
@@ -109,7 +109,7 @@ void World::updateEntity(sf::Packet* packet)
                             >> name;
 
                     entity = new Player(textures, name, id);
-                    Player::STATE state = static_cast<Player::STATE>(state_ui);
+                    Player::State state = static_cast<Player::State>(state_ui);
 
                     Player* player = static_cast<Player*>(entity);
 

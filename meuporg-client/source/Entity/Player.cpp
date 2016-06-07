@@ -144,7 +144,7 @@ void Player::setDirection()
 
 }
 
-void Player::setState(STATE state)
+void Player::setState(State state)
 {
     this->state = state;
 }
