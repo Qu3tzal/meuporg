@@ -89,7 +89,7 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
             // Get the CLC.
             ClientLinkComponent* clc = e->getComponent<ClientLinkComponent>("ClientLink");
 
-            if(clc == nullptr)
+            if(clc == nullptr || clc->client == nullptr)
                 continue;
 
             packet << clc->client->username;
