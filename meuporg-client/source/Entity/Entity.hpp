@@ -11,7 +11,7 @@ class Entity : public sf::Drawable, public sf::Transformable
         // enum of type
         enum Type {PLAYER, NPC};
 
-        Entity(unsigned int id, std::string name, Type type, kantan::TextureHolder* textures);
+        Entity(unsigned int id, std::string name, Type type, kantan::TextureHolder* textures, kantan::FontHolder* fonts);
 
         virtual ~Entity();
 
@@ -60,6 +60,8 @@ class Entity : public sf::Drawable, public sf::Transformable
 
         // ResouceHolder
         kantan::TextureHolder* textures;
+
+        kantan::FontHolder* fonts;
 
 
     private:

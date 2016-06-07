@@ -7,7 +7,7 @@ Game::Game(sf::RenderWindow* window) : Version(001)
     , udpPacketNumberReceive(0)
     , username("")
     , chat(window, &gameServerSocket, &fonts)
-    , world(&textures)
+    , world(&textures, &fonts)
 {
     //ctor
     fonts.load(1, "assets/fonts/secrcode.ttf");

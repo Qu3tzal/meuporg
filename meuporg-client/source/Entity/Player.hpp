@@ -5,12 +5,13 @@
 
 #include "Animation.hpp"
 #include "Entity.hpp"
+#include "NameText.hpp"
 
 
 class Player : public Entity
 {
     public:
-        Player(kantan::TextureHolder* textures, std::string name, unsigned int id);
+        Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id);
         virtual ~Player();
 
         enum State {IDLE, WALKING};
@@ -41,6 +42,10 @@ class Player : public Entity
         sf::Sprite sprite;
 
         sf::Vector2f velocityNormalized;
+
+        NameText nameText;
+
+
     private:
 };
 

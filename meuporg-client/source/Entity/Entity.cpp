@@ -1,11 +1,12 @@
 #include "Entity.hpp"
 
-Entity::Entity(unsigned int id, std::string name, Entity::Type type, kantan::TextureHolder* textures)
+Entity::Entity(unsigned int id, std::string name, Entity::Type type, kantan::TextureHolder* textures, kantan::FontHolder* fonts)
 {
     this->id = id;
     this->name = name;
     this->type = type;
     this->textures = textures;
+    this->fonts = fonts;
 }
 
 Entity::~Entity()

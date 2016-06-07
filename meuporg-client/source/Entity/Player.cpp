@@ -1,8 +1,9 @@
 #include "Player.hpp"
 
-Player::Player(kantan::TextureHolder* textures, std::string name, unsigned int id)
-    : Entity(id, name, Entity::Type::PLAYER, textures)
+Player::Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id)
+    : Entity(id, name, Entity::Type::PLAYER, textures, fonts)
     , direction(Direction::DOWN)
+    , nameText(name, fonts)
 {
 
 }
@@ -123,6 +124,7 @@ void Player::update(sf::Time dt)
             sprite.setTextureRect(a_MoveDown.getFrame().first);
             break;
     }
+    nameText.setPosition(getPosition().x, getPosition().y - 10);
 }
 
 void Player::setDirection()
@@ -166,4 +168,5 @@ void Player::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
     states.transform *= getTransform();
     window.draw(sprite, states);
+    window.draw(nameText, states);
 }

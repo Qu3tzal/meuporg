@@ -1,8 +1,9 @@
 #include "World.hpp"
 
-World::World(kantan::TextureHolder* textures)
+World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts)
 {
     this->textures = textures;
+    this->fonts = fonts;
 }
 
 World::~World()
@@ -108,7 +109,7 @@ void World::updateEntity(sf::Packet* packet)
                     *packet >> state_ui
                             >> name;
 
-                    entity = new Player(textures, name, id);
+                    entity = new Player(textures, fonts, name, id);
                     Player::State state = static_cast<Player::State>(state_ui);
 
                     Player* player = static_cast<Player*>(entity);
@@ -122,7 +123,7 @@ void World::updateEntity(sf::Packet* packet)
                     *packet >> state_ui
                             >> name;
 
-                    entity = new Npc(textures, name, id);
+                    entity = new Npc(textures, fonts, name, id);
                     Npc::State state = static_cast<Npc::State>(state_ui);
 
                     Npc* npc = static_cast<Npc*>(entity);

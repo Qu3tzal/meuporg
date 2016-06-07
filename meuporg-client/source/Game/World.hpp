@@ -16,7 +16,7 @@
 class World : public sf::Drawable, public sf::Transformable
 {
     public:
-        World(kantan::TextureHolder* textures);
+        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts);
         virtual ~World();
 
         void init();
@@ -39,6 +39,8 @@ class World : public sf::Drawable, public sf::Transformable
         std::vector<Entity*> entities;
 
         kantan::TextureHolder* textures;
+
+        kantan::FontHolder* fonts;
 
     private:
 };
