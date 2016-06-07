@@ -154,40 +154,42 @@ void Game::connectToGameServer()
     if(answer == NetworkValues::OKAY)
     {
         packet.clear();
-        packet << NetworkValues::CONNECT <<username << token;
+        packet << NetworkValues::CONNECT << username << token;
 
-        sf::UdpSocket::Status status;
+        gameServerSocket.setBlocking(false);
         gameServerUdpSocket.setBlocking(false);
 
-        while(status != sf::Socket::Done)
+        sf::Packet receivePacket;
+
+        // While we didn't received anything, we keep sending on UDP.
+        while(gameServerSocket.receive(receivePacket) != sf::Socket::Done)
         {
-             status = gameServerUdpSocket.send(packet, ip, 22623);
+            gameServerUdpSocket.send(packet, ip, 22623);
         }
 
-        packet.clear();
-        gameServerSocket.receive(packet);
+        gameServerSocket.setBlocking(true);
 
-        packet >> answer;
+        receivePacket >> answer;
 
         if(answer == NetworkValues::OKAY)
         {
             std::cout << "---------- Connexion reussi ----------" << std::endl;
-            packet.clear();
-            gameServerSocket.receive(packet);
+            receivePacket.clear();
+            gameServerSocket.receive(receivePacket);
             gameServerSocket.setBlocking(false);
             gameServerUdpSocket.setBlocking(false);
             int playerNumber = 0;
-            packet >> playerNumber;
+            receivePacket >> playerNumber;
 
             //std::vector<std::string> listOfPlayer;
             std::cout << "Liste des joueurs : " << std::endl;
             for(int i = 1 ; i <= playerNumber ; i++)
             {
                 std::string playerName = "";
-                packet >> playerName;
+                receivePacket >> playerName;
                 std::cout << "\t" << "[" << i << "] " << playerName << std::endl;
                 //std::string playerName = "";
-                //packet >> playerName;
+                //receivePacket >> playerName;
                 //listOfPlayer.push_back(playerName);
             }
         }
@@ -269,7 +271,7 @@ void Game::receivePacket()
             unsigned long long number;
             packet >> number;
 
-            if(number >= udpPacketNumberReceive)
+            if(number > udpPacketNumberReceive)
             {
                 udpPacketNumberReceive = number;
                 world.updateEntity(&packet);
