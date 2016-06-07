@@ -13,7 +13,7 @@ NameText::NameText(std::string name, kantan::FontHolder* fonts)
     shape.setSize(sf::Vector2f(text.getGlobalBounds().width + 20, text.getGlobalBounds().height + 20));
     shape.setFillColor(sf::Color(128, 128, 128, 128));
 
-    text.setPosition(5, 5);
+    text.setPosition(0, 0);
 
     centerOrigin(text);
     centerOrigin(shape);
