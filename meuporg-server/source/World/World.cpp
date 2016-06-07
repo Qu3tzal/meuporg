@@ -73,6 +73,77 @@ void World::playerDisconnected(Client* client)
     }
 }
 
+void World::sendUpdate(Client* client, sf::UdpSocket& socket)
+{
+    unsigned long long packetId = client->lastPacketIdSent;
+
+    for(kantan::Entity* e : m_entities)
+    {
+        packetId++;
+
+        sf::Packet packet;
+        packet << NetworkValues::UPDATE << packetId << e->getId();
+
+        if(e->getName() == "Player")
+        {
+            // Get the CLC.
+            ClientLinkComponent* clc = e->getComponent<ClientLinkComponent>("ClientLink");
+
+            if(clc == nullptr)
+                continue;
+
+            packet << clc->client->username;
+
+            // Get the movement component.
+            kantan::MovementComponent* mc = e->getComponent<kantan::MovementComponent>("Movement");
+
+            if(mc == nullptr)
+                continue;
+
+            // Set the state.
+            if(mc->velocity == sf::Vector2f(0.f, 0.f))
+                packet << ClientSide::PlayerStates::IDLE;
+            else
+                packet << ClientSide::PlayerStates::WALKING;
+
+            // Get the polygon hitbox component.
+            kantan::PolygonHitboxComponent* phc = e->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
+
+            if(phc == nullptr)
+                continue;
+
+            // Compute the left top corner.
+            /// ! TODO: Check there is at least one point.
+            sf::Vector2f leftTop(phc->points[0].x, phc->points[0].y);
+
+            for(sf::Vector2f point : phc->points)
+            {
+                if(point.x < leftTop.x)
+                    leftTop.x = point.x;
+
+                if(point.y < leftTop.y)
+                    leftTop.y = point.y;
+            }
+
+            // Set the position.
+            packet << leftTop;
+
+            // Set the velocity.
+            packet << mc->velocity;
+        }
+        else if(e->getName() == "NPC")
+        {
+
+        }
+
+        // Send the packet.
+        socket.send(packet, client->ip, client->udpPort);
+    }
+
+    // Update the last packet id sent.
+    client->lastPacketIdSent = packetId;
+}
+
 void World::cleanEntities()
 {
     for(std::size_t i(0) ; i < m_deletionMarkerComponents.size() ;)

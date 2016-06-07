@@ -8,6 +8,9 @@
 #include "../Accounts.hpp"
 #include "../Components/ClientLinkComponent.hpp"
 #include "../Systems/ClientInputSystem.hpp"
+#include "../Utils/SFMLPacketUtils.hpp"
+#include "../NetworkValues.hpp"
+#include "../ClientEntityEnums.hpp"
 
 /*
     World class.
@@ -33,6 +36,9 @@ class World
 
         // Removes a player instance.
         void playerDisconnected(Client* client);
+
+        // Sends the world state to the client.
+        void sendUpdate(Client* client, sf::UdpSocket& socket);
 
     protected:
         // Removes the entities marked as to delete.

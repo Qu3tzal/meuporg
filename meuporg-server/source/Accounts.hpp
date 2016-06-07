@@ -27,6 +27,7 @@ struct Client
 
     PlayerInput inputs = {false, false, false, false};
     unsigned long long lastPacketIdReceived = 0;
+    unsigned long long lastPacketIdSent = 0;
     unsigned long long lostPackets = 0;
 };
 

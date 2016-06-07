@@ -28,6 +28,7 @@ namespace NetworkValues
 	const unsigned int  PLAYER_DISCONNECTED(205);
 	const unsigned int  RECEIVE_CHAT_MESSAGE(206);
 	const unsigned int  SEND_CHAT_MESSAGE(207);
+	const unsigned int  UPDATE(208);
 
 	const unsigned int  KEEP_ALIVE(300);
 	const unsigned int  OKAY(301);

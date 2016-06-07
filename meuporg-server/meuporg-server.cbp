@@ -70,6 +70,9 @@
 			<Add directory="C:/MinGW/lib" />
 		</Linker>
 		<Unit filename="source/Accounts.hpp" />
+		<Unit filename="source/ClientEntityEnums.hpp" />
+		<Unit filename="source/Components/ClientLinkComponent.cpp" />
+		<Unit filename="source/Components/ClientLinkComponent.hpp" />
 		<Unit filename="source/InformationServer/InformationServer.cpp" />
 		<Unit filename="source/InformationServer/InformationServer.hpp" />
 		<Unit filename="source/Kantan-2/Component/AABBHitboxComponent.cpp" />
@@ -149,6 +152,11 @@
 		<Unit filename="source/ServerConfiguration.hpp" />
 		<Unit filename="source/Server/Server.cpp" />
 		<Unit filename="source/Server/Server.hpp" />
+		<Unit filename="source/Systems/ClientInputSystem.cpp" />
+		<Unit filename="source/Systems/ClientInputSystem.hpp" />
+		<Unit filename="source/Utils/SFMLPacketUtils.cpp" />
+		<Unit filename="source/Utils/SFMLPacketUtils.hpp" />
+		<Unit filename="source/Utils/SFMLPacketUtils.inl" />
 		<Unit filename="source/World/World.cpp" />
 		<Unit filename="source/World/World.hpp" />
 		<Unit filename="source/main.cpp" />

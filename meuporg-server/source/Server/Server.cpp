@@ -155,7 +155,11 @@ void Server::update(sf::Time dt)
 
 void Server::sendUpdate()
 {
-
+    for(Client* client : m_clients)
+    {
+        if(client->ingame)
+            m_world.sendUpdate(client, m_gameUdpSocket);
+    }
 }
 
 unsigned int Server::getNumberOfPlayers() const
