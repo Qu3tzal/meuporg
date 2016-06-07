@@ -56,7 +56,8 @@ void World::updateEntity(sf::Packet* packet)
     sf::Vector2f velocity;
 
     *packet >> id
-            >> type_ui;
+            >> type_ui
+            >> name;
 
     Entity::Type type = static_cast<Entity::Type>(type_ui);
     Entity* e = getEntityById(id);
@@ -90,8 +91,7 @@ void World::updateEntity(sf::Packet* packet)
                 }
                 break;
         }
-        *packet >> name
-                >> position
+        *packet >> position
                 >> velocity;
         e->setName(name);
         e->setPosition(position);
