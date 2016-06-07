@@ -76,11 +76,10 @@ void World::playerDisconnected(Client* client)
 void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 {
     unsigned long long packetId = client->lastPacketIdSent;
+    packetId++;
 
     for(kantan::Entity* e : m_entities)
     {
-        packetId++;
-
         sf::Packet packet;
         packet << NetworkValues::UPDATE << packetId << e->getId();
 
