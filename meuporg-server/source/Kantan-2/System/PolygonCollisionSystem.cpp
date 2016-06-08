@@ -203,8 +203,10 @@ namespace kantan
                             fstHitbox->points[i] = transform.transformPoint(fstHitbox->points[i]);
 
                         // Bouncing.
+                        /*
                         if(projectionVector != sf::Vector2f(0.f, 0.f))
                             fstMovement->velocity = 0.2f * getLength(fstMovement->velocity) * normalize(-projectionVector / elapsed.asSeconds());
+                        */
 
                         // Too small velocities must be canceled.
                         if(getLength(fstMovement->velocity) <= 0.1f)
