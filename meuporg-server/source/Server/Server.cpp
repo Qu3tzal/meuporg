@@ -300,10 +300,24 @@ void Server::receiveInputThroughTCP()
                             std::string message("");
                             packet >> message;
 
-                            std::cout << "[CHAT] " << client->username << ": " << message << std::endl;
+                            if(isChatCommand(message))
+                            {
+                                std::cout << "[COMMAND] " << client->username << ": " << message << std::endl;
 
-                            // Send chat message to everyone.
-                            sendChatMessage(client->username, message);
+                                std::string command = trim(message);
+
+                                if(command.size() != 1)
+                                {
+                                    /// /!\ TODO: Lex/parse/eval the command.
+                                }
+                            }
+                            else
+                            {
+                                std::cout << "[CHAT] " << client->username << ": " << message << std::endl;
+
+                                // Send chat message to everyone.
+                                sendChatMessage(client->username, message);
+                            }
                         }
                         break;
                     default:
@@ -518,4 +532,11 @@ void Server::notifyEntityRemoved(unsigned int entityId)
         if(client->ingame)
             client->gameTcp->send(packet);
     }
+}
+
+bool Server::isChatCommand(std::string command)
+{
+    std::string trimmed = trim(command);
+
+    return (trimmed != "" && trimmed[0] == "/");
 }

@@ -14,6 +14,7 @@
 #include "../LoginServer/LoginServer.hpp"
 #include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
 #include "../World/World.hpp"
+#include "../Utils/StringUtils.hpp"
 
 #include "../Kantan-2/kantan.hpp"
 
@@ -97,6 +98,9 @@ class Server
 
         // Notifies everyone the entity has been removed.
         void notifyEntityRemoved(unsigned int entityId);
+
+        // Returns true if the given string is a chat command.
+        bool isChatCommand(std::string command);
 
     protected:
         // Number of players connected and maximum number of players.
