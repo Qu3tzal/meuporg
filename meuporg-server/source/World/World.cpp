@@ -52,7 +52,7 @@ void World::update(sf::Time dt, Server* server)
 
 void World::playerConnected(Client* client)
 {
-    createPlayer(client);
+    createPlayer(sf::Vector2f(400.f, 600.f), client);
 }
 
 void World::playerDisconnected(Client* client)
@@ -148,7 +148,44 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
         else if(e->getName() == "NPC")
         {
             // Set the entity type.
-            packet << ClientSide::EntityType::NPC;
+            packet << ClientSide::EntityType::NPC << "Random NPC";
+
+            // Get the movement component.
+            kantan::MovementComponent* mc = e->getComponent<kantan::MovementComponent>("Movement");
+
+            if(mc == nullptr)
+                continue;
+
+            // Set the state.
+            if(mc->velocity == sf::Vector2f(0.f, 0.f))
+                packet << ClientSide::PlayerStates::IDLE;
+            else
+                packet << ClientSide::PlayerStates::WALKING;
+
+            // Get the polygon hitbox component.
+            kantan::PolygonHitboxComponent* phc = e->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
+
+            if(phc == nullptr)
+                continue;
+
+            // Compute the left top corner.
+            /// ! TODO: Check there is at least one point.
+            sf::Vector2f leftTop(phc->points[0].x, phc->points[0].y);
+
+            for(sf::Vector2f point : phc->points)
+            {
+                if(point.x < leftTop.x)
+                    leftTop.x = point.x;
+
+                if(point.y < leftTop.y)
+                    leftTop.y = point.y;
+            }
+
+            // Set the position.
+            packet << leftTop;
+
+            // Set the velocity.
+            packet << mc->velocity;
         }
 
         // Send the packet.
@@ -275,7 +312,7 @@ StaticMarkerComponent* World::createStaticMarkerComponent(std::size_t ownerId)
     return clc;
 }
 
-kantan::Entity* World::createPlayer(Client* client)
+kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client)
 {
     // Create the entity.
     kantan::Entity* player = createEntity("Player");
@@ -287,10 +324,10 @@ kantan::Entity* World::createPlayer(Client* client)
 
     // Configure the components.
     phc->points = {
-            sf::Vector2f(0.f, 0.f),
-            sf::Vector2f(31.f, 0.f),
-            sf::Vector2f(31.f, 48.f),
-            sf::Vector2f(0.f, 48.f)
+            position + sf::Vector2f(0.f, 0.f),
+            position + sf::Vector2f(31.f, 0.f),
+            position + sf::Vector2f(31.f, 48.f),
+            position + sf::Vector2f(0.f, 48.f)
         };
     phc->computeAxes();
     phc->isBlocking = true;
@@ -308,7 +345,7 @@ kantan::Entity* World::createPlayer(Client* client)
     return player;
 }
 
-kantan::Entity* World::createNPC()
+kantan::Entity* World::createNPC(sf::Vector2f position)
 {
     // Create the entity.
     kantan::Entity* npc = createEntity("NPC");
@@ -319,10 +356,10 @@ kantan::Entity* World::createNPC()
 
     // Configure the components.
     phc->points = {
-            sf::Vector2f(0.f, 0.f),
-            sf::Vector2f(31.f, 0.f),
-            sf::Vector2f(31.f, 48.f),
-            sf::Vector2f(0.f, 48.f)
+            position + sf::Vector2f(0.f, 0.f),
+            position + sf::Vector2f(31.f, 0.f),
+            position + sf::Vector2f(31.f, 48.f),
+            position + sf::Vector2f(0.f, 48.f)
         };
     phc->computeAxes();
     phc->isBlocking = true;
@@ -335,4 +372,29 @@ kantan::Entity* World::createNPC()
 
     // Return the entity.
     return npc;
+}
+
+kantan::Entity* World::createBox(sf::Vector2f position)
+{
+    // Create the entity.
+    kantan::Entity* box = createEntity("NPC", true);
+
+    // Create the components.
+    kantan::PolygonHitboxComponent* phc = createPolygonHitboxComponent(box->getId());
+
+    // Configure the components.
+    phc->points = {
+            position + sf::Vector2f(0.f, 0.f),
+            position + sf::Vector2f(32.f, 0.f),
+            position + sf::Vector2f(32.f, 32.f),
+            position + sf::Vector2f(0.f, 32.f)
+        };
+    phc->computeAxes();
+    phc->isBlocking = true;
+
+    // Add the components to the entity.
+    box->addComponent(phc);
+
+    // Return the entity.
+    return box;
 }

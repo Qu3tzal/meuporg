@@ -64,8 +64,9 @@ class World
         StaticMarkerComponent* createStaticMarkerComponent(std::size_t ownerId);
 
         // createXXX methods.
-        kantan::Entity* createPlayer(Client* client);
-        kantan::Entity* createNPC();
+        kantan::Entity* createPlayer(sf::Vector2f position, Client* client);
+        kantan::Entity* createNPC(sf::Vector2f position);
+        kantan::Entity* createBox(sf::Vector2f position);
 
     protected:
         // Entities.
