@@ -7,7 +7,7 @@ namespace ResourceId
 
     const unsigned int ONE_PUNCH_MAN_TEXTURE = 1;
     const unsigned int SPARTIATE_TEXTURE = 2;
-    const unsigned int BOX_TEXTURE = 3;
+    const unsigned int TILESET = 3;
 };
 
 #endif // RESOUCEID_HPP_INCLUDED

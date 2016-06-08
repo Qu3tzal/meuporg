@@ -17,7 +17,7 @@ Game::Game(sf::RenderWindow* window) : Version(001)
 
     textures.load(ResourceId::SPARTIATE_TEXTURE, "assets/spartan_spritesheet.png");
     textures.load(ResourceId::ONE_PUNCH_MAN_TEXTURE, "assets/saitama_spritesheet.png");
-    textures.load(ResourceId::BOX_TEXTURE, "assets/box.png");
+    textures.load(ResourceId::TILESET, "assets/box.png");
 }
 
 Game::~Game()

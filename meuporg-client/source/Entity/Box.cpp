@@ -12,7 +12,7 @@ Box::~Box()
 
 void Box::init()
 {
-    sprite.setTexture(textures->get(ResourceId::BOX_TEXTURE));
+    sprite.setTexture(textures->get(ResourceId::TILESET));
 }
 
 void Box::update(sf::Time dt)

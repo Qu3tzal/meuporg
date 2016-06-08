@@ -74,10 +74,16 @@
 		<Unit filename="source/Entity/Npc.hpp" />
 		<Unit filename="source/Entity/Player.cpp" />
 		<Unit filename="source/Entity/Player.hpp" />
+		<Unit filename="source/Game/Environment.cpp" />
+		<Unit filename="source/Game/Environment.hpp" />
 		<Unit filename="source/Game/FontLoader.cpp" />
 		<Unit filename="source/Game/FontLoader.hpp" />
 		<Unit filename="source/Game/Game.cpp" />
 		<Unit filename="source/Game/Game.hpp" />
+		<Unit filename="source/Game/Level.cpp" />
+		<Unit filename="source/Game/Level.hpp" />
+		<Unit filename="source/Game/Map.cpp" />
+		<Unit filename="source/Game/Map.hpp" />
 		<Unit filename="source/Game/TextureLoader.cpp" />
 		<Unit filename="source/Game/TextureLoader.hpp" />
 		<Unit filename="source/Game/Tile.cpp" />
@@ -102,7 +108,6 @@
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.hpp" />
 		<Unit filename="source/ResourceHolder.hpp" />
 		<Unit filename="source/ResourceHolder.inl" />
-		<Unit filename="source/ResourceId.hpp" />
 		<Unit filename="source/ResourceId.hpp" />
 		<Unit filename="source/SFMLPacketUtils.cpp" />
 		<Unit filename="source/SFMLPacketUtils.hpp" />
