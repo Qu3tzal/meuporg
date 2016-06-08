@@ -285,11 +285,11 @@ void Server::receiveInputThroughTCP()
                 switch(networkCode)
                 {
                     case NetworkValues::DISCONNECT:
-                        // Disconnect the player.
-                        disconnectPlayer(client->username, "disconnected");
-
                         // Notify everyone the player disconnected.
                         notifyPlayerDisconnected(client->username);
+
+                        // Disconnect the player.
+                        disconnectPlayer(client->username, "disconnected");
 
                         // Tag we deleted a client.
                         deletedClient = true;
