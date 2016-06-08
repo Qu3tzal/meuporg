@@ -3,6 +3,7 @@
 
 #include <SFML/System.hpp>
 #include "../ResourceHolder.hpp"
+#include "../ResouceId.hpp"
 //#include "../GraphicsUtils.inl"
 
 class Entity : public sf::Drawable, public sf::Transformable
@@ -10,7 +11,7 @@ class Entity : public sf::Drawable, public sf::Transformable
     public:
 
         // enum of type
-        enum Type {PLAYER, NPC};
+        enum Type {PLAYER, NPC, BOX};
 
         Entity(unsigned int id, std::string name, Type type, kantan::TextureHolder* textures, kantan::FontHolder* fonts);
 

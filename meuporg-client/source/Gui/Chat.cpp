@@ -18,7 +18,7 @@ void Chat::init()
     /*auto sendMessageLambda = [this](){
         this->sendMessage();};*/
     //buttons.addButton("Enter", sf::Vector2f(400.f, 50.f), sf::Vector2f(50, 50), "Entrer", FontLoader::FontId::SECRET_CODE, 12, sf::Color(128, 128, 128, 128), sf::Color(60, 60, 60, 128), sendMessageLambda);
-    textInputs.addTextInput("Chat", sf::Vector2f(200.f, 50.f), sf::Vector2f(150, 50), "Ecrivez votre message", 1, 12, sf::Color(128, 128, 128, 128), sf::Color::Black, sf::Color(128, 128, 128, 128), sf::Color::Red);
+    textInputs.addTextInput("Chat", sf::Vector2f(200.f, 50.f), sf::Vector2f(150, 50), "Ecrivez votre message", ResourceId::SECRET_CODE_FONT, 12, sf::Color(128, 128, 128, 128), sf::Color::Black, sf::Color(128, 128, 128, 128), sf::Color::Red);
 }
 
 void Chat::write(std::string message)

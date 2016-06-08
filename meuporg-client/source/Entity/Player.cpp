@@ -16,7 +16,7 @@ Player::~Player()
 void Player::init()
 {
 
-    sprite.setTexture(textures->get(1));
+    sprite.setTexture(textures->get(ResourceId::ONE_PUNCH_MAN_TEXTURE));
 
     // Move down animation
     a_MoveDown.addTextRect(sf::IntRect(16, 8, 31, 48));

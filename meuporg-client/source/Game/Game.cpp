@@ -9,11 +9,15 @@ Game::Game(sf::RenderWindow* window) : Version(001)
     , chat(window, &gameServerSocket, &fonts)
     , world(&textures, &fonts)
     , loosedPacket(0)
+    , timeOutTimer(sf::Time::Zero)
+    , timeOut(sf::seconds(5.f))
 {
     //ctor
-    fonts.load(1, "assets/fonts/secrcode.ttf");
-    textures.load(2, "assets/spartan_spritesheet.png");
-    textures.load(1, "assets/saitama_spritesheet.png");
+    fonts.load(ResourceId::SECRET_CODE_FONT, "assets/fonts/secrcode.ttf");
+
+    textures.load(ResourceId::SPARTIATE_TEXTURE, "assets/spartan_spritesheet.png");
+    textures.load(ResourceId::ONE_PUNCH_MAN_TEXTURE, "assets/saitama_spritesheet.png");
+    textures.load(ResourceId::BOX_TEXTURE, "assets/box.png");
 }
 
 Game::~Game()
@@ -236,6 +240,11 @@ void Game::update(sf::Time dt)
     receivePacket();
     world.update(dt);
     chat.update();
+    if(timeOutTimer >= timeOut)
+    {
+        std::cout << "Connection timed out" << std::endl;
+        running = false;
+    }
 }
 
 void Game::EventHandle(sf::Event event)
@@ -245,6 +254,7 @@ void Game::EventHandle(sf::Event event)
 
 void Game::receivePacket()
 {
+    timeOutTimer += sf::seconds(1/60.f);
     sf::Packet packet;
     //sf::Socket::Status status = gameServerSocket.receive(packet);
 
@@ -270,6 +280,7 @@ void Game::receivePacket()
     //if(status == sf::Socket::Status::Done)
     while(gameServerUdpSocket.receive(packet, ip, remotePort) == sf::Socket::Status::Done)
     {
+        timeOutTimer = sf::Time::Zero;
         unsigned int netCode(0);
         packet >> netCode;
 

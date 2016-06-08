@@ -5,7 +5,7 @@ NameText::NameText(std::string name, kantan::FontHolder* fonts)
     this->nameText = name;
     this->fonts = fonts;
 
-    text.setFont(fonts->get(1));
+    text.setFont(fonts->get(ResourceId::SECRET_CODE_FONT));
     text.setCharacterSize(12);
     text.setColor(sf::Color::White);
     text.setString(this->nameText);

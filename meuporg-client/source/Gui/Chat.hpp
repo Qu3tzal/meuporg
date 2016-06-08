@@ -10,6 +10,7 @@
 #include <string>
 #include <functional>
 #include <iostream>
+#include "../ResouceId.hpp"
 
 class Chat : public sf::Drawable, public sf::Transformable
 {

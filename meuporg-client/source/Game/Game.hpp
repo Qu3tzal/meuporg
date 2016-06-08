@@ -15,6 +15,7 @@
 #include "Chat.hpp"
 #include "../ResourceHolder.hpp"
 #include "World.hpp"
+#include "../ResouceId.hpp"
 
 class Game
 {
@@ -114,6 +115,10 @@ class Game
         World world;
 
         unsigned long long loosedPacket;
+
+        sf::Time timeOutTimer;
+
+        sf::Time timeOut;
 };
 
 #endif // GAME_HPP_INCLUDED

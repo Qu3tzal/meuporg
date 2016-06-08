@@ -66,6 +66,8 @@
 		</Linker>
 		<Unit filename="source/Entity/Animation.cpp" />
 		<Unit filename="source/Entity/Animation.hpp" />
+		<Unit filename="source/Entity/Box.cpp" />
+		<Unit filename="source/Entity/Box.hpp" />
 		<Unit filename="source/Entity/Entity.cpp" />
 		<Unit filename="source/Entity/Entity.hpp" />
 		<Unit filename="source/Entity/Npc.cpp" />
@@ -98,6 +100,7 @@
 		<Unit filename="source/PlayerInput.hpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.hpp" />
+		<Unit filename="source/ResouceId.hpp" />
 		<Unit filename="source/ResourceHolder.hpp" />
 		<Unit filename="source/ResourceHolder.inl" />
 		<Unit filename="source/SFMLPacketUtils.cpp" />
