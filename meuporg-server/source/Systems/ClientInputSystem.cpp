@@ -22,26 +22,28 @@ void ClientInputSystem::update(std::vector<ClientLinkComponent*>& clientLinkComp
                 // Get the movement component.
                 kantan::MovementComponent* mc = entity->getComponent<kantan::MovementComponent>("Movement");
 
-                // Reset velocity.
-                mc->velocity = sf::Vector2f(0.f, 0.f);
+                sf::Vector2f inputVector(0.f, 0.f);
 
                 if(clc->client->inputs.isMoveDownKeyPressed)
                 {
-                    mc->velocity.y += 100.f;
+                    inputVector.y += 1.f;
                 }
                 else if(clc->client->inputs.isMoveUpKeyPressed)
                 {
-                    mc->velocity.y -= 100.f;
+                    inputVector.y -= 1.f;
                 }
 
                 if(clc->client->inputs.isMoveLeftKeyPressed)
                 {
-                    mc->velocity.x -= 100.f;
+                    inputVector.x -= 1.f;
                 }
                 else if(clc->client->inputs.isMoveRightKeyPressed)
                 {
-                    mc->velocity.x += 100.f;
+                    inputVector.x += 1.f;
                 }
+
+                mc->velocity = sf::Vector2f(0.f, 0.f);
+                mc->velocity = kantan::normalize(inputVector) * mc->maximumSpeed;
             }
         }
     }

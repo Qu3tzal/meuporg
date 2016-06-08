@@ -295,7 +295,7 @@ kantan::Entity* World::createPlayer(Client* client)
     phc->computeAxes();
     phc->isBlocking = true;
 
-    mc->maximumSpeed = 1000.f;
+    mc->maximumSpeed = 100.f;
 
     clc->client = client;
 
@@ -327,7 +327,7 @@ kantan::Entity* World::createNPC()
     phc->computeAxes();
     phc->isBlocking = true;
 
-    mc->maximumSpeed = 1000.f;
+    mc->maximumSpeed = 100.f;
 
     // Add the components to the entity.
     npc->addComponent(phc);
