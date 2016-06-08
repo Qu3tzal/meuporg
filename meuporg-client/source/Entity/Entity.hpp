@@ -42,6 +42,8 @@ class Entity : public sf::Drawable, public sf::Transformable
 
         double distEucli(sf::Vector2f v1, sf::Vector2f v2);
 
+        double getNorm(sf::Vector2f vect);
+
     protected:
 
          virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const = 0;
