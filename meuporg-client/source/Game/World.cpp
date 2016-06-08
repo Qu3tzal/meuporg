@@ -91,6 +91,8 @@ void World::updateEntity(sf::Packet* packet)
                     npc->setState(state);
                 }
                 break;
+            default:
+                break;
         }
         *packet >> position
                 >> velocity;
@@ -131,6 +133,8 @@ void World::updateEntity(sf::Packet* packet)
 
                     npc->setState(state);
                 }
+                break;
+            default:
                 break;
         }
         *packet >> position
