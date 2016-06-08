@@ -15,7 +15,7 @@
 #include "Chat.hpp"
 #include "../ResourceHolder.hpp"
 #include "World.hpp"
-#include "../ResouceId.hpp"
+#include "../ResourceId.hpp"
 
 class Game
 {

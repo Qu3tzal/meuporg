@@ -100,9 +100,9 @@
 		<Unit filename="source/PlayerInput.hpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.hpp" />
-		<Unit filename="source/ResouceId.hpp" />
 		<Unit filename="source/ResourceHolder.hpp" />
 		<Unit filename="source/ResourceHolder.inl" />
+		<Unit filename="source/ResourceId.hpp" />
 		<Unit filename="source/SFMLPacketUtils.cpp" />
 		<Unit filename="source/SFMLPacketUtils.hpp" />
 		<Unit filename="source/SFMLPacketUtils.inl" />
