@@ -233,8 +233,8 @@ void Game::update(sf::Time dt)
     if(!chat.isActive())
         testInput();
     sendInput();
-    world.update(dt);
     receivePacket();
+    world.update(dt);
     chat.update();
 }
 
@@ -246,9 +246,10 @@ void Game::EventHandle(sf::Event event)
 void Game::receivePacket()
 {
     sf::Packet packet;
-    sf::Socket::Status status = gameServerSocket.receive(packet);
+    //sf::Socket::Status status = gameServerSocket.receive(packet);
 
-    if(status == sf::Socket::Status::Done)
+    //if(status == sf::Socket::Status::Done)
+    while(gameServerSocket.receive(packet) == sf::Socket::Status::Done)
     {
         unsigned int netCode(0);
         packet >> netCode;
