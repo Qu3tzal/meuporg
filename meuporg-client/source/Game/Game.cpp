@@ -192,7 +192,7 @@ void Game::connectToGameServer()
             gameServerUdpSocket.setBlocking(false);
             int playerNumber = 0;
             receivePacket >> playerNumber;
-
+            state = State::JEU;
 
             std::cout << "Liste des joueurs : " << std::endl;
             for(int i = 1 ; i <= playerNumber ; i++)
