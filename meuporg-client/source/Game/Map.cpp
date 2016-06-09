@@ -45,11 +45,11 @@ void Map::createMap()
     std::vector<std::vector<unsigned int>> tiles;
     m_size = sf::Vector2f(40, 25);
 
-    for(unsigned int i(0) ; i <= m_size.y ; ++i)
+    for(unsigned int i(0) ; i <= m_size.y * 32 ; i+= 32)
     {
         tiles.push_back(std::vector<unsigned int>());
 
-        for(unsigned int j(0) ; j <= m_size.x ; j++)
+        for(unsigned int j(0) ; j <= m_size.x * 32 ; j+= 32)
         {
             unsigned int type(0);
             if(i == 0)

@@ -382,8 +382,8 @@ void Game::render(sf::RenderWindow* window)
 {
     window->clear(sf::Color::White);
 
-    window->draw(chat);
     window->draw(world);
+    window->draw(chat);
 
     window->display();
 }
