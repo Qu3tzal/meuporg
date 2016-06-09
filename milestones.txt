@@ -38,6 +38,4 @@
 			- Envoi des entrées utilisateurs
 			- Récupération des objets du monde modifiés
 			- Animations
-			- Gestion de la musique
-			- Création des particules, sons, etc...
 			- Affichage du monde
