@@ -43,7 +43,7 @@ void Chat::write(std::string message)
     }
     text.setString(str);
     text.setPosition(10, 325 - text.getGlobalBounds().height);
-    up(text.getGlobalBounds().height);
+    up(text.getGlobalBounds().height + 5);
     logText.push_back(text);
     while(logText[0].getPosition().y < 0)
     {
@@ -68,7 +68,7 @@ void Chat::initText(sf::Text* text)
 {
     text->setColor(sf::Color::White);
     text->setCharacterSize(14);
-    text->setFont(fonts->get(ResourceId::SECRET_CODE_FONT));
+    text->setFont(fonts->get(ResourceId::MONOF_56));
 }
 
 void Chat::sendMessage()

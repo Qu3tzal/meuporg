@@ -14,6 +14,7 @@ Game::Game(sf::RenderWindow* window) : Version(001)
 {
     //ctor
     fonts.load(ResourceId::SECRET_CODE_FONT, "assets/fonts/secrcode.ttf");
+    fonts.load(ResourceId::MONOF_56, "assets/fonts/monof56.ttf");
 
     textures.load(ResourceId::SPARTIATE_TEXTURE, "assets/spartan_spritesheet.png");
     textures.load(ResourceId::ONE_PUNCH_MAN_TEXTURE, "assets/saitama_spritesheet.png");
