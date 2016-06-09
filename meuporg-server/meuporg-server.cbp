@@ -143,6 +143,7 @@
 		<Unit filename="source/Kantan-2/Utils/GraphicsUtils.inl" />
 		<Unit filename="source/Kantan-2/Utils/MathUtils.cpp" />
 		<Unit filename="source/Kantan-2/Utils/MathUtils.hpp" />
+		<Unit filename="source/Kantan-2/Utils/StringUtils.cpp" />
 		<Unit filename="source/Kantan-2/Utils/StringUtils.hpp" />
 		<Unit filename="source/Kantan-2/Utils/StringUtils.inl" />
 		<Unit filename="source/Kantan-2/kantan.hpp" />
@@ -160,8 +161,6 @@
 		<Unit filename="source/Utils/SFMLPacketUtils.cpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.hpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.inl" />
-		<Unit filename="source/Utils/StringUtils.hpp" />
-		<Unit filename="source/Utils/StringUtils.inl" />
 		<Unit filename="source/World/World.cpp" />
 		<Unit filename="source/World/World.hpp" />
 		<Unit filename="source/main.cpp" />

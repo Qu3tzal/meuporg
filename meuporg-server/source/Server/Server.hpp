@@ -14,7 +14,6 @@
 #include "../LoginServer/LoginServer.hpp"
 #include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
 #include "../World/World.hpp"
-#include "../Utils/StringUtils.hpp"
 
 #include "../Kantan-2/kantan.hpp"
 

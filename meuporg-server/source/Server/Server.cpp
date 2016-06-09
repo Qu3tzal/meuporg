@@ -304,7 +304,7 @@ void Server::receiveInputThroughTCP()
                             {
                                 std::cout << "[COMMAND] " << client->username << ": " << message << std::endl;
 
-                                std::string command = trim(message);
+                                std::string command = kantan::trim(message);
 
                                 if(command.size() != 1)
                                 {
@@ -536,7 +536,7 @@ void Server::notifyEntityRemoved(unsigned int entityId)
 
 bool Server::isChatCommand(std::string command)
 {
-    std::string trimmed = trim(command);
+    std::string trimmed = kantan::trim(command);
 
-    return (trimmed != "" && trimmed[0] == "/");
+    return (trimmed != "" && trimmed[0] == '/');
 }
