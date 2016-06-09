@@ -20,7 +20,7 @@ void Chat::init()
     background.setPosition(0, 0);
     background.setFillColor(sf::Color(128, 128, 128, 128));
 
-    textInputs.addTextInput("Chat", sf::Vector2f(0, 350), sf::Vector2f(250, 50), "Ecrivez votre message", ResourceId::SECRET_CODE_FONT, 12, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(50, 50, 50, 128));
+    textInputs.addTextInput("Chat", sf::Vector2f(130, 760), sf::Vector2f(250, 50), "Ecrivez votre message", ResourceId::SECRET_CODE_FONT, 16, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(50, 50, 50, 128));
 }
 
 void Chat::write(std::string message)
@@ -36,12 +36,12 @@ void Chat::write(std::string message)
     }
     else
     {
-        text.setPosition(10, 300);
+        text.setPosition(10, 30);
     }
 
     std::string str = logChat[logChat.size()-1];
 
-    unsigned int maxSize(50);
+    unsigned int maxSize(40);
 
     if(str.length() >= maxSize)
     {
@@ -52,7 +52,7 @@ void Chat::write(std::string message)
     }
     text.setString(str);
     logText.push_back(text);
-    while(text.getGlobalBounds().top + text.getGlobalBounds().height > 800)
+    while(text.getGlobalBounds().top + text.getGlobalBounds().height > 325)
     {
         if(logText.size()> 0)
         {
@@ -78,7 +78,7 @@ void Chat::up(float height)
 void Chat::initText(sf::Text* text)
 {
     text->setColor(sf::Color::White);
-    text->setCharacterSize(12);
+    text->setCharacterSize(14);
     text->setFont(fonts->get(ResourceId::SECRET_CODE_FONT));
 }
 
@@ -131,11 +131,11 @@ void Chat::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
     states.transform *= getTransform();
 
-    window.draw(buttons, states);
-    window.draw(textInputs, states);
     window.draw(background, states);
     for(sf::Text text : logText)
     {
         window.draw(text, states);
     }
+    window.draw(buttons, states);
+    window.draw(textInputs);
 }
