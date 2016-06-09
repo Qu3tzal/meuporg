@@ -30,15 +30,6 @@ void Chat::write(std::string message)
     sf::Text text;
     initText(&text);
 
-    if(logText.size() > 0 )
-    {
-        text.setPosition(10, logText[logText.size()-1].getGlobalBounds().top + logText[logText.size()-1].getGlobalBounds().height + 5.f);
-    }
-    else
-    {
-        text.setPosition(10, 30);
-    }
-
     std::string str = logChat[logChat.size()-1];
 
     unsigned int maxSize(40);
@@ -51,33 +42,25 @@ void Chat::write(std::string message)
         }
     }
     text.setString(str);
+    text.setPosition(10, 325 - text.getGlobalBounds().height);
+    up(text.getGlobalBounds().height);
     logText.push_back(text);
-    while(text.getGlobalBounds().top + text.getGlobalBounds().height > 325)
+    while(logText[0].getPosition().y < 0)
     {
         if(logText.size()> 0)
         {
             logText.erase(logText.begin());
             logChat.erase(logChat.begin());
         }
-        if(logText.size()> 0)
-        {
-            up(logText[0].getPosition().y);
-            std::cout << logText[0].getPosition().y << std::endl;
-        }
-        else
-            break;
     }
 
 }
 
 void Chat::up(float height)
 {
-    std::cout << height << std::endl;
-    for(sf::Text text : logText)
+    for(sf::Text& text : logText)
     {
-        std::cout <<"[ " << text.getPosition().y << " / ";
         text.setPosition(text.getPosition().x, text.getPosition().y - height);
-        std::cout << text.getPosition().y <<" ]" << std::endl;
     }
 }
 
