@@ -12,6 +12,7 @@
 #include "Npc.hpp"
 #include "../ResourceHolder.hpp"
 #include "../SFMLPacketUtils.hpp"
+#include "Map.hpp"
 
 class World : public sf::Drawable, public sf::Transformable
 {
@@ -30,6 +31,11 @@ class World : public sf::Drawable, public sf::Transformable
         void addEntity(unsigned int id, Entity::Type type, std::string name, sf::Vector2f position, sf::Vector2f velocity);
 
         Entity* getEntityById(unsigned int id);
+
+        void loadMap(std::string path);
+
+        void loadMap();
+
     protected:
 
          void draw(sf::RenderTarget& window, sf::RenderStates states) const;
@@ -41,6 +47,8 @@ class World : public sf::Drawable, public sf::Transformable
         kantan::TextureHolder* textures;
 
         kantan::FontHolder* fonts;
+
+        Map m_map;
 
     private:
 };

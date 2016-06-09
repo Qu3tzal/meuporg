@@ -2,7 +2,7 @@
 
 std::map<std::string, Tile::TileType> TILE_TYPE_DESCRIPTION_MAP =
 {
-    {"Box_1", Tile::TileType::SandGround_0},
+    {"Box_1", Tile::TileType::Box_1},
     {"Grass", Tile::TileType::GRASS}
 
 };
@@ -39,15 +39,4 @@ Tile::TileType Tile::getType() const
     return m_type;
 }
 
-bool Tile::isCrossable() const
-{
-    switch(m_type)
-    {
-        case Water_0:
-            return false;
-            break;
-        default:
-            return true;
-            break;
-    }
-}
+

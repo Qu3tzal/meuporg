@@ -24,7 +24,7 @@ class Tile
 
     public:
         // Constructor.
-        Tile(TileType type = TileType::SandGround_0);
+        Tile(TileType type = TileType::GRASS);
 
         // Destructor.
         virtual ~Tile();

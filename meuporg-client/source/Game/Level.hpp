@@ -15,7 +15,7 @@ namespace Level
 {
 
     // Reads and loads the level into the playstate.
-    bool loadLevelFromFile(std::string filename, PlayState* playstate);
+    bool loadLevelFromFile(std::string filename, Map* levelMap);
 
 }
 

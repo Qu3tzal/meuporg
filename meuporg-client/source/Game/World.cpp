@@ -1,9 +1,11 @@
 #include "World.hpp"
 
-World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts)
+World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts) : m_map(textures)
 {
     this->textures = textures;
     this->fonts = fonts;
+    //loadMap("assets/level/level1.lvl");
+    loadMap();
 }
 
 World::~World()
@@ -168,10 +170,24 @@ Entity* World::getEntityById(unsigned int id)
     return nullptr;
 }
 
+void World::loadMap(std::string path)
+{
+    if(!m_map.loadLevelFromFile(path))
+    {
+        loadMap();
+    }
+}
+void World::loadMap()
+{
+    m_map.createMap();
+}
 void World::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
+    window.draw(m_map);
+
     for(auto it = entities.begin() ; it != entities.end() ; it++)
     {
         window.draw((**it));
     }
+
 }

@@ -14,7 +14,7 @@ int main()
 
     const std::string TITLE  = "MMPROPPPG";
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), TITLE);
+    sf::RenderWindow window(sf::VideoMode(1280, 800), TITLE);
 
     Game game(&window);
     game.init();

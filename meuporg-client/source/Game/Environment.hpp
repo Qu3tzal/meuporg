@@ -4,11 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
-#include "../ID.hpp"
-#include "../TileMap/TileMap.hpp"
-#include "../Tile/Tile.hpp"
+#include "TileMap.hpp"
+#include "Tile.hpp"
 #include "../ResourceId.hpp"
-#include "../ResourceHolder/ResourceHolder.hpp"
+#include "../ResourceHolder.hpp"
 
 /*
     Environment class.
@@ -28,9 +27,6 @@ class Environment : public sf::Drawable, public sf::Transformable
 
         // Returns the tile.
         Tile getTile(sf::Vector2u index) const;
-
-        // Returns the tile containing the position.
-        sf::Vector2u getTileIndexContaining(sf::Vector2f pos) const;
 
     protected:
         // Draw the environment's tile map.

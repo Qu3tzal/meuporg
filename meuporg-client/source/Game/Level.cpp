@@ -3,7 +3,7 @@
 // Level related functions.
 namespace Level
 {
-    bool loadLevelFromFile(std::string filename)
+    bool loadLevelFromFile(std::string filename,Map* levelMap)
     {
         std::ifstream file(filename);
         std::vector<std::vector<Tile>> tiles;
@@ -11,15 +11,15 @@ namespace Level
         if(!file)
             return false;
 
-        unsigned int waste(0);
-        file >> waste >> waste;
+        sf::Vector2f size;
+        file >> size.x >> size.y;
 
         // Read tilemap data.
-        for(unsigned int i(0) ; i < Configuration::TileMapSize.y ; ++i)
+        for(unsigned int i(0) ; i < size.y ; ++i)
         {
             tiles.push_back(std::vector<Tile>());
 
-            for(unsigned int j(0) ; j < Configuration::TileMapSize.x ; ++j)
+            for(unsigned int j(0) ; j < size.x ; ++j)
             {
                 unsigned int type(0);
                 file >> type;
