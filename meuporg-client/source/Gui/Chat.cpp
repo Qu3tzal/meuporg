@@ -131,6 +131,11 @@ void Chat::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
     states.transform *= getTransform();
 
-    window.draw(buttons);
-    window.draw(textInputs);
+    window.draw(buttons, states);
+    window.draw(textInputs, states);
+    window.draw(background, states);
+    for(sf::Text text : logText)
+    {
+        window.draw(text, states);
+    }
 }
