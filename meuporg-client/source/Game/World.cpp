@@ -5,7 +5,6 @@ World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts) : m_map
     this->textures = textures;
     this->fonts = fonts;
     //loadMap("assets/level/level1.lvl");
-    loadMap();
 }
 
 World::~World()
@@ -18,6 +17,7 @@ World::~World()
 
 void World::init()
 {
+    loadMap();
     for(Entity* e : entities)
     {
         e->init();

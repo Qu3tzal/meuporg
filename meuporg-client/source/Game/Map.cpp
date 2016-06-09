@@ -86,6 +86,8 @@ void Map::initTileMap(std::vector<std::vector<unsigned int>> tiles)
     tileMap.setTexturePtr(&(textures->get(ResourceId::TILESET)));
 
     tileMap.setTileData(tiles);
+
+    tileMap.update();
 }
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
