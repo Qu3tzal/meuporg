@@ -20,7 +20,7 @@ void Chat::init()
     background.setPosition(0, 0);
     background.setFillColor(sf::Color(128, 128, 128, 128));
 
-    textInputs.addTextInput("Chat", sf::Vector2f(130, 760), sf::Vector2f(250, 50), "Ecrivez votre message", ResourceId::SECRET_CODE_FONT, 16, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(50, 50, 50, 128));
+    textInputs.addTextInput("Chat", sf::Vector2f(130, 760), sf::Vector2f(250, 50), "Ecrivez votre message", ResourceId::MONOF_56, 16, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(50, 50, 50, 128));
 }
 
 void Chat::write(std::string message)
