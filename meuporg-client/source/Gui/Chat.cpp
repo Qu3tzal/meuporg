@@ -60,7 +60,10 @@ void Chat::write(std::string message)
             logChat.erase(logChat.begin());
         }
         if(logText.size()> 0)
-            up(logText[0].getPosition().y - 100);
+        {
+            up(logText[0].getPosition().y);
+            std::cout << logText[0].getPosition().y << std::endl;
+        }
         else
             break;
     }
@@ -69,9 +72,12 @@ void Chat::write(std::string message)
 
 void Chat::up(float height)
 {
+    std::cout << height << std::endl;
     for(sf::Text text : logText)
     {
+        std::cout <<"[ " << text.getPosition().y << " / ";
         text.setPosition(text.getPosition().x, text.getPosition().y - height);
+        std::cout << text.getPosition().y <<" ]" << std::endl;
     }
 }
 
