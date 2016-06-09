@@ -45,22 +45,26 @@ void Map::createMap()
     std::vector<std::vector<unsigned int>> tiles;
     m_size = sf::Vector2f(40, 25);
 
-    for(unsigned int i(0) ; i <= m_size.y * 32 ; i+= 32)
+    for(unsigned int i(0) ; i <= m_size.y ; i++)
     {
         tiles.push_back(std::vector<unsigned int>());
 
-        for(unsigned int j(0) ; j <= m_size.x * 32 ; j+= 32)
+        for(unsigned int j(0) ; j <= m_size.x ; j++)
         {
             unsigned int type(0);
             if(i == 0)
             {
                 type = 1;
             }
-            else if(j == 1248 && i >= 48 && i <= 768)
+            else if(j == 39 && i >= 0 && i <= 24)
             {
                 type = 1;
             }
-            else if(j == 0 && i >= 32 && i <= 768)
+            else if(j == 0 && i >= 0 && i <= 24)
+            {
+                type = 1;
+            }
+            else if(i == 24)
             {
                 type = 1;
             }
