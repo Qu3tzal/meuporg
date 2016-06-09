@@ -1,6 +1,7 @@
 #ifndef WORLD_HPP_INCLUDED
 #define WORLD_HPP_INCLUDED
 
+#include <iostream>
 #include <SFML/System.hpp>
 
 #include "../Kantan-2/kantan.hpp"

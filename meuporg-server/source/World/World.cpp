@@ -32,7 +32,21 @@ World::~World()
 
 void World::init()
 {
+    std::cout << "[WORLD] Map loading..." << std::endl;
 
+    for(float x(0.f) ; x <= 1248.f ; x += 32.f)
+        createBox(sf::Vector2f(x, 0.f));
+
+    for(float y(32.f) ; y <= 768.f ; y += 32.f)
+        createBox(sf::Vector2f(1248.f, y));
+
+    for(float y(32.f) ; y <= 768.f ; y += 32.f)
+        createBox(sf::Vector2f(0.f, y));
+
+    for(float x(32.f) ; x <= 1248.f ; x += 32.f)
+        createBox(sf::Vector2f(x, 768.f));
+
+    std::cout << "[WORLD] Map loaded." << std::endl;
 }
 
 void World::update(sf::Time dt, Server* server)
