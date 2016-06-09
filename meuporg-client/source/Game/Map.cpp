@@ -43,12 +43,13 @@ bool Map::loadLevelFromFile(std::string filename)
 void Map::createMap()
 {
     std::vector<std::vector<unsigned int>> tiles;
+    m_size = sf::Vector2f(40, 25);
 
-    for(unsigned int i(0) ; i <= 768 ; ++i)
+    for(unsigned int i(0) ; i <= m_size.y ; ++i)
     {
         tiles.push_back(std::vector<unsigned int>());
 
-        for(unsigned int j(0) ; j <= 1248 ; j++)
+        for(unsigned int j(0) ; j <= m_size.x ; j++)
         {
             unsigned int type(0);
             if(i == 0)
