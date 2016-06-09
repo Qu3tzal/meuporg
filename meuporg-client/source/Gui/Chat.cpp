@@ -16,11 +16,11 @@ Chat::~Chat()
 
 void Chat::init()
 {
-    background.setSize(sf::Vector2f(150, 400));
+    background.setSize(sf::Vector2f(300, 400));
     background.setPosition(0, 0);
     background.setFillColor(sf::Color(128, 128, 128, 128));
 
-    textInputs.addTextInput("Chat", sf::Vector2f(0, 400), sf::Vector2f(150, 50), "Ecrivez votre message", ResourceId::SECRET_CODE_FONT, 12, sf::Color(128, 128, 128, 128), sf::Color::Black, sf::Color(128, 128, 128, 128), sf::Color(50, 50, 50, 128));
+    textInputs.addTextInput("Chat", sf::Vector2f(0, 350), sf::Vector2f(250, 50), "Ecrivez votre message", ResourceId::SECRET_CODE_FONT, 12, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(50, 50, 50, 128));
 }
 
 void Chat::write(std::string message)
@@ -36,7 +36,7 @@ void Chat::write(std::string message)
     }
     else
     {
-        text.setPosition(10, 350);
+        text.setPosition(10, 300);
     }
 
     std::string str = logChat[logChat.size()-1];
