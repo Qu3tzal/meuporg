@@ -28,6 +28,7 @@ Game::~Game()
 
 void Game::init()
 {
+    chat.setPosition(0, 400);
     chat.init();
     serverConnection();
     world.init();
@@ -192,16 +193,13 @@ void Game::connectToGameServer()
             int playerNumber = 0;
             receivePacket >> playerNumber;
 
-            //std::vector<std::string> listOfPlayer;
+
             std::cout << "Liste des joueurs : " << std::endl;
             for(int i = 1 ; i <= playerNumber ; i++)
             {
                 std::string playerName = "";
                 receivePacket >> playerName;
                 std::cout << "\t" << "[" << i << "] " << playerName << std::endl;
-                //std::string playerName = "";
-                //receivePacket >> playerName;
-                //listOfPlayer.push_back(playerName);
             }
         }
     }
@@ -230,21 +228,6 @@ void Game::disconnectToGameServer()
 bool Game::isRunning() const
 {
     return running;
-}
-
-void Game::update(sf::Time dt)
-{
-    if(!chat.isActive())
-        testInput();
-    sendInput();
-    receivePacket();
-    world.update(dt);
-    chat.update();
-    if(timeOutTimer >= timeOut)
-    {
-        std::cout << "Connection timed out" << std::endl;
-        running = false;
-    }
 }
 
 void Game::EventHandle(sf::Event event)
@@ -378,12 +361,45 @@ void Game::testInput()
     playerInput.MoveRight = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
 }
 
+void Game::update(sf::Time dt)
+{
+    switch(state)
+    {
+        case State::MENU:
+
+        break;
+        case State::CHARGEMENT:
+
+        break;
+        case State::JEU :
+            if(!chat.isActive())
+                testInput();
+            sendInput();
+            receivePacket();
+            world.update(dt);
+            chat.update();
+        break;
+    }
+    if(timeOutTimer >= timeOut)
+    {
+        std::cout << "Connection timed out" << std::endl;
+        running = false;
+    }
+}
+
 void Game::render(sf::RenderWindow* window)
 {
     window->clear(sf::Color::White);
-
-    window->draw(world);
-    window->draw(chat);
-
+    switch(state)
+     {
+         case State::MENU:
+            break;
+         case State::CHARGEMENT:
+            break;
+         case State::JEU:
+            window->draw(world);
+            window->draw(chat);
+            break;
+     }
     window->display();
 }

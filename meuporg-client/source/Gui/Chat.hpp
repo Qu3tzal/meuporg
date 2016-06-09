@@ -10,7 +10,10 @@
 #include <string>
 #include <functional>
 #include <iostream>
+#include <vector>
+
 #include "../ResourceId.hpp"
+#include "../ResourceHolder.hpp"
 
 class Chat : public sf::Drawable, public sf::Transformable
 {
@@ -30,6 +33,10 @@ class Chat : public sf::Drawable, public sf::Transformable
 
         bool isActive();
 
+        void initText(sf::Text* text);
+
+        void up(float height);
+
     protected:
 
     // Draws the textInputs and button
@@ -42,6 +49,14 @@ class Chat : public sf::Drawable, public sf::Transformable
     sf::TcpSocket* socket;
 
     bool chatActiveFlag;
+
+    sf::RectangleShape background;
+
+    std::vector<std::string> logChat;
+
+    std::vector<sf::Text> logText;
+
+    kantan::FontHolder* fonts;
 
     private:
 };

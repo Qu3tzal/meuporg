@@ -24,6 +24,8 @@ class Game
         // Constructor
         Game(sf::RenderWindow* window);
 
+        enum State {MENU, CHARGEMENT, JEU};
+
         // Destructor
         virtual ~Game();
 
@@ -119,6 +121,8 @@ class Game
         sf::Time timeOutTimer;
 
         sf::Time timeOut;
+
+        State state;
 };
 
 #endif // GAME_HPP_INCLUDED
