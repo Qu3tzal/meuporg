@@ -188,7 +188,13 @@ void Game::update(sf::Time dt)
         break;
         case State::JEU :
             if(!chat.isActive())
+            {
                 testInput();
+            }
+            else
+            {
+                playerInput.MoveUp = playerInput.MoveDown = playerInput.MoveLeft = playerInput.MoveRight = false;
+            }
             sendInput();
             receivePacket();
             world.update(dt);
