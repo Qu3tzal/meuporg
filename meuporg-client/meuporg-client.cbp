@@ -16,6 +16,8 @@
 					<Add directory="source/Game" />
 					<Add directory="source/Gui" />
 					<Add directory="source/Entity" />
+					<Add directory="source/Menu" />
+					<Add directory="source/Loading" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-system-d" />
@@ -36,6 +38,8 @@
 					<Add directory="source/Game" />
 					<Add directory="source/Gui" />
 					<Add directory="source/Entity" />
+					<Add directory="source/Menu" />
+					<Add directory="source/Loading" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -74,14 +78,10 @@
 		<Unit filename="source/Entity/Npc.hpp" />
 		<Unit filename="source/Entity/Player.cpp" />
 		<Unit filename="source/Entity/Player.hpp" />
-		<Unit filename="source/Game/FontLoader.cpp" />
-		<Unit filename="source/Game/FontLoader.hpp" />
 		<Unit filename="source/Game/Game.cpp" />
 		<Unit filename="source/Game/Game.hpp" />
 		<Unit filename="source/Game/Map.cpp" />
 		<Unit filename="source/Game/Map.hpp" />
-		<Unit filename="source/Game/TextureLoader.cpp" />
-		<Unit filename="source/Game/TextureLoader.hpp" />
 		<Unit filename="source/Game/Tile.cpp" />
 		<Unit filename="source/Game/Tile.hpp" />
 		<Unit filename="source/Game/TileMap.cpp" />
@@ -98,6 +98,10 @@
 		<Unit filename="source/Gui/GraphicsUtils.hpp" />
 		<Unit filename="source/Gui/NameText.cpp" />
 		<Unit filename="source/Gui/NameText.hpp" />
+		<Unit filename="source/Loading/Loading.cpp" />
+		<Unit filename="source/Loading/Loading.hpp" />
+		<Unit filename="source/Menu/Menu.cpp" />
+		<Unit filename="source/Menu/Menu.hpp" />
 		<Unit filename="source/NetworkValues.hpp" />
 		<Unit filename="source/PlayerInput.hpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />

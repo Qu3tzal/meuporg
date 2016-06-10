@@ -1,21 +1,20 @@
 #include "GUIButtonPool.hpp"
 
-GUIButtonPool::GUIButtonPool(sf::RenderWindow* window) :
+GUIButtonPool::GUIButtonPool(sf::RenderWindow* window, kantan::FontHolder* fonts) :
     m_useCustomView(false)
 {
     this->window = window;
-    font.loadFromFile("assets/fonts/secrcode.ttf");
+    this->fonts = fonts;
 }
 
 GUIButtonPool::~GUIButtonPool()
 {
 }
 
-void GUIButtonPool::addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, FontLoader::FontId fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn)
+void GUIButtonPool::addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn)
 {
     sf::Text text;
-    //text.setFont(fonts.get(fontId));
-    text.setFont(font);
+    text.setFont(fonts->get(fontId));
     text.setCharacterSize(charSize);
     text.setString(textString);
     centerOrigin(text);

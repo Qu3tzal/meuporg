@@ -11,11 +11,12 @@
 #include "../NetworkValues.hpp"
 #include "../PlayerInput.hpp"
 #include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
-#include "TextureLoader.hpp"
 #include "Chat.hpp"
 #include "../ResourceHolder.hpp"
 #include "World.hpp"
 #include "../ResourceId.hpp"
+#include "Loading.hpp"
+#include "Menu.hpp"
 
 class Game
 {
@@ -35,9 +36,6 @@ class Game
         // Initialisation
         void init();
 
-        // Establish the communication with the server.
-        void serverConnection();
-
         // Update
         void update(sf::Time dt);
 
@@ -51,12 +49,6 @@ class Game
         void notificationPacket(sf::Packet* packet);
 
     protected:
-        // Connects to the server.
-        void connectToServer();
-
-        // Connects to the gameServer.
-        void connectToGameServer();
-
         // Disconnect to the serveur
         void disconnectToGameServer();
 
@@ -123,6 +115,10 @@ class Game
         sf::Time timeOut;
 
         State state;
+
+        Menu menu;
+
+        Loading loading;
 };
 
 #endif // GAME_HPP_INCLUDED
