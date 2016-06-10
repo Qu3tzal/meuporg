@@ -27,14 +27,14 @@ void Loading::init()
     text.setFont(fonts->get(ResourceId::MONOF_56));
     text.setCharacterSize(16);
     text.setColor(sf::Color::Red);
-    text.setPosition(350, 450);
+    text.setPosition(575, 450);
     text.setString("");
 
     auto next = [this](){
     this->nextStep();};
-    textInputs.addTextInput("name", sf::Vector2f(350, 200), sf::Vector2f(250, 50), "Rentrer votre pseudo", ResourceId::MONOF_56, 14, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(70, 70, 70, 128));
-    textInputs.addTextInput("ip", sf::Vector2f(350, 325), sf::Vector2f(250, 50), "Rentrer l'ip", ResourceId::MONOF_56, 14, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(70, 70, 70, 128));
-    buttons.addButton("valider", sf::Vector2f(375, 400), sf::Vector2f(100, 50), "Valider", ResourceId::MONOF_56, 14, sf::Color(128, 128, 128, 128), sf::Color(70, 70, 70, 128), next);
+    textInputs.addTextInput("name", sf::Vector2f(575, 200), sf::Vector2f(250, 50), "Rentrer votre pseudo", ResourceId::MONOF_56, 14, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(70, 70, 70, 128));
+    textInputs.addTextInput("ip", sf::Vector2f(575, 325), sf::Vector2f(250, 50), "Rentrer l'ip", ResourceId::MONOF_56, 14, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(70, 70, 70, 128));
+    buttons.addButton("valider", sf::Vector2f(600, 400), sf::Vector2f(100, 50), "Valider", ResourceId::MONOF_56, 14, sf::Color(128, 128, 128, 128), sf::Color(70, 70, 70, 128), next);
 }
 
 void Loading::nextStep()
@@ -116,7 +116,7 @@ void Loading::connectToServer()
     text.setColor(sf::Color::Black);
     text.setString("Connection en cours");
 
-    packet << NetworkValues::CONNECT << username << Version;
+    packet << NetworkValues::CONNECT << *username << Version;
     serverSocket->send(packet);
     packet.clear();
 
@@ -226,27 +226,27 @@ void Loading::connectToGameServer()
             receivePacket >> playerNumber;
             *state = State::JEU;
 
-            /*std::cout << "Liste des joueurs : " << std::endl;
+            //std::cout << "Liste des joueurs : " << std::endl;
             for(int i = 1 ; i <= playerNumber ; i++)
             {
-                std::string playerName = "";
+               std::string playerName = "";
                 receivePacket >> playerName;
-                std::cout << "\t" << "[" << i << "] " << playerName << std::endl;
-            }*/
+                //std::cout << "\t" << "[" << i << "] " << playerName << std::endl;
+            }
         }
     }
     else if(answer == NetworkValues::CONNECTION_FAIL_WRONG_TOKEN)
     {
         text.setColor(sf::Color::Red);
         text.setString("Token invalide");
-        gameServerSocket->disconnect();
+        //gameServerSocket->disconnect();
         //connectToGameServer();
     }
     else if(answer == NetworkValues::CONNECTION_FAIL_UNKNOWN_USER)
     {
         text.setColor(sf::Color::Red);
         text.setString("Nom inconnu");
-        gameServerSocket->disconnect();
+        //gameServerSocket->disconnect();
         //connectToGameServer();
     }
 
