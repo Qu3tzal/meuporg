@@ -1,7 +1,6 @@
 #include "Game.hpp"
 
-Game::Game(sf::RenderWindow* window) : Version(001)
-    , running(true)
+Game::Game(sf::RenderWindow* window) : running(true)
     , token("")
     , udpPacketNumber(0)
     , udpPacketNumberReceive(0)
@@ -12,7 +11,7 @@ Game::Game(sf::RenderWindow* window) : Version(001)
     , timeOutTimer(sf::Time::Zero)
     , timeOut(sf::seconds(5.f))
     , state(State::CHARGEMENT)
-    , loading(&informationSocket, &serverSocket, &gameServerSocket, &gameServerUdpSocket, &fonts, window, &state)
+    , loading(&informationSocket, &serverSocket, &gameServerSocket, &gameServerUdpSocket, &fonts, window, &state, &token, &username)
 {
     //ctor
     fonts.load(ResourceId::SECRET_CODE_FONT, "assets/fonts/secrcode.ttf");

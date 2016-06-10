@@ -17,6 +17,7 @@
 #include "../ResourceId.hpp"
 #include "Loading.hpp"
 #include "Menu.hpp"
+#include "../State.hpp"
 
 class Game
 {
@@ -24,8 +25,6 @@ class Game
 
         // Constructor
         Game(sf::RenderWindow* window);
-
-        enum State {MENU, CHARGEMENT, JEU};
 
         // Destructor
         virtual ~Game();
@@ -62,8 +61,6 @@ class Game
         void testInput();
 
     private:
-        // The version of the client
-        const unsigned int Version;
 
         // Timer for the timeout
         sf::Time timeout;

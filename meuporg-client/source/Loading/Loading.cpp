@@ -1,14 +1,20 @@
 #include "Loading.hpp"
 
-Loading::Loading(sf::TcpSocket* informationSocket, sf::TcpSocket* serverSocket, sf::TcpSocket* gameServerSocket, sf::UdpSocket* gameServerUdpSocket, kantan::FontHolder* fonts, sf::RenderWindow* window, Game::State* state) :
-    textInputs(window, fonts)
-    , buttons(window, fonts)
+Loading::Loading(sf::TcpSocket* informationSocket, sf::TcpSocket* serverSocket, sf::TcpSocket* gameServerSocket, sf::UdpSocket* gameServerUdpSocket, kantan::FontHolder* fonts, sf::RenderWindow* window, State* state, std::string* token, std::string* username) :
+    buttons(window, fonts)
+    , textInputs(window, fonts)
+    , showText(true)
+    , Version(001)
+
 {
     this->informationSocket = informationSocket;
     this->serverSocket = serverSocket;
     this->gameServerSocket = gameServerSocket;
     this->gameServerUdpSocket = gameServerUdpSocket;
     this->state = state;
+    this->token = token;
+    this->username = username;
+    this->fonts = fonts;
 }
 
 Loading::~Loading()
@@ -18,49 +24,70 @@ Loading::~Loading()
 
 void Loading::init()
 {
+    text.setFont(fonts->get(ResourceId::MONOF_56));
+    text.setCharacterSize(16);
+    text.setColor(sf::Color::Red);
+    text.setPosition(350, 450);
+    text.setString("");
 
+    auto next = [this](){
+    this->nextStep();};
+    textInputs.addTextInput("name", sf::Vector2f(350, 200), sf::Vector2f(250, 50), "Rentrer votre pseudo", ResourceId::MONOF_56, 14, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(70, 70, 70, 128));
+    textInputs.addTextInput("ip", sf::Vector2f(350, 325), sf::Vector2f(250, 50), "Rentrer l'ip", ResourceId::MONOF_56, 14, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(70, 70, 70, 128));
+    buttons.addButton("valider", sf::Vector2f(375, 400), sf::Vector2f(100, 50), "Valider", ResourceId::MONOF_56, 14, sf::Color(128, 128, 128, 128), sf::Color(70, 70, 70, 128), next);
+}
+
+void Loading::nextStep()
+{
+    if(textInputs.getText("name") != "" && textInputs.getText("ip") != "")
+    {
+        ip = sf::IpAddress(textInputs.getText("ip"));
+        *username = textInputs.getText("name");
+        serverConnection();
+    }
+    else
+    {
+        text.setString("Veuillez remplir tout les champs");
+    }
 }
 
 void Loading::update(sf::Time dt)
 {
-
+    buttons.update();
+    textInputs.update();
 }
 
 void Loading::eventHandle(sf::Event e)
 {
-
+    buttons.handleEvent(e);
+    textInputs.handleEvent(e);
 }
 
 void Loading::serverConnection()
 {
 
-    std::cout << "Rentrez l'ip du serveur : ";
-    std::cin >> ip;
 
-    std::cout << "Rentrez votre identifiant : ";
-    std::cin >> username;
-
-    sf::Socket::Status status = informationSocket.connect(ip, 22626, sf::seconds(5.f));
+    sf::Socket::Status status = informationSocket->connect(ip, 22626, sf::seconds(5.f));
     if (status != sf::Socket::Done)
     {
-        std::cout << "Connection timed out" << std::endl;
-        running = false;
+        text.setColor(sf::Color::Red);
+        text.setString("Connection timed out");
         return;
     }
 
     sf::Packet packet;
     packet << NetworkValues::VERSION;
-    informationSocket.send(packet);
+    informationSocket->send(packet);
 
     sf::Packet serverVersionPacket;
-    informationSocket.receive(serverVersionPacket);
+    informationSocket->receive(serverVersionPacket);
 
     packet.clear();
 
     packet << NetworkValues::NUMBER_OF_PLAYERS;
-    informationSocket.send(packet);
+    informationSocket->send(packet);
     sf::Packet playerNumberPacket;
-    informationSocket.receive(playerNumberPacket);
+    informationSocket->receive(playerNumberPacket);
 
     unsigned int serverVersion;
     unsigned int playerNumber;
@@ -69,7 +96,7 @@ void Loading::serverConnection()
     serverVersionPacket >> serverVersion;
     playerNumberPacket >> playerNumber >> maximumPlayer;
 
-    std::cout << "Server version : " <<  serverVersion << std::endl <<" Number of player : " << playerNumber << "/" <<  maximumPlayer << std::endl;
+    //std::cout << "Server version : " <<  serverVersion << std::endl <<" Number of player : " << playerNumber << "/" <<  maximumPlayer << std::endl;
 
     connectToServer();
 }
@@ -77,80 +104,88 @@ void Loading::serverConnection()
 void Loading::connectToServer()
 {
     sf::Packet packet;
-    sf::TcpSocket::Status status = serverSocket.connect(ip, 22625, sf::seconds(5.f));
+    sf::TcpSocket::Status status = serverSocket->connect(ip, 22625, sf::seconds(5.f));
 
     if (status != sf::Socket::Done)
     {
-        std::cout << "Connection timed out" << std::endl;
-        running = false;
+        text.setColor(sf::Color::Red);
+        text.setString("Connection timed out");
         return;
     }
 
-    std::cout << "---------- Connexion en cours ----------" << std::endl;
+    text.setColor(sf::Color::Black);
+    text.setString("Connection en cours");
 
     packet << NetworkValues::CONNECT << username << Version;
-    serverSocket.send(packet);
+    serverSocket->send(packet);
     packet.clear();
 
-    serverSocket.receive(packet);
+    serverSocket->receive(packet);
 
     unsigned int answer;
     packet >> answer;
     switch(answer)
     {
         case NetworkValues::ACCOUNT_CREATED_RECONNECT :
-            std::cout << "---------- Creation du compte ----------" << std::endl;
-            serverSocket.disconnect();
+            text.setColor(sf::Color::Black);
+            text.setString("Création du compte");
+            serverSocket->disconnect();
 
             // Reconnect to the server.
             connectToServer();
             break;
         case NetworkValues::CONNECTION_SUCCESS :
             {
-                std::cout << "Connexion reussie !" << std::endl;
+                text.setColor(sf::Color::Black);
+                text.setString("Connection reussi");
 
-                packet >> token;
+                packet >> *token;
 
-                std::cout << "[DEBUG] Token: " << token << std::endl;
+                //std::cout << "[DEBUG] Token: " << *token << std::endl;
                 connectToGameServer();
             }
             break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_USER :
-             std::cout << "Identifiant inconnu !" << std::endl;
+                text.setColor(sf::Color::Red);
+                text.setString("Identifiant inconnu");
             break;
         case NetworkValues::CONNECTION_FAIL_VERSION_ERROR :
-            std::cout << "Version invalide !" << std::endl;
+            text.setColor(sf::Color::Red);
+            text.setString("Version invalide");
             break;
         case NetworkValues::CONNECTION_FAIL_SERVER_FULL :
-            std::cout << "Le serveur est complet !" << std::endl;
+            text.setColor(sf::Color::Red);
+            text.setString("Le serveur est complet");
             break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_ERROR :
-           std::cout << "Erreur inconnue" << std::endl;
+            text.setColor(sf::Color::Red);
+            text.setString("Erreur inconnu");
             break;
         case NetworkValues::CONNECTION_FAIL_ALREADY_CONNECTED :
-            std::cout << "Vous etes deja connecte(e)" << std::endl;
+            text.setColor(sf::Color::Red);
+            text.setString("Vous êtes déjà connecté");
             break;
     }
 }
 
 void Loading::connectToGameServer()
 {
-    std::cout << "---------- Attente de reponse du serveur ----------" << std::endl;
-    sf::TcpSocket::Status status = gameServerSocket.connect(ip, 22624, sf::seconds(5.f));
+    //std::cout << "---------- Attente de reponse du serveur ----------" << std::endl;
+    sf::TcpSocket::Status status = gameServerSocket->connect(ip, 22624, sf::seconds(5.f));
 
     if (status != sf::Socket::Done)
     {
-        std::cout << "Connection timed out" << std::endl;
-        running = false;
+        text.setColor(sf::Color::Red);
+        text.setString("Connection Timed Out");
         return;
     }
-    std::cout << "---------- Connexion en cours ----------" << std::endl;
+    //std::cout << "---------- Connexion en cours ----------" << std::endl;
     sf::Packet packet;
-    packet << NetworkValues::CONNECT << username << token;
+    packet << NetworkValues::CONNECT << *username << *token;
 
-    gameServerSocket.send(packet);
+    gameServerSocket->send(packet);
     packet.clear();
-    gameServerSocket.receive(packet);
+    gameServerSocket->receive(packet);
 
     unsigned int answer;
     packet >> answer;
@@ -158,59 +193,61 @@ void Loading::connectToGameServer()
     if(answer == NetworkValues::OKAY)
     {
         packet.clear();
-        packet << NetworkValues::CONNECT << username << token;
+        packet << NetworkValues::CONNECT << *username << *token;
 
-        gameServerSocket.setBlocking(false);
-        gameServerUdpSocket.setBlocking(false);
+        gameServerSocket->setBlocking(false);
+        gameServerUdpSocket->setBlocking(false);
 
         sf::Packet receivePacket;
 
         // While we didn't received anything, we keep sending on UDP.
         sf::Clock clock;
-        while(gameServerSocket.receive(receivePacket) != sf::Socket::Done)
+        while(gameServerSocket->receive(receivePacket) != sf::Socket::Done)
         {
             if(clock.getElapsedTime() >= sf::seconds(0.5f))
             {
-                gameServerUdpSocket.send(packet, ip, 22623);
+                gameServerUdpSocket->send(packet, ip, 22623);
                 clock.restart();
             }
         }
 
-        gameServerSocket.setBlocking(true);
+        gameServerSocket->setBlocking(true);
 
         receivePacket >> answer;
 
         if(answer == NetworkValues::OKAY)
         {
-            std::cout << "---------- Connexion reussi ----------" << std::endl;
+            //std::cout << "---------- Connexion reussi ----------" << std::endl;
             receivePacket.clear();
-            gameServerSocket.receive(receivePacket);
-            gameServerSocket.setBlocking(false);
-            gameServerUdpSocket.setBlocking(false);
+            gameServerSocket->receive(receivePacket);
+            gameServerSocket->setBlocking(false);
+            gameServerUdpSocket->setBlocking(false);
             int playerNumber = 0;
             receivePacket >> playerNumber;
-            state = State::JEU;
+            *state = State::JEU;
 
-            std::cout << "Liste des joueurs : " << std::endl;
+            /*std::cout << "Liste des joueurs : " << std::endl;
             for(int i = 1 ; i <= playerNumber ; i++)
             {
                 std::string playerName = "";
                 receivePacket >> playerName;
                 std::cout << "\t" << "[" << i << "] " << playerName << std::endl;
-            }
+            }*/
         }
     }
     else if(answer == NetworkValues::CONNECTION_FAIL_WRONG_TOKEN)
     {
-        std::cout << "Token invalide " << std::endl;
-        gameServerSocket.disconnect();
-        connectToGameServer();
+        text.setColor(sf::Color::Red);
+        text.setString("Token invalide");
+        gameServerSocket->disconnect();
+        //connectToGameServer();
     }
     else if(answer == NetworkValues::CONNECTION_FAIL_UNKNOWN_USER)
     {
-        std::cout << "Nom inconnu" << std::endl;
-        gameServerSocket.disconnect();
-        connectToGameServer();
+        text.setColor(sf::Color::Red);
+        text.setString("Nom inconnu");
+        gameServerSocket->disconnect();
+        //connectToGameServer();
     }
 
 }
@@ -220,5 +257,6 @@ void Loading::draw(sf::RenderTarget& window, sf::RenderStates states) const
 
     window.draw(textInputs);
     window.draw(buttons);
+    window.draw(text);
 
 }

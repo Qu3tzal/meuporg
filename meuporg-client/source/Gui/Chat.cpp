@@ -1,6 +1,6 @@
 #include "Chat.hpp"
 
-Chat::Chat(sf::RenderWindow* window, sf::TcpSocket* socket, kantan::FontHolder* fonts) : buttons(window)
+Chat::Chat(sf::RenderWindow* window, sf::TcpSocket* socket, kantan::FontHolder* fonts) : buttons(window, fonts)
     , textInputs(window, fonts)
     , chatActiveFlag(false)
 {

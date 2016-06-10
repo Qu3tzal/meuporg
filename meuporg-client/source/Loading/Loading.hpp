@@ -9,12 +9,15 @@
 #include "GUITextInputPool.hpp"
 #include "GUIButtonPool.hpp"
 #include "../ResourceId.hpp"
-#include "../Game/Game.hpp"
+#include "../State.hpp"
+#include <iostream>
+#include <functional>
+#include "../NetworkValues.hpp"
 
 class Loading : public sf::Drawable, sf::Transformable
 {
     public:
-        Loading(sf::TcpSocket* informationSocket, sf::TcpSocket* serverSocket, sf::TcpSocket* gameServerSocket, sf::UdpSocket* gameServerUdpSocket, kantan::FontHolder* fonts, sf::RenderWindow* window, Game::State* state);
+        Loading(sf::TcpSocket* informationSocket, sf::TcpSocket* serverSocket, sf::TcpSocket* gameServerSocket, sf::UdpSocket* gameServerUdpSocket, kantan::FontHolder* fonts, sf::RenderWindow* window, State* state, std::string* token, std::string* username);
         virtual ~Loading();
 
         // Establish the communication with the server.
@@ -25,6 +28,8 @@ class Loading : public sf::Drawable, sf::Transformable
         void update(sf::Time dt);
 
         void eventHandle(sf::Event e);
+
+        void nextStep();
 
     protected:
 
@@ -48,16 +53,27 @@ class Loading : public sf::Drawable, sf::Transformable
         sf::IpAddress ip;
 
         // Username
-        std::string username;
+        std::string* username;
+
+        std::string* token;
 
         GUIButtonPool buttons;
 
         GUITextInputPool textInputs;
 
-        Game::State* state;
+        State* state;
+
+        kantan::FontHolder* fonts;
+
+        sf::Text text;
+
+        bool showText;
 
 
     private:
+
+        // The version of the client
+        const unsigned int Version;
 };
 
 #endif // LOADING_HPP
