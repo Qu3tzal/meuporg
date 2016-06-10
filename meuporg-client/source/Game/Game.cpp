@@ -164,7 +164,7 @@ void Game::sendInput()
     sf::Packet packet;
     packet << NetworkValues::INPUT << username << token << udpPacketNumber << playerInput.MoveUp << playerInput.MoveDown << playerInput.MoveLeft << playerInput.MoveRight;
 
-    gameServerUdpSocket.send(packet, ip, 22623);
+    gameServerUdpSocket.send(packet, loading.getIp(), 22623);
     udpPacketNumber++;
 }
 

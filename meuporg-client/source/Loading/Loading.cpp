@@ -252,6 +252,11 @@ void Loading::connectToGameServer()
 
 }
 
+sf::IpAddress Loading::getIp() const
+{
+    return ip;
+}
+
 void Loading::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
 

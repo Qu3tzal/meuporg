@@ -5,7 +5,6 @@ Player::Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::
     , direction(Direction::DOWN)
     , nameText(name, fonts)
 {
-    std::cout << "name : " << name << std::endl;
 }
 
 Player::~Player()

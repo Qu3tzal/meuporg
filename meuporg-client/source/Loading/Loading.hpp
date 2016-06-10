@@ -31,6 +31,8 @@ class Loading : public sf::Drawable, sf::Transformable
 
         void nextStep();
 
+        sf::IpAddress getIp() const;
+
     protected:
 
          // All tcp Socket
