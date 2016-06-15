@@ -1,4 +1,51 @@
-﻿0.1
+﻿0.4
+===
+	- Serveur :
+		- Interactions marchandes :
+			- Magasin des ressources
+			- Cabinet du médecin
+			- Laboratoire de recherche
+
+	- Client :
+		- 
+
+0.3
+===
+	- Serveur :
+		- Inventaire
+		- Interactions marchandes :
+			- Armurerie
+		- Récompense en ressources pour le kill d'un monstre
+		- Missions :
+			- Notification d'atteinte d'une zone
+
+	- Client :
+		- 
+
+0.2
+===
+	- Serveur :
+		- Caractéristiques :
+			- Vie
+			- Force
+			- Agilité
+			- Résistance
+			- XP
+			- Niveau
+		- Entité monstre
+		- Récompense d'XP pour le kill d'un monstre
+		- Système de notifications internes
+		- Missions :
+			- Système d'écoute des notifications internes
+			- Notification du client du début d'une mission
+			- Notification du client de la fin d'une mission
+			- Notification du client de la progression d'une mission
+			- Notification du kill d'un monstre
+
+	- Client :
+		- 
+
+0.1
 ===
 	- Serveur :
 		- User management :
