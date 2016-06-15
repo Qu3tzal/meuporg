@@ -31,6 +31,10 @@ Protocole
 		RECEIVE_CHAT_MESSAGE				206
 		SEND_CHAT_MESSAGE					207
 		UPDATE								208
+		MISSION_START						209
+		MISSION_END							210
+		MISSION_PROGRESS					211
+		KILL								212
 
 		KEEP_ALIVE							300
 		OKAY								301
@@ -103,7 +107,7 @@ Protocole
 
 	Envoi des mises à jour
 	----------------------
-		[serveur	UDP]		UPDATE packet_number entity_id type name state position_vector velocity_vector
+		[serveur	UDP]		UPDATE packet_number entity_id type name state position_vector velocity_vector extra_data
 
 	Notification du retrait d'une entité
 	------------------------------------
@@ -124,3 +128,19 @@ Protocole
 	Envoi d'un message dans le chat
 	-------------------------------
 		[client		TCP:22624]	SEND_CHAT_MESSAGE message
+
+	Notification du début d'une mission
+	-----------------------------------
+		[serveur	TCP]		NOTIFY MISSION_START mission_id tasks_list
+
+	Notification de la fin d'une mission
+	------------------------------------
+		[serveur	TCP]		NOTIFY MISSION_END mission_id loot_list
+
+	Notification du progrès d'une mission
+	-------------------------------------
+		[serveur	TCP]		NOTIFY MISSION_PROGRESS mission_id tasks_list
+
+	Notification du kill d'une entité
+	---------------------------------
+		[serveur	TCP]		NOTIFY KILL killer_entity_id killed_entity_id
