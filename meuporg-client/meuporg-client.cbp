@@ -96,6 +96,8 @@
 		<Unit filename="source/Gui/GUITextInputPool.cpp" />
 		<Unit filename="source/Gui/GUITextInputPool.hpp" />
 		<Unit filename="source/Gui/GraphicsUtils.hpp" />
+		<Unit filename="source/Gui/Hud.cpp" />
+		<Unit filename="source/Gui/Hud.hpp" />
 		<Unit filename="source/Gui/NameText.cpp" />
 		<Unit filename="source/Gui/NameText.hpp" />
 		<Unit filename="source/Loading/Loading.cpp" />
@@ -112,6 +114,7 @@
 		<Unit filename="source/SFMLPacketUtils.cpp" />
 		<Unit filename="source/SFMLPacketUtils.hpp" />
 		<Unit filename="source/SFMLPacketUtils.inl" />
+		<Unit filename="source/State.hpp" />
 		<Unit filename="source/main.cpp" />
 		<Extensions>
 			<code_completion />
