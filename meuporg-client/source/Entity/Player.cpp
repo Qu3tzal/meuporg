@@ -5,6 +5,10 @@ Player::Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::
     , direction(Direction::DOWN)
     , nameText(name, fonts)
 {
+    setProperty("HpMax", 1);
+    setProperty("Hp", 1);
+    setProperty("XpNeeded", 1);
+    setProperty("Xp", 0.5);
 }
 
 Player::~Player()
@@ -164,6 +168,11 @@ void Player::setDirection()
 
 }
 
+void Player::setState(State state)
+{
+    this->state = state;
+}
+
 void Player::calculatePrecision(sf::Vector2f vect)
 {
     //std::cout << distEucli(vect, getPosition()) << std::endl;
@@ -171,7 +180,7 @@ void Player::calculatePrecision(sf::Vector2f vect)
 
  void Player::setProperty(std::string name, float value)
  {
-    m_properties[name] = float;
+    m_properties[name] = value;
  }
 
 float Player::getProperty(std::string name)

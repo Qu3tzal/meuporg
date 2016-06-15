@@ -13,11 +13,12 @@
 #include "../ResourceHolder.hpp"
 #include "../SFMLPacketUtils.hpp"
 #include "Map.hpp"
+#include "Hud.hpp"
 
 class World : public sf::Drawable, public sf::Transformable
 {
     public:
-        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts);
+        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username);
         virtual ~World();
 
         void init();
@@ -53,6 +54,10 @@ class World : public sf::Drawable, public sf::Transformable
         Map m_map;
 
         Player* player;
+
+        std::string* username;
+
+        Hud hud;
 
     private:
 };

@@ -1,10 +1,12 @@
 #include "World.hpp"
 
-World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts) : m_map(textures)
+World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username) : m_map(textures)
     , player(nullptr)
+    , hud(fonts)
 {
     this->textures = textures;
     this->fonts = fonts;
+    this->username = username;
     //loadMap("assets/level/level1.lvl");
 }
 
@@ -18,6 +20,8 @@ World::~World()
 
 void World::init()
 {
+    hud.init();
+    hud.setPosition(sf::Vector2f(410, 655));
     loadMap();
     for(Entity* e : entities)
     {
@@ -31,6 +35,7 @@ void World::update(sf::Time dt)
     {
         e->update(dt);
     }
+    hud.update(dt);
 }
 
 void World::removeEntity(unsigned int entityId)
@@ -148,9 +153,10 @@ void World::updateEntity(sf::Packet* packet)
         entity->init();
         entities.push_back(entity);
 
-        if(player == nullptr)
+        if(this->player == nullptr)
         {
-            player = getPlayer(name);
+            this->player = getPlayer(*username);
+            hud.setPlayer(this->player);
         }
 
 
@@ -214,5 +220,7 @@ void World::draw(sf::RenderTarget& window, sf::RenderStates states) const
     {
         window.draw((**it));
     }
+
+    window.draw(hud);
 
 }
