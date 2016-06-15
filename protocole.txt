@@ -110,7 +110,7 @@ Protocole
 
 	Envoi des mises à jour
 	----------------------
-		[serveur	UDP]		UPDATE packet_number entity_id type name state position_vector velocity_vector extra_data
+		[serveur	UDP]		UPDATE packet_number entity_id type name position_vector velocity_vector state extra_data
 
 	Notification du retrait d'une entité
 	------------------------------------
