@@ -20,9 +20,9 @@
 			- Notification d'atteinte d'une zone
 
 	- Client :
-		- Affichage de l'inventaire, avec changement de position, activation des objets activable
-		- Pnj vendeurs
-		- Affichage de lootBag avec choix de prendre ou non les objets
+		- Affichage de l'inventaire, avec changement de position, activation des objets activables
+		- PNJ vendeur
+		- Affichage de récompenses avec choix de prendre ou non
 
 0.2
 ===
@@ -46,11 +46,11 @@
 
 	- Client :
 		- Interface utilisateur : 
-					- Affichage des statistique
-					- Affichage de la vie et de l'xp
+					- Affichage des statistiques
+					- Affichage de la vie et de l'XP
 		- Création de l'entité monstre
-		- Affichage du gain d'xp
-		- Pnj donneur de mission avec texte
+		- Affichage du gain d'XP
+		- PNJ donneur de mission avec texte
 
 0.1
 ===
