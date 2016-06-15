@@ -169,9 +169,14 @@ void Player::calculatePrecision(sf::Vector2f vect)
     //std::cout << distEucli(vect, getPosition()) << std::endl;
 }
 
-void Player::setState(State state)
+ void Player::setProperty(std::string name, float value)
+ {
+    m_properties[name] = float;
+ }
+
+float Player::getProperty(std::string name)
 {
-    this->state = state;
+    return m_properties[name];
 }
 
 void Player::draw(sf::RenderTarget& window, sf::RenderStates states) const

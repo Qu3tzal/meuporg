@@ -36,6 +36,8 @@ class World : public sf::Drawable, public sf::Transformable
 
         void loadMap();
 
+        Player* getPlayer(std::string playerName);
+
     protected:
 
          void draw(sf::RenderTarget& window, sf::RenderStates states) const;
@@ -49,6 +51,8 @@ class World : public sf::Drawable, public sf::Transformable
         kantan::FontHolder* fonts;
 
         Map m_map;
+
+        Player* player;
 
     private:
 };

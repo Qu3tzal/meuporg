@@ -1,6 +1,7 @@
 #include "World.hpp"
 
 World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts) : m_map(textures)
+    , player(nullptr)
 {
     this->textures = textures;
     this->fonts = fonts;
@@ -147,6 +148,11 @@ void World::updateEntity(sf::Packet* packet)
         entity->init();
         entities.push_back(entity);
 
+        if(player == nullptr)
+        {
+            player = getPlayer(name);
+        }
+
 
     }
 
@@ -170,6 +176,23 @@ Entity* World::getEntityById(unsigned int id)
     return nullptr;
 }
 
+Player* World::getPlayer(std::string playerName)
+{
+    for(Entity* e : entities)
+    {
+        if(e->getType() == Entity::Type::PLAYER)
+        {
+            Player* player = static_cast<Player*>(e);
+            if(player->getName() == playerName)
+            {
+                return player;
+            }
+        }
+    }
+
+    return nullptr;
+}
+
 void World::loadMap(std::string path)
 {
     if(!m_map.loadLevelFromFile(path))
@@ -177,10 +200,12 @@ void World::loadMap(std::string path)
         loadMap();
     }
 }
+
 void World::loadMap()
 {
     m_map.createMap();
 }
+
 void World::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
     window.draw(m_map);

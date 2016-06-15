@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <map>
 
 #include "Animation.hpp"
 #include "Entity.hpp"
@@ -29,6 +30,10 @@ class Player : public Entity
 
         void calculatePrecision(sf::Vector2f vect);
 
+        void setProperty(std::string name, float value);
+
+        float getProperty(std::string name);
+
     protected:
 
         virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
@@ -47,6 +52,8 @@ class Player : public Entity
         sf::Vector2f velocityNormalized;
 
         NameText nameText;
+
+        std::map <std::string, float> m_properties;
 
 
     private:
