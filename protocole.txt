@@ -35,6 +35,7 @@ Protocole
 		MISSION_END							210
 		MISSION_PROGRESS					211
 		KILL								212
+		LEVEL_UP							213	
 
 		KEEP_ALIVE							300
 		OKAY								301
@@ -144,3 +145,7 @@ Protocole
 	Notification du kill d'une entité
 	---------------------------------
 		[serveur	TCP]		NOTIFY KILL killer_entity_id killed_entity_id
+
+	Notification d'augmentation d'un level
+	--------------------------------------
+		[serveur	TCP]		NOTIFY LEVEL_UP level
