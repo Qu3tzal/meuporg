@@ -9,6 +9,10 @@ Player::Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::
     setProperty("Hp", 1);
     setProperty("XpNeeded", 1);
     setProperty("Xp", 0.5);
+    setProperty("Level", 1);
+    setProperty("Strengh", 0);
+    setProperty("Agility", 0);
+    setProperty("Resist", 0);
 }
 
 Player::~Player()

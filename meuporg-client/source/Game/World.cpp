@@ -1,8 +1,8 @@
 #include "World.hpp"
 
-World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username) : m_map(textures)
+World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window) : m_map(textures)
     , player(nullptr)
-    , hud(fonts)
+    , hud(fonts, window)
 {
     this->textures = textures;
     this->fonts = fonts;
@@ -59,6 +59,7 @@ void World::updateEntity(sf::Packet* packet)
 {
     unsigned int id(0);
     unsigned int type_ui;
+    unsigned int state_ui;
     std::string name("");
 
     sf::Vector2f position;
@@ -66,7 +67,10 @@ void World::updateEntity(sf::Packet* packet)
 
     *packet >> id
             >> type_ui
-            >> name;
+            >> name
+            >> state_ui
+            >> position
+            >> velocity;
 
     Entity::Type type = static_cast<Entity::Type>(type_ui);
     Entity* e = getEntityById(id);
@@ -77,10 +81,7 @@ void World::updateEntity(sf::Packet* packet)
         {
             case Entity::Type::PLAYER:
                 {
-                   unsigned int state_ui;
                    Player* player = static_cast<Player*>(e);
-
-                   *packet >> state_ui;
 
                    Player::State state = static_cast<Player::State>(state_ui);
 
@@ -89,10 +90,7 @@ void World::updateEntity(sf::Packet* packet)
                 break;
             case Entity::Type::NPC:
                 {
-                    unsigned int state_ui;
                     Npc* npc = static_cast<Npc*>(e);
-
-                    *packet >> state_ui;
 
                     Npc::State state = static_cast<Npc::State>(state_ui);
 
@@ -102,11 +100,7 @@ void World::updateEntity(sf::Packet* packet)
             default:
                 break;
         }
-        *packet >> position
-                >> velocity;
         e->setName(name);
-        Player* player = static_cast<Player*>(e);
-        player->calculatePrecision(position);
         e->setPosition(position);
         e->setVelocity(velocity);
     }
@@ -117,10 +111,6 @@ void World::updateEntity(sf::Packet* packet)
         {
             case Entity::Type::PLAYER:
                 {
-                    unsigned int state_ui;
-                    *packet >> state_ui;
-
-
                     entity = new Player(textures, fonts, name, id);
                     Player::State state = static_cast<Player::State>(state_ui);
 
@@ -131,9 +121,6 @@ void World::updateEntity(sf::Packet* packet)
                 break;
             case Entity::Type::NPC:
                 {
-                    unsigned int state_ui;
-                    *packet >> state_ui;
-
                     entity = new Npc(textures, fonts, name, id);
                     Npc::State state = static_cast<Npc::State>(state_ui);
 
@@ -145,8 +132,7 @@ void World::updateEntity(sf::Packet* packet)
             default:
                 break;
         }
-        *packet >> position
-                >> velocity;
+
         entity->setPosition(position);
         entity->setVelocity(velocity);
 
@@ -197,6 +183,11 @@ Player* World::getPlayer(std::string playerName)
     }
 
     return nullptr;
+}
+
+void World::handleEvent(sf::Event e)
+{
+    hud.handleEvent(e);
 }
 
 void World::loadMap(std::string path)

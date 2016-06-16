@@ -3,27 +3,36 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
-
-#include<../ResourceHolder.hpp>
-#include <../ResourceId.hpp>
-#include <Player.hpp>
 #include <sstream>
+
+#include "../ResourceHolder.hpp"
+#include "../ResourceId.hpp"
+#include "Player.hpp"
+#include "GUIButtonPool.hpp"
+#include "Statistic.hpp"
+
 
 class Hud : public sf::Drawable, public sf::Transformable
 {
     public:
-        Hud(kantan::FontHolder* fonts);
+        Hud(kantan::FontHolder* fonts, sf::RenderWindow* window);
         virtual ~Hud();
+
+        enum Tabs {NONE, STATS};
 
         void init();
 
         void update(sf::Time dt);
+
+        void handleEvent(sf::Event e);
 
         unsigned int setRatioHp();
 
         unsigned int setRatioXp();
 
         void setPlayer(Player* p);
+
+        void tabIni(Tabs tab);
 
     protected:
 
@@ -40,6 +49,12 @@ class Hud : public sf::Drawable, public sf::Transformable
          sf::RectangleShape background;
 
          kantan::FontHolder* fonts;
+
+         GUIButtonPool buttons;
+
+         Tabs tab;
+
+         Statistic stats;
 
     private:
 };

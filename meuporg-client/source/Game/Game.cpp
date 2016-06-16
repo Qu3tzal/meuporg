@@ -6,7 +6,7 @@ Game::Game(sf::RenderWindow* window) : running(true)
     , udpPacketNumberReceive(0)
     , username("")
     , chat(window, &gameServerSocket, &fonts)
-    , world(&textures, &fonts, &username)
+    , world(&textures, &fonts, &username, window)
     , loosedPacket(0)
     , timeOutTimer(sf::Time::Zero)
     , timeOut(sf::seconds(5.f))
@@ -214,6 +214,7 @@ void Game::EventHandle(sf::Event event)
     {
     case State::JEU :
         chat.handleEvent(event);
+        world.handleEvent(event);
         break;
     case State::CHARGEMENT :
         loading.eventHandle(event);

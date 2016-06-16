@@ -100,6 +100,8 @@
 		<Unit filename="source/Gui/Hud.hpp" />
 		<Unit filename="source/Gui/NameText.cpp" />
 		<Unit filename="source/Gui/NameText.hpp" />
+		<Unit filename="source/Gui/Statistic.cpp" />
+		<Unit filename="source/Gui/Statistic.hpp" />
 		<Unit filename="source/Loading/Loading.cpp" />
 		<Unit filename="source/Loading/Loading.hpp" />
 		<Unit filename="source/Menu/Menu.cpp" />

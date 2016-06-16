@@ -18,12 +18,14 @@
 class World : public sf::Drawable, public sf::Transformable
 {
     public:
-        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username);
+        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window);
         virtual ~World();
 
         void init();
 
         void update(sf::Time dt);
+
+        void handleEvent(sf::Event e);
 
         void removeEntity(unsigned int entityId);
 
