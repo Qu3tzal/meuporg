@@ -32,6 +32,9 @@ World::~World()
     for(LevelStatsComponent* lsc : m_levelStatsComponents)
         delete lsc;
 
+    for(NameComponent* nc : m_nameComponents)
+        delete nc;
+
     for(StaticMarkerComponent* smc : m_staticMarkerComponents)
         delete smc;
 }
@@ -186,7 +189,15 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
         else if(e->getName() == "NPC")
         {
             // Set the entity type.
-            packet << ClientSide::EntityType::NPC << "Random NPC";
+            packet << ClientSide::EntityType::NPC;
+
+            // Get the name.
+            NameComponent* nc = e->getComponent<NameComponent>("Name");
+
+            if(nc == nullptr)
+                continue;
+
+            packet << nc->name;
 
             // Get the movement component.
             kantan::MovementComponent* mc = e->getComponent<kantan::MovementComponent>("Movement");
@@ -263,8 +274,16 @@ void World::cleanEntities(Server* server)
                         removeComponentFrom<kantan::MovementComponent>(component, m_movementComponents);
                     else if(component->getName() == "Rotation")
                         removeComponentFrom<kantan::RotationComponent>(component, m_rotationComponents);
+                    else if(component->getName() == "BasicStats")
+                        removeComponentFrom<BasicStatsComponent>(component, m_basicStatsComponents);
                     else if(component->getName() == "ClientLink")
                         removeComponentFrom<ClientLinkComponent>(component, m_clientLinkComponents);
+                    else if(component->getName() == "LevelStats")
+                        removeComponentFrom<LevelStatsComponent>(component, m_levelStatsComponents);
+                    else if(component->getName() == "NameComponent")
+                        removeComponentFrom<NameComponent>(component, m_nameComponents);
+                    else if(component->getName() == "StaticMarkerComponent")
+                        removeComponentFrom<StaticMarkerComponent>(component, m_staticMarkerComponents);
                 }
 
                 m_entities.erase(itr);
@@ -358,6 +377,14 @@ LevelStatsComponent* World::createLevelStatsComponent(std::size_t ownerId)
     return lsc;
 }
 
+NameComponent* World::createNameComponent(std::size_t ownerId)
+{
+    NameComponent* nc = new NameComponent(ownerId);
+    m_nameComponents.push_back(nc);
+
+    return nc;
+}
+
 StaticMarkerComponent* World::createStaticMarkerComponent(std::size_t ownerId)
 {
     StaticMarkerComponent* clc = new StaticMarkerComponent(ownerId);
@@ -414,6 +441,7 @@ kantan::Entity* World::createNPC(sf::Vector2f position)
     kantan::MovementComponent* mc = createMovementComponent(npc->getId());
 
     BasicStatsComponent* bsc = createBasicStatsComponent(npc->getId());
+    NameComponent* nc = createNameComponent(npc->getId());
 
     // Configure the components.
     phc->points = {
@@ -427,10 +455,13 @@ kantan::Entity* World::createNPC(sf::Vector2f position)
 
     mc->maximumSpeed = 100.f;
 
+    nc->name = "Random NPC";
+
     // Add the components to the entity.
     npc->addComponent(phc);
     npc->addComponent(mc);
     npc->addComponent(bsc);
+    npc->addComponent(nc);
 
     // Return the entity.
     return npc;

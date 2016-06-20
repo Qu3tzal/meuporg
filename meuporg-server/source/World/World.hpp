@@ -10,6 +10,7 @@
 #include "../Components/BasicStatsComponent.hpp"
 #include "../Components/ClientLinkComponent.hpp"
 #include "../Components/LevelStatsComponent.hpp"
+#include "../Components/NameComponent.hpp"
 #include "../Components/StaticMarkerComponent.hpp"
 #include "../Systems/ClientInputSystem.hpp"
 #include "../Utils/SFMLPacketUtils.hpp"
@@ -66,6 +67,7 @@ class World
         BasicStatsComponent* createBasicStatsComponent(std::size_t ownerId);
         ClientLinkComponent* createClientLinkComponent(std::size_t ownerId);
         LevelStatsComponent* createLevelStatsComponent(std::size_t ownerId);
+        NameComponent* createNameComponent(std::size_t ownerId);
         StaticMarkerComponent* createStaticMarkerComponent(std::size_t ownerId);
 
         // createXXX methods.
@@ -86,6 +88,7 @@ class World
         std::vector<BasicStatsComponent*> m_basicStatsComponents;
         std::vector<ClientLinkComponent*> m_clientLinkComponents;
         std::vector<LevelStatsComponent*> m_levelStatsComponents;
+        std::vector<NameComponent*> m_nameComponents;
         std::vector<StaticMarkerComponent*> m_staticMarkerComponents;
 
         // Systems.
