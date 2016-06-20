@@ -60,6 +60,17 @@ void World::updateEntity(sf::Packet* packet)
     unsigned int id(0);
     unsigned int type_ui;
     unsigned int state_ui;
+
+    // basic stats
+    float hp;
+    float maxHp;
+    float strengh;
+    float agility;
+    float resistance;
+
+    // level and xp
+    float xp;
+    float level;
     std::string name("");
 
     sf::Vector2f position;
@@ -70,7 +81,14 @@ void World::updateEntity(sf::Packet* packet)
             >> name
             >> state_ui
             >> position
-            >> velocity;
+            >> velocity
+            >> hp
+            >> maxHp
+            >> strengh
+            >> agility
+            >> resistance
+            >> xp
+            >> level;
 
     Entity::Type type = static_cast<Entity::Type>(type_ui);
     Entity* e = getEntityById(id);
@@ -86,6 +104,13 @@ void World::updateEntity(sf::Packet* packet)
                    Player::State state = static_cast<Player::State>(state_ui);
 
                    player->setState(state);
+                   player->setProperty("Hp", hp);
+                   player->setProperty("MaxHp", maxHp);
+                   player->setProperty("Strengh", strengh);
+                   player->setProperty("Agility", agility);
+                   player->setProperty("Resist", resistance);
+                   player->setProperty("Xp", xp);
+                   player->setProperty("Level", level);
                 }
                 break;
             case Entity::Type::NPC:
@@ -117,6 +142,13 @@ void World::updateEntity(sf::Packet* packet)
                     Player* player = static_cast<Player*>(entity);
 
                     player->setState(state);
+                    player->setProperty("Hp", hp);
+                       player->setProperty("MaxHp", maxHp);
+                       player->setProperty("Strengh", strengh);
+                       player->setProperty("Agility", agility);
+                       player->setProperty("Resist", resistance);
+                       player->setProperty("Xp", xp);
+                       player->setProperty("Level", level);
                 }
                 break;
             case Entity::Type::NPC:
