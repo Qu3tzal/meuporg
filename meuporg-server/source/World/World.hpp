@@ -7,7 +7,9 @@
 #include "../Kantan-2/kantan.hpp"
 
 #include "../Accounts.hpp"
+#include "../Components/BasicStatsComponent.hpp"
 #include "../Components/ClientLinkComponent.hpp"
+#include "../Components/LevelStatsComponent.hpp"
 #include "../Components/StaticMarkerComponent.hpp"
 #include "../Systems/ClientInputSystem.hpp"
 #include "../Utils/SFMLPacketUtils.hpp"
@@ -61,7 +63,9 @@ class World
         kantan::MovementComponent* createMovementComponent(std::size_t ownerId);
         kantan::RotationComponent* createRotationComponent(std::size_t ownerId);
 
+        BasicStatsComponent* createBasicStatsComponent(std::size_t ownerId);
         ClientLinkComponent* createClientLinkComponent(std::size_t ownerId);
+        LevelStatsComponent* createLevelStatsComponent(std::size_t ownerId);
         StaticMarkerComponent* createStaticMarkerComponent(std::size_t ownerId);
 
         // createXXX methods.
@@ -79,7 +83,9 @@ class World
         std::vector<kantan::MovementComponent*> m_movementComponents;
         std::vector<kantan::RotationComponent*> m_rotationComponents;
 
+        std::vector<BasicStatsComponent*> m_basicStatsComponents;
         std::vector<ClientLinkComponent*> m_clientLinkComponents;
+        std::vector<LevelStatsComponent*> m_levelStatsComponents;
         std::vector<StaticMarkerComponent*> m_staticMarkerComponents;
 
         // Systems.

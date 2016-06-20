@@ -23,8 +23,14 @@ World::~World()
     for(kantan::RotationComponent* rc : m_rotationComponents)
         delete rc;
 
+    for(BasicStatsComponent* bsc : m_basicStatsComponents)
+        delete bsc;
+
     for(ClientLinkComponent* clc : m_clientLinkComponents)
         delete clc;
+
+    for(LevelStatsComponent* lsc : m_levelStatsComponents)
+        delete lsc;
 
     for(StaticMarkerComponent* smc : m_staticMarkerComponents)
         delete smc;
@@ -158,6 +164,24 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 
             // Set the velocity.
             packet << mc->velocity;
+
+            // Get the basic stats component.
+            BasicStatsComponent* bsc = e->getComponent<BasicStatsComponent>("BasicStats");
+
+            if(bsc == nullptr)
+                continue;
+
+            // Set the stats.
+            packet << bsc->hp << bsc->maxhp << bsc->strength << bsc->agility << bsc->resistance;
+
+            // Get the level stats component.
+            LevelStatsComponent* lsc = e->getComponent<LevelStatsComponent>("LevelStats");
+
+            if(lsc == nullptr)
+                continue;
+
+            // Set the stats.
+            packet << lsc->xp << lsc->level;
         }
         else if(e->getName() == "NPC")
         {
@@ -310,12 +334,28 @@ kantan::RotationComponent* World::createRotationComponent(std::size_t ownerId)
     return rc;
 }
 
+BasicStatsComponent* World::createBasicStatsComponent(std::size_t ownerId)
+{
+    BasicStatsComponent* bsc = new BasicStatsComponent(ownerId);
+    m_basicStatsComponents.push_back(bsc);
+
+    return bsc;
+}
+
 ClientLinkComponent* World::createClientLinkComponent(std::size_t ownerId)
 {
     ClientLinkComponent* clc = new ClientLinkComponent(ownerId);
     m_clientLinkComponents.push_back(clc);
 
     return clc;
+}
+
+LevelStatsComponent* World::createLevelStatsComponent(std::size_t ownerId)
+{
+    LevelStatsComponent* lsc = new LevelStatsComponent(ownerId);
+    m_levelStatsComponents.push_back(lsc);
+
+    return lsc;
 }
 
 StaticMarkerComponent* World::createStaticMarkerComponent(std::size_t ownerId)
@@ -334,7 +374,10 @@ kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client)
     // Create the components.
     kantan::PolygonHitboxComponent* phc = createPolygonHitboxComponent(player->getId());
     kantan::MovementComponent* mc = createMovementComponent(player->getId());
+
+    BasicStatsComponent* bsc = createBasicStatsComponent(player->getId());
     ClientLinkComponent* clc = createClientLinkComponent(player->getId());
+    LevelStatsComponent* lsc = createLevelStatsComponent(player->getId());
 
     // Configure the components.
     phc->points = {
@@ -353,7 +396,9 @@ kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client)
     // Add the components to the entity.
     player->addComponent(phc);
     player->addComponent(mc);
+    player->addComponent(bsc);
     player->addComponent(clc);
+    player->addComponent(lsc);
 
     // Return the entity.
     return player;
@@ -367,6 +412,8 @@ kantan::Entity* World::createNPC(sf::Vector2f position)
     // Create the components.
     kantan::PolygonHitboxComponent* phc = createPolygonHitboxComponent(npc->getId());
     kantan::MovementComponent* mc = createMovementComponent(npc->getId());
+
+    BasicStatsComponent* bsc = createBasicStatsComponent(npc->getId());
 
     // Configure the components.
     phc->points = {
@@ -383,6 +430,7 @@ kantan::Entity* World::createNPC(sf::Vector2f position)
     // Add the components to the entity.
     npc->addComponent(phc);
     npc->addComponent(mc);
+    npc->addComponent(bsc);
 
     // Return the entity.
     return npc;
