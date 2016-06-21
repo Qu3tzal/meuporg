@@ -69,6 +69,9 @@ void World::update(sf::Time dt, Server* server)
     // Collision.
     m_collisionSystem.update(dt, m_polygonHitboxComponents, m_movementComponents);
 
+    // Leveling up.
+    m_levelUpSystem.update(m_levelStatsComponents, std::bind(&World::notifyLevelUp, this, std::placeholders::_1));
+
     // Clean the entities.
     cleanEntities(server);
 }
@@ -490,4 +493,19 @@ kantan::Entity* World::createBox(sf::Vector2f position)
 
     // Return the entity.
     return box;
+}
+
+// Notifies all the clients of the level up.
+void World::notifyLevelUp(LevelStatsComponent* lsc)
+{
+    sf::Packet packet;
+    packet << NetworkValues::NOTIFY << NetworkValues::LEVEL_UP << lsc->getOwnerId() << lsc->level;
+
+    for(ClientLinkComponent* clc : m_clientLinkComponents)
+    {
+        if(clc->client != nullptr)
+        {
+            clc->client->gameTcp->send(packet);
+        }
+    }
 }

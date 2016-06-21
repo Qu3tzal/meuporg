@@ -72,8 +72,14 @@
 		</Linker>
 		<Unit filename="source/Accounts.hpp" />
 		<Unit filename="source/ClientEntityEnums.hpp" />
+		<Unit filename="source/Components/BasicStatsComponent.cpp" />
+		<Unit filename="source/Components/BasicStatsComponent.hpp" />
 		<Unit filename="source/Components/ClientLinkComponent.cpp" />
 		<Unit filename="source/Components/ClientLinkComponent.hpp" />
+		<Unit filename="source/Components/LevelStatsComponent.cpp" />
+		<Unit filename="source/Components/LevelStatsComponent.hpp" />
+		<Unit filename="source/Components/NameComponent.cpp" />
+		<Unit filename="source/Components/NameComponent.hpp" />
 		<Unit filename="source/Components/StaticMarkerComponent.cpp" />
 		<Unit filename="source/Components/StaticMarkerComponent.hpp" />
 		<Unit filename="source/InformationServer/InformationServer.cpp" />
@@ -158,6 +164,8 @@
 		<Unit filename="source/Server/Server.hpp" />
 		<Unit filename="source/Systems/ClientInputSystem.cpp" />
 		<Unit filename="source/Systems/ClientInputSystem.hpp" />
+		<Unit filename="source/Systems/LevelUpSystem.cpp" />
+		<Unit filename="source/Systems/LevelUpSystem.hpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.cpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.hpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.inl" />

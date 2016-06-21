@@ -13,6 +13,7 @@
 #include "../Components/NameComponent.hpp"
 #include "../Components/StaticMarkerComponent.hpp"
 #include "../Systems/ClientInputSystem.hpp"
+#include "../Systems/LevelUpSystem.hpp"
 #include "../Utils/SFMLPacketUtils.hpp"
 #include "../NetworkValues.hpp"
 #include "../ClientEntityEnums.hpp"
@@ -75,6 +76,9 @@ class World
         kantan::Entity* createNPC(sf::Vector2f position);
         kantan::Entity* createBox(sf::Vector2f position);
 
+        // Notifies all the clients of the level up.
+        void notifyLevelUp(LevelStatsComponent* lsc);
+
     protected:
         // Entities.
         std::vector<kantan::Entity*> m_entities;
@@ -96,6 +100,7 @@ class World
         kantan::RotationSystem m_rotationSystem;
 
         ClientInputSystem m_clientInputSystem;
+        LevelUpSystem m_levelUpSystem;
 };
 
 template<typename T>
