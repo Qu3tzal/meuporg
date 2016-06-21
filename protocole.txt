@@ -150,7 +150,7 @@ Protocole
 
 	Notification d'augmentation d'un level
 	--------------------------------------
-		[serveur	TCP]		NOTIFY LEVEL_UP level
+		[serveur	TCP]		NOTIFY LEVEL_UP entity_id level
 
 	Acceptation d'une mission
 	-------------------------
