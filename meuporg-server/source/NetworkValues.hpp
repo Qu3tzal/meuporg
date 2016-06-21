@@ -29,6 +29,13 @@ namespace NetworkValues
 	const unsigned int  RECEIVE_CHAT_MESSAGE(206);
 	const unsigned int  SEND_CHAT_MESSAGE(207);
 	const unsigned int  UPDATE(208);
+	const unsigned int  MISSION_START(209);
+    const unsigned int  MISSION_END(210);
+    const unsigned int  MISSION_PROGRESS(211);
+    const unsigned int  KILL(212);
+    const unsigned int  LEVEL_UP(213);
+    const unsigned int  ACCEPT_MISSION(214);
+    const unsigned int  CANCEL_MISSION(215);
 
 	const unsigned int  KEEP_ALIVE(300);
 	const unsigned int  OKAY(301);
