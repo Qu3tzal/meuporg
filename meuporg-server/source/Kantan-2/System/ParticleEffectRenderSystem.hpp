@@ -19,7 +19,7 @@ namespace kantan
             ParticleEffectRenderSystem(sf::RenderWindow* window);
 
             // Update.
-            virtual void update(std::vector<kantan::ParticleEffectComponent*>& particleEffectComponents);
+            virtual void update(std::vector<kantan::Component*>& particleEffectComponents);
 
         protected:
             // Window ptr.

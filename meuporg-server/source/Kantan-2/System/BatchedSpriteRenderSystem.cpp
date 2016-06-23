@@ -8,7 +8,7 @@ namespace kantan
     {}
 
     // Update.
-    void BatchedSpriteRenderSystem::update(std::vector<kantan::BatchedSpriteComponent*>& batchedSpriteComponents)
+    void BatchedSpriteRenderSystem::update(std::vector<kantan::Component*>& batchedSpriteComponents)
     {
         // View hitbox.
         sf::FloatRect viewHitbox(m_window->getView().getCenter().x - m_window->getView().getSize().x / 2.f,
@@ -20,8 +20,10 @@ namespace kantan
         std::map<sf::Texture*, std::vector<BatchedSpriteComponent*>> batchedSprites;
 
         // Sort the batched sprites by common texture.
-        for(kantan::BatchedSpriteComponent* bsc : batchedSpriteComponents)
+        for(kantan::Component* component : batchedSpriteComponents)
         {
+            kantan::BatchedSpriteComponent* bsc = static_cast<kantan::BatchedSpriteComponent*>(component);
+
             // Get the batched sprite component and map it with its texture.
             if(viewHitbox.intersects(bsc->hitbox))
                 batchedSprites[bsc->texturePtr].push_back(bsc);

@@ -145,14 +145,16 @@ namespace kantan
     }
 
     // Update.
-    void PolygonCollisionSystem::update(sf::Time elapsed, std::vector<kantan::PolygonHitboxComponent*>& polygonHitboxComponents, std::vector<kantan::MovementComponent*>& movementComponents)
+    void PolygonCollisionSystem::update(sf::Time elapsed, std::vector<kantan::Component*>& polygonHitboxComponents, std::vector<kantan::Component*>& movementComponents)
     {
         m_collisions.clear();
 
         // We check each hitbox component against all the overs.
         /// /!\ It's a naive and slow way of doing it.
-        for(kantan::PolygonHitboxComponent* fstHitbox : polygonHitboxComponents)
+        for(kantan::Component* component : polygonHitboxComponents)
         {
+            kantan::PolygonHitboxComponent* fstHitbox = static_cast<kantan::PolygonHitboxComponent*>(component);
+
             // If this entity has no movement, it's not the one to modify.
             // We look for the corresponding movement component, if it exists.
             kantan::MovementComponent* fstMovement = Component::getFirstComponentOwnedBy<kantan::MovementComponent>(fstHitbox->getOwnerId(), movementComponents);
@@ -179,8 +181,10 @@ namespace kantan
             for(std::size_t i(0) ; i < fstHitbox->points.size() ; i++)
                 fstHitbox->points[i] = transform.transformPoint(fstHitbox->points[i]);
 
-            for(kantan::PolygonHitboxComponent* sndHitbox : polygonHitboxComponents)
+            for(kantan::Component* component : polygonHitboxComponents)
             {
+                kantan::PolygonHitboxComponent* sndHitbox = static_cast<kantan::PolygonHitboxComponent*>(component);
+
                 // Do not check against yourself.
                 if(fstHitbox == sndHitbox)
                     continue;

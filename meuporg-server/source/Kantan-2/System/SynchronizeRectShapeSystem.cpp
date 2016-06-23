@@ -7,10 +7,12 @@ namespace kantan
     {}
 
     // Update.
-    void SynchronizeRectShapeSystem::update(std::vector<kantan::AABBHitboxComponent*>& aabbHitboxComponents, std::vector<kantan::RectShapeComponent*>& rectShapeComponents)
+    void SynchronizeRectShapeSystem::updateAABB(std::vector<kantan::Component*>& aabbHitboxComponents, std::vector<kantan::Component*>& rectShapeComponents)
     {
-        for(kantan::AABBHitboxComponent* hc : aabbHitboxComponents)
+        for(kantan::Component* component : aabbHitboxComponents)
         {
+            kantan::AABBHitboxComponent* hc = static_cast<kantan::AABBHitboxComponent*>(component);
+
             // We look for the corresponding rect shape component, if it exists.
             kantan::RectShapeComponent* rsc = Component::getFirstComponentOwnedBy<kantan::RectShapeComponent>(hc->getOwnerId(), rectShapeComponents);
 
@@ -23,10 +25,12 @@ namespace kantan
         }
     }
 
-    void SynchronizeRectShapeSystem::update(std::vector<kantan::PolygonHitboxComponent*>& polygonHitboxComponents, std::vector<kantan::RectShapeComponent*>& rectShapeComponents)
+    void SynchronizeRectShapeSystem::updatePolygon(std::vector<kantan::Component*>& polygonHitboxComponents, std::vector<kantan::Component*>& rectShapeComponents)
     {
-        for(kantan::PolygonHitboxComponent* phc : polygonHitboxComponents)
+        for(kantan::Component* component : polygonHitboxComponents)
         {
+            kantan::PolygonHitboxComponent* phc = static_cast<kantan::PolygonHitboxComponent*>(component);
+
             // We look for the corresponding rect shape component, if it exists.
             kantan::RectShapeComponent* rsc = Component::getFirstComponentOwnedBy<kantan::RectShapeComponent>(phc->getOwnerId(), rectShapeComponents);
 

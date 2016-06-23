@@ -7,10 +7,12 @@ namespace kantan
     {}
 
     // Update.
-    void RotationSystem::update(sf::Time dt, std::vector<kantan::PolygonHitboxComponent*>& polygonHitboxComponents, std::vector<kantan::RotationComponent*>& rotationComponents)
+    void RotationSystem::update(sf::Time dt, std::vector<kantan::Component*>& polygonHitboxComponents, std::vector<kantan::Component*>& rotationComponents)
     {
-        for(kantan::RotationComponent* rc : rotationComponents)
+        for(kantan::Component* component : rotationComponents)
         {
+            kantan::RotationComponent* rc = static_cast<kantan::RotationComponent*>(component);
+
             // We look for the corresponding AABB hitbox component, if it exists.
             kantan::PolygonHitboxComponent* phc = Component::getFirstComponentOwnedBy<kantan::PolygonHitboxComponent>(rc->getOwnerId(), polygonHitboxComponents);
 

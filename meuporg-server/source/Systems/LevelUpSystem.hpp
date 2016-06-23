@@ -18,7 +18,7 @@ class LevelUpSystem : public kantan::System
 		LevelUpSystem();
 
 		// Update.
-		virtual void update(std::vector<LevelStatsComponent*>& levelStatsComponents, std::function<void(LevelStatsComponent*)> callback);
+		virtual void update(std::vector<kantan::Component*>& levelStatsComponents, std::function<void(LevelStatsComponent*)> callback);
 };
 
 #endif // LEVELUPSYSTEM_HPP_INCLUDED

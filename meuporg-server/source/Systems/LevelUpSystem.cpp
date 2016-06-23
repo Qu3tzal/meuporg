@@ -4,10 +4,12 @@
 LevelUpSystem::LevelUpSystem(){}
 
 // Update.
-void LevelUpSystem::update(std::vector<LevelStatsComponent*>& levelStatsComponents, std::function<void(LevelStatsComponent*)> callback)
+void LevelUpSystem::update(std::vector<kantan::Component*>& levelStatsComponents, std::function<void(LevelStatsComponent*)> callback)
 {
-    for(LevelStatsComponent* lsc : levelStatsComponents)
+    for(kantan::Component* component : levelStatsComponents)
     {
+        LevelStatsComponent* lsc = static_cast<LevelStatsComponent*>(component);
+
 		float levelCache = lsc->level;
 
         while(lsc->xp >= 100.f)

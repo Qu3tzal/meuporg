@@ -5,14 +5,16 @@ namespace kantan
     AABBCollisionSystem::AABBCollisionSystem(){}
 
     // Update.
-    void AABBCollisionSystem::update(sf::Time elapsed, std::vector<kantan::AABBHitboxComponent*>& aabbHitboxComponents, std::vector<kantan::MovementComponent*>& movementComponents)
+    void AABBCollisionSystem::update(sf::Time elapsed, std::vector<kantan::Component*>& aabbHitboxComponents, std::vector<kantan::Component*>& movementComponents)
     {
         m_collisions.clear();
 
         // We check each hitbox component against all the overs.
         /// /!\ It's a naive and slow way of doing it.
-        for(kantan::AABBHitboxComponent* fstHitbox : aabbHitboxComponents)
+        for(kantan::Component* component : aabbHitboxComponents)
         {
+            kantan::AABBHitboxComponent* fstHitbox = static_cast<kantan::AABBHitboxComponent*>(component);
+
             // If this entity has no movement, it's not the one to modify.
             // We look for the corresponding movement component, if it exists.
             kantan::MovementComponent* fstMovement = Component::getFirstComponentOwnedBy<kantan::MovementComponent>(fstHitbox->getOwnerId(), movementComponents);
@@ -28,8 +30,10 @@ namespace kantan
             if(kantan::getLength(fstMovement->velocity) > fstMovement->maximumSpeed)
                 fstMovement->velocity = kantan::normalize(fstMovement->velocity) * fstMovement->maximumSpeed;
 
-            for(kantan::AABBHitboxComponent* sndHitbox : aabbHitboxComponents)
+            for(kantan::Component* secondComponent : aabbHitboxComponents)
             {
+                kantan::AABBHitboxComponent* sndHitbox = static_cast<kantan::AABBHitboxComponent*>(secondComponent);
+
                 // Do not check against yourself.
                 if(fstHitbox == sndHitbox)
                     continue;

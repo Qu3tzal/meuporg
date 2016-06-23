@@ -25,8 +25,8 @@ namespace kantan
             SynchronizeBatchedSpriteSystem();
 
             // Update.
-            virtual void update(std::vector<kantan::AABBHitboxComponent*>& aabbHitboxComponents, std::vector<kantan::BatchedSpriteComponent*>& spriteComponents);
-            virtual void update(std::vector<kantan::PolygonHitboxComponent*>& polygonHitboxComponents, std::vector<kantan::BatchedSpriteComponent*>& spriteComponents, std::vector<kantan::RotationComponent*>& rotationComponents);
+            virtual void updateAABB(std::vector<kantan::Component*>& aabbHitboxComponents, std::vector<kantan::Component*>& spriteComponents);
+            virtual void updatePolygon(std::vector<kantan::Component*>& polygonHitboxComponents, std::vector<kantan::Component*>& spriteComponents, std::vector<kantan::Component*>& rotationComponents);
     };
 } // namespace kantan.
 

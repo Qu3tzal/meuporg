@@ -21,7 +21,7 @@ namespace kantan
             BatchedSpriteRenderSystem(sf::RenderWindow* window);
 
             // Update.
-            virtual void update(std::vector<kantan::BatchedSpriteComponent*>& batchedSpriteComponents);
+            virtual void update(std::vector<kantan::Component*>& batchedSpriteComponents);
 
         protected:
             // Window ptr.

@@ -21,7 +21,7 @@ namespace kantan
             AABBCollisionSystem();
 
             // Update.
-            virtual void update(sf::Time elapsed, std::vector<kantan::AABBHitboxComponent*>& aabbHitboxComponents, std::vector<kantan::MovementComponent*>& movementComponents);
+            virtual void update(sf::Time elapsed, std::vector<kantan::Component*>& aabbHitboxComponents, std::vector<kantan::Component*>& movementComponents);
 
             // Returns the collisions record.
             std::vector<std::pair<std::size_t, std::size_t>> getCollisionRecord();

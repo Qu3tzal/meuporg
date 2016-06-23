@@ -7,10 +7,12 @@ namespace kantan
     {}
 
     // Update.
-    void SynchronizeSpriteSystem::update(std::vector<kantan::AABBHitboxComponent*>& aabbHitboxComponents, std::vector<kantan::SpriteComponent*>& spriteComponents)
+    void SynchronizeSpriteSystem::updateAABB(std::vector<kantan::Component*>& aabbHitboxComponents, std::vector<kantan::Component*>& spriteComponents)
     {
-        for(kantan::AABBHitboxComponent* hc : aabbHitboxComponents)
+        for(kantan::Component* component : aabbHitboxComponents)
         {
+            kantan::AABBHitboxComponent* hc = static_cast<kantan::AABBHitboxComponent*>(component);
+
             // We look for the corresponding sprite component, if it exists.
             kantan::SpriteComponent* sc = Component::getFirstComponentOwnedBy<kantan::SpriteComponent>(hc->getOwnerId(), spriteComponents);
 
@@ -23,10 +25,12 @@ namespace kantan
         }
     }
 
-    void SynchronizeSpriteSystem::update(std::vector<kantan::PolygonHitboxComponent*>& polygonHitboxComponents, std::vector<kantan::SpriteComponent*>& spriteComponents)
+    void SynchronizeSpriteSystem::updatePolygon(std::vector<kantan::Component*>& polygonHitboxComponents, std::vector<kantan::Component*>& spriteComponents)
     {
-        for(kantan::PolygonHitboxComponent* phc : polygonHitboxComponents)
+        for(kantan::Component* component : polygonHitboxComponents)
         {
+            kantan::PolygonHitboxComponent* phc = static_cast<kantan::PolygonHitboxComponent*>(component);
+
             // We look for the corresponding sprite component, if it exists.
             kantan::SpriteComponent* sc = Component::getFirstComponentOwnedBy<kantan::SpriteComponent>(phc->getOwnerId(), spriteComponents);
 

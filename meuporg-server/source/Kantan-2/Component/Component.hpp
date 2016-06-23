@@ -16,20 +16,26 @@ namespace kantan
             // Returns the component with the same owner id.
             // Returns nullptr if none.
             template<typename T>
-            static T* getFirstComponentOwnedBy(std::size_t ownerId, std::vector<T*>& components)
+            static T* getFirstComponentOwnedBy(std::size_t ownerId, std::vector<kantan::Component*>& components)
             {
                 // We look for the corresponding component, if it exists.
                 auto cItr = std::find_if(components.begin(),
-                                                              components.end(),
-                                                              [ownerId](T* c) {
-                                                                return c->getOwnerId() == ownerId;
-                                                              });
+                                          components.end(),
+                                          [ownerId](kantan::Component* c) {
+                                            return c->getOwnerId() == ownerId;
+                                          });
 
                 // If none found, returns nullptr.
                 if(cItr == components.end())
                     return nullptr;
 
-                return (*cItr);
+                return static_cast<T*>(*cItr);
+            }
+
+            template<typename T>
+            T* convert(Component* component)
+            {
+                return static_cast<T*>(component);
             }
 
 		public:

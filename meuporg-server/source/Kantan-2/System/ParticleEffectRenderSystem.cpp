@@ -8,13 +8,15 @@ namespace kantan
     {}
 
     // Update.
-    void ParticleEffectRenderSystem::update(std::vector<kantan::ParticleEffectComponent*>& particleEffectComponents)
+    void ParticleEffectRenderSystem::update(std::vector<kantan::Component*>& particleEffectComponents)
     {
         // View hitbox.
         sf::FloatRect viewHitbox(0.f, 0.f, m_window->getView().getSize().x, m_window->getView().getSize().y);
 
-        for(kantan::ParticleEffectComponent* pec : particleEffectComponents)
+        for(kantan::Component* component : particleEffectComponents)
         {
+            kantan::ParticleEffectComponent* pec = static_cast<kantan::ParticleEffectComponent*>(component);
+
             sf::VertexArray va(sf::PrimitiveType::Points);
 
             // Get the particles and add it to the vertex array if visible.

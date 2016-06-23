@@ -23,7 +23,7 @@ namespace kantan
             RotationSystem();
 
             // Update.
-            virtual void update(sf::Time dt, std::vector<kantan::PolygonHitboxComponent*>& polygonHitboxComponents, std::vector<kantan::RotationComponent*>& rotationComponents);
+            virtual void update(sf::Time dt, std::vector<kantan::Component*>& polygonHitboxComponents, std::vector<kantan::Component*>& rotationComponents);
     };
 } // namespace kantan.
 

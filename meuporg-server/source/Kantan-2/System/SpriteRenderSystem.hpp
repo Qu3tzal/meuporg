@@ -19,7 +19,7 @@ namespace kantan
             SpriteRenderSystem(sf::RenderWindow* window);
 
             // Update.
-            virtual void update(std::vector<kantan::SpriteComponent*>& spriteComponents);
+            virtual void update(std::vector<kantan::Component*>& spriteComponents);
 
         protected:
             // Window ptr.

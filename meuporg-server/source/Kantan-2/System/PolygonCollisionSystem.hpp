@@ -25,7 +25,7 @@ namespace kantan
             bool detectCollision(kantan::PolygonHitboxComponent* a, kantan::PolygonHitboxComponent* b, sf::Vector2f& projectionVector);
 
             // Update.
-            virtual void update(sf::Time elapsed, std::vector<kantan::PolygonHitboxComponent*>& polygonHitboxComponents, std::vector<kantan::MovementComponent*>& movementComponents);
+            virtual void update(sf::Time elapsed, std::vector<kantan::Component*>& polygonHitboxComponents, std::vector<kantan::Component*>& movementComponents);
 
             // Returns the collisions record.
             std::vector<std::pair<std::size_t, std::size_t>> getCollisionRecord();

@@ -4,10 +4,12 @@
 ClientInputSystem::ClientInputSystem(){}
 
 // Update.
-void ClientInputSystem::update(std::vector<ClientLinkComponent*>& clientLinkComponents, std::vector<kantan::Entity*>& entities)
+void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkComponents, std::vector<kantan::Entity*>& entities)
 {
-    for(ClientLinkComponent* clc : clientLinkComponents)
+    for(kantan::Component* component : clientLinkComponents)
     {
+        ClientLinkComponent* clc = static_cast<ClientLinkComponent*>(component);
+
         // Prevent crashing.
         if(clc->client != nullptr)
         {

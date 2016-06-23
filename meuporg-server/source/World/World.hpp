@@ -60,6 +60,9 @@ class World
         kantan::Entity* createEntity(std::string name, bool isStatic = false);
 
         // createXXXComponent methods.
+        /// DO NOT DELETE
+        /// LEAVE COMMENTED
+        /*
         kantan::DeletionMarkerComponent* createDeletionMarkerComponent(std::size_t ownerId);
         kantan::PolygonHitboxComponent* createPolygonHitboxComponent(std::size_t ownerId);
         kantan::MovementComponent* createMovementComponent(std::size_t ownerId);
@@ -70,6 +73,10 @@ class World
         LevelStatsComponent* createLevelStatsComponent(std::size_t ownerId);
         NameComponent* createNameComponent(std::size_t ownerId);
         StaticMarkerComponent* createStaticMarkerComponent(std::size_t ownerId);
+        */
+
+        template<typename T>
+        T* createComponent(std::size_t ownerId);
 
         // createXXX methods.
         kantan::Entity* createPlayer(sf::Vector2f position, Client* client);
@@ -84,6 +91,9 @@ class World
         std::vector<kantan::Entity*> m_entities;
 
         // Components.
+        /// DO NOT DELETE
+        /// LEAVE COMMENTED
+        /*
         std::vector<kantan::DeletionMarkerComponent*> m_deletionMarkerComponents;
         std::vector<kantan::PolygonHitboxComponent*> m_polygonHitboxComponents;
         std::vector<kantan::MovementComponent*> m_movementComponents;
@@ -94,6 +104,9 @@ class World
         std::vector<LevelStatsComponent*> m_levelStatsComponents;
         std::vector<NameComponent*> m_nameComponents;
         std::vector<StaticMarkerComponent*> m_staticMarkerComponents;
+        */
+
+        std::map<std::string, std::vector<kantan::Component*>> m_components;
 
         // Systems.
         kantan::PolygonCollisionSystem m_collisionSystem;
@@ -117,6 +130,15 @@ bool World::removeComponentFrom(kantan::Component* c, std::vector<T*>& component
     }
 
     return false;
+}
+
+template<typename T>
+T* World::createComponent(std::size_t ownerId)
+{
+    T* component = new T(ownerId);
+    m_components[component->getName()].push_back(component);
+
+    return component;
 }
 
 #endif // WORLD_HPP_INCLUDED

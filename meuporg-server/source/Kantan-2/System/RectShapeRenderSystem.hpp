@@ -19,7 +19,7 @@ namespace kantan
             RectShapeRenderSystem(sf::RenderWindow* window);
 
             // Update.
-            virtual void update(std::vector<kantan::RectShapeComponent*>& rectShapeComponents);
+            virtual void update(std::vector<kantan::Component*>& rectShapeComponents);
 
         protected:
             // Window ptr.

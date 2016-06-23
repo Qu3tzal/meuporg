@@ -16,7 +16,7 @@ class ClientInputSystem : public kantan::System
 		ClientInputSystem();
 
 		// Update.
-		virtual void update(std::vector<ClientLinkComponent*>& clientLinkComponents, std::vector<kantan::Entity*>& entities);
+		virtual void update(std::vector<kantan::Component*>& clientLinkComponents, std::vector<kantan::Entity*>& entities);
 };
 
 #endif // CLIENTINPUTSYSTEM_HPP_INCLUDED

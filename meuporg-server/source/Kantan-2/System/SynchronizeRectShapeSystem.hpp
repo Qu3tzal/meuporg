@@ -23,8 +23,8 @@ namespace kantan
             SynchronizeRectShapeSystem();
 
             // Update.
-            virtual void update(std::vector<kantan::AABBHitboxComponent*>& aabbHitboxComponents, std::vector<kantan::RectShapeComponent*>& rectShapeComponents);
-            virtual void update(std::vector<kantan::PolygonHitboxComponent*>& polygonHitboxComponents, std::vector<kantan::RectShapeComponent*>& rectShapeComponents);
+            virtual void updateAABB(std::vector<kantan::Component*>& aabbHitboxComponents, std::vector<kantan::Component*>& rectShapeComponents);
+            virtual void updatePolygon(std::vector<kantan::Component*>& polygonHitboxComponents, std::vector<kantan::Component*>& rectShapeComponents);
     };
 } // namespace kantan.
 

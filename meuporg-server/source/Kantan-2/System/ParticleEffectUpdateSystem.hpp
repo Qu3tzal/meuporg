@@ -19,7 +19,7 @@ namespace kantan
             ParticleEffectUpdateSystem();
 
             // Update.
-            virtual void update(std::vector<kantan::ParticleEffectComponent*>& particleEffectComponents, sf::Time dt);
+            virtual void update(std::vector<kantan::Component*>& particleEffectComponents, sf::Time dt);
     };
 } // namespace kantan.
 

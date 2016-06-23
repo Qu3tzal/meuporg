@@ -20,7 +20,7 @@ namespace kantan
             AnimationSystem();
 
             // Update.
-            virtual void update(sf::Time elapsed, std::vector<kantan::SpriteComponent*>& spriteComponents, std::vector<kantan::AnimationComponent*>& animationComponents);
+            virtual void update(sf::Time elapsed, std::vector<kantan::Component*>& spriteComponents, std::vector<kantan::Component*>& animationComponents);
     };
 } // namespace kantan.
 

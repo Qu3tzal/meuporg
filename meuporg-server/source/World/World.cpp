@@ -11,6 +11,9 @@ World::~World()
     for(kantan::Entity* e : m_entities)
         delete e;
 
+    /// DO NOT DELETE
+    /// LEAVE COMMENTED
+    /*
     for(kantan::DeletionMarkerComponent* dmc : m_deletionMarkerComponents)
         delete dmc;
 
@@ -37,6 +40,13 @@ World::~World()
 
     for(StaticMarkerComponent* smc : m_staticMarkerComponents)
         delete smc;
+    */
+
+    for(auto entry : m_components)
+    {
+        for(kantan::Component* c : entry.second)
+            delete c;
+    }
 }
 
 void World::init()
@@ -61,16 +71,16 @@ void World::init()
 void World::update(sf::Time dt, Server* server)
 {
     // Client inputs.
-    m_clientInputSystem.update(m_clientLinkComponents, m_entities);
+    m_clientInputSystem.update(m_components["ClientLink"], m_entities);
 
     // Rotations.
     //m_rotationSystem.update(dt, m_polygonHitboxComponents, m_rotationComponents);
 
     // Collision.
-    m_collisionSystem.update(dt, m_polygonHitboxComponents, m_movementComponents);
+    m_collisionSystem.update(dt, m_components["PolygonHitbox"], m_components["Movement"]);
 
     // Leveling up.
-    m_levelUpSystem.update(m_levelStatsComponents, std::bind(&World::notifyLevelUp, this, std::placeholders::_1));
+    m_levelUpSystem.update(m_components["LevelStats"], std::bind(&World::notifyLevelUp, this, std::placeholders::_1));
 
     // Clean the entities.
     cleanEntities(server);
@@ -83,8 +93,10 @@ void World::playerConnected(Client* client)
 
 void World::playerDisconnected(Client* client)
 {
-    for(ClientLinkComponent* clc : m_clientLinkComponents)
+    for(kantan::Component* c : m_components["ClientLink"])
     {
+        ClientLinkComponent* clc = static_cast<ClientLinkComponent*>(c);
+
         if(clc->client == client)
         {
             // Get the entity.
@@ -250,9 +262,10 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 
 void World::cleanEntities(Server* server)
 {
-    for(std::size_t i(0) ; i < m_deletionMarkerComponents.size() ;)
+    for(std::size_t i(0) ; i < m_components["DeletionMarker"].size() ;)
     {
-        kantan::DeletionMarkerComponent* dmc = m_deletionMarkerComponents[i];
+        kantan::Component* c = m_components["DeletionMarker"][i];
+        kantan::DeletionMarkerComponent* dmc = static_cast<kantan::DeletionMarkerComponent*>(c);
 
         if(dmc->marked)
         {
@@ -269,24 +282,7 @@ void World::cleanEntities(Server* server)
                 {
                     kantan::Component* component = componentPair.second;
 
-                    if(component->getName() == "DeletionMarker")
-                        removeComponentFrom<kantan::DeletionMarkerComponent>(component, m_deletionMarkerComponents);
-                    else if(component->getName() == "PolygonHitbox")
-                        removeComponentFrom<kantan::PolygonHitboxComponent>(component, m_polygonHitboxComponents);
-                    else if(component->getName() == "Movement")
-                        removeComponentFrom<kantan::MovementComponent>(component, m_movementComponents);
-                    else if(component->getName() == "Rotation")
-                        removeComponentFrom<kantan::RotationComponent>(component, m_rotationComponents);
-                    else if(component->getName() == "BasicStats")
-                        removeComponentFrom<BasicStatsComponent>(component, m_basicStatsComponents);
-                    else if(component->getName() == "ClientLink")
-                        removeComponentFrom<ClientLinkComponent>(component, m_clientLinkComponents);
-                    else if(component->getName() == "LevelStats")
-                        removeComponentFrom<LevelStatsComponent>(component, m_levelStatsComponents);
-                    else if(component->getName() == "NameComponent")
-                        removeComponentFrom<NameComponent>(component, m_nameComponents);
-                    else if(component->getName() == "StaticMarkerComponent")
-                        removeComponentFrom<StaticMarkerComponent>(component, m_staticMarkerComponents);
+                    removeComponentFrom(component, m_components[component->getName()]);
                 }
 
                 m_entities.erase(itr);
@@ -310,8 +306,8 @@ kantan::Entity* World::createEntity(std::string name, bool isStatic)
 {
     kantan::Entity* e = new kantan::Entity(name);
 
-    kantan::DeletionMarkerComponent* dmc = createDeletionMarkerComponent(e->getId());
-    StaticMarkerComponent* smc = createStaticMarkerComponent(e->getId());
+    kantan::DeletionMarkerComponent* dmc = createComponent<kantan::DeletionMarkerComponent>(e->getId());
+    StaticMarkerComponent* smc = createComponent<StaticMarkerComponent>(e->getId());
 
     smc->isStatic = isStatic;
 
@@ -324,6 +320,7 @@ kantan::Entity* World::createEntity(std::string name, bool isStatic)
 }
 
 // createXXXComponent methods.
+/*
 kantan::DeletionMarkerComponent* World::createDeletionMarkerComponent(std::size_t ownerId)
 {
     kantan::DeletionMarkerComponent* dmc = new kantan::DeletionMarkerComponent(ownerId);
@@ -395,6 +392,7 @@ StaticMarkerComponent* World::createStaticMarkerComponent(std::size_t ownerId)
 
     return clc;
 }
+*/
 
 kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client)
 {
@@ -402,12 +400,12 @@ kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client)
     kantan::Entity* player = createEntity("Player");
 
     // Create the components.
-    kantan::PolygonHitboxComponent* phc = createPolygonHitboxComponent(player->getId());
-    kantan::MovementComponent* mc = createMovementComponent(player->getId());
+    kantan::PolygonHitboxComponent* phc = createComponent<kantan::PolygonHitboxComponent>(player->getId());
+    kantan::MovementComponent* mc = createComponent<kantan::MovementComponent>(player->getId());
 
-    BasicStatsComponent* bsc = createBasicStatsComponent(player->getId());
-    ClientLinkComponent* clc = createClientLinkComponent(player->getId());
-    LevelStatsComponent* lsc = createLevelStatsComponent(player->getId());
+    BasicStatsComponent* bsc = createComponent<BasicStatsComponent>(player->getId());
+    ClientLinkComponent* clc = createComponent<ClientLinkComponent>(player->getId());
+    LevelStatsComponent* lsc = createComponent<LevelStatsComponent>(player->getId());
 
     // Configure the components.
     phc->points = {
@@ -440,11 +438,11 @@ kantan::Entity* World::createNPC(sf::Vector2f position)
     kantan::Entity* npc = createEntity("NPC");
 
     // Create the components.
-    kantan::PolygonHitboxComponent* phc = createPolygonHitboxComponent(npc->getId());
-    kantan::MovementComponent* mc = createMovementComponent(npc->getId());
+    kantan::PolygonHitboxComponent* phc = createComponent<kantan::PolygonHitboxComponent>(npc->getId());
+    kantan::MovementComponent* mc = createComponent<kantan::MovementComponent>(npc->getId());
 
-    BasicStatsComponent* bsc = createBasicStatsComponent(npc->getId());
-    NameComponent* nc = createNameComponent(npc->getId());
+    BasicStatsComponent* bsc = createComponent<BasicStatsComponent>(npc->getId());
+    NameComponent* nc = createComponent<NameComponent>(npc->getId());
 
     // Configure the components.
     phc->points = {
@@ -476,7 +474,7 @@ kantan::Entity* World::createBox(sf::Vector2f position)
     kantan::Entity* box = createEntity("NPC", true);
 
     // Create the components.
-    kantan::PolygonHitboxComponent* phc = createPolygonHitboxComponent(box->getId());
+    kantan::PolygonHitboxComponent* phc = createComponent<kantan::PolygonHitboxComponent>(box->getId());
 
     // Configure the components.
     phc->points = {
@@ -501,8 +499,10 @@ void World::notifyLevelUp(LevelStatsComponent* lsc)
     sf::Packet packet;
     packet << NetworkValues::NOTIFY << NetworkValues::LEVEL_UP << lsc->getOwnerId() << lsc->level;
 
-    for(ClientLinkComponent* clc : m_clientLinkComponents)
+    for(kantan::Component* c : m_components["ClientLink"])
     {
+        ClientLinkComponent* clc = static_cast<ClientLinkComponent*>(c);
+
         if(clc->client != nullptr)
         {
             clc->client->gameTcp->send(packet);
