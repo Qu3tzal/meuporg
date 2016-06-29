@@ -15,7 +15,7 @@ void Mission::init()
     switch(missionId)
     {
     case 0 :
-        addText("Bonjour, Je m'appele Pnice et je suis là pour te la mettre !")
+        addText("Bonjour, Je m'appele Pnice et je suis là pour te la mettre !");
         addText("J'ai une mission à te proposer ! Serait tu capables d'enculer l'enculeur de mouche ?");
     }
 }

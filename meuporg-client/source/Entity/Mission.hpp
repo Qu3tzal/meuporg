@@ -1,6 +1,8 @@
 #ifndef MISSION_HPP
 #define MISSION_HPP
 
+#include <string>
+#include <vector>
 
 class Mission
 {
