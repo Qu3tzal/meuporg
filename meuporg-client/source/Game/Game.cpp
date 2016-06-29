@@ -154,6 +154,17 @@ void Game::notificationPacket(sf::Packet* packet)
                 world.removeEntity(entityId);
             }
             break;
+        case NetworkValues::LEVEL_UP :
+            {
+                unsigned int entityId(0);
+                *packet >> entityId;
+                std::string name = world.getEntityById(entityId)->getName();
+                unsigned int level(0);
+                *packet >> level;
+                std::stringstream ss;
+                ss << name << " viens de monter level " << level;
+                chat.write(ss.str());
+            }
         default:
             break;
     }
