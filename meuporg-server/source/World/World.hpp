@@ -48,6 +48,9 @@ class World
         // Sends the world state to the client.
         void sendUpdate(Client* client, sf::UdpSocket& socket);
 
+        // Gives the given amount of XP to the player.
+        void giveXpTo(std::string username, float amount);
+
     protected:
         // Removes the entities marked as to delete.
         void cleanEntities(Server* server);

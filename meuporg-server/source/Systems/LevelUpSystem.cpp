@@ -16,6 +16,7 @@ void LevelUpSystem::update(std::vector<kantan::Component*>& levelStatsComponents
 		{
 			lsc->xp -= 100.f;
 			lsc->level++;
+			std::cout << "[WORLD] Entity #" << lsc->getOwnerId() << " leveled up to level " << lsc->level << " !" << std::endl;
 		}
 
 		if(levelCache != lsc->level)

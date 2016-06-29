@@ -309,6 +309,20 @@ void Server::receiveInputThroughTCP()
                                 if(command.size() != 1)
                                 {
                                     /// /!\ TODO: Lex/parse/eval the command.
+                                    std::stringstream ss(command);
+                                    std::string word("");
+
+                                    ss >> word;
+
+                                    if(word == "/give_xp")
+                                    {
+                                        std::string username("");
+                                        float amount(0.f);
+
+                                        ss >> username >> amount;
+
+                                        m_world.giveXpTo(username, amount);
+                                    }
                                 }
                             }
                             else

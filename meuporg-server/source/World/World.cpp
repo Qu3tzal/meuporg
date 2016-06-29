@@ -74,7 +74,7 @@ void World::update(sf::Time dt, Server* server)
     m_clientInputSystem.update(m_components["ClientLink"], m_entities);
 
     // Rotations.
-    //m_rotationSystem.update(dt, m_polygonHitboxComponents, m_rotationComponents);
+    //m_rotationSystem.update(dt, m_components["PolygonHitbox"], m_components["Rotation"]);
 
     // Collision.
     m_collisionSystem.update(dt, m_components["PolygonHitbox"], m_components["Movement"]);
@@ -258,6 +258,40 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 
     // Update the last packet id sent.
     client->lastPacketIdSent = packetId;
+}
+
+void World::giveXpTo(std::string username, float amount)
+{
+    if(amount <= 0.f)
+        return;
+
+    // Check the player exists.
+    for(kantan::Component* component : m_components["ClientLink"])
+    {
+        ClientLinkComponent* clc = static_cast<ClientLinkComponent*>(component);
+
+        // Check the username.
+        if(clc->client->username != username)
+            continue;
+
+        // Retrieve the entity.
+        kantan::Entity* entity = kantan::Entity::getEntityWithId(clc->getOwnerId(), m_entities);
+
+        if(entity == nullptr)
+            continue;
+
+        // Get the XP component.
+        LevelStatsComponent* lsc = entity->getComponent<LevelStatsComponent>("LevelStats");
+
+        if(lsc == nullptr)
+            continue;
+
+        // Give the XP.
+        lsc->xp += amount;
+
+        // Log.
+        std::cout << "[WORLD] " << username << " got " << amount << " XP." << std::endl;
+    }
 }
 
 void World::cleanEntities(Server* server)
