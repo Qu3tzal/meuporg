@@ -159,10 +159,10 @@ void Game::notificationPacket(sf::Packet* packet)
                 unsigned int entityId(0);
                 *packet >> entityId;
                 std::string name = world.getEntityById(entityId)->getName();
-                unsigned int level(0);
+                float level(0);
                 *packet >> level;
                 std::stringstream ss;
-                ss << name << " viens de monter level " << level;
+                ss << name << " viens de monter level " << (unsigned int)level;
                 chat.write(ss.str());
             }
         default:
