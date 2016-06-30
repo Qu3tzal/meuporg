@@ -34,6 +34,8 @@ class Player : public Entity
 
         float getProperty(std::string name);
 
+        void setXpneeded();
+
     protected:
 
         virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;

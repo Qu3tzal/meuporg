@@ -61,6 +61,7 @@ void Player::init()
 void Player::update(sf::Time dt)
 {
     //Entity::update(dt);
+    setXpneeded();
     sprite.setOrigin(sf::Vector2f(0.f, 0.f));
     setDirection();
     switch(direction)
@@ -170,6 +171,11 @@ void Player::setDirection()
         }
     }
 
+}
+
+void Player::setXpneeded()
+{
+    setProperty("XpNeeded", 100);
 }
 
 void Player::setState(State state)
