@@ -9,6 +9,11 @@ int main()
 {
     const float TickRate = 1/60.f;
     const sf::Time TickRateTime = sf::seconds(TickRate);
+
+    const int frameRateLock = 60;
+    const float frameRate = 1.f/frameRateLock;
+    const sf::Time frameRateTime = sf::seconds(frameRate);
+
     int ticks = 0;
     int frames = 0;
 
@@ -21,6 +26,7 @@ int main()
 
     sf::Clock clientClock;
     sf::Time elapsed;
+    sf::Time frame;
     sf::Time dt;
     sf::Time fpsTimer;
 
@@ -49,8 +55,14 @@ int main()
             ticks++;
         }
 
-        game.render(&window);
-        frames++;
+        frame += dt;
+
+        if(frame.asSeconds() > frameRate)
+        {
+            frame -= frameRateTime;
+            game.render(&window);
+            frames++;
+        }
 
         fpsTimer += dt;
 
