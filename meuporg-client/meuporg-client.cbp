@@ -93,6 +93,8 @@
 		<Unit filename="source/GraphicsUtils.inl" />
 		<Unit filename="source/Gui/Chat.cpp" />
 		<Unit filename="source/Gui/Chat.hpp" />
+		<Unit filename="source/Gui/Dialog.cpp" />
+		<Unit filename="source/Gui/Dialog.hpp" />
 		<Unit filename="source/Gui/GUIButtonPool.cpp" />
 		<Unit filename="source/Gui/GUIButtonPool.hpp" />
 		<Unit filename="source/Gui/GUITextInputPool.cpp" />
