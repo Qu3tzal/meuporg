@@ -3,6 +3,7 @@
 World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window) : m_map(textures)
     , player(nullptr)
     , hud(fonts, window)
+    , dialog(fonts)
 {
     this->textures = textures;
     this->fonts = fonts;
@@ -27,6 +28,9 @@ void World::init()
     {
         e->init();
     }
+    dialog.init();
+    dialog.setText("Bonjours,................................., Salut,..........................................., Ca Marche ?..................");
+    dialog.setPosition(500, 500);
 }
 
 void World::update(sf::Time dt)
@@ -220,6 +224,7 @@ Player* World::getPlayer(std::string playerName)
 void World::handleEvent(sf::Event e)
 {
     hud.handleEvent(e);
+    dialog.handleEvent(e);
 }
 
 void World::loadMap(std::string path)
@@ -243,6 +248,7 @@ void World::draw(sf::RenderTarget& window, sf::RenderStates states) const
     {
         window.draw((**it));
     }
+    window.draw(dialog);
 
     window.draw(hud);
 

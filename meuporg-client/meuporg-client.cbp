@@ -95,6 +95,8 @@
 		<Unit filename="source/Gui/Chat.hpp" />
 		<Unit filename="source/Gui/Dialog.cpp" />
 		<Unit filename="source/Gui/Dialog.hpp" />
+		<Unit filename="source/Gui/DialogManager.cpp" />
+		<Unit filename="source/Gui/DialogManager.hpp" />
 		<Unit filename="source/Gui/GUIButtonPool.cpp" />
 		<Unit filename="source/Gui/GUIButtonPool.hpp" />
 		<Unit filename="source/Gui/GUITextInputPool.cpp" />
