@@ -23,6 +23,7 @@ void DialogManager::update(sf::Time dt)
 
         if(dialogs.top()->isFinished())
         {
+            delete dialogs.top();
             dialogs.pop();
         }
     }
