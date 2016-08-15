@@ -2,6 +2,7 @@
 #define DIALOG_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <string>
 #include <vector>
 #include <map>
@@ -33,6 +34,8 @@ class Dialog : public sf::Drawable, public sf::Transformable
 
         void setChoice(DialogChoice choice);
 
+        bool isFinished();
+
     protected:
 
         virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
@@ -47,6 +50,8 @@ class Dialog : public sf::Drawable, public sf::Transformable
 
         sf::Text text;
 
+        sf::Text nextPageText;
+
         void next();
 
         unsigned int itr;
@@ -54,6 +59,12 @@ class Dialog : public sf::Drawable, public sf::Transformable
         std::vector<std::string> texts;
 
         DialogChoice choice;
+
+        sf::Time timer;
+
+        bool drawArrow;
+
+        bool finished;
 };
 
 #endif // DIALOG_HPP
