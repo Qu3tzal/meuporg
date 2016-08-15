@@ -62,22 +62,7 @@ class World
         // Creates an entity with the deletion and static marker component.
         kantan::Entity* createEntity(std::string name, bool isStatic = false);
 
-        // createXXXComponent methods.
-        /// DO NOT DELETE
-        /// LEAVE COMMENTED
-        /*
-        kantan::DeletionMarkerComponent* createDeletionMarkerComponent(std::size_t ownerId);
-        kantan::PolygonHitboxComponent* createPolygonHitboxComponent(std::size_t ownerId);
-        kantan::MovementComponent* createMovementComponent(std::size_t ownerId);
-        kantan::RotationComponent* createRotationComponent(std::size_t ownerId);
-
-        BasicStatsComponent* createBasicStatsComponent(std::size_t ownerId);
-        ClientLinkComponent* createClientLinkComponent(std::size_t ownerId);
-        LevelStatsComponent* createLevelStatsComponent(std::size_t ownerId);
-        NameComponent* createNameComponent(std::size_t ownerId);
-        StaticMarkerComponent* createStaticMarkerComponent(std::size_t ownerId);
-        */
-
+        // Creates a component.
         template<typename T>
         T* createComponent(std::size_t ownerId);
 
@@ -94,21 +79,6 @@ class World
         std::vector<kantan::Entity*> m_entities;
 
         // Components.
-        /// DO NOT DELETE
-        /// LEAVE COMMENTED
-        /*
-        std::vector<kantan::DeletionMarkerComponent*> m_deletionMarkerComponents;
-        std::vector<kantan::PolygonHitboxComponent*> m_polygonHitboxComponents;
-        std::vector<kantan::MovementComponent*> m_movementComponents;
-        std::vector<kantan::RotationComponent*> m_rotationComponents;
-
-        std::vector<BasicStatsComponent*> m_basicStatsComponents;
-        std::vector<ClientLinkComponent*> m_clientLinkComponents;
-        std::vector<LevelStatsComponent*> m_levelStatsComponents;
-        std::vector<NameComponent*> m_nameComponents;
-        std::vector<StaticMarkerComponent*> m_staticMarkerComponents;
-        */
-
         std::map<std::string, std::vector<kantan::Component*>> m_components;
 
         // Systems.

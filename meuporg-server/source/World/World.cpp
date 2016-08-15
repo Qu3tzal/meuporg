@@ -11,37 +11,6 @@ World::~World()
     for(kantan::Entity* e : m_entities)
         delete e;
 
-    /// DO NOT DELETE
-    /// LEAVE COMMENTED
-    /*
-    for(kantan::DeletionMarkerComponent* dmc : m_deletionMarkerComponents)
-        delete dmc;
-
-    for(kantan::PolygonHitboxComponent* phc : m_polygonHitboxComponents)
-        delete phc;
-
-    for(kantan::MovementComponent* mc : m_movementComponents)
-        delete mc;
-
-    for(kantan::RotationComponent* rc : m_rotationComponents)
-        delete rc;
-
-    for(BasicStatsComponent* bsc : m_basicStatsComponents)
-        delete bsc;
-
-    for(ClientLinkComponent* clc : m_clientLinkComponents)
-        delete clc;
-
-    for(LevelStatsComponent* lsc : m_levelStatsComponents)
-        delete lsc;
-
-    for(NameComponent* nc : m_nameComponents)
-        delete nc;
-
-    for(StaticMarkerComponent* smc : m_staticMarkerComponents)
-        delete smc;
-    */
-
     for(auto entry : m_components)
     {
         for(kantan::Component* c : entry.second)
@@ -353,81 +322,7 @@ kantan::Entity* World::createEntity(std::string name, bool isStatic)
     return e;
 }
 
-// createXXXComponent methods.
-/*
-kantan::DeletionMarkerComponent* World::createDeletionMarkerComponent(std::size_t ownerId)
-{
-    kantan::DeletionMarkerComponent* dmc = new kantan::DeletionMarkerComponent(ownerId);
-    m_deletionMarkerComponents.push_back(dmc);
-
-    return dmc;
-}
-
-kantan::PolygonHitboxComponent* World::createPolygonHitboxComponent(std::size_t ownerId)
-{
-    kantan::PolygonHitboxComponent* phc = new kantan::PolygonHitboxComponent(ownerId);
-    m_polygonHitboxComponents.push_back(phc);
-
-    return phc;
-}
-
-kantan::MovementComponent* World::createMovementComponent(std::size_t ownerId)
-{
-    kantan::MovementComponent* mc = new kantan::MovementComponent(ownerId);
-    m_movementComponents.push_back(mc);
-
-    return mc;
-}
-
-kantan::RotationComponent* World::createRotationComponent(std::size_t ownerId)
-{
-    kantan::RotationComponent* rc = new kantan::RotationComponent(ownerId);
-    m_rotationComponents.push_back(rc);
-
-    return rc;
-}
-
-BasicStatsComponent* World::createBasicStatsComponent(std::size_t ownerId)
-{
-    BasicStatsComponent* bsc = new BasicStatsComponent(ownerId);
-    m_basicStatsComponents.push_back(bsc);
-
-    return bsc;
-}
-
-ClientLinkComponent* World::createClientLinkComponent(std::size_t ownerId)
-{
-    ClientLinkComponent* clc = new ClientLinkComponent(ownerId);
-    m_clientLinkComponents.push_back(clc);
-
-    return clc;
-}
-
-LevelStatsComponent* World::createLevelStatsComponent(std::size_t ownerId)
-{
-    LevelStatsComponent* lsc = new LevelStatsComponent(ownerId);
-    m_levelStatsComponents.push_back(lsc);
-
-    return lsc;
-}
-
-NameComponent* World::createNameComponent(std::size_t ownerId)
-{
-    NameComponent* nc = new NameComponent(ownerId);
-    m_nameComponents.push_back(nc);
-
-    return nc;
-}
-
-StaticMarkerComponent* World::createStaticMarkerComponent(std::size_t ownerId)
-{
-    StaticMarkerComponent* clc = new StaticMarkerComponent(ownerId);
-    m_staticMarkerComponents.push_back(clc);
-
-    return clc;
-}
-*/
-
+// createXXX methods.
 kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client)
 {
     // Create the entity.
