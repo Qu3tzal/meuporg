@@ -14,7 +14,7 @@
 #include "../SFMLPacketUtils.hpp"
 #include "Map.hpp"
 #include "Hud.hpp"
-#include "Dialog.hpp"
+#include "DialogManager.hpp"
 
 class World : public sf::Drawable, public sf::Transformable
 {
@@ -62,7 +62,7 @@ class World : public sf::Drawable, public sf::Transformable
 
         Hud hud;
 
-        Dialog dialog;
+        DialogManager dialogs;
 
     private:
 };

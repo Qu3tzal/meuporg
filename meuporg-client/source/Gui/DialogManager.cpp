@@ -1,11 +1,54 @@
 #include "DialogManager.hpp"
 
-DialogManager::DialogManager()
+DialogManager::DialogManager(kantan::FontHolder* fonts)
 {
-    //ctor
+    this->fonts = fonts;
 }
 
 DialogManager::~DialogManager()
 {
     //dtor
 }
+
+void DialogManager::init()
+{
+
+}
+
+void DialogManager::update(sf::Time dt)
+{
+    if(!dialogs.empty())
+    {
+        dialogs.top()->update(dt);
+
+        if(dialogs.top()->isFinished())
+        {
+            dialogs.pop();
+        }
+    }
+
+}
+
+void DialogManager::handleEvent(sf::Event e)
+{
+    if(!dialogs.empty())
+        dialogs.top()->handleEvent(e);
+}
+
+Dialog* DialogManager::createDialog()
+{
+    Dialog* dialog = new Dialog(fonts);
+    dialog->init();
+    dialogs.push(dialog);
+
+    return dialog;
+}
+
+void DialogManager::draw(sf::RenderTarget& window, sf::RenderStates states) const
+{
+    states.transform *= getTransform();
+
+    if(!dialogs.empty())
+        window.draw(*dialogs.top(), states);
+}
+
