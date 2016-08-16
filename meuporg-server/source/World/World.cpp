@@ -28,31 +28,23 @@ int World::getId() const
     return m_id;
 }
 
-void World::init()
+void World::init(std::string mapFilepath)
 {
     Multithreading::outputMutex.lock();
     std::cout << "[WORLD|" << m_id << "] Map loading..." << std::endl;
     Multithreading::outputMutex.unlock();
 
-    sf::Clock loadingClock;
-
-    for(float x(0.f) ; x <= 1248.f ; x += 32.f)
-        createBox(sf::Vector2f(x, 0.f));
-
-    for(float y(32.f) ; y <= 768.f ; y += 32.f)
-        createBox(sf::Vector2f(1248.f, y));
-
-    for(float y(32.f) ; y <= 768.f ; y += 32.f)
-        createBox(sf::Vector2f(0.f, y));
-
-    for(float x(32.f) ; x <= 1248.f ; x += 32.f)
-        createBox(sf::Vector2f(x, 768.f));
-
-    sf::Time loadingTime = loadingClock.restart();
+    MapLoader mapLoader(mapFilepath, this);
+    m_mapId = mapLoader.getMapId();
 
     Multithreading::outputMutex.lock();
-    std::cout << "[WORLD|" << m_id << "] Map loaded in " << loadingTime.asMilliseconds() << " ms." << std::endl;
+    std::cout << "[WORLD|" << m_id << "] Map loaded in " << mapLoader.getLoadingTime().asMilliseconds() << " ms." << std::endl;
     Multithreading::outputMutex.unlock();
+}
+
+int World::getMapId() const
+{
+    return m_mapId;
 }
 
 void World::update(sf::Time dt, Server* server)

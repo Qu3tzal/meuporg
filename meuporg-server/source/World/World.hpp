@@ -13,6 +13,7 @@
 #include "../Components/LevelStatsComponent.hpp"
 #include "../Components/NameComponent.hpp"
 #include "../Components/StaticMarkerComponent.hpp"
+#include "../MapLoader/MapLoader.hpp"
 #include "../Systems/ClientInputSystem.hpp"
 #include "../Systems/LevelUpSystem.hpp"
 #include "../Utils/SFMLPacketUtils.hpp"
@@ -42,7 +43,10 @@ class World
         int getId() const;
 
         // Initializes the world.
-        void init();
+        void init(std::string mapFilepath);
+
+        // Returns the map's id.
+        int getMapId() const;
 
         // Updates the world.
         void update(sf::Time dt, Server* server);
@@ -60,6 +64,9 @@ class World
         void giveXpTo(std::string username, float amount);
 
     protected:
+        // Needs this friendship to access createXXX methods.
+        friend MapLoader;
+
         // Checks the performances of the world thread.
         void performancesCheck(sf::Time serverdt);
 
@@ -88,6 +95,9 @@ class World
     protected:
         // ID.
         int m_id;
+
+        // Map id.
+        int m_mapId;
 
         // Inner clock.
         sf::Clock m_worldClock;

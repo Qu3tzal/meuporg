@@ -19,6 +19,7 @@
 					<Add directory="source/LoginServer" />
 					<Add directory="source" />
 					<Add directory="source/World" />
+					<Add directory="source/MapLoader" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-system-d" />
@@ -42,6 +43,7 @@
 					<Add directory="source/LoginServer" />
 					<Add directory="source" />
 					<Add directory="source/World" />
+					<Add directory="source/MapLoader" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -155,6 +157,9 @@
 		<Unit filename="source/Kantan-2/kantan.hpp" />
 		<Unit filename="source/LoginServer/LoginServer.cpp" />
 		<Unit filename="source/LoginServer/LoginServer.hpp" />
+		<Unit filename="source/MapLoader/MapLoader.cpp" />
+		<Unit filename="source/MapLoader/MapLoader.hpp" />
+		<Unit filename="source/MapValues.hpp" />
 		<Unit filename="source/MultithreadingOutput.hpp" />
 		<Unit filename="source/NetworkValues.hpp" />
 		<Unit filename="source/PlayerInput.hpp" />
