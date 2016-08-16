@@ -7,6 +7,7 @@
 #include "../Kantan-2/kantan.hpp"
 
 #include "../Accounts.hpp"
+#include "../MultithreadingOutput.hpp"
 #include "../Components/BasicStatsComponent.hpp"
 #include "../Components/ClientLinkComponent.hpp"
 #include "../Components/LevelStatsComponent.hpp"
@@ -27,11 +28,18 @@ class Server;
 class World
 {
     public:
+        // Last id.
+        static int lastId;
+
+    public:
         // Ctor.
         World();
 
         // Dtor.
         virtual ~World();
+
+        // Returns the world's id.
+        int getId() const;
 
         // Initializes the world.
         void init();
@@ -75,6 +83,9 @@ class World
         void notifyLevelUp(LevelStatsComponent* lsc);
 
     protected:
+        // ID.
+        int m_id;
+
         // Entities.
         std::vector<kantan::Entity*> m_entities;
 

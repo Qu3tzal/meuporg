@@ -3,12 +3,15 @@
 
 #include <exception>
 #include <iostream>
+#include <vector>
 #include <sstream>
+#include <thread>
 #include <map>
 
 #include <SFML/Network.hpp>
 
 #include "../Accounts.hpp"
+#include "../MultithreadingOutput.hpp"
 #include "../NetworkValues.hpp"
 #include "../ServerConfiguration.hpp"
 #include "../LoginServer/LoginServer.hpp"
@@ -101,6 +104,9 @@ class Server
         // Returns true if the given string is a chat command.
         bool isChatCommand(std::string command);
 
+        // Switch a client from a world to another.
+        void switchClientToWorld(Client* client, int worldId);
+
     protected:
         // Number of players connected and maximum number of players.
         unsigned int m_numberOfPlayers;
@@ -129,6 +135,9 @@ class Server
 
         // World.
         World m_world;
+
+        // Multithreading worlds.
+        std::vector<World*> m_worlds;
 };
 
 #endif // SERVER_HPP_INCLUDED

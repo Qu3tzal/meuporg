@@ -155,6 +155,7 @@
 		<Unit filename="source/Kantan-2/kantan.hpp" />
 		<Unit filename="source/LoginServer/LoginServer.cpp" />
 		<Unit filename="source/LoginServer/LoginServer.hpp" />
+		<Unit filename="source/MultithreadingOutput.hpp" />
 		<Unit filename="source/NetworkValues.hpp" />
 		<Unit filename="source/PlayerInput.hpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />

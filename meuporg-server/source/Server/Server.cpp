@@ -12,6 +12,9 @@ Server::~Server()
 {
     for(auto accountEntry : m_accounts)
         delete accountEntry.second;
+
+    for(World* world : m_worlds)
+        delete world;
 }
 
 void Server::init()
@@ -28,6 +31,24 @@ void Server::init()
 
     // Init the world.
     m_world.init();
+
+    // Create the worlds.
+    for(unsigned int i(0) ; i < 10 ; i++)
+        m_worlds.push_back(new World());
+
+    // Init the worlds.
+    // Multithreading worlds.
+    std::vector<std::thread> threads;
+
+    for(World* world : m_worlds)
+        threads.push_back(std::thread(&World::init, world));
+
+    for(std::thread& thread : threads)
+        thread.join();
+
+    Multithreading::outputMutex.lock();
+    std::cout << "[GAME_SERVER] All worlds loaded !" << std::endl;
+    Multithreading::outputMutex.unlock();
 }
 
 bool Server::isRunning() const
@@ -48,7 +69,10 @@ void Server::login(sf::Time dt)
         // We still don't know to who belongs this socket.
         // We need to wait for the CONNECT packet.
         m_pendingTcpSockets.push_back(pendingSocket);
+
+        Multithreading::outputMutex.lock();
         std::cout << "[GAME_SERVER] New pending socket from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ")." << std::endl;
+        Multithreading::outputMutex.unlock();
     }
     else
     {
@@ -64,7 +88,9 @@ void Server::login(sf::Time dt)
         // Check timeout.
         if(pendingSocket->timeout >= ServerConfiguration::PendingSocketTimeout)
         {
+            Multithreading::outputMutex.lock();
             std::cout << "[GAME_SERVER] Pending socket from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ") timed out." << std::endl;
+            Multithreading::outputMutex.unlock();
 
             delete pendingSocket;
             m_pendingTcpSockets.erase(pendingSocketItr);
@@ -80,7 +106,9 @@ void Server::login(sf::Time dt)
 
             if(networkCode != NetworkValues::CONNECT)
             {
+                Multithreading::outputMutex.lock();
                 std::cout << "[GAME_SERVER] Unknown network code : '" << networkCode << "'." << std::endl;
+                Multithreading::outputMutex.unlock();
                 continue;
             }
 
@@ -96,7 +124,9 @@ void Server::login(sf::Time dt)
                 answer << NetworkValues::CONNECTION_FAIL_UNKNOWN_USER;
                 pendingSocket->tcpSocket->send(answer);
 
+                Multithreading::outputMutex.lock();
                 std::cout << "[GAME_SERVER] CONNECTION_FAIL_UNKNOWN_USER from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ")." << std::endl;
+                Multithreading::outputMutex.unlock();
 
                 continue;
             }
@@ -116,7 +146,9 @@ void Server::login(sf::Time dt)
                 // Reset timeout.
                 m_accounts.at(username)->linkedClient->timeout = sf::Time::Zero;
 
+                Multithreading::outputMutex.lock();
                 std::cout << "[GAME_SERVER] Game TCP connected from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ") for '" << username << "'." << std::endl;
+                Multithreading::outputMutex.unlock();
 
                 // Delete the pending socket.
                 delete pendingSocket;
@@ -130,7 +162,9 @@ void Server::login(sf::Time dt)
                 answer << NetworkValues::CONNECTION_FAIL_WRONG_TOKEN;
                 pendingSocket->tcpSocket->send(answer);
 
+                Multithreading::outputMutex.lock();
                 std::cout << "[GAME_SERVER] CONNECTION_FAIL_WRONG_TOKEN from (" << pendingSocket->tcpSocket->getRemoteAddress().toString() << ")." << std::endl;
+                Multithreading::outputMutex.unlock();
             }
         }
 
@@ -151,6 +185,15 @@ void Server::update(sf::Time dt)
     updateTimeoutPlayers(dt);
 
     m_world.update(dt, this);
+
+    // Multithreading worlds.
+    std::vector<std::thread> threads;
+
+    for(World* world : m_worlds)
+        threads.push_back(std::thread(&World::update, world, dt, this));
+
+    for(std::thread& thread : threads)
+        thread.join();
 }
 
 void Server::sendUpdate()
@@ -158,7 +201,14 @@ void Server::sendUpdate()
     for(Client* client : m_clients)
     {
         if(client->ingame)
+        {
             m_world.sendUpdate(client, m_gameUdpSocket);
+
+            // Multithreading worlds.
+            // Can't multithread network stuff.
+            for(World* world : m_worlds)
+                world->sendUpdate(client, m_gameUdpSocket);
+        }
     }
 }
 
@@ -200,8 +250,12 @@ void Server::disconnectPlayer(std::string username, std::string reason)
 
         // Notify the world.
         m_world.playerDisconnected(client);
+        client->ingame = false;
+        client->currentWorld = -1;
 
+        Multithreading::outputMutex.lock();
         std::cout << "[GAME_SERVER] '" << username << "' has left the game (" << reason << ")." << std::endl;
+        Multithreading::outputMutex.unlock();
 
         // Erase the client.
         delete client;
@@ -209,7 +263,9 @@ void Server::disconnectPlayer(std::string username, std::string reason)
     }
     catch(std::exception& e)
     {
+        Multithreading::outputMutex.lock();
         std::cerr << "[GAME_SERVER][ERROR] " << e.what() << std::endl;
+        Multithreading::outputMutex.unlock();
     }
 }
 
@@ -302,7 +358,9 @@ void Server::receiveInputThroughTCP()
 
                             if(isChatCommand(message))
                             {
+                                Multithreading::outputMutex.lock();
                                 std::cout << "[COMMAND] " << client->username << ": " << message << std::endl;
+                                Multithreading::outputMutex.unlock();
 
                                 std::string command = kantan::trim(message);
 
@@ -323,11 +381,20 @@ void Server::receiveInputThroughTCP()
 
                                         m_world.giveXpTo(username, amount);
                                     }
+                                    else if(word == "/change_world")
+                                    {
+                                        int worldId;
+                                        ss >> worldId;
+
+                                        switchClientToWorld(client, worldId);
+                                    }
                                 }
                             }
                             else
                             {
+                                Multithreading::outputMutex.lock();
                                 std::cout << "[CHAT] " << client->username << ": " << message << std::endl;
+                                Multithreading::outputMutex.unlock();
 
                                 // Send chat message to everyone.
                                 sendChatMessage(client->username, message);
@@ -413,14 +480,28 @@ void Server::receiveInputThroughUDP()
 
                             m_accounts.at(username)->linkedClient->gameTcp->send(answer);
 
+                            Multithreading::outputMutex.lock();
                             std::cout << "[GAME_SERVER] Game UDP connected from (" << ip.toString() << ") for '" << username << "'." << std::endl;
                             std::cout << "[GAME_SERVER] '" << username << "' from (" << ip.toString() << ") is now in game !" << std::endl;
+                            Multithreading::outputMutex.unlock();
 
                             // Notify everyone the player connected.
                             notifyPlayerConnected(username);
 
+                            // Select a world to put the player in.
                             // Notify the world.
                             m_world.playerConnected(m_accounts.at(username)->linkedClient);
+                            // Change the client's data.
+                            m_accounts.at(username)->linkedClient->currentWorld = m_world.getId();
+
+                            // Notify player in witch world he has been transferred.
+                            answer.clear();
+                            answer << NetworkValues::PLAYER_MOVED_TO_WORLD << m_world.getId();
+                            m_accounts.at(username)->linkedClient->gameTcp->send(answer);
+
+                            Multithreading::outputMutex.lock();
+                            std::cout << "[GAME_SERVER] '" << username << "' has been transferred to world #" << m_accounts.at(username)->linkedClient->currentWorld << "." << std::endl;
+                            Multithreading::outputMutex.unlock();
                         }
                     }
                 }
@@ -463,8 +544,10 @@ void Server::receiveInputThroughUDP()
                             if(udpPacketId - client->lastPacketIdReceived > 1)
                             {
                                 client->lostPackets += (udpPacketId - 1) - client->lastPacketIdReceived;
+                                Multithreading::outputMutex.lock();
                                 std::cout   << "[PACKET_LOSS] " << client->username << ": " << client->lostPackets << " / " << client->lastPacketIdReceived
                                             << " (" << (client->lostPackets * 100.f) / (float)(client->lastPacketIdReceived) << "%)" << std::endl;
+                                Multithreading::outputMutex.unlock();
                             }
 
                             // Update the last packet id.
@@ -553,4 +636,42 @@ bool Server::isChatCommand(std::string command)
     std::string trimmed = kantan::trim(command);
 
     return (trimmed != "" && trimmed[0] == '/');
+}
+
+void Server::switchClientToWorld(Client* client, int worldId)
+{
+    // The client needs to be in game.
+    if(client->ingame)
+    {
+        // In which world is it currently ?
+        int currentWorldId = client->currentWorld;
+
+        if(currentWorldId != -1)
+        {
+            // Find the current world and notify it the player is leaving.
+            auto worldItr = std::find_if(m_worlds.begin(), m_worlds.end(), [&](const World* world){
+                                                return world->getId() == currentWorldId;
+                                         });
+
+            if(worldItr != m_worlds.end())
+                (*worldItr)->playerDisconnected(client);
+        }
+
+        // Switch the player in the new world.
+        // Check the destination world is valid.
+        auto worldItr = std::find_if(m_worlds.begin(), m_worlds.end(), [&](const World* world){
+                                            return world->getId() == worldId;
+                                     });
+
+        if(worldItr != m_worlds.end())
+        {
+            (*worldItr)->playerConnected(client);
+            client->currentWorld = worldId;
+
+            // Notify the client.
+            sf::Packet notification;
+            notification << NetworkValues::PLAYER_MOVED_TO_WORLD << worldId;
+            client->gameTcp->send(notification);
+        }
+    }
 }

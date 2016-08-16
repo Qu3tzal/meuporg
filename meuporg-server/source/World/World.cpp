@@ -1,7 +1,10 @@
 #include "World.hpp"
 #include "../Server/Server.hpp"
 
+int World::lastId = 0;
+
 World::World()
+    : m_id(lastId++)
 {
 }
 
@@ -18,9 +21,16 @@ World::~World()
     }
 }
 
+int World::getId() const
+{
+    return m_id;
+}
+
 void World::init()
 {
-    std::cout << "[WORLD] Map loading..." << std::endl;
+    Multithreading::outputMutex.lock();
+    std::cout << "[WORLD|" << m_id << "] Map loading..." << std::endl;
+    Multithreading::outputMutex.unlock();
 
     for(float x(0.f) ; x <= 1248.f ; x += 32.f)
         createBox(sf::Vector2f(x, 0.f));
@@ -34,7 +44,9 @@ void World::init()
     for(float x(32.f) ; x <= 1248.f ; x += 32.f)
         createBox(sf::Vector2f(x, 768.f));
 
-    std::cout << "[WORLD] Map loaded." << std::endl;
+    Multithreading::outputMutex.lock();
+    std::cout << "[WORLD|" << m_id << "] Map loaded." << std::endl;
+    Multithreading::outputMutex.unlock();
 }
 
 void World::update(sf::Time dt, Server* server)
@@ -259,7 +271,9 @@ void World::giveXpTo(std::string username, float amount)
         lsc->xp += amount;
 
         // Log.
-        std::cout << "[WORLD] " << username << " got " << amount << " XP." << std::endl;
+        Multithreading::outputMutex.lock();
+        std::cout << "[WORLD|" << m_id << "] " << username << " got " << amount << " XP." << std::endl;
+        Multithreading::outputMutex.unlock();
     }
 }
 

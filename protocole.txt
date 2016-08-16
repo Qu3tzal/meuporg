@@ -38,6 +38,7 @@ Protocole
 		LEVEL_UP							213
 		ACCEPT_MISSION						214
 		CANCEL_MISSION						215
+		PLAYER_MOVED_TO_WORLD				216
 
 		KEEP_ALIVE							300
 		OKAY								301
@@ -159,3 +160,7 @@ Protocole
 	Annulation d'une mission
 	------------------------
 		[client		TCP]		CANCEL_MISSION mission_id
+
+	Changement de monde du joueur
+	-----------------------------
+		[serveur	TCP]		PLAYER_MOVED_TO_WORLD world_id
