@@ -15,6 +15,7 @@ struct DialogChoice
 {
     std::map<std::string, int> possibilities;
     std::function<void(int)> callback;
+    std::string title = "Quel est votre choix";
 };
 
 class Dialog : public sf::Drawable, public sf::Transformable
@@ -69,6 +70,8 @@ class Dialog : public sf::Drawable, public sf::Transformable
         bool finished;
 
         bool choiceStep;
+
+        sf::Text title;
 
         std::vector<sf::Text> choiceTexts;
 

@@ -110,10 +110,17 @@ void Dialog::next()
 void Dialog::initChoice()
 {
     int i = 0;
+
+    title.setPosition(5, 10);
+    title.setFont(fonts->get(ResourceId::MONOF_56));
+    title.setCharacterSize(16);
+    title.setColor(sf::Color::White);
+    title.setString(choice->title);
+
     for(auto itr = choice->possibilities.begin(); itr != choice->possibilities.end(); itr++)
     {
         sf::Text text;
-        text.setPosition(20, 10 + i * 25);
+        text.setPosition(20, 45 + i * 25);
         text.setFont(fonts->get(ResourceId::MONOF_56));
         text.setCharacterSize(16);
         text.setColor(sf::Color::White);
@@ -122,7 +129,8 @@ void Dialog::initChoice()
         choiceTexts.push_back(text);
         i++;
     }
-    nextPageText.setPosition(0, 10);
+    nextPageText.setPosition(0, 45);
+    background.setSize(sf::Vector2f(background.getSize().x, choiceTexts[choiceTexts.size() - 1].getPosition().y + choiceTexts[choiceTexts.size() - 1].getGlobalBounds().height + 10));
     itr = 0;
 }
 
@@ -188,6 +196,7 @@ void Dialog::draw(sf::RenderTarget& window, sf::RenderStates states) const
         {
             window.draw(t, states);
         }
+        window.draw(title, states);
     }
     if(drawArrow)
         window.draw(nextPageText, states);
