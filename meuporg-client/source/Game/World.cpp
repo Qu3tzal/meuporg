@@ -24,6 +24,7 @@ void World::init()
     hud.init();
     hud.setPosition(sf::Vector2f(410, 655));
     loadMap(0);
+    //loadMap("assets/map/map1.txt");
     for(Entity* e : entities)
     {
         e->init();
@@ -216,6 +217,7 @@ void World::changeWorld(int worldId, int mapId)
     }
     entities.clear();
     player = nullptr;
+    hud.setPlayer(nullptr);
 
     loadMap(mapId);
 }
@@ -260,7 +262,11 @@ void World::loadMap(std::string path)
 {
     if(!m_map.loadLevelFromFile(path))
     {
-        //loadMap();
+        std::cout<<"marche pas";
+    }
+    else
+    {
+        std::cout<<"marche";
     }
 }
 
