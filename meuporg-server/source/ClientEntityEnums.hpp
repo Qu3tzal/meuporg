@@ -5,19 +5,20 @@ namespace ClientSide
 {
     enum EntityType
     {
-        PLAYER,
-        NPC
+        ENTITYTYPE_PLAYER,
+        ENTITYTYPE_NPC
     };
 
     enum PlayerStates
     {
-        IDLE,
-        WALKING
+        PLAYERSTATE_IDLE,
+        PLAYERSTATE_WALKING
     };
 
     enum NPCStates
     {
-
+        NPCSTATE_IDLE,
+        NPCSTATE_WALKING
     };
 };
 
