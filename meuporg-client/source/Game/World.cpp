@@ -23,7 +23,7 @@ void World::init()
 {
     hud.init();
     hud.setPosition(sf::Vector2f(410, 655));
-    loadMap();
+    loadMap(0);
     for(Entity* e : entities)
     {
         e->init();
@@ -205,6 +205,16 @@ void World::addEntity(unsigned int id, Entity::Type type, std::string name, sf::
 
 }
 
+void World::changeWorld(int worldId)
+{
+    for(Entity* e : entities)
+    {
+        delete e;
+    }
+    entities.clear();
+    player = nullptr;
+}
+
 Entity* World::getEntityById(unsigned int id)
 {
     for(Entity* e : entities)
@@ -245,13 +255,13 @@ void World::loadMap(std::string path)
 {
     if(!m_map.loadLevelFromFile(path))
     {
-        loadMap();
+        //loadMap();
     }
 }
 
-void World::loadMap()
+void World::loadMap(int worldId)
 {
-    m_map.createMap();
+    m_map.createMap(worldId);
 }
 
 void World::draw(sf::RenderTarget& window, sf::RenderStates states) const

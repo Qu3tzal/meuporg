@@ -40,44 +40,51 @@ bool Map::loadLevelFromFile(std::string filename)
     return true;
 }
 
-void Map::createMap()
+void Map::createMap(int worldId)
 {
-    std::vector<std::vector<unsigned int>> tiles;
-    m_size = sf::Vector2f(40, 25);
-
-    for(unsigned int i(0) ; i <= m_size.y ; i++)
+    switch(worldId)
     {
-        tiles.push_back(std::vector<unsigned int>());
-
-        for(unsigned int j(0) ; j <= m_size.x ; j++)
+    case 0:
         {
-            unsigned int type(0);
-            if(i == 0)
+            std::vector<std::vector<unsigned int>> tiles;
+            m_size = sf::Vector2f(40, 25);
+
+            for(unsigned int i(0) ; i <= m_size.y ; i++)
             {
-                type = 1;
+                tiles.push_back(std::vector<unsigned int>());
+
+                for(unsigned int j(0) ; j <= m_size.x ; j++)
+                {
+                    unsigned int type(0);
+                    if(i == 0)
+                    {
+                        type = 1;
+                    }
+                    else if(j == 39 && i >= 0 && i <= 24)
+                    {
+                        type = 1;
+                    }
+                    else if(j == 0 && i >= 0 && i <= 24)
+                    {
+                        type = 1;
+                    }
+                    else if(i == 24)
+                    {
+                        type = 1;
+                    }
+                    else
+                    {
+                        type = 0;
+                    }
+                    tiles[i].push_back(type);
+                }
             }
-            else if(j == 39 && i >= 0 && i <= 24)
-            {
-                type = 1;
-            }
-            else if(j == 0 && i >= 0 && i <= 24)
-            {
-                type = 1;
-            }
-            else if(i == 24)
-            {
-                type = 1;
-            }
-            else
-            {
-                type = 0;
-            }
-            tiles[i].push_back(type);
+            initTileMap(tiles);
         }
+        break;
+    default:
+        break;
     }
-
-    initTileMap(tiles);
-
 
 }
 

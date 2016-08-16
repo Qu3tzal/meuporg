@@ -165,6 +165,18 @@ void Game::notificationPacket(sf::Packet* packet)
                 ss << name << " viens de monter level " << (unsigned int)level;
                 chat.write(ss.str());
             }
+            break;
+        case NetworkValues::PLAYER_MOVED_TO_WORLD:
+            {
+                unsigned int worldId(0);
+                *packet >> worldId;
+                world.changeWorld(worldId);
+
+                std::stringstream ss;
+                ss << " Vous vous teléportez au monde : " << (unsigned int)worldId;
+                chat.write(ss.str());
+            }
+            break;
         default:
             break;
     }

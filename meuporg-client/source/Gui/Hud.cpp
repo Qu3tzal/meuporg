@@ -66,7 +66,8 @@ void Hud::update(sf::Time dt)
     switch(tab)
     {
     case Tabs::STATS :
-        stats.update(player);
+        if(player != nullptr)
+            stats.update(player);
         break;
     case Tabs::NONE :
         break;

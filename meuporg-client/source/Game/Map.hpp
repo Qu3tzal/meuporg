@@ -22,7 +22,7 @@ class Map : public sf::Drawable, sf::Transformable
 
         void initTileMap(std::vector<std::vector<unsigned int>> tiles);
 
-        void createMap();
+        void createMap(int worldId);
 
     protected:
 

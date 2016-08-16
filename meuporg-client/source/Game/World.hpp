@@ -38,9 +38,11 @@ class World : public sf::Drawable, public sf::Transformable
 
         void loadMap(std::string path);
 
-        void loadMap();
+        void loadMap(int worldId);
 
         Player* getPlayer(std::string playerName);
+
+        void changeWorld(int worldId);
 
     protected:
 
