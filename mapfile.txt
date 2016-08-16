@@ -1,0 +1,10 @@
+Constantes de format
+--------------------
+	ENTITY		001
+	
+	BOX			101	
+
+Format de fichier de map serveur
+--------------------------------
+	ENTITY type position_x position_y
+
