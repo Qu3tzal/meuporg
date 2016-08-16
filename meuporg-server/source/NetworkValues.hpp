@@ -7,7 +7,6 @@ namespace NetworkValues
 {
     const unsigned int  VERSION(000);
    	const unsigned int	NUMBER_OF_PLAYERS(001);
-	const unsigned int	MAP_NAME(002);
 
 	const unsigned int	CONNECT(100);
 	const unsigned int	ACCOUNT_CREATED_RECONNECT(101);
@@ -37,6 +36,8 @@ namespace NetworkValues
     const unsigned int  ACCEPT_MISSION(214);
     const unsigned int  CANCEL_MISSION(215);
     const unsigned int  PLAYER_MOVED_TO_WORLD(216);
+    const unsigned int  STATIC_MAP_DATA(217);
+    const unsigned int  GET_STATIC_MAP_DATA(218);
 
 	const unsigned int  KEEP_ALIVE(300);
 	const unsigned int  OKAY(301);
