@@ -14,6 +14,7 @@ class NameComponent : public kantan::Component
 		NameComponent(std::size_t ownerId);
 
 		// Attribute.
+		int id;
 		std::string name;
 };
 
