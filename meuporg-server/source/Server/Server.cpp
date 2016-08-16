@@ -666,12 +666,18 @@ void Server::switchClientToWorld(Client* client, int worldId)
         if(worldItr != m_worlds.end())
         {
             (*worldItr)->playerConnected(client);
+            int oldWorldId = client->currentWorld;
             client->currentWorld = worldId;
 
             // Notify the client.
             sf::Packet notification;
             notification << NetworkValues::PLAYER_MOVED_TO_WORLD << worldId;
             client->gameTcp->send(notification);
+
+            // Log.
+            Multithreading::outputMutex.lock();
+            std::cout << "[GAME_SERVER] Transferred '" << client->username << "' from world #" << oldWorldId << " to world #" << worldId << "." << std::endl;
+            Multithreading::outputMutex.unlock();
         }
     }
 }
