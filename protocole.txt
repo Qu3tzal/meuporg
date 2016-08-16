@@ -38,8 +38,6 @@ Protocole
 		ACCEPT_MISSION						214
 		CANCEL_MISSION						215
 		PLAYER_MOVED_TO_WORLD				216
-		STATIC_MAP_DATA						217
-		GET_STATIC_MAP_DATA					218
 
 		KEEP_ALIVE							300
 		OKAY								301
@@ -159,9 +157,4 @@ Protocole
 
 	Changement de monde du joueur
 	-----------------------------
-		[serveur	TCP]		PLAYER_MOVED_TO_WORLD world_id
-		
-	Demande des données statiques de la map
-	---------------------------------------
-		[client		TCP]		GET_STATIC_MAP_DATA world_id
-		[serveur	TCP]		STATIC_MAP_DATA number_of_entities [type name position state]
+		[serveur	TCP]		PLAYER_MOVED_TO_WORLD world_id map_id
