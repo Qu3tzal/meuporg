@@ -33,6 +33,17 @@ void World::init()
     Dialog* dialog = dialogs.createDialog();
 
     dialog->setText("Bonjours,................................., Salut,..........................................., Ca Marche ?..................");
+
+    DialogChoice* choices = dialog->addChoice();
+    choices->possibilities["Quittez"] = -1;
+    choices->possibilities["Bonjour"] = 1;
+    choices->possibilities["Aurevoir"] = 2;
+
+    choices->callback = [&](int i) {
+    Dialog* dialog2 = dialogs.createDialog();
+    std::string str = "Yoloooooo ça marche " + i;
+    dialog2->setText(str);
+    };
 }
 
 void World::update(sf::Time dt)

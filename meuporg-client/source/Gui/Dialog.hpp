@@ -13,7 +13,7 @@
 
 struct DialogChoice
 {
-    std::map<int, std::string> possibilities;
+    std::map<std::string, int> possibilities;
     std::function<void(int)> callback;
 };
 
@@ -32,7 +32,7 @@ class Dialog : public sf::Drawable, public sf::Transformable
 
         void setText(std::string str);
 
-        void setChoice(DialogChoice choice);
+        DialogChoice* addChoice();
 
         bool isFinished();
 
@@ -41,6 +41,8 @@ class Dialog : public sf::Drawable, public sf::Transformable
         virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 
         std::string arrow;
+
+        void initChoice();
 
     private:
 
@@ -58,13 +60,18 @@ class Dialog : public sf::Drawable, public sf::Transformable
 
         std::vector<std::string> texts;
 
-        DialogChoice choice;
+        DialogChoice* choice;
 
         sf::Time timer;
 
         bool drawArrow;
 
         bool finished;
+
+        bool choiceStep;
+
+        std::vector<sf::Text> choiceTexts;
+
 };
 
 #endif // DIALOG_HPP

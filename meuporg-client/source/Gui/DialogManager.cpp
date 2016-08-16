@@ -21,7 +21,7 @@ void DialogManager::update(sf::Time dt)
     {
         dialogs.top()->update(dt);
 
-        if(dialogs.top()->isFinished())
+        while(!dialogs.empty() && dialogs.top()->isFinished())
         {
             delete dialogs.top();
             dialogs.pop();
