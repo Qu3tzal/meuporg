@@ -32,7 +32,7 @@ void World::init()
     dialogs.setPosition(500, 500);
     Dialog* dialog = dialogs.createDialog();
 
-    dialog->setText("Bonjours,................................., Salut,..........................................., Ca Marche ?..................");
+    dialog->setText("a123456789b123456789c123456789d123456789e123456789f123456789g123456789h123456789i123456789J123456789K123456789L123456789M123456789O123456789P123456789Q123456789R123456789S123456789T123456789U123456789X123456789Y123456789Z12345678911111111111111111111111111111111111111111111111111111111111111111111111111111111111");
 
     DialogChoice* choices = dialog->addChoice();
     choices->possibilities["Quittez"] = -1;
@@ -41,7 +41,7 @@ void World::init()
 
     choices->callback = [&](int i) {
     Dialog* dialog2 = dialogs.createDialog();
-    std::string str = "Yoloooooo ça marche " + i;
+    std::string str = "Yoloooooo ça marche ";
     dialog2->setText(str);
     };
 }

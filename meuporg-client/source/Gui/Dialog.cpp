@@ -113,7 +113,7 @@ void Dialog::initChoice()
     for(auto itr = choice->possibilities.begin(); itr != choice->possibilities.end(); itr++)
     {
         sf::Text text;
-        text.setPosition(10, 10 + i * 25);
+        text.setPosition(20, 10 + i * 25);
         text.setFont(fonts->get(ResourceId::MONOF_56));
         text.setCharacterSize(16);
         text.setColor(sf::Color::White);
@@ -148,9 +148,10 @@ void Dialog::setText(std::string str)
             nb++;
             if(nb == maxLine)
             {
-                texts.push_back(str.substr(0, j));
-                str.erase(0, j);
+                texts.push_back(str.substr(0, j + 1));
+                str.erase(0, j + 1);
                 nb = 0;
+                j = 0;
             }
 
         }
