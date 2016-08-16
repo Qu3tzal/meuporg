@@ -1,6 +1,8 @@
 #ifndef PLAYERSTATS_HPP_INCLUDED
 #define PLAYERSTATS_HPP_INCLUDED
 
+#include <string>
+
 /*
     Data of a player in the database.
 */
