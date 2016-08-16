@@ -1,8 +1,6 @@
 #ifndef NETWORKVALUES_HPP_INCLUDED
 #define NETWORKVALUES_HPP_INCLUDED
 
-#include <SFML/System.hpp>
-
 namespace NetworkValues
 {
     const unsigned int  VERSION(000);
