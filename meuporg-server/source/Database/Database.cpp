@@ -19,6 +19,11 @@ Database::~Database()
         sqlite3_close(m_db);
 }
 
+void Database::createAccount(const std::string& username, const std::string& password)
+{
+
+}
+
 bool Database::checkAccountExists(const std::string& username)
 {
     // Prepare statement.

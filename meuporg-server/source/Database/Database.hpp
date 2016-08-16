@@ -17,6 +17,9 @@ class Database
         // Dtor.
         virtual ~Database();
 
+        // Creates an account.
+        void createAccount(const std::string& username, const std::string& password = "");
+
         // Returns true if the account exists.
         bool checkAccountExists(const std::string& username);
 
