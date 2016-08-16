@@ -354,8 +354,9 @@ void Server::receiveInputThroughTCP()
                     case NetworkValues::SEND_CHAT_MESSAGE:
                         {
                             // Extract message.
+                            std::string channel("");
                             std::string message("");
-                            packet >> message;
+                            packet >> channel >> message;
 
                             if(isChatCommand(message))
                             {
@@ -406,7 +407,7 @@ void Server::receiveInputThroughTCP()
                                 Multithreading::outputMutex.unlock();
 
                                 // Send chat message to everyone.
-                                sendChatMessage(client->username, message);
+                                sendChatMessage(client->username, channel, message);
                             }
                         }
                         break;
@@ -581,14 +582,14 @@ void Server::receiveInputThroughUDP()
     }
 }
 
-void Server::sendChatMessage(std::string username, std::string message)
+void Server::sendChatMessage(std::string username, std::string channel, std::string message)
 {
     // Record the message.
     m_chatLog.push_back(std::pair<std::string, std::string>(username, message));
 
     // Prepare the packet.
     sf::Packet packet;
-    packet << NetworkValues::NOTIFY << NetworkValues::RECEIVE_CHAT_MESSAGE << username << message;
+    packet << NetworkValues::NOTIFY << NetworkValues::RECEIVE_CHAT_MESSAGE << username << channel << message;
 
     // Send the message to all the in-game clients.
     for(Client* client : m_clients)

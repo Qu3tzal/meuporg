@@ -121,11 +121,11 @@ Protocole
 
 	Notification d'un message du chat
 	---------------------------------
-		[serveur	TCP]		NOTIFY RECEIVE_CHAT_MESSAGE author_username message
+		[serveur	TCP]		NOTIFY RECEIVE_CHAT_MESSAGE author_username channel message
 		
 	Envoi d'un message dans le chat
 	-------------------------------
-		[client		TCP:22624]	SEND_CHAT_MESSAGE message
+		[client		TCP:22624]	SEND_CHAT_MESSAGE channel message
 
 	Notification du début d'une mission
 	-----------------------------------

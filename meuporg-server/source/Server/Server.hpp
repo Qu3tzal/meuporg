@@ -90,7 +90,7 @@ class Server
         void receiveInputThroughUDP();
 
         // Sends the chat message.
-        void sendChatMessage(std::string username, std::string message);
+        void sendChatMessage(std::string username, std::string channel, std::string message);
 
         // Notifies everyone the player connected.
         void notifyPlayerConnected(std::string username);
