@@ -133,9 +133,6 @@ class Server
         // Chat log : (username, message).
         std::vector<std::pair<std::string, std::string>> m_chatLog;
 
-        // World.
-        World m_world;
-
         // Multithreading worlds.
         std::vector<World*> m_worlds;
 };

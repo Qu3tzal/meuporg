@@ -29,9 +29,6 @@ void Server::init()
     m_gameUdpSocket.bind(ServerConfiguration::GameUDPPort);
     m_gameUdpSocket.setBlocking(false);
 
-    // Init the world.
-    m_world.init();
-
     // Create the worlds.
     for(unsigned int i(0) ; i < 10 ; i++)
         m_worlds.push_back(new World());
@@ -184,8 +181,6 @@ void Server::update(sf::Time dt)
     updateNumberOfPlayers();
     updateTimeoutPlayers(dt);
 
-    m_world.update(dt, this);
-
     // Multithreading worlds.
     std::vector<std::thread> threads;
 
@@ -202,8 +197,6 @@ void Server::sendUpdate()
     {
         if(client->ingame)
         {
-            m_world.sendUpdate(client, m_gameUdpSocket);
-
             // Multithreading worlds.
             // Can't multithread network stuff.
             for(World* world : m_worlds)
@@ -248,8 +241,16 @@ void Server::disconnectPlayer(std::string username, std::string reason)
         // Null the linked client.
         m_accounts.at(username)->linkedClient = nullptr;
 
-        // Notify the world.
-        m_world.playerDisconnected(client);
+        // Multithreading worlds.
+        // Notify the worlds.
+        // Find the current world and notify it the player is leaving.
+        auto worldItr = std::find_if(m_worlds.begin(), m_worlds.end(), [&](const World* world){
+                                            return world->getId() == client->currentWorld;
+                                     });
+
+        if(worldItr != m_worlds.end())
+            (*worldItr)->playerDisconnected(client);
+
         client->ingame = false;
         client->currentWorld = -1;
 
@@ -379,7 +380,15 @@ void Server::receiveInputThroughTCP()
 
                                         ss >> username >> amount;
 
-                                        m_world.giveXpTo(username, amount);
+                                        // Multithreading worlds.
+                                        // Notify the worlds.
+                                        // Find the current world.
+                                        auto worldItr = std::find_if(m_worlds.begin(), m_worlds.end(), [&](const World* world){
+                                                                            return world->getId() == client->currentWorld;
+                                                                     });
+
+                                        if(worldItr != m_worlds.end())
+                                            (*worldItr)->giveXpTo(username, amount);
                                     }
                                     else if(word == "/change_world")
                                     {
@@ -490,13 +499,13 @@ void Server::receiveInputThroughUDP()
 
                             // Select a world to put the player in.
                             // Notify the world.
-                            m_world.playerConnected(m_accounts.at(username)->linkedClient);
+                            m_worlds[0]->playerConnected(m_accounts.at(username)->linkedClient);
                             // Change the client's data.
-                            m_accounts.at(username)->linkedClient->currentWorld = m_world.getId();
+                            m_accounts.at(username)->linkedClient->currentWorld = m_worlds[0]->getId();
 
                             // Notify player in witch world he has been transferred.
                             answer.clear();
-                            answer << NetworkValues::PLAYER_MOVED_TO_WORLD << m_world.getId();
+                            answer << NetworkValues::PLAYER_MOVED_TO_WORLD << m_worlds[0]->getId();
                             m_accounts.at(username)->linkedClient->gameTcp->send(answer);
 
                             Multithreading::outputMutex.lock();
