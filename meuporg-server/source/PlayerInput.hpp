@@ -10,6 +10,9 @@ struct PlayerInput
     bool isMoveDownKeyPressed;
     bool isMoveLeftKeyPressed;
     bool isMoveRightKeyPressed;
+
+    float mouseX;
+    float mouseY;
 };
 
 #endif // PLAYERINPUT_HPP_INCLUDED
