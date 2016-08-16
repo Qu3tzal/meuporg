@@ -507,7 +507,7 @@ void Server::receiveInputThroughUDP()
 
                             // Notify player in witch world he has been transferred.
                             answer.clear();
-                            answer << NetworkValues::PLAYER_MOVED_TO_WORLD << m_worlds[0]->getId() << m_worlds[0]->getMapId();
+                            answer << NetworkValues::NOTIFY << NetworkValues::PLAYER_MOVED_TO_WORLD << m_worlds[0]->getId() << m_worlds[0]->getMapId();
                             m_accounts.at(username)->linkedClient->gameTcp->send(answer);
 
                             Multithreading::outputMutex.lock();
@@ -682,7 +682,7 @@ void Server::switchClientToWorld(Client* client, int worldId)
 
             // Notify the client.
             sf::Packet notification;
-            notification << NetworkValues::PLAYER_MOVED_TO_WORLD << worldId << (*worldItr)->getMapId();
+            notification << NetworkValues::NOTIFY << NetworkValues::PLAYER_MOVED_TO_WORLD << worldId << (*worldItr)->getMapId();
             client->gameTcp->send(notification);
 
             // Log.

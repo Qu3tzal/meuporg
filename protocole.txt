@@ -155,6 +155,6 @@ Protocole
 	------------------------
 		[client		TCP]		CANCEL_MISSION mission_id
 
-	Changement de monde du joueur
-	-----------------------------
-		[serveur	TCP]		PLAYER_MOVED_TO_WORLD world_id map_id
+	Notification de changement de monde du joueur
+	---------------------------------------------
+		[serveur	TCP]		NOTIFY PLAYER_MOVED_TO_WORLD world_id map_id
