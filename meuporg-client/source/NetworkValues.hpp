@@ -36,6 +36,7 @@ namespace NetworkValues
     const unsigned int  LEVEL_UP(213);
     const unsigned int  ACCEPT_MISSION(214);
 	const unsigned int	CANCEL_MISSION(215);
+    const unsigned int	PLAYER_MOVED_TO_WORLD(216);
 
 	const unsigned int	KEEP_ALIVE(300);
 	const unsigned int	OKAY(301);
