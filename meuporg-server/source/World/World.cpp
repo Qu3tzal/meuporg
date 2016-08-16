@@ -5,6 +5,8 @@ int World::lastId = 0;
 
 World::World()
     : m_id(lastId++)
+    , m_worldTimeAccumulator(sf::Time::Zero)
+    , m_serverTimeAccumulator(sf::Time::Zero)
 {
 }
 
@@ -32,6 +34,8 @@ void World::init()
     std::cout << "[WORLD|" << m_id << "] Map loading..." << std::endl;
     Multithreading::outputMutex.unlock();
 
+    sf::Clock loadingClock;
+
     for(float x(0.f) ; x <= 1248.f ; x += 32.f)
         createBox(sf::Vector2f(x, 0.f));
 
@@ -44,13 +48,17 @@ void World::init()
     for(float x(32.f) ; x <= 1248.f ; x += 32.f)
         createBox(sf::Vector2f(x, 768.f));
 
+    sf::Time loadingTime = loadingClock.restart();
+
     Multithreading::outputMutex.lock();
-    std::cout << "[WORLD|" << m_id << "] Map loaded." << std::endl;
+    std::cout << "[WORLD|" << m_id << "] Map loaded in " << loadingTime.asMilliseconds() << " ms." << std::endl;
     Multithreading::outputMutex.unlock();
 }
 
 void World::update(sf::Time dt, Server* server)
 {
+    //performancesCheck(dt);
+
     // Client inputs.
     m_clientInputSystem.update(m_components["ClientLink"], m_entities);
 
@@ -98,6 +106,10 @@ void World::playerDisconnected(Client* client)
 
 void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 {
+    // Check the client belongs to our world.
+    if(client->currentWorld != m_id)
+        return;
+
     unsigned long long packetId = client->lastPacketIdSent;
 
     for(kantan::Entity* e : m_entities)
@@ -274,6 +286,43 @@ void World::giveXpTo(std::string username, float amount)
         Multithreading::outputMutex.lock();
         std::cout << "[WORLD|" << m_id << "] " << username << " got " << amount << " XP." << std::endl;
         Multithreading::outputMutex.unlock();
+    }
+}
+
+void World::performancesCheck(sf::Time serverdt)
+{
+    m_worldTimeAccumulator += m_worldClock.restart();
+    m_serverTimeAccumulator += serverdt;
+
+    if(m_serverTimeAccumulator >= sf::seconds(1.f))
+    {
+        sf::Time diff = m_worldTimeAccumulator - m_serverTimeAccumulator;
+
+        if(diff > sf::Time::Zero)
+        {
+            Multithreading::outputMutex.lock();
+            std::cout << "[WORLD|" << m_id << "] is " << diff.asMilliseconds() << "ms in advance." << std::endl;
+            std::cout << "\tworld time: " << m_worldTimeAccumulator.asMilliseconds() << std::endl;
+            std::cout << "\tserver time: " << m_serverTimeAccumulator.asMilliseconds() << std::endl;
+            Multithreading::outputMutex.unlock();
+        }
+        else if(diff < sf::Time::Zero)
+        {
+            Multithreading::outputMutex.lock();
+            std::cout << "[WORLD|" << m_id << "] is " << -diff.asMilliseconds() << "ms late." << std::endl;
+            std::cout << "\tworld time: " << m_worldTimeAccumulator.asMilliseconds() << std::endl;
+            std::cout << "\tserver time: " << m_serverTimeAccumulator.asMilliseconds() << std::endl;
+            Multithreading::outputMutex.unlock();
+        }
+        else
+        {
+            Multithreading::outputMutex.lock();
+            std::cout << "[WORLD|" << m_id << "] is perfectly synced !" << std::endl;
+            Multithreading::outputMutex.unlock();
+        }
+
+        m_worldTimeAccumulator = sf::Time::Zero;
+        m_serverTimeAccumulator = sf::Time::Zero;
     }
 }
 

@@ -60,6 +60,9 @@ class World
         void giveXpTo(std::string username, float amount);
 
     protected:
+        // Checks the performances of the world thread.
+        void performancesCheck(sf::Time serverdt);
+
         // Removes the entities marked as to delete.
         void cleanEntities(Server* server);
 
@@ -85,6 +88,11 @@ class World
     protected:
         // ID.
         int m_id;
+
+        // Inner clock.
+        sf::Clock m_worldClock;
+        sf::Time m_worldTimeAccumulator;
+        sf::Time m_serverTimeAccumulator;
 
         // Entities.
         std::vector<kantan::Entity*> m_entities;
