@@ -88,6 +88,7 @@ class World
         kantan::Entity* createPlayer(sf::Vector2f position, Client* client);
         kantan::Entity* createNPC(sf::Vector2f position);
         kantan::Entity* createBox(sf::Vector2f position);
+        kantan::Entity* createMonster(sf::Vector2f position);
 
         // Notifies all the clients of the level up.
         void notifyLevelUp(LevelStatsComponent* lsc);

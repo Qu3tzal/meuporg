@@ -6,7 +6,8 @@ namespace ClientSide
     enum EntityType
     {
         ENTITYTYPE_PLAYER,
-        ENTITYTYPE_NPC
+        ENTITYTYPE_NPC,
+        ENTITYTYPE_MONSTER
     };
 
     enum PlayerStates
@@ -19,6 +20,12 @@ namespace ClientSide
     {
         NPCSTATE_IDLE,
         NPCSTATE_WALKING
+    };
+
+    enum MonsterStates
+    {
+        MONSTERSTATE_IDLE,
+        MONSTERSTATE_WALKING
     };
 };
 

@@ -249,6 +249,50 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
             // Set the NPC's id.
             packet << nc->id;
         }
+        else if(e->getName() == "Monster")
+        {
+            // Set the entity type.
+            packet << ClientSide::EntityType::ENTITYTYPE_NPC;
+
+            packet << "Monster";
+
+            // Get the movement component.
+            kantan::MovementComponent* mc = e->getComponent<kantan::MovementComponent>("Movement");
+
+            if(mc == nullptr)
+                continue;
+
+            // Set the state.
+            if(mc->velocity == sf::Vector2f(0.f, 0.f))
+                packet << ClientSide::MonsterStates::MONSTERSTATE_IDLE;
+            else
+                packet << ClientSide::MonsterStates::MONSTERSTATE_IDLE;
+
+            // Get the polygon hitbox component.
+            kantan::PolygonHitboxComponent* phc = e->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
+
+            if(phc == nullptr)
+                continue;
+
+            // Compute the left top corner.
+            /// ! TODO: Check there is at least one point.
+            sf::Vector2f leftTop(phc->points[0].x, phc->points[0].y);
+
+            for(sf::Vector2f point : phc->points)
+            {
+                if(point.x < leftTop.x)
+                    leftTop.x = point.x;
+
+                if(point.y < leftTop.y)
+                    leftTop.y = point.y;
+            }
+
+            // Set the position.
+            packet << leftTop;
+
+            // Set the velocity.
+            packet << mc->velocity;
+        }
 
         // Send the packet.
         socket.send(packet, client->ip, client->udpPort);
@@ -489,6 +533,38 @@ kantan::Entity* World::createBox(sf::Vector2f position)
 
     // Return the entity.
     return box;
+}
+
+kantan::Entity* World::createMonster(sf::Vector2f position)
+{
+    // Create the entity.
+    kantan::Entity* monster = createEntity("Monster");
+
+    // Create the components.
+    kantan::PolygonHitboxComponent* phc = createComponent<kantan::PolygonHitboxComponent>(monster->getId());
+    kantan::MovementComponent* mc = createComponent<kantan::MovementComponent>(monster->getId());
+
+    BasicStatsComponent* bsc = createComponent<BasicStatsComponent>(monster->getId());
+
+    // Configure the components.
+    phc->points = {
+            position + sf::Vector2f(0.f, 0.f),
+            position + sf::Vector2f(31.f, 0.f),
+            position + sf::Vector2f(31.f, 48.f),
+            position + sf::Vector2f(0.f, 48.f)
+        };
+    phc->computeAxes();
+    phc->isBlocking = true;
+
+    mc->maximumSpeed = 100.f;
+
+    // Add the components to the entity.
+    monster->addComponent(phc);
+    monster->addComponent(mc);
+    monster->addComponent(bsc);
+
+    // Return the entity.
+    return monster;
 }
 
 // Notifies all the clients of the level up.
