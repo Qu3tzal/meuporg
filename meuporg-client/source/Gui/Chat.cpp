@@ -78,7 +78,7 @@ void Chat::sendMessage()
     textInputs.clear("Chat");
     sf::Packet packet;
 
-    packet << NetworkValues::SEND_CHAT_MESSAGE << message;
+    packet << NetworkValues::SEND_CHAT_MESSAGE << "general" << message;
 
     socket->send(packet);
 

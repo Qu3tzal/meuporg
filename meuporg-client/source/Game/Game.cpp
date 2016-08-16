@@ -114,11 +114,16 @@ void Game::notificationPacket(sf::Packet* packet)
             {
                 std::string message("");
                 std::string username("");
+                std::string chanel("");
                 std::string text("");
 
                 *packet >> username;
-                *packet >> text;
-
+                        >> chanel
+                        >> text;
+                /**
+                TODO
+                Canaux
+                **/
                 message  = "[" + username + "] " + text;
                 chat.write(message);
             }
