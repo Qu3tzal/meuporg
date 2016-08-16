@@ -76,6 +76,8 @@
 		<Unit filename="source/Entity/Entity.hpp" />
 		<Unit filename="source/Entity/Mission.cpp" />
 		<Unit filename="source/Entity/Mission.hpp" />
+		<Unit filename="source/Entity/Monster.cpp" />
+		<Unit filename="source/Entity/Monster.hpp" />
 		<Unit filename="source/Entity/Npc.cpp" />
 		<Unit filename="source/Entity/Npc.hpp" />
 		<Unit filename="source/Entity/Player.cpp" />

@@ -100,14 +100,7 @@ void World::updateEntity(sf::Packet* packet)
             >> name
             >> state_ui
             >> position
-            >> velocity
-            >> hp
-            >> maxHp
-            >> strengh
-            >> agility
-            >> resistance
-            >> xp
-            >> level;
+            >> velocity;
 
     Entity::Type type = static_cast<Entity::Type>(type_ui);
     Entity* e = getEntityById(id);
@@ -118,10 +111,16 @@ void World::updateEntity(sf::Packet* packet)
         {
             case Entity::Type::PLAYER:
                 {
-                   Player* player = static_cast<Player*>(e);
+                    Player* player = static_cast<Player*>(e);
 
-                   Player::State state = static_cast<Player::State>(state_ui);
-
+                    Player::State state = static_cast<Player::State>(state_ui);
+                    *packet >> hp
+                    >> maxHp
+                    >> strengh
+                    >> agility
+                    >> resistance
+                    >> xp
+                    >> level;
                    player->setState(state);
                    player->setProperty("Hp", hp);
                    player->setProperty("MaxHp", maxHp);
@@ -139,6 +138,15 @@ void World::updateEntity(sf::Packet* packet)
                     Npc::State state = static_cast<Npc::State>(state_ui);
 
                     npc->setState(state);
+                }
+                break;
+            case Entity::Type::MONSTER:
+                {
+                    Monster* monster = static_cast<Monster*>(e);
+
+                    Monster::State state = static_cast<Monster::State>(state_ui);
+
+                    monster->setState(state);
                 }
                 break;
             default:
@@ -160,14 +168,22 @@ void World::updateEntity(sf::Packet* packet)
 
                     Player* player = static_cast<Player*>(entity);
 
+                    *packet >> hp
+                    >> maxHp
+                    >> strengh
+                    >> agility
+                    >> resistance
+                    >> xp
+                    >> level;
+
                     player->setState(state);
                     player->setProperty("Hp", hp);
-                       player->setProperty("MaxHp", maxHp);
-                       player->setProperty("Strengh", strengh);
-                       player->setProperty("Agility", agility);
-                       player->setProperty("Resist", resistance);
-                       player->setProperty("Xp", xp);
-                       player->setProperty("Level", level);
+                   player->setProperty("MaxHp", maxHp);
+                   player->setProperty("Strengh", strengh);
+                   player->setProperty("Agility", agility);
+                   player->setProperty("Resist", resistance);
+                   player->setProperty("Xp", xp);
+                   player->setProperty("Level", level);
                 }
                 break;
             case Entity::Type::NPC:
@@ -178,6 +194,16 @@ void World::updateEntity(sf::Packet* packet)
                     Npc* npc = static_cast<Npc*>(entity);
 
                     npc->setState(state);
+                }
+                break;
+            case Entity::Type::MONSTER:
+                {
+                    entity = new Monster(textures, fonts, name, id);
+                    Monster::State state = static_cast<Monster::State>(state_ui);
+
+                    Monster* monster = static_cast<Monster*>(entity);
+
+                    monster->setState(state);
                 }
                 break;
             default:

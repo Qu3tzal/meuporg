@@ -19,6 +19,7 @@
 #include "Menu.hpp"
 #include "../State.hpp"
 
+
 class Game
 {
     public:
@@ -116,6 +117,8 @@ class Game
         Menu menu;
 
         Loading loading;
+
+        sf::RenderWindow* window;
 };
 
 #endif // GAME_HPP_INCLUDED

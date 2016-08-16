@@ -20,6 +20,8 @@ Game::Game(sf::RenderWindow* window) : running(true)
     textures.load(ResourceId::SPARTIATE_TEXTURE, "assets/spartan_spritesheet.png");
     textures.load(ResourceId::ONE_PUNCH_MAN_TEXTURE, "assets/saitama_spritesheet.png");
     textures.load(ResourceId::TILESET, "assets/box.png");
+
+    this->window = window;
 }
 
 Game::~Game()
@@ -193,7 +195,16 @@ void Game::notificationPacket(sf::Packet* packet)
 void Game::sendInput()
 {
     sf::Packet packet;
-    packet << NetworkValues::INPUT << username << token << udpPacketNumber << playerInput.MoveUp << playerInput.MoveDown << playerInput.MoveLeft << playerInput.MoveRight;
+    packet << NetworkValues::INPUT
+            << username
+            << token
+            << udpPacketNumber
+            << playerInput.MoveUp
+            << playerInput.MoveDown
+            << playerInput.MoveLeft
+            << playerInput.MoveRight
+            << playerInput.MouseX
+            << playerInput.MouseY;
 
     gameServerUdpSocket.send(packet, loading.getIp(), 22623);
     udpPacketNumber++;
@@ -205,6 +216,13 @@ void Game::testInput()
     playerInput.MoveDown = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
     playerInput.MoveLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Q);
     playerInput.MoveRight = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+
+    sf::Vector2i mouseposition = sf::Mouse::getPosition(*window);
+
+    sf::Vector2f gameMousePosition = window->mapPixelToCoords(mouseposition);
+
+    playerInput.MouseX = gameMousePosition.x;
+    playerInput.MouseY = gameMousePosition.y;
 }
 
 void Game::update(sf::Time dt)

@@ -1,6 +1,6 @@
 #include "Entity.hpp"
 
-Entity::Entity(unsigned int id, std::string name, Entity::Type type, kantan::TextureHolder* textures, kantan::FontHolder* fonts)
+Entity::Entity(int id, std::string name, Entity::Type type, kantan::TextureHolder* textures, kantan::FontHolder* fonts)
 {
     this->id = id;
     this->name = name;

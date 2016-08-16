@@ -7,5 +7,8 @@ struct PlayerInput
     bool MoveDown;
     bool MoveLeft;
     bool MoveRight;
+
+    float MouseX;
+    float MouseY;
 };
 #endif // PLAYERINPUT_HPP_INCLUDED

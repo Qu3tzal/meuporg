@@ -9,6 +9,7 @@
 
 #include "Entity.hpp"
 #include "Player.hpp"
+#include "Monster.hpp"
 #include "Npc.hpp"
 #include "../ResourceHolder.hpp"
 #include "../SFMLPacketUtils.hpp"
