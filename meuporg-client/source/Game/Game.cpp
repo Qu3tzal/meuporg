@@ -117,7 +117,7 @@ void Game::notificationPacket(sf::Packet* packet)
                 std::string chanel("");
                 std::string text("");
 
-                *packet >> username;
+                *packet >> username
                         >> chanel
                         >> text;
                 /**
@@ -176,7 +176,7 @@ void Game::notificationPacket(sf::Packet* packet)
                 unsigned int worldId(0);
                 unsigned int mapId(0);
 
-                *packet >> worldId;
+                *packet >> worldId
                         >> mapId;
                 world.changeWorld(worldId, mapId);
 

@@ -18,7 +18,6 @@ bool Map::loadLevelFromFile(std::string filename)
     if(!file)
         return false;
 
-    sf::Vector2f m_size;
     file >> m_size.x >> m_size.y;
 
     // Read tilemap data.
@@ -35,8 +34,6 @@ bool Map::loadLevelFromFile(std::string filename)
         }
     }
     initTileMap(tiles);
-
-
     return true;
 }
 
