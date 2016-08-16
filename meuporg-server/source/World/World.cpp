@@ -78,6 +78,11 @@ void World::update(sf::Time dt, Server* server)
 void World::playerConnected(Client* client)
 {
     createPlayer(sf::Vector2f(400.f, 600.f), client);
+
+    // Log.
+    Multithreading::outputMutex.lock();
+    std::cout << "[WORLD|" << m_id << "] '" << client->username << "' joined." << std::endl;
+    Multithreading::outputMutex.unlock();
 }
 
 void World::playerDisconnected(Client* client)
@@ -100,6 +105,11 @@ void World::playerDisconnected(Client* client)
 
             // Null the client link.
             clc->client = nullptr;
+
+            // Log.
+            Multithreading::outputMutex.lock();
+            std::cout << "[WORLD|" << m_id << "] '" << client->username << "' left." << std::endl;
+            Multithreading::outputMutex.unlock();
         }
     }
 }
