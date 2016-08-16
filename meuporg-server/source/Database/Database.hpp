@@ -17,11 +17,18 @@ class Database
         // Dtor.
         virtual ~Database();
 
+        // Returns true if the account exists.
+        bool checkAccountExists(const std::string& username);
+
         // Returns true if the password match.
-        bool checkAccountPassword(std::string username, std::string password);
+        bool checkAccountPassword(const std::string& username, const std::string& password);
 
         // Returns the stats of the player.
-        PlayerData getPlayerStats(std::string username);
+        PlayerData getPlayerStats(const std::string& username);
+
+        // Writes the stats of the player.
+        /// /!\ Except the username and hashed password !
+        void writePlayerStats(const PlayerData& playerData);
 
     protected:
         // Database instance.

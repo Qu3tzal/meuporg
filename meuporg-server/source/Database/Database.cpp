@@ -19,7 +19,38 @@ Database::~Database()
         sqlite3_close(m_db);
 }
 
-bool Database::checkAccountPassword(std::string username, std::string password)
+bool Database::checkAccountExists(const std::string& username)
+{
+    // Prepare statement.
+    std::string statementString("SELECT id FROM `players` WHERE username=:username");
+
+    sqlite3_stmt* statement;
+    int error = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
+
+    if(error != SQLITE_OK)
+        return false;
+
+    // Bind parameter.
+    int usernameParameterIndex = sqlite3_bind_parameter_index(statement, ":username");
+    sqlite3_bind_text(statement, usernameParameterIndex, username.c_str(), username.size(), nullptr);
+
+    // Execute.
+    while(true)
+    {
+        int status = sqlite3_step(statement);
+
+        if(status == SQLITE_BUSY)
+            continue;
+
+        bool result = (status == SQLITE_ROW);
+
+        // Free.
+        sqlite3_finalize(statement);
+        return result;
+    }
+}
+
+bool Database::checkAccountPassword(const std::string& username, const std::string& password)
 {
     // Prepare statement.
     std::string statementString("SELECT id FROM `players` WHERE username=:username AND hashedPassword=:hashedPassword");
@@ -54,7 +85,7 @@ bool Database::checkAccountPassword(std::string username, std::string password)
     }
 }
 
-PlayerData Database::getPlayerStats(std::string username)
+PlayerData Database::getPlayerStats(const std::string& username)
 {
     // Prepare statement.
     std::string statementString("SELECT * FROM `players` WHERE username=:username");
@@ -104,4 +135,64 @@ PlayerData Database::getPlayerStats(std::string username)
     sqlite3_finalize(statement);
 
     return playerData;
+}
+
+void Database::writePlayerStats(const PlayerData& playerData)
+{
+    // Prepare statement.
+    std::string statementString("UPDATE `players` SET worldId=:worldId, positionX=:positionX, positionY=:positionY, hp=:hp, maxhp=:maxhp, strength=:strength, agility=:agility, resistance=:resistance, xp=:xp, level=:level WHERE id=:dbid");
+
+    sqlite3_stmt* statement;
+    int error = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
+
+    if(error != SQLITE_OK)
+        return;
+
+    // Bind parameters.
+    int parameterIndex = sqlite3_bind_parameter_index(statement, ":dbid");
+    sqlite3_bind_int(statement, parameterIndex, playerData.dbid);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":worldId");
+    sqlite3_bind_int(statement, parameterIndex, playerData.worldId);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":positionX");
+    sqlite3_bind_double(statement, parameterIndex, playerData.positionX);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":positionY");
+    sqlite3_bind_double(statement, parameterIndex, playerData.positionY);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":hp");
+    sqlite3_bind_double(statement, parameterIndex, playerData.hp);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":maxhp");
+    sqlite3_bind_double(statement, parameterIndex, playerData.maxhp);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":strength");
+    sqlite3_bind_double(statement, parameterIndex, playerData.strength);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":agility");
+    sqlite3_bind_double(statement, parameterIndex, playerData.agility);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":resistance");
+    sqlite3_bind_double(statement, parameterIndex, playerData.resistance);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":xp");
+    sqlite3_bind_double(statement, parameterIndex, playerData.xp);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":level");
+    sqlite3_bind_double(statement, parameterIndex, playerData.level);
+
+    // Execute.
+    while(true)
+    {
+        int status = sqlite3_step(statement);
+
+        if(status == SQLITE_BUSY)
+            continue;
+
+        break;
+    }
+
+    // Free.
+    sqlite3_finalize(statement);
 }
