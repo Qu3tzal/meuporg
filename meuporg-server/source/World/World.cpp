@@ -252,7 +252,7 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
         else if(e->getName() == "Monster")
         {
             // Set the entity type.
-            packet << ClientSide::EntityType::ENTITYTYPE_NPC;
+            packet << ClientSide::EntityType::ENTITYTYPE_MONSTER;
 
             packet << "Monster";
 
