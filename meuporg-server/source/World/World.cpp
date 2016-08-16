@@ -131,7 +131,7 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
         if(e->getName() == "Player")
         {
             // Set the entity type.
-            packet << ClientSide::EntityType::PLAYER;
+            packet << ClientSide::EntityType::ENTITYTYPE_PLAYER;
 
             // Get the CLC.
             ClientLinkComponent* clc = e->getComponent<ClientLinkComponent>("ClientLink");
@@ -149,9 +149,9 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 
             // Set the state.
             if(mc->velocity == sf::Vector2f(0.f, 0.f))
-                packet << ClientSide::PlayerStates::IDLE;
+                packet << ClientSide::PlayerStates::PLAYERSTATE_IDLE;
             else
-                packet << ClientSide::PlayerStates::WALKING;
+                packet << ClientSide::PlayerStates::PLAYERSTATE_WALKING;
 
             // Get the polygon hitbox component.
             kantan::PolygonHitboxComponent* phc = e->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
@@ -199,7 +199,7 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
         else if(e->getName() == "NPC")
         {
             // Set the entity type.
-            packet << ClientSide::EntityType::NPC;
+            packet << ClientSide::EntityType::ENTITYTYPE_NPC;
 
             // Get the name.
             NameComponent* nc = e->getComponent<NameComponent>("Name");
@@ -217,9 +217,9 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 
             // Set the state.
             if(mc->velocity == sf::Vector2f(0.f, 0.f))
-                packet << ClientSide::PlayerStates::IDLE;
+                packet << ClientSide::NPCStates::NPCSTATE_IDLE;
             else
-                packet << ClientSide::PlayerStates::WALKING;
+                packet << ClientSide::NPCStates::NPCSTATE_WALKING;
 
             // Get the polygon hitbox component.
             kantan::PolygonHitboxComponent* phc = e->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
@@ -245,6 +245,9 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 
             // Set the velocity.
             packet << mc->velocity;
+
+            // Set the NPC's id.
+            packet << nc->id;
         }
 
         // Send the packet.
@@ -450,6 +453,7 @@ kantan::Entity* World::createNPC(sf::Vector2f position)
 
     mc->maximumSpeed = 100.f;
 
+    nc->id = 0;
     nc->name = "Random NPC";
 
     // Add the components to the entity.
@@ -465,7 +469,7 @@ kantan::Entity* World::createNPC(sf::Vector2f position)
 kantan::Entity* World::createBox(sf::Vector2f position)
 {
     // Create the entity.
-    kantan::Entity* box = createEntity("NPC", true);
+    kantan::Entity* box = createEntity("Box", true);
 
     // Create the components.
     kantan::PolygonHitboxComponent* phc = createComponent<kantan::PolygonHitboxComponent>(box->getId());
