@@ -38,7 +38,7 @@ void Server::init()
     std::vector<std::thread> threads;
 
     for(World* world : m_worlds)
-        threads.push_back(std::thread(&World::init, world));
+        threads.push_back(std::thread(&World::init, world, "maps/basic.map"));
 
     for(std::thread& thread : threads)
         thread.join();
