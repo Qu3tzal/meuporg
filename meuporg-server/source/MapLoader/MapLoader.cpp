@@ -31,6 +31,8 @@ MapLoader::MapLoader(std::string mapFilepath, World* world)
 
             if(type == "box")
                 world->createBox(position);
+            else if(type == "monster")
+                world->createMonster(position);
         }
         else if(instructionType == "id")
         {
