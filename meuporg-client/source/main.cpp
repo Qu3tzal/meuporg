@@ -68,9 +68,5 @@ int main()
         }
     }
 
-    std::cout << "Press enter to quit..." << std::endl;
-    std::cin.get();
-    std::cin.get();
-
     return 0;
 }
