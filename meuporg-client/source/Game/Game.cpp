@@ -169,11 +169,14 @@ void Game::notificationPacket(sf::Packet* packet)
         case NetworkValues::PLAYER_MOVED_TO_WORLD:
             {
                 unsigned int worldId(0);
+                unsigned int mapId(0);
+
                 *packet >> worldId;
-                world.changeWorld(worldId);
+                        >> mapId;
+                world.changeWorld(worldId, mapId);
 
                 std::stringstream ss;
-                ss << " Vous vous teléportez au monde : " << (unsigned int)worldId;
+                ss << " Vous vous teléportez au monde : " << (unsigned int)worldId << " Map id : " << mapId;
                 chat.write(ss.str());
             }
             break;

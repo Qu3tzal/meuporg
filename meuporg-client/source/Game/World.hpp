@@ -38,11 +38,11 @@ class World : public sf::Drawable, public sf::Transformable
 
         void loadMap(std::string path);
 
-        void loadMap(int worldId);
+        void loadMap(int mapId);
 
         Player* getPlayer(std::string playerName);
 
-        void changeWorld(int worldId);
+        void changeWorld(int worldId, int mapId);
 
     protected:
 
@@ -65,6 +65,10 @@ class World : public sf::Drawable, public sf::Transformable
         Hud hud;
 
         DialogManager dialogs;
+
+        unsigned int worldId;
+
+        unsigned int mapId;
 
     private:
 };

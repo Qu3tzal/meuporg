@@ -205,14 +205,19 @@ void World::addEntity(unsigned int id, Entity::Type type, std::string name, sf::
 
 }
 
-void World::changeWorld(int worldId)
+void World::changeWorld(int worldId, int mapId)
 {
+    this->worldId = worldId;
+    this->mapId = mapId;
+
     for(Entity* e : entities)
     {
         delete e;
     }
     entities.clear();
     player = nullptr;
+
+    loadMap(mapId);
 }
 
 Entity* World::getEntityById(unsigned int id)

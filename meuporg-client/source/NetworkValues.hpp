@@ -7,7 +7,6 @@ namespace NetworkValues
 {
     const unsigned int  VERSION(000);
    	const unsigned int	NUMBER_OF_PLAYERS(001);
-	const unsigned int	MAP_NAME(002);
 
 	const unsigned int	CONNECT(100);
 	const unsigned int	ACCOUNT_CREATED_RECONNECT(101);

@@ -40,9 +40,9 @@ bool Map::loadLevelFromFile(std::string filename)
     return true;
 }
 
-void Map::createMap(int worldId)
+void Map::createMap(int mapId)
 {
-    switch(worldId)
+    switch(mapId)
     {
     case 0:
         {
