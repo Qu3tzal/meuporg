@@ -82,6 +82,8 @@
 		<Unit filename="source/Components/ClientLinkComponent.hpp" />
 		<Unit filename="source/Components/LevelStatsComponent.cpp" />
 		<Unit filename="source/Components/LevelStatsComponent.hpp" />
+		<Unit filename="source/Components/MonsterAIComponent.cpp" />
+		<Unit filename="source/Components/MonsterAIComponent.hpp" />
 		<Unit filename="source/Components/NameComponent.cpp" />
 		<Unit filename="source/Components/NameComponent.hpp" />
 		<Unit filename="source/Components/StaticMarkerComponent.cpp" />
@@ -176,6 +178,8 @@
 		<Unit filename="source/Systems/ClientInputSystem.hpp" />
 		<Unit filename="source/Systems/LevelUpSystem.cpp" />
 		<Unit filename="source/Systems/LevelUpSystem.hpp" />
+		<Unit filename="source/Systems/MonsterAISystem.cpp" />
+		<Unit filename="source/Systems/MonsterAISystem.hpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.cpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.hpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.inl" />
