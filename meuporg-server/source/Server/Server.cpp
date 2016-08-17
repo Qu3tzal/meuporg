@@ -398,6 +398,28 @@ void Server::receiveInputThroughTCP()
 
                                         switchClientToWorld(client, worldId);
                                     }
+                                    else if(word == "/spawn_monster")
+                                    {
+                                        int worldId;
+                                        ss >> worldId;
+
+                                        sf::Vector2f position;
+                                        ss >> position.x >> position.y;
+
+                                        // Find the targeted world.
+                                        auto worldItr = std::find_if(m_worlds.begin(), m_worlds.end(), [&](const World* world){
+                                                                            return world->getId() == client->currentWorld;
+                                                                     });
+
+                                        if(worldItr != m_worlds.end())
+                                        {
+                                            (*worldItr)->createMonster(position);
+
+                                            Multithreading::outputMutex.lock();
+                                            std::cout << "[GAME_SERVER] " << client->username << " spawned a monster in world #" << worldId << " at position {" << position.x << ", " << position.y << "}." << std::endl;
+                                            Multithreading::outputMutex.unlock();
+                                        }
+                                    }
                                 }
                             }
                             else
