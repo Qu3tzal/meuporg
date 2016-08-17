@@ -54,6 +54,9 @@ void World::update(sf::Time dt, Server* server)
     // Client inputs.
     m_clientInputSystem.update(m_components["ClientLink"], m_entities);
 
+    // AI.
+    m_monsterAISystem.update(dt, m_components["MonsterAI"], m_components["Movement"]);
+
     // Rotations.
     //m_rotationSystem.update(dt, m_components["PolygonHitbox"], m_components["Rotation"]);
 
@@ -126,7 +129,7 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
         packetId++;
 
         sf::Packet packet;
-        packet << NetworkValues::UPDATE << packetId << e->getId();
+        packet << NetworkValues::UPDATE << packetId << m_id << e->getId();
 
         if(e->getName() == "Player")
         {
@@ -545,6 +548,7 @@ kantan::Entity* World::createMonster(sf::Vector2f position)
     kantan::MovementComponent* mc = createComponent<kantan::MovementComponent>(monster->getId());
 
     BasicStatsComponent* bsc = createComponent<BasicStatsComponent>(monster->getId());
+    MonsterAIComponent* maic = createComponent<MonsterAIComponent>(monster->getId());
 
     // Configure the components.
     phc->points = {
@@ -562,6 +566,7 @@ kantan::Entity* World::createMonster(sf::Vector2f position)
     monster->addComponent(phc);
     monster->addComponent(mc);
     monster->addComponent(bsc);
+    monster->addComponent(maic);
 
     // Return the entity.
     return monster;

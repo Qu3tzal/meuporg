@@ -13,9 +13,13 @@
 #include "../Components/LevelStatsComponent.hpp"
 #include "../Components/NameComponent.hpp"
 #include "../Components/StaticMarkerComponent.hpp"
+
 #include "../MapLoader/MapLoader.hpp"
+
 #include "../Systems/ClientInputSystem.hpp"
 #include "../Systems/LevelUpSystem.hpp"
+#include "../Systems/MonsterAISystem.hpp"
+
 #include "../Utils/SFMLPacketUtils.hpp"
 #include "../NetworkValues.hpp"
 #include "../ClientEntityEnums.hpp"
@@ -66,6 +70,7 @@ class World
     protected:
         // Needs this friendship to access createXXX methods.
         friend MapLoader;
+        friend Server;
 
         // Checks the performances of the world thread.
         void performancesCheck(sf::Time serverdt);
@@ -117,6 +122,7 @@ class World
 
         ClientInputSystem m_clientInputSystem;
         LevelUpSystem m_levelUpSystem;
+        MonsterAISystem m_monsterAISystem;
 };
 
 template<typename T>
