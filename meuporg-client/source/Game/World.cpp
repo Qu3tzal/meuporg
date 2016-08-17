@@ -79,6 +79,7 @@ void World::updateEntity(sf::Packet* packet)
     unsigned int id(0);
     unsigned int type_ui;
     unsigned int state_ui;
+    unsigned int worldId(0);
 
     // basic stats
     float hp;
@@ -95,12 +96,16 @@ void World::updateEntity(sf::Packet* packet)
     sf::Vector2f position;
     sf::Vector2f velocity;
 
-    *packet >> id
+    *packet >> worldId
+            >> id
             >> type_ui
             >> name
             >> state_ui
             >> position
             >> velocity;
+
+    if(this->worldId != worldId)
+        return;
 
     Entity::Type type = static_cast<Entity::Type>(type_ui);
     Entity* e = getEntityById(id);
