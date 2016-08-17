@@ -6,7 +6,12 @@ Server::Server()
     , m_maximumPlayersCapacity(16)
     , m_loginServer(this)
 {
-
+    if(!m_database.getLastError())
+    {
+        Multithreading::outputMutex.lock();
+        std::cerr << "[GAME_SERVER] Error loading database : '" << m_database.getLastError() << "'." << std::endl;
+        Multithreading::outputMutex.unlock();
+    }
 }
 
 Server::~Server()
