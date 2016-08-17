@@ -204,7 +204,11 @@ void Game::sendInput()
             << playerInput.MoveLeft
             << playerInput.MoveRight
             << playerInput.MouseX
-            << playerInput.MouseY;
+            << playerInput.MouseY
+            << playerInput.aAttack
+            << playerInput.eAttack
+            << playerInput.leftClickPressed
+            << playerInput.rightClickPressed;
 
     gameServerUdpSocket.send(packet, loading.getIp(), 22623);
     udpPacketNumber++;
@@ -216,6 +220,15 @@ void Game::testInput()
     playerInput.MoveDown = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
     playerInput.MoveLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Q);
     playerInput.MoveRight = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+
+    playerInput.aAttack = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+    playerInput.eAttack = sf::Keyboard::isKeyPressed(sf::Keyboard::E);
+
+    playerInput.leftClickPressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+    playerInput.rightClickPressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
+
+
+
 
     sf::Vector2i mouseposition = sf::Mouse::getPosition(*window);
 
@@ -242,7 +255,7 @@ void Game::update(sf::Time dt)
             }
             else
             {
-                playerInput.MoveUp = playerInput.MoveDown = playerInput.MoveLeft = playerInput.MoveRight = false;
+                playerInput.MoveUp = playerInput.MoveDown = playerInput.MoveLeft = playerInput.MoveRight = playerInput.aAttack = playerInput.eAttack = false;
             }
             sendInput();
             receivePacket();

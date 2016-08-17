@@ -8,6 +8,12 @@ struct PlayerInput
     bool MoveLeft;
     bool MoveRight;
 
+    bool aAttack;
+    bool eAttack;
+
+    bool leftClickPressed;
+    bool rightClickPressed;
+
     float MouseX;
     float MouseY;
 };
