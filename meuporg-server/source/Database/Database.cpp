@@ -5,9 +5,9 @@ Database::Database(std::string filepath)
     m_opened = false;
 
     // Check error.
-    int error = sqlite3_open(filepath.c_str(), &m_db);
+    m_lastError = sqlite3_open(filepath.c_str(), &m_db);
 
-    if(error == SQLITE_OK)
+    if(m_lastError == SQLITE_OK)
     {
         m_opened = true;
     }
@@ -17,6 +17,11 @@ Database::~Database()
 {
     if(m_opened)
         sqlite3_close(m_db);
+}
+
+int Database::getLastError() const
+{
+    return m_lastError;
 }
 
 void Database::createAccount(const std::string& username, const std::string& password)
@@ -30,9 +35,9 @@ bool Database::checkAccountExists(const std::string& username)
     std::string statementString("SELECT id FROM `players` WHERE username=:username");
 
     sqlite3_stmt* statement;
-    int error = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
+    m_lastError = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
 
-    if(error != SQLITE_OK)
+    if(m_lastError != SQLITE_OK)
         return false;
 
     // Bind parameter.
@@ -61,9 +66,9 @@ bool Database::checkAccountPassword(const std::string& username, const std::stri
     std::string statementString("SELECT id FROM `players` WHERE username=:username AND hashedPassword=:hashedPassword");
 
     sqlite3_stmt* statement;
-    int error = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
+    m_lastError = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
 
-    if(error != SQLITE_OK)
+    if(m_lastError != SQLITE_OK)
         return false;
 
     std::string hashedPassword(""); /// /!\ Hash the password.
@@ -90,15 +95,15 @@ bool Database::checkAccountPassword(const std::string& username, const std::stri
     }
 }
 
-PlayerData Database::getPlayerStats(const std::string& username)
+PlayerData Database::getPlayerData(const std::string& username)
 {
     // Prepare statement.
     std::string statementString("SELECT * FROM `players` WHERE username=:username");
 
     sqlite3_stmt* statement;
-    int error = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
+    m_lastError = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
 
-    if(error != SQLITE_OK)
+    if(m_lastError != SQLITE_OK)
         return PlayerData();
 
     // Bind parameters.
@@ -142,15 +147,15 @@ PlayerData Database::getPlayerStats(const std::string& username)
     return playerData;
 }
 
-void Database::writePlayerStats(const PlayerData& playerData)
+void Database::writePlayerData(const PlayerData& playerData)
 {
     // Prepare statement.
     std::string statementString("UPDATE `players` SET worldId=:worldId, positionX=:positionX, positionY=:positionY, hp=:hp, maxhp=:maxhp, strength=:strength, agility=:agility, resistance=:resistance, xp=:xp, level=:level WHERE id=:dbid");
 
     sqlite3_stmt* statement;
-    int error = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
+    m_lastError = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
 
-    if(error != SQLITE_OK)
+    if(m_lastError != SQLITE_OK)
         return;
 
     // Bind parameters.

@@ -166,7 +166,7 @@
 		<Unit filename="source/LoginServer/LoginServer.hpp" />
 		<Unit filename="source/MapLoader/MapLoader.cpp" />
 		<Unit filename="source/MapLoader/MapLoader.hpp" />
-		<Unit filename="source/MultithreadingOutput.hpp" />
+		<Unit filename="source/Multithreading.hpp" />
 		<Unit filename="source/NetworkValues.hpp" />
 		<Unit filename="source/PlayerInput.hpp" />
 		<Unit filename="source/RandomNumberGenerator/RandomNumberGenerator.cpp" />

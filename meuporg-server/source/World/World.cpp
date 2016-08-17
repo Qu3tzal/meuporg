@@ -70,9 +70,11 @@ void World::update(sf::Time dt, Server* server)
     cleanEntities(server);
 }
 
-void World::playerConnected(Client* client)
+void World::playerConnected(Client* client, Server* server)
 {
-    createPlayer(sf::Vector2f(400.f, 600.f), client);
+    PlayerData playerData = server->getPlayerData(client->username);
+
+    createPlayer(sf::Vector2f(400.f, 600.f), client, playerData);
 
     // Log.
     Multithreading::outputMutex.lock();
@@ -80,7 +82,7 @@ void World::playerConnected(Client* client)
     Multithreading::outputMutex.unlock();
 }
 
-void World::playerDisconnected(Client* client)
+void World::playerDisconnected(Client* client, Server* server)
 {
     for(kantan::Component* c : m_components["ClientLink"])
     {
@@ -97,6 +99,27 @@ void World::playerDisconnected(Client* client)
             // Mark as to delete.
             kantan::DeletionMarkerComponent* dmc = entity->getComponent<kantan::DeletionMarkerComponent>("DeletionMarker");
             dmc->marked = true;
+
+            // Get the basic stats component and the level stats component.
+            BasicStatsComponent* bsc = entity->getComponent<BasicStatsComponent>("BasicStats");
+            LevelStatsComponent* lsc = entity->getComponent<LevelStatsComponent>("LevelStats");
+
+            // Save the data of the player.
+            PlayerData playerData;
+
+            playerData.dbid = clc->dbid;
+            playerData.username = clc->client->username;
+
+            playerData.hp = bsc->hp;
+            playerData.maxhp = bsc->maxhp;
+            playerData.strength = bsc->strength;
+            playerData.agility = bsc->agility;
+            playerData.resistance = bsc->resistance;
+
+            playerData.xp = lsc->xp;
+            playerData.level = lsc->level;
+
+            server->writePlayerData(playerData);
 
             // Null the client link.
             clc->client = nullptr;
@@ -269,7 +292,7 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
             if(mc->velocity == sf::Vector2f(0.f, 0.f))
                 packet << ClientSide::MonsterStates::MONSTERSTATE_IDLE;
             else
-                packet << ClientSide::MonsterStates::MONSTERSTATE_IDLE;
+                packet << ClientSide::MonsterStates::MONSTERSTATE_WALKING;
 
             // Get the polygon hitbox component.
             kantan::PolygonHitboxComponent* phc = e->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
@@ -438,7 +461,7 @@ kantan::Entity* World::createEntity(std::string name, bool isStatic)
 }
 
 // createXXX methods.
-kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client)
+kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client, PlayerData playerData)
 {
     // Create the entity.
     kantan::Entity* player = createEntity("Player");
@@ -464,6 +487,16 @@ kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client)
     mc->maximumSpeed = 100.f;
 
     clc->client = client;
+    clc->dbid = playerData.dbid;
+
+    bsc->hp = playerData.hp;
+    bsc->maxhp = playerData.maxhp;
+    bsc->strength = playerData.strength;
+    bsc->agility = playerData.agility;
+    bsc->resistance = playerData.resistance;
+
+    lsc->xp = playerData.xp;
+    lsc->level = playerData.level;
 
     // Add the components to the entity.
     player->addComponent(phc);

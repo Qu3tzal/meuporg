@@ -17,6 +17,9 @@ class Database
         // Dtor.
         virtual ~Database();
 
+        // Returns the last error code.
+        int getLastError() const;
+
         // Creates an account.
         void createAccount(const std::string& username, const std::string& password = "");
 
@@ -27,11 +30,11 @@ class Database
         bool checkAccountPassword(const std::string& username, const std::string& password);
 
         // Returns the stats of the player.
-        PlayerData getPlayerStats(const std::string& username);
+        PlayerData getPlayerData(const std::string& username);
 
         // Writes the stats of the player.
         /// /!\ Except the username and hashed password !
-        void writePlayerStats(const PlayerData& playerData);
+        void writePlayerData(const PlayerData& playerData);
 
     protected:
         // Database instance.
@@ -39,6 +42,9 @@ class Database
 
         // Opened flag.
         bool m_opened;
+
+        // Last error.
+        int m_lastError;
 };
 
 #endif // DATABASE_HPP_INCLUDED

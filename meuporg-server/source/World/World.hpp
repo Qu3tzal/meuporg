@@ -7,7 +7,9 @@
 #include "../Kantan-2/kantan.hpp"
 
 #include "../Accounts.hpp"
-#include "../MultithreadingOutput.hpp"
+#include "../Multithreading.hpp"
+#include "../Database/PlayerData.hpp"
+
 #include "../Components/BasicStatsComponent.hpp"
 #include "../Components/ClientLinkComponent.hpp"
 #include "../Components/LevelStatsComponent.hpp"
@@ -56,10 +58,10 @@ class World
         void update(sf::Time dt, Server* server);
 
         // Creates a player instance.
-        void playerConnected(Client* client);
+        void playerConnected(Client* client, Server* server);
 
         // Removes a player instance.
-        void playerDisconnected(Client* client);
+        void playerDisconnected(Client* client, Server* server);
 
         // Sends the world state to the client.
         void sendUpdate(Client* client, sf::UdpSocket& socket);
@@ -90,7 +92,7 @@ class World
         T* createComponent(std::size_t ownerId);
 
         // createXXX methods.
-        kantan::Entity* createPlayer(sf::Vector2f position, Client* client);
+        kantan::Entity* createPlayer(sf::Vector2f position, Client* client, PlayerData playerData);
         kantan::Entity* createNPC(sf::Vector2f position);
         kantan::Entity* createBox(sf::Vector2f position);
         kantan::Entity* createMonster(sf::Vector2f position);

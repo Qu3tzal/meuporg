@@ -11,7 +11,8 @@
 #include <SFML/Network.hpp>
 
 #include "../Accounts.hpp"
-#include "../MultithreadingOutput.hpp"
+#include "../Database/Database.hpp"
+#include "../Multithreading.hpp"
 #include "../NetworkValues.hpp"
 #include "../ServerConfiguration.hpp"
 #include "../LoginServer/LoginServer.hpp"
@@ -107,7 +108,16 @@ class Server
         // Switch a client from a world to another.
         void switchClientToWorld(Client* client, int worldId);
 
+        // Returns the player data.
+        PlayerData getPlayerData(std::string username);
+
+        // Writes the player data.
+        void writePlayerData(const PlayerData& playerData);
+
     protected:
+        // Database.
+        Database m_database;
+
         // Number of players connected and maximum number of players.
         unsigned int m_numberOfPlayers;
         unsigned int m_maximumPlayersCapacity;

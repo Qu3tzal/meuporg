@@ -1,7 +1,8 @@
 #include "Server.hpp"
 
 Server::Server()
-    : m_numberOfPlayers(0)
+    : m_database("db/players.sqlite")
+    , m_numberOfPlayers(0)
     , m_maximumPlayersCapacity(16)
     , m_loginServer(this)
 {
@@ -249,7 +250,7 @@ void Server::disconnectPlayer(std::string username, std::string reason)
                                      });
 
         if(worldItr != m_worlds.end())
-            (*worldItr)->playerDisconnected(client);
+            (*worldItr)->playerDisconnected(client, this);
 
         client->ingame = false;
         client->currentWorld = -1;
@@ -522,7 +523,7 @@ void Server::receiveInputThroughUDP()
 
                             // Select a world to put the player in.
                             // Notify the world.
-                            m_worlds[0]->playerConnected(m_accounts.at(username)->linkedClient);
+                            m_worlds[0]->playerConnected(m_accounts.at(username)->linkedClient, this);
 
                             // Change the client's data.
                             m_accounts.at(username)->linkedClient->currentWorld = m_worlds[0]->getId();
@@ -689,7 +690,7 @@ void Server::switchClientToWorld(Client* client, int worldId)
                                          });
 
             if(worldItr != m_worlds.end())
-                (*worldItr)->playerDisconnected(client);
+                (*worldItr)->playerDisconnected(client, this);
         }
 
         // Switch the player in the new world.
@@ -700,7 +701,7 @@ void Server::switchClientToWorld(Client* client, int worldId)
 
         if(worldItr != m_worlds.end())
         {
-            (*worldItr)->playerConnected(client);
+            (*worldItr)->playerConnected(client, this);
             int oldWorldId = client->currentWorld;
             client->currentWorld = worldId;
 
@@ -715,4 +716,20 @@ void Server::switchClientToWorld(Client* client, int worldId)
             Multithreading::outputMutex.unlock();
         }
     }
+}
+
+PlayerData Server::getPlayerData(std::string username)
+{
+    Multithreading::databaseMutex.lock();
+    PlayerData playerData = m_database.getPlayerData(username);
+    Multithreading::databaseMutex.unlock();
+
+    return playerData;
+}
+
+void Server::writePlayerData(const PlayerData& playerData)
+{
+    Multithreading::databaseMutex.lock();
+    m_database.writePlayerData(playerData);
+    Multithreading::databaseMutex.unlock();
 }

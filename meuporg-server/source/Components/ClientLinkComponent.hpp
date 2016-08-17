@@ -16,6 +16,7 @@ class ClientLinkComponent : public kantan::Component
 
 		// Attribute.
 		Client* client;
+		int dbid;
 };
 
 #endif // CLIENTLINKCOMPONENT_HPP_INCLUDED
