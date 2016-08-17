@@ -183,7 +183,7 @@ void Game::notificationPacket(sf::Packet* packet)
                 world.changeWorld(worldId, mapId);
 
                 std::stringstream ss;
-                ss << " Vous vous teléportez au monde : " << (unsigned int)worldId;
+                ss << " Vous vous teléportez au monde: " << (unsigned int)worldId;
                 chat.write(ss.str(), sf::Color::Yellow);
             }
             break;
