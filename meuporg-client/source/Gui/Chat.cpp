@@ -23,12 +23,12 @@ void Chat::init()
     textInputs.addTextInput("Chat", sf::Vector2f(130, 760), sf::Vector2f(250, 50), "Ecrivez votre message", ResourceId::MONOF_56, 16, sf::Color(128, 128, 128, 128), sf::Color::White, sf::Color(128, 128, 128, 128), sf::Color(50, 50, 50, 128));
 }
 
-void Chat::write(std::string message)
+void Chat::write(std::string message, sf::Color color)
 {
     logChat.push_back(message);
 
     sf::Text text;
-    initText(&text);
+    initText(&text, color);
 
     std::string str = logChat[logChat.size()-1];
 
@@ -56,6 +56,11 @@ void Chat::write(std::string message)
 
 }
 
+void Chat::write(std::string str)
+{
+    write(str, sf::Color::White);
+}
+
 void Chat::up(float height)
 {
     for(sf::Text& text : logText)
@@ -64,9 +69,9 @@ void Chat::up(float height)
     }
 }
 
-void Chat::initText(sf::Text* text)
+void Chat::initText(sf::Text* text, sf::Color color)
 {
-    text->setColor(sf::Color::White);
+    text->setColor(color);
     text->setCharacterSize(14);
     text->setFont(fonts->get(ResourceId::MONOF_56));
 }

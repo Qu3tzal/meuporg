@@ -139,7 +139,7 @@ void Game::notificationPacket(sf::Packet* packet)
 
                 message = "[" + username + "] Viens de se connecter !";
 
-                chat.write(message);
+                chat.write(message, sf::Color::Yellow);
             }
             break;
         case NetworkValues::PLAYER_DISCONNECTED :
@@ -151,7 +151,7 @@ void Game::notificationPacket(sf::Packet* packet)
 
                 message = "[" + username + "] Viens de se deconnecter !";
 
-                chat.write(message);
+                chat.write(message, sf::Color::Yellow);
             }
             break;
         case NetworkValues::ENTITY_REMOVED :
@@ -170,7 +170,7 @@ void Game::notificationPacket(sf::Packet* packet)
                 *packet >> level;
                 std::stringstream ss;
                 ss << name << " viens de monter level " << (unsigned int)level;
-                chat.write(ss.str());
+                chat.write(ss.str(), sf::Color::Yellow);
             }
             break;
         case NetworkValues::PLAYER_MOVED_TO_WORLD:
@@ -183,8 +183,8 @@ void Game::notificationPacket(sf::Packet* packet)
                 world.changeWorld(worldId, mapId);
 
                 std::stringstream ss;
-                ss << " Vous vous teléportez au monde : " << (unsigned int)worldId << " Map id : " << mapId;
-                chat.write(ss.str());
+                ss << " Vous vous teléportez au monde : " << (unsigned int)worldId;
+                chat.write(ss.str(), sf::Color::Yellow);
             }
             break;
         default:

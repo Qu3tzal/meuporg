@@ -25,7 +25,9 @@ class Chat : public sf::Drawable, public sf::Transformable
 
         void update();
 
-        void write(std::string);
+        void write(std::string s);
+
+        void write(std::string s , sf::Color c);
 
         void sendMessage();
 
@@ -33,7 +35,7 @@ class Chat : public sf::Drawable, public sf::Transformable
 
         bool isActive();
 
-        void initText(sf::Text* text);
+        void initText(sf::Text* text, sf::Color color);
 
         void up(float height);
 
