@@ -78,7 +78,7 @@ void World::playerConnected(Client* client, Server* server)
 
     // Log.
     Multithreading::outputMutex.lock();
-    std::cout << "[WORLD|" << m_id << "] '" << client->username << "' joined." << std::endl;
+    std::cout << "[WORLD|" << m_id << "] '" << client->username << "' joined (dbid: " << playerData.dbid << ")." << std::endl;
     Multithreading::outputMutex.unlock();
 }
 
@@ -104,11 +104,34 @@ void World::playerDisconnected(Client* client, Server* server)
             BasicStatsComponent* bsc = entity->getComponent<BasicStatsComponent>("BasicStats");
             LevelStatsComponent* lsc = entity->getComponent<LevelStatsComponent>("LevelStats");
 
+            // Get the polygon hitbox component.
+            kantan::PolygonHitboxComponent* phc = entity->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
+
+            if(phc == nullptr)
+                continue;
+
+            // Compute the left top corner.
+            /// ! TODO: Check there is at least one point.
+            sf::Vector2f leftTop(phc->points[0].x, phc->points[0].y);
+
+            for(sf::Vector2f point : phc->points)
+            {
+                if(point.x < leftTop.x)
+                    leftTop.x = point.x;
+
+                if(point.y < leftTop.y)
+                    leftTop.y = point.y;
+            }
+
             // Save the data of the player.
             PlayerData playerData;
 
             playerData.dbid = clc->dbid;
             playerData.username = clc->client->username;
+
+            playerData.worldId = m_id;
+            playerData.positionX = leftTop.x;
+            playerData.positionY = leftTop.y;
 
             playerData.hp = bsc->hp;
             playerData.maxhp = bsc->maxhp;

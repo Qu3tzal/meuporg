@@ -19,7 +19,7 @@ void LoginServer::init()
 
 void LoginServer::login(sf::Time dt)
 {
-    // Do not login any body if the server is full.
+    // Do not login anybody if the server is full.
     if(m_server->getNumberOfPlayers() >= m_server->getMaximumPlayersCapacity())
     {
         sf::TcpSocket tcpsocket;
@@ -114,15 +114,16 @@ void LoginServer::login(sf::Time dt)
                 }
 
                 // Check if an account is linked to the username.
-                auto accountIterator = m_server->getAccounts()->find(client->username);
-
-                if(accountIterator == m_server->getAccounts()->end())
+                if(!m_server->checkAccountExists(client->username))
                 {
                     /*
                         -> account creation
+                            -> create account in database
+                            -> load account in server's memory
                         -> send back ACCOUNT_CREATED_RECONNECT
                         -> disconnect login socket
                     */
+                    m_server->createAccount(client->username, "");
                     m_server->getAccounts()->insert(std::pair<std::string, Account*>(client->username, new Account()));
                     std::cout << "[LOGIN_SERVER] Account '" << client->username << "' created for (" << client->loginTcp.getRemoteAddress().toString() << ")." << std::endl;
 
@@ -139,13 +140,29 @@ void LoginServer::login(sf::Time dt)
                 {
                     /*
                         -> check account->linkedClient == nullptr else CONNECTION_FAIL_ALREADY_CONNECTED
+                        -> load account in the server's memory
                         -> client->loggedIn = true;
                         -> send back CONNECTION_SUCCESS with a random token
                         -> associate account with random token and client
                     */
-                    // Alias.
-                    Account* account = (*accountIterator).second;
 
+                    // Check if the account is already loaded in memory.
+                    auto accountIterator = m_server->getAccounts()->find(client->username);
+                    Account* account;
+
+                    // The account is not yet loaded in memory so we load it.
+                    if(accountIterator == m_server->getAccounts()->end())
+                    {
+                        // Load the account in the server's memory.
+                        account = new Account();
+                        m_server->getAccounts()->insert(std::pair<std::string, Account*>(client->username, account));
+                    }
+                    else
+                    {
+                        account = accountIterator->second;
+                    }
+
+                    // Check no one is already in game with this account.
                     if(account->linkedClient != nullptr)
                     {
                         sf::Packet packet;

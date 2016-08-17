@@ -6,7 +6,7 @@ Server::Server()
     , m_maximumPlayersCapacity(16)
     , m_loginServer(this)
 {
-    if(!m_database.getLastError())
+    if(m_database.getLastError())
     {
         Multithreading::outputMutex.lock();
         std::cerr << "[GAME_SERVER] Error loading database : '" << m_database.getLastError() << "'." << std::endl;
@@ -25,6 +25,9 @@ Server::~Server()
 
 void Server::init()
 {
+    // Load all the accounts in memory.
+
+
     // Init the login server.
     m_loginServer.init();
 
@@ -231,6 +234,17 @@ std::map<std::string, Account*>* Server::getAccounts()
     return &m_accounts;
 }
 
+void Server::shutdown()
+{
+    for(auto entry : m_accounts)
+    {
+        if(entry.second->linkedClient->ingame)
+        {
+            disconnectPlayer(entry.first, "Server closed");
+        }
+    }
+}
+
 void Server::disconnectPlayer(std::string username, std::string reason)
 {
     // Dissociate the account and the client.
@@ -246,6 +260,9 @@ void Server::disconnectPlayer(std::string username, std::string reason)
 
         // Null the linked client.
         m_accounts.at(username)->linkedClient = nullptr;
+
+        // Unload the account from the server's memory.
+        m_accounts.erase(m_accounts.find(username));
 
         // Multithreading worlds.
         // Notify the worlds.
@@ -527,6 +544,8 @@ void Server::receiveInputThroughUDP()
                             notifyPlayerConnected(username);
 
                             // Select a world to put the player in.
+                            /// /!\ TODO ?
+
                             // Notify the world.
                             m_worlds[0]->playerConnected(m_accounts.at(username)->linkedClient, this);
 
@@ -723,7 +742,23 @@ void Server::switchClientToWorld(Client* client, int worldId)
     }
 }
 
-PlayerData Server::getPlayerData(std::string username)
+bool Server::checkAccountExists(const std::string& username)
+{
+    Multithreading::databaseMutex.lock();
+    bool result = m_database.checkAccountExists(username);
+    Multithreading::databaseMutex.unlock();
+
+    return result;
+}
+
+void Server::createAccount(const std::string& username, const std::string& password)
+{
+    Multithreading::databaseMutex.lock();
+    m_database.createAccount(username, password);
+    Multithreading::databaseMutex.unlock();
+}
+
+PlayerData Server::getPlayerData(const std::string& username)
 {
     Multithreading::databaseMutex.lock();
     PlayerData playerData = m_database.getPlayerData(username);

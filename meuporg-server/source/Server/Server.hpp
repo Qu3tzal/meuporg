@@ -72,8 +72,12 @@ class Server
         // Returns the list of accounts.
         std::map<std::string, Account*>* getAccounts();
 
+        // Shuts down the server.
+        void shutdown();
+
     protected:
         friend World;
+        friend LoginServer;
 
         // Disconnects the player for the given reason.
         void disconnectPlayer(std::string username, std::string reason);
@@ -108,8 +112,14 @@ class Server
         // Switch a client from a world to another.
         void switchClientToWorld(Client* client, int worldId);
 
+        // Returns true if the account exists.
+        bool checkAccountExists(const std::string& username);
+
+        // Create an account with default stats.
+        void createAccount(const std::string& username, const std::string& password);
+
         // Returns the player data.
-        PlayerData getPlayerData(std::string username);
+        PlayerData getPlayerData(const std::string& username);
 
         // Writes the player data.
         void writePlayerData(const PlayerData& playerData);

@@ -26,7 +26,29 @@ int Database::getLastError() const
 
 void Database::createAccount(const std::string& username, const std::string& password)
 {
+    // Prepare statement.
+    std::string statementString("INSERT INTO `players` (username) VALUES(:username)");
 
+    sqlite3_stmt* statement;
+    m_lastError = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
+
+    if(m_lastError != SQLITE_OK)
+        return;
+
+    // Bind parameter.
+    int usernameParameterIndex = sqlite3_bind_parameter_index(statement, ":username");
+    sqlite3_bind_text(statement, usernameParameterIndex, username.c_str(), username.size(), nullptr);
+
+    // Execute.
+    while(true)
+    {
+        int status = sqlite3_step(statement);
+
+        if(status == SQLITE_BUSY)
+            continue;
+
+        return;
+    }
 }
 
 bool Database::checkAccountExists(const std::string& username)
@@ -125,8 +147,30 @@ PlayerData Database::getPlayerData(const std::string& username)
 
     playerData.dbid = sqlite3_column_int(statement, 0);
 
-    playerData.username = std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 1)));
-    playerData.hashedPassword = std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 2)));
+    const unsigned char* cuc_string_username = sqlite3_column_text(statement, 1);
+    const char* cc_string_username = reinterpret_cast<const char*>(cuc_string_username);
+
+    try
+    {
+        playerData.username = std::string(cc_string_username);
+    }
+    catch(std::exception& e)
+    {
+        playerData.username = "";
+    }
+
+    const unsigned char* cuc_string_hashedPassword = sqlite3_column_text(statement, 2);
+    const char* cc_string_hashedPassword = reinterpret_cast<const char*>(cuc_string_hashedPassword);
+
+    try
+    {
+        playerData.hashedPassword = std::string(cc_string_hashedPassword);
+    }
+    catch(std::exception& e)
+    {
+        playerData.hashedPassword = "";
+    }
+
 
     playerData.worldId = sqlite3_column_int(statement, 3);
     playerData.positionX = sqlite3_column_double(statement, 4);
