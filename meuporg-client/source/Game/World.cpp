@@ -65,7 +65,6 @@ void World::removeEntity(unsigned int entityId)
         {
             delete *it;
             entities.erase(it);
-            removed = true;
 
         }
         else
