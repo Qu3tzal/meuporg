@@ -84,6 +84,8 @@
 		<Unit filename="source/Components/DamageComponent.hpp" />
 		<Unit filename="source/Components/LevelStatsComponent.cpp" />
 		<Unit filename="source/Components/LevelStatsComponent.hpp" />
+		<Unit filename="source/Components/LifetimeComponent.cpp" />
+		<Unit filename="source/Components/LifetimeComponent.hpp" />
 		<Unit filename="source/Components/MonsterAIComponent.cpp" />
 		<Unit filename="source/Components/MonsterAIComponent.hpp" />
 		<Unit filename="source/Components/NameComponent.cpp" />
@@ -182,8 +184,12 @@
 		<Unit filename="source/Systems/ClientInputSystem.hpp" />
 		<Unit filename="source/Systems/LevelUpSystem.cpp" />
 		<Unit filename="source/Systems/LevelUpSystem.hpp" />
+		<Unit filename="source/Systems/LifetimeSystem.cpp" />
+		<Unit filename="source/Systems/LifetimeSystem.hpp" />
 		<Unit filename="source/Systems/MonsterAISystem.cpp" />
 		<Unit filename="source/Systems/MonsterAISystem.hpp" />
+		<Unit filename="source/Systems/WeaponCooldownSystem.cpp" />
+		<Unit filename="source/Systems/WeaponCooldownSystem.hpp" />
 		<Unit filename="source/Utils/Maths.hpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.cpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.hpp" />

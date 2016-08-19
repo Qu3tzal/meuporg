@@ -98,3 +98,4 @@ meuporg-client/bin/Debug/assets/bullet.png
 meuporg-client/bin/Release/assets/bullet.png
 meuporg-client/bin/Release/assets/map/map1.txt
 meuporg-server/db/players.sqlite
+meuporg-server/db/players.sqlite
