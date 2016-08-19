@@ -54,23 +54,25 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
                 mc->velocity = sf::Vector2f(0.f, 0.f);
                 mc->velocity = kantan::normalize(inputVector) * mc->maximumSpeed;
             }
-            else if(entity->hasComponent("PolygonHitbox") && entity->hasComponent("Weapon"))
+
+            if(entity->hasComponent("PolygonHitbox") && entity->hasComponent("Weapon"))
             {
                 if(clc->client->inputs.isAAttackKeyPressed)
                 {
                     if(wc->timeSinceLastShot >= wc->cooldown)
                     {
-                        wc->timeSinceLastShot -= wc->cooldown;
+                        wc->timeSinceLastShot = sf::Time::Zero;
 
                         sf::Vector2f center = kantan::getCenter(phc->points);
-                        sf::Vector2f direction = center - sf::Vector2f(clc->client->inputs.mouseX, clc->client->inputs.mouseY);
+                        sf::Vector2f direction = sf::Vector2f(clc->client->inputs.mouseX, clc->client->inputs.mouseY) - center;
 
                         world->createBullet(
-                                        kantan::getCenter(phc->points) + kantan::normalize(direction) * 30.f,
+                                        kantan::getCenter(phc->points) + kantan::normalize(direction) * 40.f,
                                         entity->getId(),
                                         direction,
                                         wc->projectileSpeed,
-                                        wc->baseDamage
+                                        wc->baseDamage,
+                                        wc->projectileLifetime
                                     );
                     }
                 }
