@@ -138,7 +138,8 @@ void Player::update(sf::Time dt)
             break;
     }
     //centerOrigin(nameText);
-    nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, -30 - sprite.getOrigin().y);
+    nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, - (nameText.getheight() + 5) - sprite.getOrigin().y);
+    nameText.setHealth(getProperty("Hp"),getProperty("HpMax"));
 }
 
 void Player::setDirection()

@@ -1,22 +1,35 @@
 #include "NameText.hpp"
 
-NameText::NameText(std::string name, kantan::FontHolder* fonts)
+NameText::NameText(std::string name, kantan::FontHolder* fonts): ShowHealth(true)
 {
-    this->nameText = name;
+    this->name = name;
     this->fonts = fonts;
 
-    text.setFont(fonts->get(ResourceId::SECRET_CODE_FONT));
-    text.setCharacterSize(12);
-    text.setColor(sf::Color::White);
-    text.setString(this->nameText);
+    nameText.setFont(fonts->get(ResourceId::SECRET_CODE_FONT));
+    nameText.setCharacterSize(12);
+    nameText.setColor(sf::Color::White);
+    nameText.setString(this->name);
 
-    shape.setSize(sf::Vector2f(text.getGlobalBounds().width + 20, text.getGlobalBounds().height + 20));
-    shape.setFillColor(sf::Color(128, 128, 128, 128));
+    nameBackground.setSize(sf::Vector2f(nameText.getGlobalBounds().width + 20, nameText.getGlobalBounds().height + 20));
+    nameBackground.setFillColor(sf::Color(128, 128, 128, 128));
 
-    text.setPosition(0, 0);
+    nameText.setPosition(0, 0);
+    if(ShowHealth)
+    {
+        healthText.setFont(fonts->get(ResourceId::SECRET_CODE_FONT));
+        healthText.setCharacterSize(12);
+        healthText.setColor(sf::Color::White);
 
-    centerOrigin(text);
-    centerOrigin(shape);
+        healthBackground.setSize(sf::Vector2f(healthText.getGlobalBounds().width + 20, healthText.getGlobalBounds().height + 20));
+        healthBackground.setFillColor(sf::Color(128, 128, 128, 128));
+
+        centerOrigin(healthText);
+        centerOrigin(healthBackground);
+
+        healthText.setPosition(0, nameBackground.getGlobalBounds().height);
+    }
+    centerOrigin(nameText);
+    centerOrigin(nameBackground);
 }
 
 NameText::~NameText()
@@ -24,10 +37,28 @@ NameText::~NameText()
     //dtor
 }
 
+void NameText::setHealth(float health, float healthMax)
+{
+    std::stringstream ss;
+    ss << (int)health << "\\" << (int)healthMax <<" PV";
+    healthText.setString(ss.str());
+    healthBackground.setSize(sf::Vector2f(healthText.getGlobalBounds().width + 20, healthText.getGlobalBounds().height + 20));
+}
+
+int NameText::getheight()
+{
+    return nameBackground.getGlobalBounds().height;
+}
+
 void NameText::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
 
     states.transform *= getTransform();
-    window.draw(shape, states);
-    window.draw(text, states);
+    window.draw(nameBackground, states);
+    if(ShowHealth)
+        window.draw(healthBackground, states);
+    window.draw(nameText, states);
+    if(ShowHealth)
+        window.draw(healthText);
+
 }
