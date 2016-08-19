@@ -2,6 +2,8 @@
 #define KANTAN_POLYGONCOLLISIONSYSTEM
 
 #include <SFML/System.hpp>
+
+#include <functional>
 #include <vector>
 
 #include "System.hpp"
@@ -30,9 +32,15 @@ namespace kantan
             // Returns the collisions record.
             std::vector<std::pair<std::size_t, std::size_t>> getCollisionRecord();
 
+            // Sets the collision response predicate.
+            void setCollisionResponsePredicate(std::function<bool(std::size_t, std::size_t)> predicate);
+
         protected:
             // Record of the collisions.
             std::vector<std::pair<std::size_t, std::size_t>> m_collisions;
+
+            // Predicate.
+            std::function<bool(std::size_t, std::size_t)> m_predicate;
     };
 } // namespace kantan.
 

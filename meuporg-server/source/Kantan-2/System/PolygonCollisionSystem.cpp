@@ -2,7 +2,11 @@
 
 namespace kantan
 {
-    PolygonCollisionSystem::PolygonCollisionSystem(){}
+    PolygonCollisionSystem::PolygonCollisionSystem()
+    {
+        // Default predicate.
+        m_predicate = [](std::size_t, std::size_t){return true;};
+    }
 
     bool PolygonCollisionSystem::detectCollision(kantan::PolygonHitboxComponent* a, kantan::PolygonHitboxComponent* b, sf::Vector2f& projectionVector)
     {
@@ -196,7 +200,8 @@ namespace kantan
                 if(detectCollision(fstHitbox, sndHitbox, projectionVector))
                 {
                     // Are we blocking ?
-                    if(fstHitbox->isBlocking && sndHitbox->isBlocking)
+                    // And do we satisfy the predicate ?
+                    if(fstHitbox->isBlocking && sndHitbox->isBlocking && m_predicate(fstHitbox->getOwnerId(), sndHitbox->getOwnerId()))
                     {
                         // Create a transformation with the projection vector.
                         transform = sf::Transform::Identity;
@@ -216,6 +221,8 @@ namespace kantan
                         if(getLength(fstMovement->velocity) <= 0.1f)
                             fstMovement->velocity = sf::Vector2f(0.f, 0.f);
                     }
+
+                    m_collisions.push_back(std::make_pair(fstHitbox->getOwnerId(), sndHitbox->getOwnerId()));
                 }
             }
         }
@@ -225,5 +232,11 @@ namespace kantan
     std::vector<std::pair<std::size_t, std::size_t>> PolygonCollisionSystem::getCollisionRecord()
     {
         return m_collisions;
+    }
+
+    // Sets the collision response predicate.
+    void PolygonCollisionSystem::setCollisionResponsePredicate(std::function<bool(std::size_t, std::size_t)> predicate)
+    {
+        m_predicate = predicate;
     }
 } // namespace kantan.
