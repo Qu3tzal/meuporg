@@ -174,7 +174,7 @@ void Game::notificationPacket(sf::Packet* packet)
                 float level(0);
                 *packet >> level;
                 std::stringstream ss;
-                ss << name << " viens de monter level " << (unsigned int)level;
+                ss << name << "viens de monter level " << (unsigned int)level;
                 chat.write(ss.str(), sf::Color::Yellow);
             }
             break;
@@ -188,7 +188,7 @@ void Game::notificationPacket(sf::Packet* packet)
                 world.changeWorld(worldId, mapId);
 
                 std::stringstream ss;
-                ss << " Vous vous teléportez au monde: " << (unsigned int)worldId;
+                ss << "Vous vous teléportez au monde: " << (unsigned int)worldId;
                 chat.write(ss.str(), sf::Color::Yellow);
             }
             break;
