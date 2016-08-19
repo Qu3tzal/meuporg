@@ -72,6 +72,8 @@ class World : public sf::Drawable, public sf::Transformable
 
         unsigned int mapId;
 
+        int unknownId;
+
     private:
 };
 

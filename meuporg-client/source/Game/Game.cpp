@@ -159,8 +159,11 @@ void Game::notificationPacket(sf::Packet* packet)
         case NetworkValues::ENTITY_REMOVED :
             {
                 unsigned int entityId(0);
-                *packet >> entityId;
+                unsigned long long id(0);
+                *packet >> id
+                        >> entityId;
                 world.removeEntity(entityId);
+                udpPacketNumberReceive = id;
             }
             break;
         case NetworkValues::LEVEL_UP :

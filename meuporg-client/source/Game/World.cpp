@@ -4,6 +4,7 @@ World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::st
     , player(nullptr)
     , hud(fonts, window)
     , dialogs(fonts)
+    , unknownId(0)
 {
     this->textures = textures;
     this->fonts = fonts;
@@ -58,6 +59,7 @@ void World::update(sf::Time dt)
 
 void World::removeEntity(unsigned int entityId)
 {
+    bool removed = false;
     std::vector<Entity*>::iterator it;
     for(it = entities.begin() ; it != entities.end() ; )
     {
@@ -65,12 +67,22 @@ void World::removeEntity(unsigned int entityId)
         {
             delete *it;
             entities.erase(it);
+            removed = true;
+            std::stringstream ss;
+            ss << "Suppression de l'entite: " << entityId << std::endl;
+            std::cout << ss.str();
         }
         else
         {
             it++;
         }
     }
+    if(!removed)
+    {
+        unknownId++;
+        std::cout << unknownId;
+    }
+
 }
 
 void World::updateEntity(sf::Packet* packet)
@@ -162,6 +174,9 @@ void World::updateEntity(sf::Packet* packet)
     }
     else
     {
+        std::stringstream ss;
+        ss << "Creation de l'entite: " << id << std::endl;
+        std::cout << ss.str();
         Entity* entity;
         switch(type)
         {
