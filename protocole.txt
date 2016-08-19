@@ -109,7 +109,7 @@ Protocole
 
 	Notification du retrait d'une entité
 	------------------------------------
-		[serveur	TCP]		NOTIFY ENTITY_REMOVED entity_id
+		[serveur	TCP]		NOTIFY ENTITY_REMOVED packet_number entity_id
 
 	Notification de la connexion d'un joueur
 	----------------------------------------
