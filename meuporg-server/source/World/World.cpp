@@ -51,6 +51,9 @@ void World::update(sf::Time dt, Server* server)
 {
     //performancesCheck(dt);
 
+    // Cooldowns.
+    m_weaponCooldownSystem.update(dt, m_components["Weapon"]);
+
     // Client inputs.
     m_clientInputSystem.update(m_components["ClientLink"], m_entities, this);
 
@@ -511,6 +514,7 @@ kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client, Playe
     wc->baseDamage = 25.f;
     wc->cooldown = sf::seconds(0.2f);
     wc->projectileSpeed = 1000.f;
+    wc->projectileLifetime = sf::seconds(2.f);
 
     // Add the components to the entity.
     player->addComponent(phc);
@@ -620,7 +624,7 @@ kantan::Entity* World::createMonster(sf::Vector2f position)
     return monster;
 }
 
-kantan::Entity* World::createBullet(sf::Vector2f position, std::size_t emitter, sf::Vector2f direction, float maxSpeed, float damage)
+kantan::Entity* World::createBullet(sf::Vector2f position, std::size_t emitter, sf::Vector2f direction, float maxSpeed, float damage, sf::Time projectileLifetime)
 {
     // Create the entity.
     kantan::Entity* bullet = createEntity("Bullet");
@@ -631,6 +635,7 @@ kantan::Entity* World::createBullet(sf::Vector2f position, std::size_t emitter, 
 
     BasicStatsComponent* bsc = createComponent<BasicStatsComponent>(bullet->getId());
     DamageComponent* dc = createComponent<DamageComponent>(bullet->getId());
+    LifetimeComponent* lc = createComponent<LifetimeComponent>(bullet->getId());
 
     // Configure the components.
     phc->points = {
@@ -648,11 +653,17 @@ kantan::Entity* World::createBullet(sf::Vector2f position, std::size_t emitter, 
     dc->emitter = emitter;
     dc->damage = damage;
 
+    lc->maxlifetime = projectileLifetime;
+    lc->callback = [&](std::size_t entityId){
+            std::find(m_entities
+        };
+
     // Add the components to the entity.
     bullet->addComponent(phc);
     bullet->addComponent(mc);
     bullet->addComponent(bsc);
     bullet->addComponent(dc);
+    bullet->addComponent(lc);
 
     // Return the entity.
     return bullet;

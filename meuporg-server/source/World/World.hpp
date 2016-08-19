@@ -23,6 +23,7 @@
 #include "../Systems/ClientInputSystem.hpp"
 #include "../Systems/LevelUpSystem.hpp"
 #include "../Systems/MonsterAISystem.hpp"
+#include "../Systems/WeaponCooldownSystem.hpp"
 
 #include "../Utils/Maths.hpp"
 #include "../Utils/SFMLPacketUtils.hpp"
@@ -100,7 +101,7 @@ class World
         kantan::Entity* createNPC(sf::Vector2f position);
         kantan::Entity* createBox(sf::Vector2f position);
         kantan::Entity* createMonster(sf::Vector2f position);
-        kantan::Entity* createBullet(sf::Vector2f position, std::size_t emitter, sf::Vector2f direction, float maxSpeed, float damage);
+        kantan::Entity* createBullet(sf::Vector2f position, std::size_t emitter, sf::Vector2f direction, float maxSpeed, float damage, sf::Time projectileLifetime);
 
         // Notifies all the clients of the level up.
         void notifyLevelUp(LevelStatsComponent* lsc);
@@ -130,6 +131,7 @@ class World
         ClientInputSystem m_clientInputSystem;
         LevelUpSystem m_levelUpSystem;
         MonsterAISystem m_monsterAISystem;
+        WeaponCooldownSystem m_weaponCooldownSystem;
 };
 
 template<typename T>
