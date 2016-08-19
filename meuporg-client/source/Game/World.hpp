@@ -16,6 +16,7 @@
 #include "Map.hpp"
 #include "Hud.hpp"
 #include "DialogManager.hpp"
+#include "Bullet.hpp"
 
 class World : public sf::Drawable, public sf::Transformable
 {

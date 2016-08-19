@@ -70,6 +70,8 @@
 		</Linker>
 		<Unit filename="source/Entity/Animation.cpp" />
 		<Unit filename="source/Entity/Animation.hpp" />
+		<Unit filename="source/Entity/Bullet.cpp" />
+		<Unit filename="source/Entity/Bullet.hpp" />
 		<Unit filename="source/Entity/Entity.cpp" />
 		<Unit filename="source/Entity/Entity.hpp" />
 		<Unit filename="source/Entity/Mission.cpp" />

@@ -1,6 +1,6 @@
 #include "Monster.hpp"
 
-Monster::Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id): Entity(id, name, Entity::Type::PLAYER, textures, fonts)
+Monster::Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id): Entity(id, name, Entity::Type::MONSTER, textures, fonts)
     , direction(Direction::DOWN)
 {
     //ctor

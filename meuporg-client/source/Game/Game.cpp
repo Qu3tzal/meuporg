@@ -21,6 +21,8 @@ Game::Game(sf::RenderWindow* window) : running(true)
     textures.load(ResourceId::ONE_PUNCH_MAN_TEXTURE, "assets/saitama_spritesheet.png");
     textures.load(ResourceId::TILESET, "assets/box.png");
 
+    textures.load(ResourceId::BULLET, "assets/bullet.png");
+
     this->window = window;
 }
 

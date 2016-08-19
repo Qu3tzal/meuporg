@@ -210,6 +210,11 @@ void World::updateEntity(sf::Packet* packet)
                     monster->setState(state);
                 }
                 break;
+               case Entity::Type::BULLET:
+                {
+                    entity = new Bullet(textures, fonts, name, id);
+                }
+                break;
             default:
                 break;
         }
