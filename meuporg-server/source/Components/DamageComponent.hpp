@@ -14,6 +14,7 @@ class DamageComponent : public kantan::Component
 		DamageComponent(std::size_t ownerId);
 
 		// Attributes.
+		int emitter;
 		float damage;
 };
 
