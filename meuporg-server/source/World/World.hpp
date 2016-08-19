@@ -12,9 +12,11 @@
 
 #include "../Components/BasicStatsComponent.hpp"
 #include "../Components/ClientLinkComponent.hpp"
+#include "../Components/DamageComponent.hpp"
 #include "../Components/LevelStatsComponent.hpp"
 #include "../Components/NameComponent.hpp"
 #include "../Components/StaticMarkerComponent.hpp"
+#include "../Components/WeaponComponent.hpp"
 
 #include "../MapLoader/MapLoader.hpp"
 
@@ -22,6 +24,7 @@
 #include "../Systems/LevelUpSystem.hpp"
 #include "../Systems/MonsterAISystem.hpp"
 
+#include "../Utils/Maths.hpp"
 #include "../Utils/SFMLPacketUtils.hpp"
 #include "../NetworkValues.hpp"
 #include "../ClientEntityEnums.hpp"
@@ -96,6 +99,7 @@ class World
         kantan::Entity* createNPC(sf::Vector2f position);
         kantan::Entity* createBox(sf::Vector2f position);
         kantan::Entity* createMonster(sf::Vector2f position);
+        kantan::Entity* createBullet(sf::Vector2f position, kantan::Entity* emitter, sf::Vector2f direction, float maxSpeed, float damage);
 
         // Notifies all the clients of the level up.
         void notifyLevelUp(LevelStatsComponent* lsc);

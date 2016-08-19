@@ -52,7 +52,7 @@ void World::update(sf::Time dt, Server* server)
     //performancesCheck(dt);
 
     // Client inputs.
-    m_clientInputSystem.update(m_components["ClientLink"], m_entities);
+    m_clientInputSystem.update(m_components["ClientLink"], m_entities, this);
 
     // AI.
     m_monsterAISystem.update(dt, m_components["MonsterAI"], m_components["Movement"]);
@@ -208,21 +208,8 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
             if(phc == nullptr)
                 continue;
 
-            // Compute the left top corner.
-            /// ! TODO: Check there is at least one point.
-            sf::Vector2f leftTop(phc->points[0].x, phc->points[0].y);
-
-            for(sf::Vector2f point : phc->points)
-            {
-                if(point.x < leftTop.x)
-                    leftTop.x = point.x;
-
-                if(point.y < leftTop.y)
-                    leftTop.y = point.y;
-            }
-
             // Set the position.
-            packet << leftTop;
+            packet << getLeftTop(phc->points);
 
             // Set the velocity.
             packet << mc->velocity;
@@ -276,21 +263,8 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
             if(phc == nullptr)
                 continue;
 
-            // Compute the left top corner.
-            /// ! TODO: Check there is at least one point.
-            sf::Vector2f leftTop(phc->points[0].x, phc->points[0].y);
-
-            for(sf::Vector2f point : phc->points)
-            {
-                if(point.x < leftTop.x)
-                    leftTop.x = point.x;
-
-                if(point.y < leftTop.y)
-                    leftTop.y = point.y;
-            }
-
             // Set the position.
-            packet << leftTop;
+            packet << getLeftTop(phc->points);
 
             // Set the velocity.
             packet << mc->velocity;
@@ -323,21 +297,32 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
             if(phc == nullptr)
                 continue;
 
-            // Compute the left top corner.
-            /// ! TODO: Check there is at least one point.
-            sf::Vector2f leftTop(phc->points[0].x, phc->points[0].y);
+            // Set the position.
+            packet << getLeftTop(phc->points);
 
-            for(sf::Vector2f point : phc->points)
-            {
-                if(point.x < leftTop.x)
-                    leftTop.x = point.x;
+            // Set the velocity.
+            packet << mc->velocity;
+        }
+        else if(e->getName() == "Bullet")
+        {
+            // Set the entity type.
+            packet << ClientSide::EntityType::ENTITYTYPE_BULLET;
+            packet << "Bullet" << 0; // Default name and state.
 
-                if(point.y < leftTop.y)
-                    leftTop.y = point.y;
-            }
+            // Get the movement component.
+            kantan::MovementComponent* mc = e->getComponent<kantan::MovementComponent>("Movement");
+
+            if(mc == nullptr)
+                continue;
+
+            // Get the polygon hitbox component.
+            kantan::PolygonHitboxComponent* phc = e->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
+
+            if(phc == nullptr)
+                continue;
 
             // Set the position.
-            packet << leftTop;
+            packet << getLeftTop(phc->points);
 
             // Set the velocity.
             packet << mc->velocity;
@@ -496,6 +481,7 @@ kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client, Playe
     BasicStatsComponent* bsc = createComponent<BasicStatsComponent>(player->getId());
     ClientLinkComponent* clc = createComponent<ClientLinkComponent>(player->getId());
     LevelStatsComponent* lsc = createComponent<LevelStatsComponent>(player->getId());
+    WeaponComponent* wc = createComponent<WeaponComponent>(player->getId());
 
     // Configure the components.
     phc->points = {
@@ -521,12 +507,18 @@ kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client, Playe
     lsc->xp = playerData.xp;
     lsc->level = playerData.level;
 
+    wc->name = "Super ultra gun";
+    wc->baseDamage = 25.f;
+    wc->cooldown = sf::seconds(0.2f);
+    wc->projectileSpeed = 1000.f;
+
     // Add the components to the entity.
     player->addComponent(phc);
     player->addComponent(mc);
     player->addComponent(bsc);
     player->addComponent(clc);
     player->addComponent(lsc);
+    player->addComponent(wc);
 
     // Return the entity.
     return player;
@@ -626,6 +618,43 @@ kantan::Entity* World::createMonster(sf::Vector2f position)
 
     // Return the entity.
     return monster;
+}
+
+kantan::Entity* World::createBullet(sf::Vector2f position, kantan::Entity* emitter, sf::Vector2f direction, float maxSpeed, float damage)
+{
+    // Create the entity.
+    kantan::Entity* bullet = createEntity("Bullet");
+
+    // Create the components.
+    kantan::PolygonHitboxComponent* phc = createComponent<kantan::PolygonHitboxComponent>(bullet->getId());
+    kantan::MovementComponent* mc = createComponent<kantan::MovementComponent>(bullet->getId());
+
+    BasicStatsComponent* bsc = createComponent<BasicStatsComponent>(bullet->getId());
+    DamageComponent* dc = createComponent<DamageComponent>(bullet->getId());
+
+    // Configure the components.
+    phc->points = {
+            position + sf::Vector2f(0.f, 0.f),
+            position + sf::Vector2f(8.f, 0.f),
+            position + sf::Vector2f(8.f, 8.f),
+            position + sf::Vector2f(0.f, 8.f)
+        };
+    phc->computeAxes();
+    phc->isBlocking = true;
+
+    mc->maximumSpeed = maxSpeed;
+    mc->velocity = kantan::normalize(direction) * mc->maximumSpeed;
+
+    dc->damage = damage;
+
+    // Add the components to the entity.
+    bullet->addComponent(phc);
+    bullet->addComponent(mc);
+    bullet->addComponent(bsc);
+    bullet->addComponent(dc);
+
+    // Return the entity.
+    return bullet;
 }
 
 // Notifies all the clients of the level up.
