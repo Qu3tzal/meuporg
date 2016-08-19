@@ -67,7 +67,7 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
                         sf::Vector2f direction = sf::Vector2f(clc->client->inputs.mouseX, clc->client->inputs.mouseY) - center;
 
                         world->createBullet(
-                                        kantan::getCenter(phc->points) + kantan::normalize(direction) * 40.f,
+                                        kantan::getCenter(phc->points) + kantan::normalize(direction),
                                         entity->getId(),
                                         direction,
                                         wc->projectileSpeed,
