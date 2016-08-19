@@ -69,6 +69,9 @@ void World::update(sf::Time dt, Server* server)
     // Leveling up.
     m_levelUpSystem.update(m_components["LevelStats"], std::bind(&World::notifyLevelUp, this, std::placeholders::_1));
 
+    // Lifetime management.
+    m_lifetimeSystem.update(dt, m_components["Lifetime"]);
+
     // Clean the entities.
     cleanEntities(server);
 }
@@ -653,9 +656,19 @@ kantan::Entity* World::createBullet(sf::Vector2f position, std::size_t emitter, 
     dc->emitter = emitter;
     dc->damage = damage;
 
-    lc->maxlifetime = projectileLifetime;
+    lc->maxlifetime = sf::seconds(0.2f);
     lc->callback = [&](std::size_t entityId){
-            std::find(m_entities
+            // Find the entity.
+            auto itr = std::find_if(m_entities.begin(), m_entities.end(), [&](kantan::Entity* e) -> bool {
+                                        return e->getId() == entityId;
+                                    });
+
+            if(itr != m_entities.end())
+            {
+                // Mark it as to delete.
+                kantan::DeletionMarkerComponent* dmc = (*itr)->getComponent<kantan::DeletionMarkerComponent>("DeletionMarker");
+                dmc->marked = true;
+            }
         };
 
     // Add the components to the entity.

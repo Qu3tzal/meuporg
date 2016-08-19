@@ -14,6 +14,7 @@
 #include "../Components/ClientLinkComponent.hpp"
 #include "../Components/DamageComponent.hpp"
 #include "../Components/LevelStatsComponent.hpp"
+#include "../Components/LifetimeComponent.hpp"
 #include "../Components/NameComponent.hpp"
 #include "../Components/StaticMarkerComponent.hpp"
 #include "../Components/WeaponComponent.hpp"
@@ -22,6 +23,7 @@
 
 #include "../Systems/ClientInputSystem.hpp"
 #include "../Systems/LevelUpSystem.hpp"
+#include "../Systems/LifetimeSystem.hpp"
 #include "../Systems/MonsterAISystem.hpp"
 #include "../Systems/WeaponCooldownSystem.hpp"
 
@@ -130,6 +132,7 @@ class World
 
         ClientInputSystem m_clientInputSystem;
         LevelUpSystem m_levelUpSystem;
+        LifetimeSystem m_lifetimeSystem;
         MonsterAISystem m_monsterAISystem;
         WeaponCooldownSystem m_weaponCooldownSystem;
 };
