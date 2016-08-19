@@ -94,8 +94,8 @@ void Game::receivePacket()
             if(number - udpPacketNumberReceive > 1)
             {
                 loosedPacket += (number - 1) - udpPacketNumberReceive;
-                std::cout   << "[PACKET_LOSS] " << loosedPacket << " / " << udpPacketNumberReceive
-                                            << " (" << (loosedPacket * 100.f) / (float)(udpPacketNumberReceive) << "%)" << std::endl;
+                /*std::cout   << "[PACKET_LOSS] " << loosedPacket << " / " << udpPacketNumberReceive
+                                            << " (" << (loosedPacket * 100.f) / (float)(udpPacketNumberReceive) << "%)" << std::endl;*/
             }
             if(number > udpPacketNumberReceive)
             {
