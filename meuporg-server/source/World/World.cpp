@@ -620,7 +620,7 @@ kantan::Entity* World::createMonster(sf::Vector2f position)
     return monster;
 }
 
-kantan::Entity* World::createBullet(sf::Vector2f position, kantan::Entity* emitter, sf::Vector2f direction, float maxSpeed, float damage)
+kantan::Entity* World::createBullet(sf::Vector2f position, std::size_t emitter, sf::Vector2f direction, float maxSpeed, float damage)
 {
     // Create the entity.
     kantan::Entity* bullet = createEntity("Bullet");
@@ -645,6 +645,7 @@ kantan::Entity* World::createBullet(sf::Vector2f position, kantan::Entity* emitt
     mc->maximumSpeed = maxSpeed;
     mc->velocity = kantan::normalize(direction) * mc->maximumSpeed;
 
+    dc->emitter = emitter;
     dc->damage = damage;
 
     // Add the components to the entity.

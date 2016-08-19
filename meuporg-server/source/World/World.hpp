@@ -76,6 +76,7 @@ class World
         // Needs this friendship to access createXXX methods.
         friend MapLoader;
         friend Server;
+        friend ClientInputSystem;
 
         // Checks the performances of the world thread.
         void performancesCheck(sf::Time serverdt);
@@ -99,7 +100,7 @@ class World
         kantan::Entity* createNPC(sf::Vector2f position);
         kantan::Entity* createBox(sf::Vector2f position);
         kantan::Entity* createMonster(sf::Vector2f position);
-        kantan::Entity* createBullet(sf::Vector2f position, kantan::Entity* emitter, sf::Vector2f direction, float maxSpeed, float damage);
+        kantan::Entity* createBullet(sf::Vector2f position, std::size_t emitter, sf::Vector2f direction, float maxSpeed, float damage);
 
         // Notifies all the clients of the level up.
         void notifyLevelUp(LevelStatsComponent* lsc);
