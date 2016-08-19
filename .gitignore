@@ -94,3 +94,7 @@ meuporg-server/db/players.sqlite
 tutoPOOc++.cpp
 tutoPOOc++2.cpp
 meuporg-client/bin/Release/assets/level/level1.lvl
+meuporg-client/bin/Debug/assets/bullet.png
+meuporg-client/bin/Release/assets/bullet.png
+meuporg-client/bin/Release/assets/map/map1.txt
+meuporg-server/db/players.sqlite
