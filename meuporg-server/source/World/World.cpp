@@ -31,7 +31,8 @@ int World::getId() const
 void World::init(std::string mapFilepath)
 {
     // Prepare physics.
-    std::bind(&World::collisionResponsePredicate, this, std::placeholders::_1);
+    auto lambda = std::bind(&World::collisionResponsePredicate, this, std::placeholders::_1, std::placeholders::_2);
+    m_collisionSystem.setCollisionResponsePredicate(lambda);
 
     // Load map.
     Multithreading::outputMutex.lock();
@@ -732,7 +733,7 @@ bool World::collisionResponsePredicate(const std::size_t& firstEntityId, const s
 
         if(dc != nullptr)
             if(dc->emitter != -1 && (std::size_t)(dc->emitter) == secondEntityId)
-                return true;
+                return false;
     }
     else if(secondEntity->getName() == "Bullet")
     {
@@ -741,7 +742,7 @@ bool World::collisionResponsePredicate(const std::size_t& firstEntityId, const s
 
         if(dc != nullptr)
             if(dc->emitter != -1 && (std::size_t)(dc->emitter) == firstEntityId)
-                return true;
+                return false;
     }
 
     // Collide otherwise.
