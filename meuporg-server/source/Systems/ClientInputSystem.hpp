@@ -5,6 +5,8 @@
 
 #include "../Components/ClientLinkComponent.hpp"
 
+class World;
+
 /*
 	ClientInputSystem class.
 	System : client input system.
@@ -16,7 +18,7 @@ class ClientInputSystem : public kantan::System
 		ClientInputSystem();
 
 		// Update.
-		virtual void update(std::vector<kantan::Component*>& clientLinkComponents, std::vector<kantan::Entity*>& entities);
+		virtual void update(std::vector<kantan::Component*>& clientLinkComponents, std::vector<kantan::Entity*>& entities, World* world);
 };
 
 #endif // CLIENTINPUTSYSTEM_HPP_INCLUDED

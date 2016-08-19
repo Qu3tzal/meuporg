@@ -1,10 +1,11 @@
 #include "ClientInputSystem.hpp"
+#include "../World/World.hpp"
 
 // Ctor.
 ClientInputSystem::ClientInputSystem(){}
 
 // Update.
-void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkComponents, std::vector<kantan::Entity*>& entities)
+void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkComponents, std::vector<kantan::Entity*>& entities, World* world)
 {
     for(kantan::Component* component : clientLinkComponents)
     {
@@ -18,12 +19,18 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
             if(entity == nullptr)
                 continue;
 
+            // Get the hitbox component.
+            kantan::PolygonHitboxComponent* phc = entity->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
+
+            // Get the movement component.
+            kantan::MovementComponent* mc = entity->getComponent<kantan::MovementComponent>("Movement");
+
+            // Get the weapon component.
+            WeaponComponent *wc = entity->getComponent<WeaponComponent>("Weapon");
+
             // Check the entity has a movement component.
             if(entity->hasComponent("Movement"))
             {
-                // Get the movement component.
-                kantan::MovementComponent* mc = entity->getComponent<kantan::MovementComponent>("Movement");
-
                 sf::Vector2f inputVector(0.f, 0.f);
 
                 if(clc->client->inputs.isMoveDownKeyPressed)
@@ -46,6 +53,27 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
 
                 mc->velocity = sf::Vector2f(0.f, 0.f);
                 mc->velocity = kantan::normalize(inputVector) * mc->maximumSpeed;
+            }
+            else if(entity->hasComponent("PolygonHitbox") && entity->hasComponent("Weapon"))
+            {
+                if(clc->client->inputs.isAAttackKeyPressed)
+                {
+                    if(wc->timeSinceLastShot >= wc->cooldown)
+                    {
+                        wc->timeSinceLastShot -= wc->cooldown;
+
+                        sf::Vector2f center = kantan::getCenter(phc->points);
+                        sf::Vector2f direction = center - sf::Vector2f(clc->client->inputs.mouseX, clc->client->inputs.mouseY);
+
+                        world->createBullet(
+                                        kantan::getCenter(phc->points) + kantan::normalize(direction) * 30.f,
+                                        entity->getId(),
+                                        direction,
+                                        wc->projectileSpeed,
+                                        wc->baseDamage
+                                    );
+                    }
+                }
             }
         }
     }
