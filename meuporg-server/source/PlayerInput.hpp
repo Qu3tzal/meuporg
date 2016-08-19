@@ -13,6 +13,12 @@ struct PlayerInput
 
     float mouseX;
     float mouseY;
+
+    bool isEAttackKeyPressed;
+    bool isAAttackKeyPressed;
+
+    bool isMouseLeftButtonPressed;
+    bool isMouseRightButtonPressed;
 };
 
 #endif // PLAYERINPUT_HPP_INCLUDED

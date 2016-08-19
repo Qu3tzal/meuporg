@@ -617,7 +617,11 @@ void Server::receiveInputThroughUDP()
                                     >> client->inputs.isMoveLeftKeyPressed
                                     >> client->inputs.isMoveRightKeyPressed
                                     >> client->inputs.mouseX
-                                    >> client->inputs.mouseY;
+                                    >> client->inputs.mouseY
+                                    >> client->inputs.isEAttackKeyPressed
+                                    >> client->inputs.isAAttackKeyPressed
+                                    >> client->inputs.isMouseLeftButtonPressed
+                                    >> client->inputs.isMouseRightButtonPressed;
                         }
                     }
                 }
