@@ -30,6 +30,10 @@ int World::getId() const
 
 void World::init(std::string mapFilepath)
 {
+    // Prepare physics.
+    std::bind(&World::collisionResponsePredicate, this, std::placeholders::_1);
+
+    // Load map.
     Multithreading::outputMutex.lock();
     std::cout << "[WORLD|" << m_id << "] Map loading..." << std::endl;
     Multithreading::outputMutex.unlock();
@@ -517,7 +521,7 @@ kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client, Playe
     wc->baseDamage = 25.f;
     wc->cooldown = sf::seconds(0.2f);
     wc->projectileSpeed = 1000.f;
-    wc->projectileLifetime = sf::seconds(2.f);
+    wc->projectileLifetime = sf::seconds(0.5f);
 
     // Add the components to the entity.
     player->addComponent(phc);
@@ -656,7 +660,7 @@ kantan::Entity* World::createBullet(sf::Vector2f position, std::size_t emitter, 
     dc->emitter = emitter;
     dc->damage = damage;
 
-    lc->maxlifetime = sf::seconds(0.2f);
+    lc->maxlifetime = projectileLifetime;
     lc->callback = [&](std::size_t entityId){
             // Find the entity.
             auto itr = std::find_if(m_entities.begin(), m_entities.end(), [&](kantan::Entity* e) -> bool {
@@ -697,4 +701,49 @@ void World::notifyLevelUp(LevelStatsComponent* lsc)
             clc->client->gameTcp->send(packet);
         }
     }
+}
+
+// Predicate for the physics engine.
+bool World::collisionResponsePredicate(const std::size_t& firstEntityId, const std::size_t& secondEntityId)
+{
+    // Get the first entity.
+    auto firstItr = std::find_if(m_entities.begin(), m_entities.end(), [&](kantan::Entity* e){
+                        return e->getId() == firstEntityId;
+                 });
+
+    // Get the second entity.
+    auto secondItr = std::find_if(m_entities.begin(), m_entities.end(), [&](kantan::Entity* e){
+                        return e->getId() == secondEntityId;
+                 });
+
+    // If one of the entities does not exist, we do not collide.
+    if(firstItr == m_entities.end() || secondItr == m_entities.end())
+        return false;
+
+    // Aliases.
+    kantan::Entity* firstEntity = (*firstItr);
+    kantan::Entity* secondEntity = (*secondItr);
+
+    // Check the type of the entities.
+    if(firstEntity->getName() == "Bullet")
+    {
+        // Check the other entity is not the emitter.
+        DamageComponent* dc = firstEntity->getComponent<DamageComponent>();
+
+        if(dc != nullptr)
+            if(dc->emitter == secondEntityId)
+                return true;
+    }
+    else if(secondEntity->getName() == "Bullet")
+    {
+        // Check the other entity is not the emitter.
+        DamageComponent* dc = secondEntity->getComponent<DamageComponent>();
+
+        if(dc != nullptr)
+            if(dc->emitter == firstEntityId)
+                return true;
+    }
+
+    // Collide otherwise.
+    return true;
 }
