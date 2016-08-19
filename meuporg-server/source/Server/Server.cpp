@@ -683,15 +683,19 @@ void Server::notifyPlayerDisconnected(std::string username)
 // Notifies everyone the entity has been removed.
 void Server::notifyEntityRemoved(unsigned int entityId)
 {
-    // Prepare the packet.
     sf::Packet packet;
-    packet << NetworkValues::NOTIFY << NetworkValues::ENTITY_REMOVED << client->lastPacketIdSent++ << entityId;
 
     // Send the notification to all the in-game clients.
     for(Client* client : m_clients)
     {
         if(client->ingame)
+        {
+            // Prepare the packet.
+            packet.clear();
+            packet << NetworkValues::NOTIFY << NetworkValues::ENTITY_REMOVED << client->lastPacketIdSent++ << entityId;
+
             client->gameTcp->send(packet);
+        }
     }
 }
 
