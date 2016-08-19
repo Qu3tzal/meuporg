@@ -728,19 +728,19 @@ bool World::collisionResponsePredicate(const std::size_t& firstEntityId, const s
     if(firstEntity->getName() == "Bullet")
     {
         // Check the other entity is not the emitter.
-        DamageComponent* dc = firstEntity->getComponent<DamageComponent>();
+        DamageComponent* dc = firstEntity->getComponent<DamageComponent>("Damage");
 
         if(dc != nullptr)
-            if(dc->emitter == secondEntityId)
+            if(dc->emitter != -1 && (std::size_t)(dc->emitter) == secondEntityId)
                 return true;
     }
     else if(secondEntity->getName() == "Bullet")
     {
         // Check the other entity is not the emitter.
-        DamageComponent* dc = secondEntity->getComponent<DamageComponent>();
+        DamageComponent* dc = secondEntity->getComponent<DamageComponent>("Damage");
 
         if(dc != nullptr)
-            if(dc->emitter == firstEntityId)
+            if(dc->emitter != -1 && (std::size_t)(dc->emitter) == firstEntityId)
                 return true;
     }
 
