@@ -5,7 +5,7 @@ NameText::NameText(std::string name, kantan::FontHolder* fonts): ShowHealth(true
     this->name = name;
     this->fonts = fonts;
 
-    nameText.setFont(fonts->get(ResourceId::SECRET_CODE_FONT));
+    nameText.setFont(fonts->get(ResourceId::MONOF_56));
     nameText.setCharacterSize(12);
     nameText.setColor(sf::Color::White);
     nameText.setString(this->name);
@@ -16,17 +16,18 @@ NameText::NameText(std::string name, kantan::FontHolder* fonts): ShowHealth(true
     nameText.setPosition(0, 0);
     if(ShowHealth)
     {
-        healthText.setFont(fonts->get(ResourceId::SECRET_CODE_FONT));
+        healthText.setFont(fonts->get(ResourceId::MONOF_56));
         healthText.setCharacterSize(12);
-        healthText.setColor(sf::Color::White);
+        healthText.setColor(sf::Color::Red);
 
         healthBackground.setSize(sf::Vector2f(healthText.getGlobalBounds().width + 20, healthText.getGlobalBounds().height + 20));
         healthBackground.setFillColor(sf::Color(128, 128, 128, 128));
 
+        healthText.setPosition(0, nameBackground.getGlobalBounds().height);
+        healthBackground.setPosition(sf::Vector2f(0, nameBackground.getGlobalBounds().height));
+
         centerOrigin(healthText);
         centerOrigin(healthBackground);
-
-        healthText.setPosition(0, nameBackground.getGlobalBounds().height);
     }
     centerOrigin(nameText);
     centerOrigin(nameBackground);
@@ -40,14 +41,17 @@ NameText::~NameText()
 void NameText::setHealth(float health, float healthMax)
 {
     std::stringstream ss;
-    ss << (int)health << "\\" << (int)healthMax <<" PV";
+    ss << (int)health << "/" << (int)healthMax <<" PV";
     healthText.setString(ss.str());
     healthBackground.setSize(sf::Vector2f(healthText.getGlobalBounds().width + 20, healthText.getGlobalBounds().height + 20));
+
+    centerOrigin(healthText);
+    centerOrigin(healthBackground);
 }
 
 int NameText::getheight()
 {
-    return nameBackground.getGlobalBounds().height;
+    return (nameBackground.getGlobalBounds().height + healthBackground.getGlobalBounds().height);
 }
 
 void NameText::draw(sf::RenderTarget& window, sf::RenderStates states) const
@@ -59,6 +63,6 @@ void NameText::draw(sf::RenderTarget& window, sf::RenderStates states) const
         window.draw(healthBackground, states);
     window.draw(nameText, states);
     if(ShowHealth)
-        window.draw(healthText);
+        window.draw(healthText, states);
 
 }
