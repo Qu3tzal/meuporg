@@ -10,9 +10,9 @@ template<typename T>
 sf::Packet& operator >>(sf::Packet& packet, sf::Vector2<T>& vector);
 
 // Writing.
-sf::Packet& operator <<(sf::Packet& packet, sf::Time& time);
+sf::Packet& operator <<(sf::Packet& packet, const sf::Time& time);
 template<typename T>
-sf::Packet& operator <<(sf::Packet& packet, sf::Vector2<T>& vector);
+sf::Packet& operator <<(sf::Packet& packet, const sf::Vector2<T>& vector);
 
 #include "SFMLPacketUtils.inl"
 
