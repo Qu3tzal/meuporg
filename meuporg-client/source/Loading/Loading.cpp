@@ -2,7 +2,7 @@
 
 Loading::Loading(sf::TcpSocket* informationSocket, sf::TcpSocket* serverSocket, sf::TcpSocket* gameServerSocket, sf::UdpSocket* gameServerUdpSocket, kantan::FontHolder* fonts, sf::RenderWindow* window, State* state, std::string* token, std::string* username) :
     buttons(window, fonts)
-    , textInputs(window, fonts)
+    , textInputs(window, fonts, 0)
     , showText(true)
     , Version(001)
 

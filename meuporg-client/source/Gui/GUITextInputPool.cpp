@@ -1,9 +1,10 @@
 #include "GUITextInputPool.hpp"
 
-GUITextInputPool::GUITextInputPool(sf::RenderWindow* window, kantan::FontHolder* fonts) :
+GUITextInputPool::GUITextInputPool(sf::RenderWindow* window, kantan::FontHolder* fonts, int mode = 0) :
     m_focusedTextName("")
     , m_useCustomView(false)
 {
+    this->mode = mode;
     this->window = window;
     this->fonts = fonts;
     //fonts->load(1, "assets/fonts/secrcode.ttf");
@@ -16,6 +17,9 @@ GUITextInputPool::~GUITextInputPool()
 
 void GUITextInputPool::addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor)
 {
+    if(mode == 1 && m_texts.size() >= 1)
+        return;
+
     sf::Text text, placeholderText;
     //text.setFont(fonts.get(fontId));
     text.setFont(fonts->get(fontId));
@@ -54,11 +58,15 @@ void GUITextInputPool::addTextInput(std::string name, sf::Vector2f centerPositio
     shape.setOutlineColor(borderLineColor);
 
     m_texts[name] = {shape, text, placeholderText, textColor, borderLineColor, focusedBorderLineColor, shape.getSize()};
+
 }
 
 void GUITextInputPool::addTextInput(std::string name, TextInput TextInput)
 {
-	m_texts[name] = TextInput;
+    if(mode == 1 && m_texts.size() >= 1)
+        return;
+
+    m_texts[name] = TextInput;
 }
 
 void GUITextInputPool::removeTextInput(std::string name)
@@ -70,28 +78,36 @@ void GUITextInputPool::removeTextInput(std::string name)
 
 void GUITextInputPool::update()
 {
-    // Update hover color.
-    for(auto itr(m_texts.begin()) ; itr != m_texts.end() ; ++itr)
+    if(mode != 1)
     {
-        sf::FloatRect hitbox = itr->second.shape.getGlobalBounds();
-        hitbox.left += getPosition().x;
-        hitbox.top += getPosition().y;
-        sf::Vector2i rawMousePosition = sf::Mouse::getPosition(*window);
-        sf::Vector2f mousePosition = window->mapPixelToCoords(rawMousePosition);
+        // Update hover color.
+        for(auto itr(m_texts.begin()) ; itr != m_texts.end() ; ++itr)
+        {
+            sf::FloatRect hitbox = itr->second.shape.getGlobalBounds();
+            hitbox.left += getPosition().x;
+            hitbox.top += getPosition().y;
+            sf::Vector2i rawMousePosition = sf::Mouse::getPosition(*window);
+            sf::Vector2f mousePosition = window->mapPixelToCoords(rawMousePosition);
 
-        if(m_useCustomView)
-            mousePosition = window->mapPixelToCoords(rawMousePosition, m_customView);
+            if(m_useCustomView)
+                mousePosition = window->mapPixelToCoords(rawMousePosition, m_customView);
 
-        if(hitbox.contains(mousePosition) || itr->first == m_focusedTextName)
-            itr->second.shape.setOutlineColor(itr->second.focusedBorderLineColor);
-        else if(itr->first != m_focusedTextName) // If we are not focused and not hovered, back to basic line color.
-            itr->second.shape.setOutlineColor(itr->second.borderLineColor);
+            if(hitbox.contains(mousePosition) || itr->first == m_focusedTextName)
+                itr->second.shape.setOutlineColor(itr->second.focusedBorderLineColor);
+            else if(itr->first != m_focusedTextName) // If we are not focused and not hovered, back to basic line color.
+                itr->second.shape.setOutlineColor(itr->second.borderLineColor);
+        }
     }
 }
 
 void GUITextInputPool::handleEvent(sf::Event event)
 {
-    if(event.type == sf::Event::MouseButtonPressed)
+    if(mode == 1 && event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::T)
+    {
+        if(m_focusedTextName == "")
+            m_focusedTextName = m_texts.begin()->first;
+    }
+    else if(event.type == sf::Event::MouseButtonPressed)
     {
         // Reset the focused text input.
         m_focusedTextName = "";
@@ -177,6 +193,11 @@ void GUITextInputPool::clear(std::string name)
     m_texts[name].text.setString("");
 }
 
+void GUITextInputPool::resetFocus()
+{
+    m_focusedTextName = "";
+}
+
 std::string GUITextInputPool::getFocusedName()
 {
     return m_focusedTextName;
@@ -186,14 +207,18 @@ void GUITextInputPool::draw(sf::RenderTarget& window, sf::RenderStates states) c
 {
     states.transform *= getTransform();
 
-    for(std::pair<std::string, TextInput> b_pair : m_texts)
-    {
-        window.draw(b_pair.second.shape, states);
+    if(mode == 1 && m_focusedTextName == "")
+        return;
 
-        // We display the text only if we are focused or we have something already written.
-        if(b_pair.first == m_focusedTextName || b_pair.second.text.getString() != "")
-            window.draw(b_pair.second.text, states);
-        else
-            window.draw(b_pair.second.placeholderText, states);
-    }
+        for(std::pair<std::string, TextInput> b_pair : m_texts)
+        {
+            window.draw(b_pair.second.shape, states);
+
+            // We display the text only if we are focused or we have something already written.
+            if(b_pair.first == m_focusedTextName || b_pair.second.text.getString() != "")
+                window.draw(b_pair.second.text, states);
+            else
+                window.draw(b_pair.second.placeholderText, states);
+        }
+
 }

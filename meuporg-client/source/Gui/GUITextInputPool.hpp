@@ -32,7 +32,7 @@ class GUITextInputPool : public sf::Drawable, public sf::Transformable
 {
     public:
         // Ctor.
-        GUITextInputPool(sf::RenderWindow* window, kantan::FontHolder* fonts);
+        GUITextInputPool(sf::RenderWindow* window, kantan::FontHolder* fonts, int mode);
 
         // Dtor.
         virtual ~GUITextInputPool();
@@ -64,6 +64,9 @@ class GUITextInputPool : public sf::Drawable, public sf::Transformable
         // Get the focuses input name
         std::string getFocusedName();
 
+        //reset the focused name
+        void resetFocus();
+
     protected:
         // Draws the text inputs.
         void draw(sf::RenderTarget& window, sf::RenderStates states) const;
@@ -85,5 +88,8 @@ class GUITextInputPool : public sf::Drawable, public sf::Transformable
         sf::RenderWindow* window;
 
         kantan::FontHolder* fonts;
+
+        // Enter mode
+        int mode;
 };
 #endif // GUITEXTINPUTPOOL_HPP

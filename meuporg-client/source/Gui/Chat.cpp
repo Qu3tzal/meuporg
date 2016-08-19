@@ -1,7 +1,7 @@
 #include "Chat.hpp"
 
 Chat::Chat(sf::RenderWindow* window, sf::TcpSocket* socket, kantan::FontHolder* fonts) : buttons(window, fonts)
-    , textInputs(window, fonts)
+    , textInputs(window, fonts, 1)
     , chatActiveFlag(false)
 {
     this->socket = socket;
@@ -112,6 +112,7 @@ void Chat::handleEvent(sf::Event e)
         if(e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Return && textInputs.getText("Chat") != "")
         {
             sendMessage();
+            textInputs.resetFocus();
         }
     }
 }
