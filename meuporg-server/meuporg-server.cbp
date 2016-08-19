@@ -80,6 +80,8 @@
 		<Unit filename="source/Components/BasicStatsComponent.hpp" />
 		<Unit filename="source/Components/ClientLinkComponent.cpp" />
 		<Unit filename="source/Components/ClientLinkComponent.hpp" />
+		<Unit filename="source/Components/DamageComponent.cpp" />
+		<Unit filename="source/Components/DamageComponent.hpp" />
 		<Unit filename="source/Components/LevelStatsComponent.cpp" />
 		<Unit filename="source/Components/LevelStatsComponent.hpp" />
 		<Unit filename="source/Components/MonsterAIComponent.cpp" />
@@ -88,6 +90,8 @@
 		<Unit filename="source/Components/NameComponent.hpp" />
 		<Unit filename="source/Components/StaticMarkerComponent.cpp" />
 		<Unit filename="source/Components/StaticMarkerComponent.hpp" />
+		<Unit filename="source/Components/WeaponComponent.cpp" />
+		<Unit filename="source/Components/WeaponComponent.hpp" />
 		<Unit filename="source/Database/Database.cpp" />
 		<Unit filename="source/Database/Database.hpp" />
 		<Unit filename="source/Database/PlayerData.hpp" />
@@ -180,6 +184,7 @@
 		<Unit filename="source/Systems/LevelUpSystem.hpp" />
 		<Unit filename="source/Systems/MonsterAISystem.cpp" />
 		<Unit filename="source/Systems/MonsterAISystem.hpp" />
+		<Unit filename="source/Utils/Maths.hpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.cpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.hpp" />
 		<Unit filename="source/Utils/SFMLPacketUtils.inl" />
