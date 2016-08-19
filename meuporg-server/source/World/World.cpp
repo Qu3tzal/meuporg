@@ -70,6 +70,7 @@ void World::update(sf::Time dt, Server* server)
 
     // Collision.
     m_collisionSystem.update(dt, m_components["PolygonHitbox"], m_components["Movement"]);
+    checkCollisionEffects(m_collisionSystem.getCollisionRecord());
 
     // Leveling up.
     m_levelUpSystem.update(m_components["LevelStats"], std::bind(&World::notifyLevelUp, this, std::placeholders::_1));
@@ -381,6 +382,18 @@ void World::giveXpTo(std::string username, float amount)
         std::cout << "[WORLD|" << m_id << "] " << username << " got " << amount << " XP." << std::endl;
         Multithreading::outputMutex.unlock();
     }
+}
+
+kantan::Entity* World::getEntity(const std::size_t& id)
+{
+    auto itr = std::find_if(m_entities.begin(), m_entities.end(), [&](kantan::Entity* e){
+                        return e->getId() == id;
+                 });
+
+    if(itr == m_entities.end())
+        return nullptr;
+
+    return (*itr);
 }
 
 void World::performancesCheck(sf::Time serverdt)
@@ -707,23 +720,13 @@ void World::notifyLevelUp(LevelStatsComponent* lsc)
 // Predicate for the physics engine.
 bool World::collisionResponsePredicate(const std::size_t& firstEntityId, const std::size_t& secondEntityId)
 {
-    // Get the first entity.
-    auto firstItr = std::find_if(m_entities.begin(), m_entities.end(), [&](kantan::Entity* e){
-                        return e->getId() == firstEntityId;
-                 });
-
-    // Get the second entity.
-    auto secondItr = std::find_if(m_entities.begin(), m_entities.end(), [&](kantan::Entity* e){
-                        return e->getId() == secondEntityId;
-                 });
+    // Get the entities.
+    kantan::Entity* firstEntity = getEntity(firstEntityId);
+    kantan::Entity* secondEntity = getEntity(secondEntityId);
 
     // If one of the entities does not exist, we do not collide.
-    if(firstItr == m_entities.end() || secondItr == m_entities.end())
+    if(firstEntity == nullptr || secondEntity == nullptr)
         return false;
-
-    // Aliases.
-    kantan::Entity* firstEntity = (*firstItr);
-    kantan::Entity* secondEntity = (*secondItr);
 
     // Check the type of the entities.
     if(firstEntity->getName() == "Bullet")
@@ -747,4 +750,66 @@ bool World::collisionResponsePredicate(const std::size_t& firstEntityId, const s
 
     // Collide otherwise.
     return true;
+}
+
+void World::checkCollisionEffects(const std::vector<std::pair<std::size_t, std::size_t>>& collisionRecord)
+{
+    for(const std::pair<std::size_t, std::size_t>& collisionPair : collisionRecord)
+    {
+        // Get the entities.
+        kantan::Entity* firstEntity = getEntity(collisionPair.first);
+        kantan::Entity* secondEntity = getEntity(collisionPair.second);
+
+        // If one of the entities does not exist, we do not collide.
+        if(firstEntity == nullptr || secondEntity == nullptr)
+            continue;
+
+        if(firstEntity->getName() == "Bullet" && secondEntity->getName() == "Bullet")
+        {
+            kantan::DeletionMarkerComponent* dmc_first = firstEntity->getComponent<kantan::DeletionMarkerComponent>("DeletionMarker");
+            kantan::DeletionMarkerComponent* dmc_second = secondEntity->getComponent<kantan::DeletionMarkerComponent>("DeletionMarker");
+
+            if(dmc_first != nullptr)
+                dmc_first->marked = true;
+
+            if(dmc_second != nullptr)
+                dmc_second->marked = true;
+        }
+        else if(firstEntity->getName() == "Bullet" || secondEntity->getName() == "Bullet")
+        {
+            kantan::Entity *target, *bullet;
+
+            if(firstEntity->getName() == "Bullet")
+            {
+                target = secondEntity;
+                bullet = firstEntity;
+            }
+            else
+            {
+                target = firstEntity;
+                bullet = secondEntity;
+            }
+
+            // Check the other entity is not the emitter.
+            DamageComponent* dc = bullet->getComponent<DamageComponent>("Damage");
+
+            if(dc == nullptr)
+                continue;
+
+            if(dc->emitter != -1 && (std::size_t)(dc->emitter) == target->getId())
+                continue;
+
+            // Deal damages to the target.
+            BasicStatsComponent* bscTarget = target->getComponent<BasicStatsComponent>("BasicStats");
+
+            if(bscTarget != nullptr)
+                bscTarget->hp -= std::max(dc->damage - bscTarget->resistance, 0.f);
+
+            // Destroy the bullet.
+            kantan::DeletionMarkerComponent* dmcBullet= bullet->getComponent<kantan::DeletionMarkerComponent>("DeletionMarker");
+
+            if(dmcBullet != nullptr)
+                dmcBullet->marked = true;
+        }
+    }
 }

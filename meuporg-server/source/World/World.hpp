@@ -81,6 +81,9 @@ class World
         friend Server;
         friend ClientInputSystem;
 
+        // Returns the entity pointer or nullptr if not found by its id.
+        kantan::Entity* getEntity(const std::size_t& id);
+
         // Checks the performances of the world thread.
         void performancesCheck(sf::Time serverdt);
 
@@ -110,6 +113,9 @@ class World
 
         // Predicate for the physics engine.
         bool collisionResponsePredicate(const std::size_t& firstEntityId, const std::size_t& secondEntityId);
+
+        // Checks the collisions.
+        void checkCollisionEffects(const std::vector<std::pair<std::size_t, std::size_t>>& collisionRecord);
 
     protected:
         // ID.
