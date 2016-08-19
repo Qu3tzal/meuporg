@@ -16,10 +16,10 @@ class WeaponComponent : public kantan::Component
 		// Attributes.
 		std::string name;
 		float baseDamage;
-		float reach;
 		float projectileSpeed;
 		sf::Time cooldown;
 		sf::Time timeSinceLastShot;
+		sf::Time projectileLifetime;
 };
 
 #endif // WEAPONCOMPONENT_HPP_INCLUDED
