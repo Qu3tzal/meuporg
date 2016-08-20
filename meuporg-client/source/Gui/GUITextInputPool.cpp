@@ -107,7 +107,7 @@ void GUITextInputPool::handleEvent(sf::Event event)
         if(m_focusedTextName == "")
             m_focusedTextName = m_texts.begin()->first;
     }
-    else if(event.type == sf::Event::MouseButtonPressed)
+    else if(event.type == sf::Event::MouseButtonPressed && mode != 1)
     {
         // Reset the focused text input.
         m_focusedTextName = "";
