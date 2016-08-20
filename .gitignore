@@ -100,3 +100,5 @@ meuporg-client/bin/Release/assets/map/map1.txt
 meuporg-server/db/players.sqlite
 meuporg-server/db/players.sqlite
 meuporg-server/bin/Debug/db/players.sqlite
+meuporg-server/bin/Debug/db/players.sqlite
+meuporg-server/db/players.sqlite
