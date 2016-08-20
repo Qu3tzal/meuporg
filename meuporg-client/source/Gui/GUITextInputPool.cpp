@@ -107,10 +107,12 @@ void GUITextInputPool::handleEvent(sf::Event event)
         if(m_focusedTextName == "")
             m_focusedTextName = m_texts.begin()->first;
     }
-    else if(event.type == sf::Event::MouseButtonPressed && mode != 1)
+    else if(event.type == sf::Event::MouseButtonPressed)
     {
         // Reset the focused text input.
         m_focusedTextName = "";
+        if(mode == 1)
+            m_texts[m_texts.begin()->first].text.setString("");
 
         for(std::pair<std::string, TextInput> b_pair : m_texts)
         {
@@ -125,7 +127,7 @@ void GUITextInputPool::handleEvent(sf::Event event)
             if(m_useCustomView)
                 mousePosition = window->mapPixelToCoords(rawMousePosition, m_customView);
 
-            if(hitbox.contains(mousePosition))
+            if(hitbox.contains(mousePosition) && mode != 1)
                 m_focusedTextName = b_pair.first;
         }
     }
