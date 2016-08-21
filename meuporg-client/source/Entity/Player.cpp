@@ -56,6 +56,9 @@ void Player::init()
     a_MoveRight.addTextRect(sf::IntRect(209, 137, 27, 47), sf::Vector2f(0.f, -1.f));
     a_MoveRight.setLoop(true);
     a_MoveRight.setSpeed(12);
+
+    damageText.setFont(fonts->get(ResourceId::KENPIXEL));
+    damageText.setCharacterSize(12);
 }
 
 void Player::update(sf::Time dt)
@@ -140,6 +143,10 @@ void Player::update(sf::Time dt)
     //centerOrigin(nameText);
     nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, - (nameText.getheight()) - sprite.getOrigin().y);
     nameText.setHealth(getProperty("Hp"),getProperty("HpMax"));
+
+    damageText.setPosition(getPosition().x - 15, getPosition().y + sprite.getGlobalBounds().height / 2);
+    if(damageText.getColor().a < 256)
+        damageText.setColor(sf::Color(damageText.getColor().r, damageText.getColor().g, damageText.getColor().b, damageText.getColor().a + 2));
 }
 
 void Player::setDirection()
@@ -191,6 +198,27 @@ void Player::calculatePrecision(sf::Vector2f vect)
 
  void Player::setProperty(std::string name, float value)
  {
+     if(name == "Hp")
+     {
+         float health = m_properties[name];
+         if(health != value)
+         {
+            if(value > health)
+            {
+                damageText.setColor(sf::Color::Green);
+                std::stringstream ss;
+                ss << "+ " << value;
+                damageText.setString(ss.str());
+            }
+            else
+            {
+                damageText.setColor(sf::Color::Red);
+                std::stringstream ss;
+                ss << "- " << value;
+                damageText.setString(ss.str());
+            }
+         }
+     }
     m_properties[name] = value;
  }
 
