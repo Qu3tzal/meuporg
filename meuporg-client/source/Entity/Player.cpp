@@ -144,9 +144,11 @@ void Player::update(sf::Time dt)
     nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, - (nameText.getheight()) - sprite.getOrigin().y);
     nameText.setHealth(getProperty("Hp"),getProperty("HpMax"));
 
-    damageText.setPosition(- 23, sprite.getGlobalBounds().height / 2);
     if(damageText.getColor().a > 1)
+    {
         damageText.setColor(sf::Color(damageText.getColor().r, damageText.getColor().g, damageText.getColor().b, damageText.getColor().a - 2));
+        damageText.setPosition(- (damageText.getGlobalBounds().width + 5 ), (sprite.getGlobalBounds().height / 2) - 0.4f);
+    }
     else
         damageText.setString("");
 }
