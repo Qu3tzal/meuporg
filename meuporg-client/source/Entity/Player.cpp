@@ -292,7 +292,7 @@ void Player::calculatePrecision(sf::Vector2f vect)
             ss << "+ " << nb << " XP";
             text.setString(ss.str());
 
-            text.setPosition(sprite.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
+            text.setPosition(sprite.getGlobalBounds().width + 5 , sprite.getGlobalBounds().height / 2);
             rightDamagesText.push_back(text);
          }
      }
