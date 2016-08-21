@@ -104,3 +104,5 @@ meuporg-server/bin/Debug/db/players.sqlite
 meuporg-server/db/players.sqlite
 meuporg-server/bin/Debug/maps/basic.map
 meuporg-server/bin/Debug/db/players.sqlite
+*.sqlite
+meuporg-server/db/players.sqlite
