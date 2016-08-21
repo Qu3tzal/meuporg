@@ -125,6 +125,9 @@ class Server
         void writePlayerData(const PlayerData& playerData);
 
     protected:
+        // Running flag.
+        bool m_isRunning;
+
         // Database.
         Database m_database;
 

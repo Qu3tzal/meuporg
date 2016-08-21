@@ -1,7 +1,8 @@
 #include "Server.hpp"
 
 Server::Server()
-    : m_database("db/players.sqlite")
+    : m_isRunning(true)
+    , m_database("db/players.sqlite")
     , m_numberOfPlayers(0)
     , m_maximumPlayersCapacity(16)
     , m_loginServer(this)
@@ -25,9 +26,6 @@ Server::~Server()
 
 void Server::init()
 {
-    // Load all the accounts in memory.
-
-
     // Init the login server.
     m_loginServer.init();
 
@@ -59,7 +57,7 @@ void Server::init()
 
 bool Server::isRunning() const
 {
-    return true;
+    return m_isRunning;
 }
 
 void Server::login(sf::Time dt)
@@ -243,6 +241,8 @@ void Server::shutdown()
             disconnectPlayer(entry.first, "Server closed");
         }
     }
+
+
 }
 
 void Server::disconnectPlayer(std::string username, std::string reason)
@@ -456,6 +456,10 @@ void Server::receiveInputThroughTCP()
                                             std::cout << "[GAME_SERVER] " << client->username << " spawned a monster in world #" << worldId << " at position {" << position.x << ", " << position.y << "}." << std::endl;
                                             Multithreading::outputMutex.unlock();
                                         }
+                                    }
+                                    else if(word == "/stop")
+                                    {
+                                        shutdown();
                                     }
                                 }
                             }
