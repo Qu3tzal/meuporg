@@ -209,6 +209,7 @@ void Game::notificationPacket(sf::Packet* packet)
 
                 ss << killer << " a tué: " << killed << " !";
                 chat.write(ss.str(), sf::Color::Red);
+                world.entityKilled(killedId);
             }
         default:
             break;
