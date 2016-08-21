@@ -122,3 +122,6 @@ meuporg-client/bin/Debug/assets/fonts/kenpixel_mini.ttf
 meuporg-client/bin/Debug/assets/fonts/kenpixel_mini_square.ttf
 meuporg-client/bin/Debug/assets/fonts/kenpixel_square.ttf
 meuporg-client/bin/Debug/assets/fonts/kenvector_future.ttf
+meuporg-client/bin/Release/assets/bullet2.png
+*.ttf
+*.sqlite
