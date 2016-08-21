@@ -14,6 +14,8 @@ class BasicStatsComponent : public kantan::Component
 		BasicStatsComponent(std::size_t ownerId);
 
 		// Attribute.
+		bool isDead;
+
 		float hp;
 		float maxhp;
 

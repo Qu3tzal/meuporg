@@ -2,6 +2,7 @@
 
 BasicStatsComponent::BasicStatsComponent(std::size_t ownerId)
      : kantan::Component(std::string("BasicStats"), ownerId)
+     , isDead(false)
      , hp(1.f)
 	 , maxhp(1.f)
 	 , strength(0.f)
