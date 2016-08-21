@@ -17,11 +17,11 @@ void Statistic::init()
 
     nameText.setPosition(sf::Vector2f(10, 10));
     nameText.setCharacterSize(24);
-    nameText.setFont(fonts->get(ResourceId::MONOF_56));
+    nameText.setFont(fonts->get(ResourceId::KENPIXEL));
     nameText.setColor(sf::Color::White);
 
     statsText.setCharacterSize(16);
-    statsText.setFont(fonts->get(ResourceId::MONOF_56));
+    statsText.setFont(fonts->get(ResourceId::KENPIXEL));
     statsText.setColor(sf::Color::White);
 }
 
@@ -35,7 +35,7 @@ void Statistic::update(Player* p)
     std::stringstream sst;
 
     sst << "Vie : " << p->getProperty("HpMax") << "\nForce : " << p->getProperty("Strengh") << "\n"
-    << "Agilité : " << p->getProperty("Agility") << "\nArmure : " << p->getProperty("Resist");
+    << "Agilite : " << p->getProperty("Agility") << "\nArmure : " << p->getProperty("Resist");
 
     statsText.setString(sst.str());
     statsText.setPosition(sf::Vector2f(10, nameText.getGlobalBounds().top + nameText.getGlobalBounds().height + 10));

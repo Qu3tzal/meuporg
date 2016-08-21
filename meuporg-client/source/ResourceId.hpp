@@ -6,6 +6,7 @@ namespace ResourceId
     // fonts
     const unsigned int SECRET_CODE_FONT = 1;
     const unsigned int MONOF_56 = 2;
+    const unsigned int KENPIXEL = 3;
 
     // Textures
     const unsigned int ONE_PUNCH_MAN_TEXTURE = 1;

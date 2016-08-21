@@ -38,7 +38,7 @@ void Hud::init()
     buttons.addButton("Stats", sf::Vector2f(840, 760), sf::Vector2f(90, 40), "Statistique", ResourceId::MONOF_56, 16, sf::Color(200, 200, 200, 128), sf::Color(128, 128, 128, 128), [this](){this->tabIni(Tabs::STATS);});
 
     stats.init();
-    stats.setPosition(400, 400);
+    stats.setPosition(760, 557);
 }
 
 void Hud::tabIni(Tabs t)
