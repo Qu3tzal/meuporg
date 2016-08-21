@@ -35,7 +35,7 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
             WeaponComponent *wc = entity->getComponent<WeaponComponent>("Weapon");
 
             // Block input if dead.
-            if(bsc != nullptr && bsc->isDead)
+            if(bsc != nullptr || bsc->isDead)
                 continue;
 
             // Check the entity has a movement component.

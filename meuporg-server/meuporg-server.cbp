@@ -12,6 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-pg" />
 					<Add option="-g" />
 					<Add directory="source/Server" />
 					<Add directory="source/InformationServer" />
@@ -23,6 +24,7 @@
 					<Add directory="source/Database" />
 				</Compiler>
 				<Linker>
+					<Add option="-pg -lgmon" />
 					<Add library="sfml-system-d" />
 					<Add library="sfml-graphics-d" />
 					<Add library="sfml-window-d" />
