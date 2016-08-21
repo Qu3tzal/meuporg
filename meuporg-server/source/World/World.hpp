@@ -111,6 +111,9 @@ class World
         // Notifies all the clients of the level up.
         void notifyLevelUp(LevelStatsComponent* lsc);
 
+        // Notifies all the clients of the kill.
+        void notifyKill(std::size_t killerId, std::size_t killedId);
+
         // Predicate for the physics engine.
         bool collisionResponsePredicate(const std::size_t& firstEntityId, const std::size_t& secondEntityId);
 

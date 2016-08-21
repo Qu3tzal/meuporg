@@ -717,6 +717,23 @@ void World::notifyLevelUp(LevelStatsComponent* lsc)
     }
 }
 
+// Notifies all the clients of the kill.
+void World::notifyKill(std::size_t killerId, std::size_t killedId)
+{
+    sf::Packet packet;
+    packet << NetworkValues::NOTIFY << NetworkValues::KILL << killerId << killedId;
+
+    for(kantan::Component* c : m_components["ClientLink"])
+    {
+        ClientLinkComponent* clc = static_cast<ClientLinkComponent*>(c);
+
+        if(clc->client != nullptr)
+        {
+            clc->client->gameTcp->send(packet);
+        }
+    }
+}
+
 // Predicate for the physics engine.
 bool World::collisionResponsePredicate(const std::size_t& firstEntityId, const std::size_t& secondEntityId)
 {
@@ -803,7 +820,17 @@ void World::checkCollisionEffects(const std::vector<std::pair<std::size_t, std::
             BasicStatsComponent* bscTarget = target->getComponent<BasicStatsComponent>("BasicStats");
 
             if(bscTarget != nullptr)
+            {
                 bscTarget->hp -= std::max(dc->damage - bscTarget->resistance, 0.f);
+
+                if(bscTarget->hp <= 0.f)
+                {
+                    bscTarget->hp = 0.f;
+                    bscTarget->isDead = true;
+
+                    notifyKill(dc->emitter, bscTarget->getOwnerId());
+                }
+            }
 
             // Destroy the bullet.
             kantan::DeletionMarkerComponent* dmcBullet= bullet->getComponent<kantan::DeletionMarkerComponent>("DeletionMarker");
