@@ -1,6 +1,6 @@
 #include "World.hpp"
 
-World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window) : m_map(textures)
+World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window, sf::TcpSocket* socket) : m_map(textures)
     , player(nullptr)
     , hud(fonts, window)
     , dialogs(fonts)
@@ -8,6 +8,7 @@ World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::st
     this->textures = textures;
     this->fonts = fonts;
     this->username = username;
+    this->socket = socket;
     //loadMap("assets/level/level1.lvl");
 }
 
@@ -184,7 +185,7 @@ void World::updateEntity(sf::Packet* packet)
 
                     player->setState(state);
                     player->setProperty("Hp", hp);
-                   player->setProperty("MaxHp", maxHp);
+                   player->setProperty("HpMax", maxHp);
                    player->setProperty("Strengh", strengh);
                    player->setProperty("Agility", agility);
                    player->setProperty("Resist", resistance);
@@ -237,6 +238,27 @@ void World::updateEntity(sf::Packet* packet)
     }
 
 }
+
+void World::sendRespawnRequest(unsigned int spawnId)
+{
+    sf::Packet packet;
+    packet << NetworkValues::RESPAWN << spawnId;
+
+    socket->send(packet);
+}
+
+void World::entityKilled(unsigned int id)
+{
+    if(id == player->getId())
+    {
+        Dialog* dialog = dialogs.createDialog();
+        DialogChoice* choice = dialog->addChoice();
+        choice->title = "Point de réapation:";
+        choice->possibilities["Spawn 1"] = 0;
+        choice->callback = [this](int choice){this->sendRespawnRequest(choice);};
+    }
+}
+
 
 void World::addEntity(unsigned int id, Entity::Type type, std::string name, sf::Vector2f position, sf::Vector2f velocity)
 {

@@ -6,7 +6,7 @@ Game::Game(sf::RenderWindow* window) : running(true)
     , udpPacketNumberReceive(0)
     , username("")
     , chat(window, &gameServerSocket, &fonts)
-    , world(&textures, &fonts, &username, window)
+    , world(&textures, &fonts, &username, window, &gameServerSocket)
     , loosedPacket(0)
     , timeOutTimer(sf::Time::Zero)
     , timeOut(sf::seconds(5.f))
@@ -209,6 +209,7 @@ void Game::notificationPacket(sf::Packet* packet)
 
                 ss << killer << " a tué: " << killed << " !";
                 chat.write(ss.str(), sf::Color::Red);
+                world.entityKilled(killedId);
             }
         default:
             break;

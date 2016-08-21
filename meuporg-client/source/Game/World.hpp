@@ -17,11 +17,12 @@
 #include "Hud.hpp"
 #include "DialogManager.hpp"
 #include "Bullet.hpp"
+#include "../NetworkValues.hpp"
 
 class World : public sf::Drawable, public sf::Transformable
 {
     public:
-        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window);
+        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window, sf::TcpSocket* socket);
         virtual ~World();
 
         void init();
@@ -45,6 +46,10 @@ class World : public sf::Drawable, public sf::Transformable
         Player* getPlayer(std::string playerName);
 
         void changeWorld(int worldId, int mapId);
+
+        void sendRespawnRequest(unsigned int spawnId);
+
+        void entityKilled(unsigned int id);
 
     protected:
 
@@ -71,6 +76,8 @@ class World : public sf::Drawable, public sf::Transformable
         unsigned int worldId;
 
         unsigned int mapId;
+
+        sf::TcpSocket* socket;
 
     private:
 };
