@@ -57,9 +57,6 @@ void Player::init()
     a_MoveRight.setLoop(true);
     a_MoveRight.setSpeed(12);
 
-    damageText.setFont(fonts->get(ResourceId::KENPIXEL));
-    damageText.setCharacterSize(12);
-    damageText.setPosition(- (damageText.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
 }
 
 void Player::update(sf::Time dt)
@@ -145,15 +142,18 @@ void Player::update(sf::Time dt)
     nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, - (nameText.getheight()) - sprite.getOrigin().y);
     nameText.setHealth(getProperty("Hp"),getProperty("HpMax"));
 
-    if(damageText.getColor().a > 1)
+    for(auto i = damagesText.begin() ; i != damagesText.end();)
     {
-        damageText.setColor(sf::Color(damageText.getColor().r, damageText.getColor().g, damageText.getColor().b, damageText.getColor().a - 2));
-        damageText.setPosition(- (damageText.getGlobalBounds().width + 5 ), damageText.getPosition().y - 1);
-    }
-    else
-    {
-        damageText.setString("");
-        damageText.setPosition(- (damageText.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
+        if(i->getColor().a > 1)
+        {
+            i->setColor(sf::Color(i->getColor().r, i->getColor().g, i->getColor().b, i->getColor().a - 2));
+            i->setPosition(- (i->getGlobalBounds().width + 5 ), i->getPosition().y - 1);
+            i++;
+        }
+        else
+        {
+            damagesText.erase(i);
+        }
     }
 }
 
@@ -211,20 +211,31 @@ void Player::calculatePrecision(sf::Vector2f vect)
          float health = m_properties[name];
          if(health != value)
          {
+
+             sf::Text text;
+             text.setFont(fonts->get(ResourceId::KENPIXEL));
+             text.setCharacterSize(12);
+
+
             if(value > health)
             {
-                damageText.setColor(sf::Color(0, 255, 0, 255));
+                text.setColor(sf::Color(0, 255, 0, 255));
                 std::stringstream ss;
-                ss << "+ " << value;
-                damageText.setString(ss.str());
+                float nb = value - health;
+                ss << "+ " << nb;
+                text.setString(ss.str());
             }
             else
             {
-                damageText.setColor(sf::Color(255, 0, 0, 255));
+                text.setColor(sf::Color(255, 0, 0, 255));
                 std::stringstream ss;
-                ss << "- " << value;
-                damageText.setString(ss.str());
+                float nb = health - value;
+                ss << "- " << nb;
+                text.setString(ss.str());
             }
+            text.setPosition(- (text.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
+            damagesText.push_back(text);
+
          }
      }
     m_properties[name] = value;
@@ -240,5 +251,6 @@ void Player::draw(sf::RenderTarget& window, sf::RenderStates states) const
     states.transform *= getTransform();
     window.draw(sprite, states);
     window.draw(nameText, states);
-    window.draw(damageText, states);
+    for(sf::Text text : damagesText)
+        window.draw(text, states);
 }

@@ -57,7 +57,7 @@ class Player : public Entity
 
         std::map <std::string, float> m_properties;
 
-        sf::Text damageText;
+        std::vector<sf::Text> damagesText;
 
 
     private:
