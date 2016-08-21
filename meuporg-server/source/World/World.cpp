@@ -399,7 +399,7 @@ void World::onRespawn(Client* client, std::size_t spawnId)
     {
         ClientLinkComponent* clc = component->convert<ClientLinkComponent>();
 
-        if(clc == nullptr)
+        if(clc == nullptr || clc->client != client)
             continue;
 
         return respawn(clc->getOwnerId());
@@ -845,7 +845,7 @@ void World::checkCollisionEffects(const std::vector<std::pair<std::size_t, std::
             // Deal damages to the target.
             BasicStatsComponent* bscTarget = target->getComponent<BasicStatsComponent>("BasicStats");
 
-            if(bscTarget != nullptr)
+            if(bscTarget != nullptr && !bscTarget->isDead)
             {
                 bscTarget->hp -= std::max(dc->damage - bscTarget->resistance, 0.f);
 
@@ -856,13 +856,13 @@ void World::checkCollisionEffects(const std::vector<std::pair<std::size_t, std::
                     onKill(dc->emitter, bscTarget->getOwnerId());
                     notifyKill(dc->emitter, bscTarget->getOwnerId());
                 }
+
+                // Destroy the bullet.
+                kantan::DeletionMarkerComponent* dmcBullet = bullet->getComponent<kantan::DeletionMarkerComponent>("DeletionMarker");
+
+                if(dmcBullet != nullptr)
+                    dmcBullet->marked = true;
             }
-
-            // Destroy the bullet.
-            kantan::DeletionMarkerComponent* dmcBullet= bullet->getComponent<kantan::DeletionMarkerComponent>("DeletionMarker");
-
-            if(dmcBullet != nullptr)
-                dmcBullet->marked = true;
         }
     }
 }
@@ -901,6 +901,9 @@ void World::addSpawnPoint(sf::Vector2f spawn)
 void World::respawn(std::size_t entityId, std::size_t spawnId)
 {
     kantan::Entity* entity = getEntity(entityId);
+
+    if(entity == nullptr)
+        return;
 
     // Reactivate hitbox.
     kantan::PolygonHitboxComponent* phc = entity->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
