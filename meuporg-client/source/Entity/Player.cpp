@@ -65,8 +65,10 @@ void Player::update(sf::Time dt)
     setXpneeded();
     sprite.setOrigin(sf::Vector2f(0.f, 0.f));
     setDirection();
-    switch(direction)
+    if(state != State::DEAD)
     {
+        switch(direction)
+        {
         case Direction::UP :
             if(state == State::WALKING)
             {
@@ -137,7 +139,13 @@ void Player::update(sf::Time dt)
             sprite.setTextureRect(a_MoveDown.getFrame().first);
             sprite.setOrigin(a_MoveDown.getFrame().second);
             break;
+        }
     }
+    else
+    {
+        sprite.setTexture(textures->get(ResourceId::GRAVE));
+    }
+
     //centerOrigin(nameText);
     nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, - (nameText.getheight()) - sprite.getOrigin().y);
     nameText.setHealth(getProperty("Hp"),getProperty("HpMax"));

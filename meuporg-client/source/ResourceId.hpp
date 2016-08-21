@@ -13,6 +13,7 @@ namespace ResourceId
     const unsigned int SPARTIATE_TEXTURE = 2;
     const unsigned int TILESET = 3;
     const unsigned int BULLET = 4;
+    const unsigned int GRAVE = 5;
 };
 
 #endif // RESOUCEID_HPP_INCLUDED
