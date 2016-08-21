@@ -27,7 +27,7 @@ int Database::getLastError() const
 void Database::createAccount(const std::string& username, const std::string& password)
 {
     // Prepare statement.
-    std::string statementString("INSERT INTO `players` (username) VALUES(:username)");
+    std::string statementString("INSERT INTO `players` (username, password, hp, maxhp, strength, agility, resistance, xp, level) VALUES(:username, :password, :hp, :maxhp, :strength, :agility, :resistance, :xp, :level)");
 
     sqlite3_stmt* statement;
     m_lastError = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);
@@ -36,8 +36,33 @@ void Database::createAccount(const std::string& username, const std::string& pas
         return;
 
     // Bind parameter.
-    int usernameParameterIndex = sqlite3_bind_parameter_index(statement, ":username");
-    sqlite3_bind_text(statement, usernameParameterIndex, username.c_str(), username.size(), nullptr);
+    int parameterIndex = sqlite3_bind_parameter_index(statement, ":username");
+    sqlite3_bind_text(statement, parameterIndex, username.c_str(), username.size(), nullptr);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":password");
+    sqlite3_bind_text(statement, parameterIndex, password.c_str(), password.size(), nullptr);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":hp");
+    sqlite3_bind_double(statement, parameterIndex, 100.f);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":maxhp");
+    sqlite3_bind_double(statement, parameterIndex, 100.f);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":strength");
+    sqlite3_bind_double(statement, parameterIndex, 0.f);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":agility");
+    sqlite3_bind_double(statement, parameterIndex, 0.f);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":resistance");
+    sqlite3_bind_double(statement, parameterIndex, 0.f);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":xp");
+    sqlite3_bind_double(statement, parameterIndex, 0.f);
+
+    parameterIndex = sqlite3_bind_parameter_index(statement, ":level");
+    sqlite3_bind_double(statement, parameterIndex, 0.f);
+
 
     // Execute.
     while(true)
