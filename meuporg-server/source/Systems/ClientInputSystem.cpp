@@ -25,8 +25,18 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
             // Get the movement component.
             kantan::MovementComponent* mc = entity->getComponent<kantan::MovementComponent>("Movement");
 
+            // Get the basic stats component.
+            BasicStatsComponent* bsc = entity->getComponent<BasicStatsComponent>("BasicStat");
+
+            // Get the level stats component.
+            LevelStatsComponent* lsc = entity->getComponent<LevelStatsComponent>("LevelStats");
+
             // Get the weapon component.
             WeaponComponent *wc = entity->getComponent<WeaponComponent>("Weapon");
+
+            // Block input if dead.
+            if(bsc != nullptr && bsc->isDead)
+                continue;
 
             // Check the entity has a movement component.
             if(entity->hasComponent("Movement"))
@@ -55,7 +65,7 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
                 mc->velocity = kantan::normalize(inputVector) * mc->maximumSpeed;
             }
 
-            if(entity->hasComponent("PolygonHitbox") && entity->hasComponent("Weapon"))
+            if(entity->hasComponent("PolygonHitbox") && entity->hasComponent("Weapon") && entity->hasComponent("LevelStats"))
             {
                 if(clc->client->inputs.isAAttackKeyPressed)
                 {
@@ -71,7 +81,7 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
                                         entity->getId(),
                                         direction,
                                         wc->projectileSpeed,
-                                        wc->baseDamage,
+                                        wc->baseDamage + wc->baseDamage * (std::min(lsc->level, 100.f) / 100.f),
                                         wc->projectileLifetime
                                     );
                     }
