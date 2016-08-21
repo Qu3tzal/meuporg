@@ -289,10 +289,10 @@ void Player::calculatePrecision(sf::Vector2f vect)
             text.setColor(sf::Color(0, 0, 255, 255));
             std::stringstream ss;
             float nb = value - xp;
-            ss << "+ " << nb << " xp";
+            ss << "+ " << nb << " XP";
             text.setString(ss.str());
 
-            text.setPosition(sprite.getGlobalBounds().width +  (text.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
+            text.setPosition(sprite.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
             rightDamagesText.push_back(text);
          }
      }
@@ -304,7 +304,7 @@ void Player::calculatePrecision(sf::Vector2f vect)
          {
             sf::Text text;
             text.setFont(fonts->get(ResourceId::KENPIXEL));
-            text.setCharacterSize(12);
+            text.setCharacterSize(20);
 
             text.setColor(sf::Color(255, 215, 0, 255));
             std::stringstream ss;

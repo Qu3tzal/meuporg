@@ -176,7 +176,7 @@ void Game::notificationPacket(sf::Packet* packet)
                 float level(0);
                 *packet >> level;
                 std::stringstream ss;
-                ss << name << "viens de monter level " << (unsigned int)level;
+                ss << name << " viens de monter level " << (unsigned int)level;
                 chat.write(ss.str(), sf::Color::Yellow);
             }
             break;
