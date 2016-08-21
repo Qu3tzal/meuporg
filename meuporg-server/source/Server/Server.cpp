@@ -234,15 +234,28 @@ std::map<std::string, Account*>* Server::getAccounts()
 
 void Server::shutdown()
 {
-    for(auto entry : m_accounts)
+    Multithreading::outputMutex.lock();
+    std::cerr << "[GAME_SERVER] Disconnecting everybody..." << std::endl;
+    std::cerr << "[GAME_SERVER] Stopping server..." << std::endl;
+    Multithreading::outputMutex.unlock();
+
+    // Disconnect everyone.
+    auto itr = m_accounts.begin();
+    itr++;
+
+    while(itr != m_accounts.end())
     {
-        if(entry.second->linkedClient->ingame)
+        if(itr->second->linkedClient->ingame)
         {
-            disconnectPlayer(entry.first, "Server closed");
+            disconnectPlayer(itr->first, "Server closed");
         }
     }
 
+    m_isRunning = false;
 
+    Multithreading::outputMutex.lock();
+    std::cerr << "[GAME_SERVER] Server stopped." << std::endl;
+    Multithreading::outputMutex.unlock();
 }
 
 void Server::disconnectPlayer(std::string username, std::string reason)
