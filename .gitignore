@@ -125,3 +125,4 @@ meuporg-client/bin/Debug/assets/fonts/kenvector_future.ttf
 meuporg-client/bin/Release/assets/bullet2.png
 *.ttf
 *.sqlite
+meuporg-client/bin/Release/assets/tombe.png

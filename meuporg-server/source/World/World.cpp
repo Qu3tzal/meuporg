@@ -91,6 +91,7 @@ void World::playerConnected(Client* client, Server* server)
     // Log.
     Multithreading::outputMutex.lock();
     std::cout << "[WORLD|" << m_id << "] '" << client->username << "' joined (dbid: " << playerData.dbid << ")." << std::endl;
+    std::cout << "maxhp: " << playerData.maxhp << std::endl;
     Multithreading::outputMutex.unlock();
 }
 
@@ -514,7 +515,7 @@ kantan::Entity* World::createEntity(std::string name, bool isStatic)
 }
 
 // createXXX methods.
-kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client, PlayerData playerData)
+kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client, const PlayerData& playerData)
 {
     // Create the entity.
     kantan::Entity* player = createEntity("Player");
@@ -743,6 +744,10 @@ void World::notifyKill(std::size_t killerId, std::size_t killedId)
 {
     sf::Packet packet;
     packet << NetworkValues::NOTIFY << NetworkValues::KILL << killerId << killedId;
+
+    Multithreading::outputMutex.lock();
+    std::cout << "[WORLD|" << m_id << "] Entity #" << killerId << " killed entity #" << killedId << "." << std::endl;
+    Multithreading::outputMutex.unlock();
 
     for(kantan::Component* c : m_components["ClientLink"])
     {

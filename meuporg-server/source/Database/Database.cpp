@@ -27,7 +27,7 @@ int Database::getLastError() const
 void Database::createAccount(const std::string& username, const std::string& password)
 {
     // Prepare statement.
-    std::string statementString("INSERT INTO `players` (username, password, hp, maxhp, strength, agility, resistance, xp, level) VALUES(:username, :password, :hp, :maxhp, :strength, :agility, :resistance, :xp, :level)");
+    std::string statementString("INSERT INTO `players` (username, hashedPassword, hp, maxhp, strength, agility, resistance, xp, level) VALUES(:username, :password, :hp, :maxhp, :strength, :agility, :resistance, :xp, :level)");
 
     sqlite3_stmt* statement;
     m_lastError = sqlite3_prepare(m_db, statementString.c_str(), statementString.size(), &statement, nullptr);

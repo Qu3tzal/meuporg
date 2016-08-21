@@ -105,7 +105,7 @@ class World
         T* createComponent(std::size_t ownerId);
 
         // createXXX methods.
-        kantan::Entity* createPlayer(sf::Vector2f position, Client* client, PlayerData playerData);
+        kantan::Entity* createPlayer(sf::Vector2f position, Client* client, const PlayerData& playerData);
         kantan::Entity* createNPC(sf::Vector2f position);
         kantan::Entity* createBox(sf::Vector2f position);
         kantan::Entity* createMonster(sf::Vector2f position);
