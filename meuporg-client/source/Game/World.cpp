@@ -185,7 +185,7 @@ void World::updateEntity(sf::Packet* packet)
 
                     player->setState(state);
                     player->setProperty("Hp", hp);
-                   player->setProperty("MaxHp", maxHp);
+                   player->setProperty("HpMax", maxHp);
                    player->setProperty("Strengh", strengh);
                    player->setProperty("Agility", agility);
                    player->setProperty("Resist", resistance);
