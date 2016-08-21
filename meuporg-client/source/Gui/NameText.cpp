@@ -5,8 +5,8 @@ NameText::NameText(std::string name, kantan::FontHolder* fonts): ShowHealth(true
     this->name = name;
     this->fonts = fonts;
 
-    nameText.setFont(fonts->get(ResourceId::KENPIXEL));
-    nameText.setCharacterSize(13);
+    nameText.setFont(fonts->get(ResourceId::MONOF_56));
+    nameText.setCharacterSize(12);
     nameText.setColor(sf::Color::White);
     nameText.setString(this->name);
 
@@ -17,7 +17,7 @@ NameText::NameText(std::string name, kantan::FontHolder* fonts): ShowHealth(true
     if(ShowHealth)
     {
         healthText.setFont(fonts->get(ResourceId::KENPIXEL));
-        healthText.setCharacterSize(15);
+        healthText.setCharacterSize(12);
         healthText.setColor(sf::Color::Red);
 
         healthBackground.setSize(sf::Vector2f(healthText.getGlobalBounds().width + 20, healthText.getGlobalBounds().height + 20));
