@@ -1,2 +1,3 @@
 id 1
 entity monster 400.f 400.f
+spawn 640.f 400.f
