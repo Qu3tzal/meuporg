@@ -144,9 +144,11 @@ void Player::update(sf::Time dt)
     nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, - (nameText.getheight()) - sprite.getOrigin().y);
     nameText.setHealth(getProperty("Hp"),getProperty("HpMax"));
 
-    damageText.setPosition(getPosition().x - 15, getPosition().y + sprite.getGlobalBounds().height / 2);
-    if(damageText.getColor().a < 256)
-        damageText.setColor(sf::Color(damageText.getColor().r, damageText.getColor().g, damageText.getColor().b, damageText.getColor().a + 2));
+    damageText.setPosition(- 23, sprite.getGlobalBounds().height / 2);
+    if(damageText.getColor().a > 1)
+        damageText.setColor(sf::Color(damageText.getColor().r, damageText.getColor().g, damageText.getColor().b, damageText.getColor().a - 2));
+    else
+        damageText.setString("");
 }
 
 void Player::setDirection()
@@ -205,14 +207,14 @@ void Player::calculatePrecision(sf::Vector2f vect)
          {
             if(value > health)
             {
-                damageText.setColor(sf::Color::Green);
+                damageText.setColor(sf::Color(0, 255, 0, 255));
                 std::stringstream ss;
                 ss << "+ " << value;
                 damageText.setString(ss.str());
             }
             else
             {
-                damageText.setColor(sf::Color::Red);
+                damageText.setColor(sf::Color(255, 0, 0, 255));
                 std::stringstream ss;
                 ss << "- " << value;
                 damageText.setString(ss.str());
