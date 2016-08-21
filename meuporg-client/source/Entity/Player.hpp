@@ -32,6 +32,8 @@ class Player : public Entity
 
         void setProperty(std::string name, float value);
 
+        void setProperty(std::string name, float value, bool show);
+
         float getProperty(std::string name);
 
         void setXpneeded();

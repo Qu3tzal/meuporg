@@ -228,6 +228,11 @@ void Player::setDirection()
 
 }
 
+void Player::setProperty(std::string name, float value)
+{
+    setProperty(name, value, true);
+}
+
 void Player::setXpneeded()
 {
     setProperty("XpNeeded", 100);
@@ -243,79 +248,85 @@ void Player::calculatePrecision(sf::Vector2f vect)
     //std::cout << distEucli(vect, getPosition()) << std::endl;
 }
 
- void Player::setProperty(std::string name, float value)
+ void Player::setProperty(std::string name, float value, bool show)
  {
-     if(name == "Hp")
+     if(show)
      {
-         float health = m_properties[name];
-         if(health != value)
+         if(name == "Hp")
          {
+             float health = m_properties[name];
+             if(health != value)
+             {
 
-             sf::Text text;
-             text.setFont(fonts->get(ResourceId::KENPIXEL));
-             text.setCharacterSize(12);
+                 sf::Text text;
+                 text.setFont(fonts->get(ResourceId::KENPIXEL));
+                 text.setCharacterSize(12);
 
 
-            if(value > health)
-            {
-                text.setColor(sf::Color(0, 255, 0, 255));
+                if(value > health)
+                {
+                    text.setColor(sf::Color(0, 255, 0, 255));
+                    std::stringstream ss;
+                    float nb = value - health;
+                    ss << "+ " << nb;
+                    text.setString(ss.str());
+                }
+                else
+                {
+                    text.setColor(sf::Color(255, 0, 0, 255));
+                    std::stringstream ss;
+                    float nb = health - value;
+                    ss << "- " << nb;
+                    text.setString(ss.str());
+                }
+                text.setPosition(- (text.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
+                leftDamagesText.push_back(text);
+
+             }
+         }
+         else if(name == "Xp")
+         {
+             float xp = m_properties[name];
+             if(xp != value)
+             {
+                if(value > xp)
+                {
+                    sf::Text text;
+                    text.setFont(fonts->get(ResourceId::KENPIXEL));
+                    text.setCharacterSize(15);
+
+                    text.setColor(sf::Color(0, 0, 255, 255));
+                    std::stringstream ss;
+                    float nb = value - xp;
+                    ss << "+ " << nb << " XP";
+                    text.setString(ss.str());
+
+                    text.setPosition(sprite.getGlobalBounds().width + 5 , sprite.getGlobalBounds().height / 2);
+                    rightDamagesText.push_back(text);
+                }
+             }
+         }
+         else if(name == "Level")
+         {
+             float level = m_properties[name];
+
+             if(level != value)
+             {
+                sf::Text text;
+                text.setFont(fonts->get(ResourceId::KENPIXEL));
+                text.setCharacterSize(20);
+
+                text.setColor(sf::Color(255, 215, 0, 255));
                 std::stringstream ss;
-                float nb = value - health;
-                ss << "+ " << nb;
+                ss << "LEVEL UP!";
                 text.setString(ss.str());
-            }
-            else
-            {
-                text.setColor(sf::Color(255, 0, 0, 255));
-                std::stringstream ss;
-                float nb = health - value;
-                ss << "- " << nb;
-                text.setString(ss.str());
-            }
-            text.setPosition(- (text.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
-            leftDamagesText.push_back(text);
 
+                centerOrigin(text);
+                text.setPosition(sprite.getGlobalBounds().width / 2,  - (text.getGlobalBounds().height + 5));
+                topDamagesText.push_back(text);
+             }
          }
-     }
-     else if(name == "Xp")
-     {
-         float xp = m_properties[name];
-         if(xp != value)
-         {
-            sf::Text text;
-            text.setFont(fonts->get(ResourceId::KENPIXEL));
-            text.setCharacterSize(15);
-
-            text.setColor(sf::Color(0, 0, 255, 255));
-            std::stringstream ss;
-            float nb = value - xp;
-            ss << "+ " << nb << " XP";
-            text.setString(ss.str());
-
-            text.setPosition(sprite.getGlobalBounds().width + 5 , sprite.getGlobalBounds().height / 2);
-            rightDamagesText.push_back(text);
-         }
-     }
-     else if(name == "Level")
-     {
-         float level = m_properties[name];
-
-         if(level != value)
-         {
-            sf::Text text;
-            text.setFont(fonts->get(ResourceId::KENPIXEL));
-            text.setCharacterSize(20);
-
-            text.setColor(sf::Color(255, 215, 0, 255));
-            std::stringstream ss;
-            ss << "LEVEL UP!";
-            text.setString(ss.str());
-
-            centerOrigin(text);
-            text.setPosition(sprite.getGlobalBounds().width / 2,  - (text.getGlobalBounds().height + 5));
-            topDamagesText.push_back(text);
-         }
-     }
+    }
     m_properties[name] = value;
  }
 

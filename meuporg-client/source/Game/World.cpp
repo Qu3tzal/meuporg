@@ -183,13 +183,13 @@ void World::updateEntity(sf::Packet* packet)
                     >> level;
 
                     player->setState(state);
-                    player->setProperty("Hp", hp);
-                   player->setProperty("HpMax", maxHp);
-                   player->setProperty("Strengh", strengh);
-                   player->setProperty("Agility", agility);
-                   player->setProperty("Resist", resistance);
-                   player->setProperty("Xp", xp);
-                   player->setProperty("Level", level);
+                    player->setProperty("Hp", hp, false);
+                   player->setProperty("HpMax", maxHp, false);
+                   player->setProperty("Strengh", strengh, false);
+                   player->setProperty("Agility", agility, false);
+                   player->setProperty("Resist", resistance, false);
+                   player->setProperty("Xp", xp, false);
+                   player->setProperty("Level", level, false);
                 }
                 break;
             case Entity::Type::NPC:
