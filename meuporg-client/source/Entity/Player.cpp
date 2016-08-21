@@ -59,6 +59,7 @@ void Player::init()
 
     damageText.setFont(fonts->get(ResourceId::KENPIXEL));
     damageText.setCharacterSize(12);
+    damageText.setPosition(- (damageText.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
 }
 
 void Player::update(sf::Time dt)
@@ -147,10 +148,13 @@ void Player::update(sf::Time dt)
     if(damageText.getColor().a > 1)
     {
         damageText.setColor(sf::Color(damageText.getColor().r, damageText.getColor().g, damageText.getColor().b, damageText.getColor().a - 2));
-        damageText.setPosition(- (damageText.getGlobalBounds().width + 5 ), (sprite.getGlobalBounds().height / 2) - 0.4f);
+        damageText.setPosition(- (damageText.getGlobalBounds().width + 5 ), damageText.getPosition().y - 1);
     }
     else
+    {
         damageText.setString("");
+        damageText.setPosition(- (damageText.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
+    }
 }
 
 void Player::setDirection()

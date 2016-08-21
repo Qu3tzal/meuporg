@@ -111,3 +111,14 @@ meuporg-server/bin/Debug/db/players.sqlite
 meuporg-server/bin/Debug/db/players.sqlite
 *.sqlite
 meuporg-server/db/players.sqlite
+meuporg-client/bin/Debug/assets/fonts/kenpixel.ttf
+meuporg-client/bin/Debug/assets/fonts/kenpixel_blocks.ttf
+meuporg-client/bin/Debug/assets/fonts/kenpixel_future.ttf
+meuporg-client/bin/Debug/assets/fonts/kenpixel_future_square.ttf
+meuporg-client/bin/Debug/assets/fonts/kenpixel_high.ttf
+meuporg-client/bin/Debug/assets/fonts/kenvector_future_thin.ttf
+meuporg-client/bin/Debug/assets/fonts/kenpixel_high_square.ttf
+meuporg-client/bin/Debug/assets/fonts/kenpixel_mini.ttf
+meuporg-client/bin/Debug/assets/fonts/kenpixel_mini_square.ttf
+meuporg-client/bin/Debug/assets/fonts/kenpixel_square.ttf
+meuporg-client/bin/Debug/assets/fonts/kenvector_future.ttf
