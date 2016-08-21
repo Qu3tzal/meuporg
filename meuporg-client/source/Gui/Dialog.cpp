@@ -168,7 +168,6 @@ void Dialog::setText(std::string str)
     {
         texts.push_back(str);
     }
-    next();
 
 }
 

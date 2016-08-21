@@ -37,6 +37,9 @@ class Dialog : public sf::Drawable, public sf::Transformable
 
         bool isFinished();
 
+        void next();
+
+
     protected:
 
         virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
@@ -54,8 +57,6 @@ class Dialog : public sf::Drawable, public sf::Transformable
         sf::Text text;
 
         sf::Text nextPageText;
-
-        void next();
 
         unsigned int itr;
 
