@@ -26,7 +26,7 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
             kantan::MovementComponent* mc = entity->getComponent<kantan::MovementComponent>("Movement");
 
             // Get the basic stats component.
-            BasicStatsComponent* bsc = entity->getComponent<BasicStatsComponent>("BasicStat");
+            BasicStatsComponent* bsc = entity->getComponent<BasicStatsComponent>("BasicStats");
 
             // Get the level stats component.
             LevelStatsComponent* lsc = entity->getComponent<LevelStatsComponent>("LevelStats");
@@ -34,57 +34,60 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
             // Get the weapon component.
             WeaponComponent *wc = entity->getComponent<WeaponComponent>("Weapon");
 
-            // Block input if dead.
-            if(bsc != nullptr || bsc->isDead)
+            // A player MUST have these components.
+            if(phc == nullptr || mc == nullptr || bsc == nullptr || lsc == nullptr || wc == nullptr)
                 continue;
 
-            // Check the entity has a movement component.
-            if(entity->hasComponent("Movement"))
+
+            // Block input if dead.
+            if(bsc->isDead)
             {
-                sf::Vector2f inputVector(0.f, 0.f);
-
-                if(clc->client->inputs.isMoveDownKeyPressed)
-                {
-                    inputVector.y += 1.f;
-                }
-                else if(clc->client->inputs.isMoveUpKeyPressed)
-                {
-                    inputVector.y -= 1.f;
-                }
-
-                if(clc->client->inputs.isMoveLeftKeyPressed)
-                {
-                    inputVector.x -= 1.f;
-                }
-                else if(clc->client->inputs.isMoveRightKeyPressed)
-                {
-                    inputVector.x += 1.f;
-                }
-
                 mc->velocity = sf::Vector2f(0.f, 0.f);
-                mc->velocity = kantan::normalize(inputVector) * mc->maximumSpeed;
+                continue;
             }
 
-            if(entity->hasComponent("PolygonHitbox") && entity->hasComponent("Weapon") && entity->hasComponent("LevelStats"))
+            // Movement.
+            sf::Vector2f inputVector(0.f, 0.f);
+
+            if(clc->client->inputs.isMoveDownKeyPressed)
             {
-                if(clc->client->inputs.isAAttackKeyPressed)
+                inputVector.y += 1.f;
+            }
+            else if(clc->client->inputs.isMoveUpKeyPressed)
+            {
+                inputVector.y -= 1.f;
+            }
+
+            if(clc->client->inputs.isMoveLeftKeyPressed)
+            {
+                inputVector.x -= 1.f;
+            }
+            else if(clc->client->inputs.isMoveRightKeyPressed)
+            {
+                inputVector.x += 1.f;
+            }
+
+            mc->velocity = sf::Vector2f(0.f, 0.f);
+            mc->velocity = kantan::normalize(inputVector) * mc->maximumSpeed;
+
+            // Attacks.
+            if(clc->client->inputs.isAAttackKeyPressed)
+            {
+                if(wc->timeSinceLastShot >= wc->cooldown)
                 {
-                    if(wc->timeSinceLastShot >= wc->cooldown)
-                    {
-                        wc->timeSinceLastShot = sf::Time::Zero;
+                    wc->timeSinceLastShot = sf::Time::Zero;
 
-                        sf::Vector2f center = kantan::getCenter(phc->points);
-                        sf::Vector2f direction = sf::Vector2f(clc->client->inputs.mouseX, clc->client->inputs.mouseY) - center;
+                    sf::Vector2f center = kantan::getCenter(phc->points);
+                    sf::Vector2f direction = sf::Vector2f(clc->client->inputs.mouseX, clc->client->inputs.mouseY) - center;
 
-                        world->createBullet(
-                                        kantan::getCenter(phc->points) + kantan::normalize(direction),
-                                        entity->getId(),
-                                        direction,
-                                        wc->projectileSpeed,
-                                        wc->baseDamage + wc->baseDamage * (std::min(lsc->level, 100.f) / 100.f),
-                                        wc->projectileLifetime
-                                    );
-                    }
+                    world->createBullet(
+                                    kantan::getCenter(phc->points) + kantan::normalize(direction),
+                                    entity->getId(),
+                                    direction,
+                                    wc->projectileSpeed,
+                                    wc->baseDamage + wc->baseDamage * (std::min(lsc->level, 100.f) / 100.f),
+                                    wc->projectileLifetime
+                                );
                 }
             }
         }

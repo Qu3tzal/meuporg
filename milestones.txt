@@ -13,9 +13,6 @@
 		- Système de notifications internes
 		- Missions :
 			- Système d'écoute des notifications internes
-			- Notification du client du début d'une mission
-			- Notification du client de la fin d'une mission
-			- Notification du client de la progression d'une mission
 			- Notification du kill d'un monstre
 
 	- Client :
@@ -24,7 +21,7 @@
 					- Affichage de la vie et de l'XP
 		- Création de l'entité monstre
 		- Affichage du gain d'XP
-		- PNJ donneur de mission avec texte
+		- Dialogues avec choix
 
 0.1
 ===

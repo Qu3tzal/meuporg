@@ -5,6 +5,7 @@
 #include "ServerConfiguration.hpp"
 #include "Server/Server.hpp"
 #include "InformationServer/InformationServer.hpp"
+#include "Multithreading.hpp"
 
 int informationServer_main(Server* server)
 {
@@ -12,7 +13,7 @@ int informationServer_main(Server* server)
     informationServer.init();
 
     sf::Clock serverclock;
-    while(informationServer.isRunning())
+    while(informationServer.isRunning() && server->isRunning())
     {
         informationServer.update(serverclock.restart());
     }
@@ -66,8 +67,10 @@ int main()
         }
     }
 
-    // Stop the information server.
+    // Stop all threads.
     informationServer_thread.join();
+
+    std::cout << "\tGood bye !" << std::endl;
 
     return 0;
 }
