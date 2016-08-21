@@ -67,6 +67,7 @@ void Player::update(sf::Time dt)
     setDirection();
     if(state != State::DEAD)
     {
+        sprite.setTexture(textures->get(ResourceId::ONE_PUNCH_MAN_TEXTURE));
         switch(direction)
         {
         case Direction::UP :
