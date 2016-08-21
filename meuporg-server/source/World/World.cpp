@@ -306,11 +306,21 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
             if(mc == nullptr)
                 continue;
 
+            // Get the basic stats component.
+            BasicStatsComponent* bsc = e->getComponent<BasicStatsComponent>("BasicStats");
+
             // Set the state.
-            if(mc->velocity == sf::Vector2f(0.f, 0.f))
-                packet << ClientSide::MonsterStates::MONSTERSTATE_IDLE;
+            if(bsc != nullptr && bsc->isDead)
+            {
+                packet << ClientSide::MonsterStates::MONSTERSTATE_DEAD;
+            }
             else
-                packet << ClientSide::MonsterStates::MONSTERSTATE_WALKING;
+            {
+                if(mc->velocity == sf::Vector2f(0.f, 0.f))
+                    packet << ClientSide::MonsterStates::MONSTERSTATE_IDLE;
+                else
+                    packet << ClientSide::MonsterStates::MONSTERSTATE_WALKING;
+            }
 
             // Get the polygon hitbox component.
             kantan::PolygonHitboxComponent* phc = e->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
@@ -890,7 +900,7 @@ void World::onKill(std::size_t killerId, std::size_t killedId)
     LevelStatsComponent* lsc = killerEntity->getComponent<LevelStatsComponent>("LevelStats");
 
     if(lsc != nullptr)
-        lsc->xp += 100.f;
+        lsc->xp += 10.f;
 }
 
 void World::addSpawnPoint(sf::Vector2f spawn)

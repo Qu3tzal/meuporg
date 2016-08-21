@@ -27,7 +27,8 @@ namespace ClientSide
     enum MonsterStates
     {
         MONSTERSTATE_IDLE,
-        MONSTERSTATE_WALKING
+        MONSTERSTATE_WALKING,
+        MONSTERSTATE_DEAD
     };
 };
 
