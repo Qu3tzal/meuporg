@@ -23,6 +23,7 @@ Game::Game(sf::RenderWindow* window) : running(true)
     textures.load(ResourceId::TILESET, "assets/box.png");
 
     textures.load(ResourceId::BULLET, "assets/bullet2.png");
+    textures.load(ResourceId::GRAVE, "assets/tombe.png");
 
     this->window = window;
 }
@@ -193,6 +194,22 @@ void Game::notificationPacket(sf::Packet* packet)
                 chat.write(ss.str(), sf::Color::Yellow);
             }
             break;
+        case NetworkValues::KILL:
+            {
+                unsigned int killerId(0);
+                unsigned int killedId(0);
+
+                *packet >> killerId
+                        >> killedId;
+
+                std::string killer = world.getEntityById(killerId)->getName();
+                std::string killed = world.getEntityById(killedId)->getName();
+
+                std::stringstream ss;
+
+                ss << killer << "A tué: " << killed << " !";
+                chat.write(ss.str(), sf::Color::Red);
+            }
         default:
             break;
     }
