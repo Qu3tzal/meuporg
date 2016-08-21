@@ -42,9 +42,8 @@ void World::init()
     choices->possibilities["Aurevoir"] = 2;
 
     choices->callback = [&](int i) {
-    Dialog* dialog2 = dialogs.createDialog();
-    std::string str = "Yoloooooo ça marche ";
-    dialog2->setText(str);*/
+    };*/
+
 }
 
 void World::update(sf::Time dt)
