@@ -144,6 +144,7 @@ void Player::update(sf::Time dt)
     else
     {
         sprite.setTexture(textures->get(ResourceId::GRAVE));
+        sprite.setTextureRect(sf::IntRect(0, 0, sprite.getTexture()->getSize().x, sprite.getTexture()->getSize().y));
     }
 
     //centerOrigin(nameText);

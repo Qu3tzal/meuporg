@@ -207,7 +207,7 @@ void Game::notificationPacket(sf::Packet* packet)
 
                 std::stringstream ss;
 
-                ss << killer << "A tué: " << killed << " !";
+                ss << killer << " a tué: " << killed << " !";
                 chat.write(ss.str(), sf::Color::Red);
             }
         default:
