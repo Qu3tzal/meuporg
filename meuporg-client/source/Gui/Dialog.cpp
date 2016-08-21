@@ -168,13 +168,13 @@ void Dialog::setText(std::string str)
     {
         texts.push_back(str);
     }
+    next();
 
 }
 
 DialogChoice* Dialog::addChoice()
 {
     choice = new DialogChoice();
-    next();
     return choice;
 }
 
