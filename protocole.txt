@@ -38,6 +38,7 @@ Protocole
 		ACCEPT_MISSION						214
 		CANCEL_MISSION						215
 		PLAYER_MOVED_TO_WORLD				216
+		RESPAWN								217
 
 		KEEP_ALIVE							300
 		OKAY								301
@@ -158,3 +159,7 @@ Protocole
 	Notification de changement de monde du joueur
 	---------------------------------------------
 		[serveur	TCP]		NOTIFY PLAYER_MOVED_TO_WORLD world_id map_id
+
+	Demande de respawn
+	------------------
+		[client		TCP]		RESPAWN spawn_id
