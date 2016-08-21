@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include <SFML/Network.hpp>
 
 #include "ServerConfiguration.hpp"
@@ -27,8 +28,7 @@ int main()
     Server server;
 
     // Launch the information server.
-    sf::Thread informationServer_thread(&informationServer_main, &server);
-    informationServer_thread.launch();
+    std::thread informationServer_thread(&informationServer_main, &server);
 
     /*
         Game server.
@@ -67,7 +67,7 @@ int main()
     }
 
     // Stop the information server.
-    informationServer_thread.terminate();
+    informationServer_thread.join();
 
     return 0;
 }
