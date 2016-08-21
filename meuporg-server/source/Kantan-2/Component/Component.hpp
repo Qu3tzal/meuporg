@@ -33,9 +33,9 @@ namespace kantan
             }
 
             template<typename T>
-            T* convert(Component* component)
+            T* convert()
             {
-                return static_cast<T*>(component);
+                return static_cast<T*>(this);
             }
 
 		public:
