@@ -53,9 +53,12 @@ void Monster::update(sf::Time dt)
 {
     //Entity::update(dt);
     sprite.setOrigin(sf::Vector2f(0.f, 0.f));
-    setDirection();
-    switch(direction)
+    if(state != State::DEAD)
     {
+        sprite.setTexture(textures->get(ResourceId::SPARTIATE_TEXTURE));
+        setDirection();
+        switch(direction)
+        {
         case Direction::UP :
             if(state == State::WALKING)
             {
@@ -126,7 +129,15 @@ void Monster::update(sf::Time dt)
             sprite.setTextureRect(a_MoveDown.getFrame().first);
             sprite.setOrigin(a_MoveDown.getFrame().second);
             break;
+        }
     }
+    else
+    {
+        sprite.setTexture(textures->get(ResourceId::GRAVE));
+        sprite.setTextureRect(sf::IntRect(0, 0, sprite.getTexture()->getSize().x, sprite.getTexture()->getSize().y));
+    }
+
+
 }
 
 void Monster::setDirection()

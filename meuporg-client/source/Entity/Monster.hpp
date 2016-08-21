@@ -15,7 +15,7 @@ class Monster: public Entity
         Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id);
         virtual ~Monster();
 
-        enum State {IDLE, WALKING};
+        enum State {IDLE, WALKING, DEAD};
 
         enum Direction{UP, DOWN, LEFT, RIGHT};
 

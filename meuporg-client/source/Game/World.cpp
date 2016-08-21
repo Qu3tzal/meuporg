@@ -255,6 +255,7 @@ void World::entityKilled(unsigned int id)
         choice->title = "Point de réapation:";
         choice->possibilities["Spawn 1"] = 0;
         choice->callback = [this](int choice){this->sendRespawnRequest(choice);};
+        dialog->next();
     }
 }
 
