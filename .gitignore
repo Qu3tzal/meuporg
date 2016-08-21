@@ -126,3 +126,4 @@ meuporg-client/bin/Release/assets/bullet2.png
 *.ttf
 *.sqlite
 meuporg-client/bin/Release/assets/tombe.png
+meuporg-server/bin/Debug/gmon.out
