@@ -38,6 +38,14 @@ MapLoader::MapLoader(std::string mapFilepath, World* world)
         {
             ss >> m_mapId;
         }
+        else if(instructionType == "spawn")
+        {
+            sf::Vector2f position;
+            ss >> position.x;
+            ss >> position.y;
+
+            world->addSpawnPoint(position);
+        }
     }
 
     // Get loading time.
