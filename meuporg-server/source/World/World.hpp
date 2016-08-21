@@ -75,6 +75,9 @@ class World
         // Gives the given amount of XP to the player.
         void giveXpTo(std::string username, float amount);
 
+        // Called when the server receives a RESPAWN request.
+        void onRespawn(Client* client, std::size_t spawnId);
+
     protected:
         // Needs this friendship to access createXXX methods.
         friend MapLoader;
@@ -120,6 +123,15 @@ class World
         // Checks the collisions.
         void checkCollisionEffects(const std::vector<std::pair<std::size_t, std::size_t>>& collisionRecord);
 
+        // Manages the effect of a death.
+        void onKill(std::size_t killerId, std::size_t killedId);
+
+        // Adds a spawn point.
+        void addSpawnPoint(sf::Vector2f spawn);
+
+        // Respawns an entity.
+        void respawn(std::size_t entityId, std::size_t spawnId = 0);
+
     protected:
         // ID.
         int m_id;
@@ -147,6 +159,9 @@ class World
         LifetimeSystem m_lifetimeSystem;
         MonsterAISystem m_monsterAISystem;
         WeaponCooldownSystem m_weaponCooldownSystem;
+
+        // Spawn points list.
+        std::vector<sf::Vector2f> m_spawns;
 };
 
 template<typename T>

@@ -208,11 +208,21 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
             if(mc == nullptr)
                 continue;
 
+            // Get the basic stats component.
+            BasicStatsComponent* bsc = e->getComponent<BasicStatsComponent>("BasicStats");
+
             // Set the state.
-            if(mc->velocity == sf::Vector2f(0.f, 0.f))
-                packet << ClientSide::PlayerStates::PLAYERSTATE_IDLE;
+            if(bsc != nullptr && bsc->isDead)
+            {
+                packet << ClientSide::PlayerStates::PLAYERSTATE_DEAD;
+            }
             else
-                packet << ClientSide::PlayerStates::PLAYERSTATE_WALKING;
+            {
+                if(mc->velocity == sf::Vector2f(0.f, 0.f))
+                    packet << ClientSide::PlayerStates::PLAYERSTATE_IDLE;
+                else
+                    packet << ClientSide::PlayerStates::PLAYERSTATE_WALKING;
+            }
 
             // Get the polygon hitbox component.
             kantan::PolygonHitboxComponent* phc = e->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
@@ -226,9 +236,7 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
             // Set the velocity.
             packet << mc->velocity;
 
-            // Get the basic stats component.
-            BasicStatsComponent* bsc = e->getComponent<BasicStatsComponent>("BasicStats");
-
+            // Check component.
             if(bsc == nullptr)
                 continue;
 
@@ -381,6 +389,19 @@ void World::giveXpTo(std::string username, float amount)
         Multithreading::outputMutex.lock();
         std::cout << "[WORLD|" << m_id << "] " << username << " got " << amount << " XP." << std::endl;
         Multithreading::outputMutex.unlock();
+    }
+}
+
+void World::onRespawn(Client* client, std::size_t spawnId)
+{
+    for(kantan::Component* component : m_components["ClientLink"])
+    {
+        ClientLinkComponent* clc = component->convert<ClientLinkComponent>();
+
+        if(clc == nullptr)
+            continue;
+
+        return respawn(clc->getOwnerId());
     }
 }
 
@@ -826,8 +847,8 @@ void World::checkCollisionEffects(const std::vector<std::pair<std::size_t, std::
                 if(bscTarget->hp <= 0.f)
                 {
                     bscTarget->hp = 0.f;
-                    bscTarget->isDead = true;
 
+                    onKill(dc->emitter, bscTarget->getOwnerId());
                     notifyKill(dc->emitter, bscTarget->getOwnerId());
                 }
             }
@@ -838,5 +859,65 @@ void World::checkCollisionEffects(const std::vector<std::pair<std::size_t, std::
             if(dmcBullet != nullptr)
                 dmcBullet->marked = true;
         }
+    }
+}
+
+// Manages the effect of a death.
+void World::onKill(std::size_t killerId, std::size_t killedId)
+{
+    kantan::Entity* killedEntity = getEntity(killedId);
+
+    // Deactivate hitbox.
+    kantan::PolygonHitboxComponent* phc = killedEntity->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
+
+    if(phc != nullptr)
+        phc->isBlocking = false;
+
+    // Set dead state.
+    BasicStatsComponent* bsc = killedEntity->getComponent<BasicStatsComponent>("BasicStats");
+
+    if(bsc != nullptr)
+        bsc->isDead = true;
+
+    // Give XP for the kill.
+    kantan::Entity* killerEntity = getEntity(killerId);
+
+    LevelStatsComponent* lsc = killerEntity->getComponent<LevelStatsComponent>("LevelStats");
+
+    if(lsc != nullptr)
+        lsc->xp += 100.f;
+}
+
+void World::addSpawnPoint(sf::Vector2f spawn)
+{
+    m_spawns.push_back(spawn);
+}
+
+void World::respawn(std::size_t entityId, std::size_t spawnId)
+{
+    kantan::Entity* entity = getEntity(entityId);
+
+    // Reactivate hitbox.
+    kantan::PolygonHitboxComponent* phc = entity->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
+
+    if(phc != nullptr)
+    {
+        phc->isBlocking = true;
+
+        // Translate to position.
+        sf::Transform transform(sf::Transform::Identity);
+        transform.translate(m_spawns[spawnId] - kantan::getCenter(phc->points));
+
+        for(sf::Vector2f& point : phc->points)
+            point = transform.transformPoint(point);
+    }
+
+    // Set alive state and restore hp.
+    BasicStatsComponent* bsc = entity->getComponent<BasicStatsComponent>("BasicStats");
+
+    if(bsc != nullptr)
+    {
+        bsc->isDead = false;
+        bsc->hp = bsc->maxhp;
     }
 }

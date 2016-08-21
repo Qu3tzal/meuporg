@@ -364,6 +364,20 @@ void Server::receiveInputThroughTCP()
 
                 switch(networkCode)
                 {
+                    case NetworkValues::RESPAWN:
+                        {
+                            std::size_t spawnId;
+                            packet >> spawnId;
+
+                            // Find the targeted world.
+                            auto worldItr = std::find_if(m_worlds.begin(), m_worlds.end(), [&](const World* world){
+                                                                return world->getId() == client->currentWorld;
+                                                         });
+
+                            if(worldItr != m_worlds.end())
+                                (*worldItr)->onRespawn(client, spawnId);
+                        }
+                        break;
                     case NetworkValues::DISCONNECT:
                         // Notify everyone the player disconnected.
                         notifyPlayerDisconnected(client->username);
