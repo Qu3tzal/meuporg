@@ -14,7 +14,8 @@ namespace ClientSide
     enum PlayerStates
     {
         PLAYERSTATE_IDLE,
-        PLAYERSTATE_WALKING
+        PLAYERSTATE_WALKING,
+        PLAYERSTATE_DEAD
     };
 
     enum NPCStates
