@@ -12,7 +12,7 @@ int main()
     int ticks = 0;
     int frames = 0;
 
-    const std::string TITLE  = "MMPROPPPG";
+    const std::string TITLE  = "MMPROPPPG V0.2";
 
     sf::RenderWindow window(sf::VideoMode(1280, 800), TITLE);
     window.setFramerateLimit(120);
