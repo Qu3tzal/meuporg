@@ -232,4 +232,5 @@ void Player::draw(sf::RenderTarget& window, sf::RenderStates states) const
     states.transform *= getTransform();
     window.draw(sprite, states);
     window.draw(nameText, states);
+    window.draw(damageText, states);
 }
