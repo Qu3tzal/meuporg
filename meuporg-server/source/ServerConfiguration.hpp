@@ -5,7 +5,7 @@
 
 namespace ServerConfiguration
 {
-    const unsigned int Version(001);
+    const unsigned int Version(002);
     const float TickPerSec(60.f);
     const sf::Time Ticktime = sf::seconds(1.f / TickPerSec);
 
