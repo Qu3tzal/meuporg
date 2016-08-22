@@ -2,3 +2,4 @@ Format de fichier de map serveur
 --------------------------------
 	id map_id
 	entity type position_x position_y
+	spawn position_x position_y
