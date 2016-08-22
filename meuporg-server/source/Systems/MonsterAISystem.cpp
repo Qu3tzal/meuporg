@@ -10,7 +10,7 @@ MonsterAISystem::MonsterAISystem()
 }
 
 // Update.
-void MonsterAISystem::update(sf::Time dt, std::vector<kantan::Component*>& monsterAIComponents, std::vector<kantan::Component*>& movementComponents)
+void MonsterAISystem::update(sf::Time dt, std::vector<kantan::Component*>& monsterAIComponents, std::vector<kantan::Component*>& movementComponents, std::vector<kantan::Component*>& basicStatsComponents)
 {
     for(kantan::Component* component : monsterAIComponents)
     {
@@ -20,6 +20,14 @@ void MonsterAISystem::update(sf::Time dt, std::vector<kantan::Component*>& monst
         kantan::MovementComponent* mc = kantan::Component::getFirstComponentOwnedBy<kantan::MovementComponent>(maic->getOwnerId(), movementComponents);
 
         if(mc == nullptr)
+            continue;
+
+        BasicStatsComponent* bsc = kantan::Component::getFirstComponentOwnedBy<BasicStatsComponent>(maic->getOwnerId(), basicStatsComponents);
+
+        if(bsc == nullptr)
+            continue;
+
+        if(bsc->isDead)
             continue;
 
         // Do we need to take another decision ?

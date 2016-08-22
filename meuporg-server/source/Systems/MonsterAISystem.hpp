@@ -4,6 +4,7 @@
 #include "../Kantan-2/kantan.hpp"
 
 #include "../Components/MonsterAIComponent.hpp"
+#include "../Components/BasicStatsComponent.hpp"
 
 #include <chrono>
 #include <random>
@@ -19,7 +20,7 @@ class MonsterAISystem : public kantan::System
 		MonsterAISystem();
 
 		// Update.
-		virtual void update(sf::Time dt, std::vector<kantan::Component*>& monsterAIComponents, std::vector<kantan::Component*>& movementComponents);
+		virtual void update(sf::Time dt, std::vector<kantan::Component*>& monsterAIComponents, std::vector<kantan::Component*>& movementComponents, std::vector<kantan::Component*>& basicStatsComponents);
 
     protected:
         std::default_random_engine m_rng_generator;

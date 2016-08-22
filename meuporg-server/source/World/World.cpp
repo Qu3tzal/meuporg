@@ -63,7 +63,7 @@ void World::update(sf::Time dt, Server* server)
     m_clientInputSystem.update(m_components["ClientLink"], m_entities, this);
 
     // AI.
-    m_monsterAISystem.update(dt, m_components["MonsterAI"], m_components["Movement"]);
+    m_monsterAISystem.update(dt, m_components["MonsterAI"], m_components["Movement"], m_components["BasicStats"]);
 
     // Rotations.
     //m_rotationSystem.update(dt, m_components["PolygonHitbox"], m_components["Rotation"]);
