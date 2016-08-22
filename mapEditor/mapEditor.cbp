@@ -40,6 +40,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/include" />
 		</Compiler>
 		<Linker>
@@ -54,6 +55,15 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="source/Game.cpp" />
 		<Unit filename="source/Game.hpp" />
+		<Unit filename="source/GraphicsUtils.inl" />
+		<Unit filename="source/Gui/GUIButtonPool.cpp" />
+		<Unit filename="source/Gui/GUIButtonPool.hpp" />
+		<Unit filename="source/Gui/GUITextInputPool.cpp" />
+		<Unit filename="source/Gui/GUITextInputPool.hpp" />
+		<Unit filename="source/Gui/GraphicsUtils.hpp" />
+		<Unit filename="source/ResourceHolder.hpp" />
+		<Unit filename="source/ResourceHolder.inl" />
+		<Unit filename="source/ResourceId.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
