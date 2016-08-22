@@ -4,7 +4,7 @@ Loading::Loading(sf::TcpSocket* informationSocket, sf::TcpSocket* serverSocket, 
     buttons(window, fonts)
     , textInputs(window, fonts, 0)
     , showText(true)
-    , Version(001)
+    , Version(002)
 
 {
     this->informationSocket = informationSocket;
