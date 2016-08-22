@@ -1,37 +1,75 @@
+#include <iostream>
+#include <sstream>
+#include <SFML/Network.hpp>
+#include "Game.hpp"
 #include <SFML/Graphics.hpp>
 
 int main()
 {
-    // Create the main window
-    sf::RenderWindow app(sf::VideoMode(800, 600), "SFML window");
+    const float TickRate = 1/60.f;
+    const sf::Time TickRateTime = sf::seconds(TickRate);
+    int ticks = 0;
+    int frames = 0;
 
-    // Load a sprite to display
-    sf::Texture texture;
-    if (!texture.loadFromFile("cb.bmp"))
-        return EXIT_FAILURE;
-    sf::Sprite sprite(texture);
+    const std::string TITLE  = "MMPROPPPG V0.2";
 
-	// Start the game loop
-    while (app.isOpen())
+    sf::RenderWindow window(sf::VideoMode(1280, 800), TITLE);
+    window.setFramerateLimit(120);
+
+    Game game(&window);
+    game.init();
+
+    sf::Clock clientClock;
+    sf::Time elapsed;
+    sf::Time dt;
+    sf::Time fpsTimer;
+
+    // Start the game loop
+    while (window.isOpen())
     {
+        if(!game.isRunning())
+            window.close();
+
         // Process events
         sf::Event event;
-        while (app.pollEvent(event))
+        while (window.pollEvent(event))
         {
             // Close window : exit
             if (event.type == sf::Event::Closed)
-                app.close();
+                window.close();
+            game.EventHandle(event);
+        }
+        dt = clientClock.restart();
+        elapsed += dt;
+
+        if(elapsed.asSeconds() > TickRate)
+        {
+            elapsed -= TickRateTime;
+            game.update(TickRateTime);
+            ticks++;
         }
 
-        // Clear screen
-        app.clear();
 
-        // Draw the sprite
-        app.draw(sprite);
+        window.clear(sf::Color::White);
+        window.draw(game);
+        window.display();
 
-        // Update the window
-        app.display();
+        frames++;
+
+        fpsTimer += dt;
+
+        if(fpsTimer.asSeconds() > 1)
+        {
+            std::stringstream ss;
+            ss << ticks << " " << frames;
+            std::string strt, strf;
+            ss >> strt >> strf;
+            fpsTimer -=  sf::seconds(1.f);
+            window.setTitle(TITLE + " ticks : " + strt + " , FPS : " + strf);
+            ticks = 0;
+            frames = 0;
+        }
     }
 
-    return EXIT_SUCCESS;
+    return 0;
 }

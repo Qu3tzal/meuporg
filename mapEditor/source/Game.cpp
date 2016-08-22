@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game()
+Game::Game(sf::RenderWindow* window) : run(true)
 {
     //ctor
 }
@@ -20,7 +20,17 @@ void Game::update(sf::Time dt)
 
 }
 
-void Game::draw(sf::RenderTarget* window, sf::RenderStates* states) const
+void Game::EventHandle(sf::Event e)
+{
+
+}
+
+bool Game::isRunning()
+{
+    return run;
+}
+
+void Game::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
 
 }
