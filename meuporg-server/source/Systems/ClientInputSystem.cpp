@@ -71,7 +71,7 @@ void ClientInputSystem::update(std::vector<kantan::Component*>& clientLinkCompon
             mc->velocity = kantan::normalize(inputVector) * mc->maximumSpeed;
 
             // Attacks.
-            if(clc->client->inputs.isAAttackKeyPressed)
+            if(clc->client->inputs.isMouseRightButtonPressed)
             {
                 if(wc->timeSinceLastShot >= wc->cooldown)
                 {
