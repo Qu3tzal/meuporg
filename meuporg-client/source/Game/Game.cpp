@@ -323,7 +323,6 @@ void Game::render(sf::RenderWindow* window)
             break;
          case State::JEU:
             window->draw(world);
-            window->draw(chat);
             break;
      }
     window->display();
