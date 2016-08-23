@@ -347,17 +347,17 @@ void World::setStaticView() const
 
 void World::setGameView() const
 {
-    sf::View view;
+    sf::View view = window->getView();
     if(player != nullptr)
     {
         view.setCenter(player->getPosition().x, player->getPosition().y);
-        view.setSize(playerCentredView.getSize());
     }
     window->setView(view);
 }
 
 void World::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
+    setGameView();
     window.draw(m_map);
 
     for(auto it = entities.begin() ; it != entities.end() ; it++)
@@ -371,6 +371,5 @@ void World::draw(sf::RenderTarget& window, sf::RenderStates states) const
     window.draw(hud);
     window.draw(dialogs);
 
-    setGameView();
     // end of the static View
 }
