@@ -17,6 +17,7 @@
 #include "../Components/LifetimeComponent.hpp"
 #include "../Components/NameComponent.hpp"
 #include "../Components/StaticMarkerComponent.hpp"
+#include "../Components/TowerAIComponent.hpp"
 #include "../Components/WeaponComponent.hpp"
 
 #include "../MapLoader/MapLoader.hpp"
@@ -110,6 +111,7 @@ class World
         kantan::Entity* createBox(sf::Vector2f position);
         kantan::Entity* createMonster(sf::Vector2f position);
         kantan::Entity* createBullet(sf::Vector2f position, std::size_t emitter, sf::Vector2f direction, float maxSpeed, float damage, sf::Time projectileLifetime);
+        kantan::Entity* createTower(sf::Vector2f position);
 
         // Notifies all the clients of the level up.
         void notifyLevelUp(LevelStatsComponent* lsc);
@@ -121,7 +123,7 @@ class World
         bool collisionResponsePredicate(const std::size_t& firstEntityId, const std::size_t& secondEntityId);
 
         // Checks the collisions.
-        void checkCollisionEffects(const std::vector<std::pair<std::size_t, std::size_t>>& collisionRecord);
+        void checkCollisionEffects(const std::vector<std::tuple<std::size_t, std::size_t, sf::Vector2f>>& collisionRecord);
 
         // Manages the effect of a death.
         void onKill(std::size_t killerId, std::size_t killedId);

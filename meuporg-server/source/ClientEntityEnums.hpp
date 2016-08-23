@@ -8,7 +8,8 @@ namespace ClientSide
         ENTITYTYPE_PLAYER,
         ENTITYTYPE_NPC,
         ENTITYTYPE_MONSTER,
-        ENTITYTYPE_BULLET
+        ENTITYTYPE_BULLET,
+        ENTITYTYPE_TOWER
     };
 
     enum PlayerStates

@@ -34,6 +34,9 @@ void World::init(std::string mapFilepath)
     auto lambda = std::bind(&World::collisionResponsePredicate, this, std::placeholders::_1, std::placeholders::_2);
     m_collisionSystem.setCollisionResponsePredicate(lambda);
 
+    // Init the spatial partitioning.
+    m_collisionSystem.initSpatialPartitioning(sf::Vector2i(100, 100), 20.f, sf::Vector2f(0.f, 0.f));
+
     // Load map.
     Multithreading::outputMutex.lock();
     std::cout << "[WORLD|" << m_id << "] Map loading..." << std::endl;
@@ -91,7 +94,6 @@ void World::playerConnected(Client* client, Server* server)
     // Log.
     Multithreading::outputMutex.lock();
     std::cout << "[WORLD|" << m_id << "] '" << client->username << "' joined (dbid: " << playerData.dbid << ")." << std::endl;
-    std::cout << "maxhp: " << playerData.maxhp << std::endl;
     Multithreading::outputMutex.unlock();
 }
 
@@ -357,6 +359,43 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 
             // Set the velocity.
             packet << mc->velocity;
+
+            // Get the damage component.
+            DamageComponent* dc = e->getComponent<DamageComponent>("Damage");
+
+            if(dc == nullptr)
+                continue;
+
+            // Set the emitter id.
+            packet << dc->emitter;
+        }
+        else if(e->getName() == "Tower")
+        {
+            // Set the entity type.
+            packet << ClientSide::EntityType::ENTITYTYPE_TOWER;
+            packet << "Tower" << 0; // Default name and state.
+
+            // Get the polygon hitbox component.
+            kantan::PolygonHitboxComponent* phc = e->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
+
+            if(phc == nullptr)
+                continue;
+
+            // Set the position.
+            packet << getLeftTop(phc->points);
+
+            // Set the velocity.
+            packet << sf::Vector2f(0.f, 0.f);
+
+            // Get the basic stats component.
+            BasicStatsComponent* bsc = e->getComponent<BasicStatsComponent>("BasicStats");
+
+            // Check component.
+            if(bsc == nullptr)
+                continue;
+
+            // Set the stats.
+            packet << bsc->hp << bsc->maxhp << bsc->strength << bsc->agility << bsc->resistance;
         }
 
         // Send the packet.
@@ -732,6 +771,50 @@ kantan::Entity* World::createBullet(sf::Vector2f position, std::size_t emitter, 
     return bullet;
 }
 
+kantan::Entity* World::createTower(sf::Vector2f position)
+{
+    // Create the entity.
+    kantan::Entity* tower = createEntity("Tower");
+
+    // Create the components.
+    kantan::PolygonHitboxComponent* phc = createComponent<kantan::PolygonHitboxComponent>(tower->getId());
+
+    BasicStatsComponent* bsc = createComponent<BasicStatsComponent>(tower->getId());
+    TowerAIComponent* taic = createComponent<TowerAIComponent>(tower->getId());
+    WeaponComponent* wc = createComponent<WeaponComponent>(tower->getId());
+
+    // Configure the components.
+    phc->points = {
+            position + sf::Vector2f(0.f, 0.f),
+            position + sf::Vector2f(48.f, 0.f),
+            position + sf::Vector2f(48.f, 107.f),
+            position + sf::Vector2f(0.f, 107.f)
+        };
+    phc->computeAxes();
+    phc->isBlocking = true;
+
+    bsc->hp = 500.f;
+    bsc->maxhp = 500.f;
+    bsc->strength = 0.f;
+    bsc->agility = 0.f;
+    bsc->resistance = 0.f;
+
+    wc->name = "Super ultra tower gun";
+    wc->baseDamage = 25.f;
+    wc->cooldown = sf::seconds(0.5f);
+    wc->projectileSpeed = 1000.f;
+    wc->projectileLifetime = sf::seconds(0.5f);
+
+    // Add the components to the entity.
+    tower->addComponent(phc);
+    tower->addComponent(bsc);
+    tower->addComponent(taic);
+    tower->addComponent(wc);
+
+    // Return the entity.
+    return tower;
+}
+
 // Notifies all the clients of the level up.
 void World::notifyLevelUp(LevelStatsComponent* lsc)
 {
@@ -805,13 +888,13 @@ bool World::collisionResponsePredicate(const std::size_t& firstEntityId, const s
     return true;
 }
 
-void World::checkCollisionEffects(const std::vector<std::pair<std::size_t, std::size_t>>& collisionRecord)
+void World::checkCollisionEffects(const std::vector<std::tuple<std::size_t, std::size_t, sf::Vector2f>>& collisionRecord)
 {
-    for(const std::pair<std::size_t, std::size_t>& collisionPair : collisionRecord)
+    for(const std::tuple<std::size_t, std::size_t, sf::Vector2f>& collisionPair : collisionRecord)
     {
         // Get the entities.
-        kantan::Entity* firstEntity = getEntity(collisionPair.first);
-        kantan::Entity* secondEntity = getEntity(collisionPair.second);
+        kantan::Entity* firstEntity = getEntity(std::get<0>(collisionPair));
+        kantan::Entity* secondEntity = getEntity(std::get<1>(collisionPair));
 
         // If one of the entities does not exist, we do not collide.
         if(firstEntity == nullptr || secondEntity == nullptr)
