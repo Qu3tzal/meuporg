@@ -23,6 +23,7 @@ void Bullet::init()
         sprite.setTextureRect(sf::IntRect(8, 0, 8, 8));
         break;
     default:
+        sprite.setTextureRect(sf::IntRect(0, 0, 8, 8));
         break;
     }
 }
