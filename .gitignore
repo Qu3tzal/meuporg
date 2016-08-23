@@ -136,3 +136,4 @@ meuporg-client/bin/Debug/assets/bullet2.png
 meuporg-server/bin/Debug/db/players.sqlite
 *.sqlite
 meuporg-server/db/players.sqlite
+meuporg-server/db/players.sqlite.old
