@@ -119,6 +119,7 @@ class Game
         Loading loading;
 
         sf::RenderWindow* window;
+
 };
 
 #endif // GAME_HPP_INCLUDED

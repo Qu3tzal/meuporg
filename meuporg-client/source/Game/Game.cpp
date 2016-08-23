@@ -6,7 +6,7 @@ Game::Game(sf::RenderWindow* window) : running(true)
     , udpPacketNumberReceive(0)
     , username("")
     , chat(window, &gameServerSocket, &fonts)
-    , world(&textures, &fonts, &username, window, &gameServerSocket)
+    , world(&textures, &fonts, &username, window, &gameServerSocket, &chat)
     , loosedPacket(0)
     , timeOutTimer(sf::Time::Zero)
     , timeOut(sf::seconds(5.f))
@@ -24,6 +24,7 @@ Game::Game(sf::RenderWindow* window) : running(true)
 
     textures.load(ResourceId::BULLET, "assets/bullet2.png");
     textures.load(ResourceId::GRAVE, "assets/tombe.png");
+    textures.load(ResourceId::TOWER, "assets/tower.png");
 
     this->window = window;
 }

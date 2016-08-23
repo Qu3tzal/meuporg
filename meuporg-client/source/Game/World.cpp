@@ -1,6 +1,6 @@
 #include "World.hpp"
 
-World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window, sf::TcpSocket* socket) : m_map(textures)
+World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window, sf::TcpSocket* socket, Chat* chat) : m_map(textures)
     , player(nullptr)
     , hud(fonts, window)
     , dialogs(fonts)
@@ -9,6 +9,8 @@ World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::st
     this->fonts = fonts;
     this->username = username;
     this->socket = socket;
+    this->chat = chat;
+    this->window = window;
     //loadMap("assets/level/level1.lvl");
 }
 
@@ -22,6 +24,11 @@ World::~World()
 
 void World::init()
 {
+    staticView.setSize(window->getView().getSize());
+    staticView.setCenter(window->getView().getCenter());
+
+    playerCentredView = window->getView();
+
     hud.init();
     hud.setPosition(sf::Vector2f(410, 655));
     loadMap(0);
@@ -32,17 +39,6 @@ void World::init()
     }
     dialogs.init();
     dialogs.setPosition(500, 500);
-    /*Dialog* dialog = dialogs.createDialog();
-
-    dialog->setText("a123456789b123456789c123456789d123456789e123456789f123456789g123456789h123456789i123456789J123456789K123456789L123456789M123456789O123456789P123456789Q123456789R123456789S123456789T123456789U123456789X123456789Y123456789Z12345678911111111111111111111111111111111111111111111111111111111111111111111111111111111111");
-
-    DialogChoice* choices = dialog->addChoice();
-    choices->possibilities["Quittez"] = -1;
-    choices->possibilities["Bonjour"] = 1;
-    choices->possibilities["Aurevoir"] = 2;
-
-    choices->callback = [&](int i) {
-    };*/
 
 }
 
@@ -214,7 +210,15 @@ void World::updateEntity(sf::Packet* packet)
                 break;
                case Entity::Type::BULLET:
                 {
-                    entity = new Bullet(textures, fonts, name, id);
+                    unsigned int id(0);
+                    *packet >> id;
+                    Entity* e = getEntityById(id);
+                    entity = new Bullet(textures, fonts, name, id, e->getType());
+                }
+                break;
+               case Entity::Type::TOWER:
+                {
+                    entity = new Tower(textures, fonts, name, id);
                 }
                 break;
             default:
@@ -334,6 +338,23 @@ void World::loadMap(int worldId)
     m_map.createMap(worldId);
 }
 
+void World::setStaticView() const
+{
+    // Set the static view.
+    window->setView(staticView);
+}
+
+void World::setGameView() const
+{
+    sf::View view;
+    if(player != nullptr)
+    {
+        view.setCenter(player->getPosition().x, player->getPosition().y);
+        view.setSize(playerCentredView.getSize());
+    }
+    window->setView(view);
+}
+
 void World::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
     window.draw(m_map);
@@ -342,8 +363,13 @@ void World::draw(sf::RenderTarget& window, sf::RenderStates states) const
     {
         window.draw((**it));
     }
+    // static view
+    setStaticView();
 
+    window.draw(*chat);
     window.draw(hud);
-
     window.draw(dialogs);
+
+    setGameView();
+    // end of the static View
 }

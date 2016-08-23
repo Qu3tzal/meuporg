@@ -14,6 +14,7 @@ namespace ResourceId
     const unsigned int TILESET = 3;
     const unsigned int BULLET = 4;
     const unsigned int GRAVE = 5;
+    const unsigned int TOWER = 6;
 };
 
 #endif // RESOUCEID_HPP_INCLUDED

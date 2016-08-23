@@ -17,12 +17,14 @@
 #include "Hud.hpp"
 #include "DialogManager.hpp"
 #include "Bullet.hpp"
+#include "Tower.hpp"
 #include "../NetworkValues.hpp"
+#include "Chat.hpp"
 
 class World : public sf::Drawable, public sf::Transformable
 {
     public:
-        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window, sf::TcpSocket* socket);
+        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window, sf::TcpSocket* socket, Chat* chat);
         virtual ~World();
 
         void init();
@@ -51,6 +53,10 @@ class World : public sf::Drawable, public sf::Transformable
 
         void entityKilled(unsigned int id);
 
+        void setStaticView() const;
+
+        void setGameView() const;
+
     protected:
 
          void draw(sf::RenderTarget& window, sf::RenderStates states) const;
@@ -78,6 +84,14 @@ class World : public sf::Drawable, public sf::Transformable
         unsigned int mapId;
 
         sf::TcpSocket* socket;
+
+        Chat* chat;
+
+        sf::View staticView;
+
+        sf::View playerCentredView;
+
+        sf::RenderWindow* window;
 
     private:
 };
