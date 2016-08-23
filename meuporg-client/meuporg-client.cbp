@@ -82,6 +82,8 @@
 		<Unit filename="source/Entity/Npc.hpp" />
 		<Unit filename="source/Entity/Player.cpp" />
 		<Unit filename="source/Entity/Player.hpp" />
+		<Unit filename="source/Entity/Tower.cpp" />
+		<Unit filename="source/Entity/Tower.hpp" />
 		<Unit filename="source/Game/Game.cpp" />
 		<Unit filename="source/Game/Game.hpp" />
 		<Unit filename="source/Game/Map.cpp" />
