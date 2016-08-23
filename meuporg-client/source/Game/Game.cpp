@@ -313,7 +313,7 @@ void Game::EventHandle(sf::Event event)
 
 void Game::render(sf::RenderWindow* window)
 {
-    window->clear(sf::Color::White);
+    window->clear(sf::Color::Black);
     switch(state)
      {
          case State::MENU:
