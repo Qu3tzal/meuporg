@@ -133,3 +133,6 @@ meuporg-client/bin/Debug/assets/bullet2.png
 meuporg-client/bin/Debug/assets/tower.png
 meuporg-client/bin/Release/assets/tower.png
 meuporg-client/bin/Debug/assets/bullet2.png
+meuporg-server/bin/Debug/db/players.sqlite
+*.sqlite
+meuporg-server/db/players.sqlite
