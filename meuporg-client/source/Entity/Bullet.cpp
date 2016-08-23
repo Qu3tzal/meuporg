@@ -1,8 +1,9 @@
 #include "Bullet.hpp"
 
-Bullet::Bullet(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id): Entity(id, name, Entity::Type::BULLET, textures, fonts)
+Bullet::Bullet(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id, Entity::Type luncher)
+    : Entity(id, name, Entity::Type::BULLET, textures, fonts)
 {
-    //ctor
+    this->luncher = luncher;
 }
 
 Bullet::~Bullet()
@@ -13,6 +14,17 @@ Bullet::~Bullet()
 void Bullet::init()
 {
     sprite.setTexture(textures->get(ResourceId::BULLET));
+    switch(luncher)
+    {
+    case Entity::Type::PLAYER:
+        sprite.setTextureRect(sf::IntRect(0, 0, 8, 8));
+        break;
+    case Entity::Type::TOWER:
+        sprite.setTextureRect(sf::IntRect(8, 0, 8, 8));
+        break;
+    default:
+        break;
+    }
 }
 
 void Bullet::update(sf::Time dt)
