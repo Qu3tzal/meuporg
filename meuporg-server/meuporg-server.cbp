@@ -94,6 +94,8 @@
 		<Unit filename="source/Components/NameComponent.hpp" />
 		<Unit filename="source/Components/StaticMarkerComponent.cpp" />
 		<Unit filename="source/Components/StaticMarkerComponent.hpp" />
+		<Unit filename="source/Components/TowerAIComponent.cpp" />
+		<Unit filename="source/Components/TowerAIComponent.hpp" />
 		<Unit filename="source/Components/WeaponComponent.cpp" />
 		<Unit filename="source/Components/WeaponComponent.hpp" />
 		<Unit filename="source/Database/Database.cpp" />
