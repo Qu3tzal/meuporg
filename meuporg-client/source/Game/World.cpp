@@ -210,9 +210,9 @@ void World::updateEntity(sf::Packet* packet)
                 break;
                case Entity::Type::BULLET:
                 {
-                    unsigned int id(0);
-                    *packet >> id;
-                    Entity* e = getEntityById(id);
+                    unsigned int luncherId(0);
+                    *packet >> luncherId;
+                    Entity* e = getEntityById(luncherId);
                     entity = new Bullet(textures, fonts, name, id, e->getType());
                 }
                 break;
