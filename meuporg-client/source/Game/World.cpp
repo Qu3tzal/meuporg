@@ -222,6 +222,7 @@ void World::updateEntity(sf::Packet* packet)
                 }
                 break;
             default:
+                return;
                 break;
         }
 
