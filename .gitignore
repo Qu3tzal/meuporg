@@ -127,3 +127,9 @@ meuporg-client/bin/Release/assets/bullet2.png
 *.sqlite
 meuporg-client/bin/Release/assets/tombe.png
 meuporg-server/bin/Debug/gmon.out
+meuporg-client/bin/Debug/assets/bullet2.png
+meuporg-client/bin/Debug/assets/bullet2.png
+meuporg-client/bin/Debug/assets/bullet2.png
+meuporg-client/bin/Debug/assets/tower.png
+meuporg-client/bin/Release/assets/tower.png
+meuporg-client/bin/Debug/assets/bullet2.png
