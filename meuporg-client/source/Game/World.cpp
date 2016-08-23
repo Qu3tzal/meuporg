@@ -372,4 +372,5 @@ void World::draw(sf::RenderTarget& window, sf::RenderStates states) const
     window.draw(dialogs);
 
     // end of the static View
+    setGameView();
 }
