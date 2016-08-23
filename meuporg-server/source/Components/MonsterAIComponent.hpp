@@ -5,7 +5,7 @@
 
 /*
 	MonsterAIComponent class.
-	Component : holds the xp and level.
+	Component : holds direction and last decision.
 */
 class MonsterAIComponent : public kantan::Component
 {
