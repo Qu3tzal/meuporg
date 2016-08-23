@@ -1,3 +1,5 @@
 id 1
 entity monster 400.f 400.f
+entity tower 200.f 600.f
+entity tower 800.f 600.f
 spawn 640.f 400.f
