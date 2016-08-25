@@ -17,13 +17,13 @@ void Bullet::init()
     switch(luncher)
     {
     case Entity::Type::PLAYER:
-        sprite.setTextureRect(sf::IntRect(0, 0, 8, 8));
+        sprite.setTextureRect(sf::IntRect(0, 0, 4, 4));
         break;
     case Entity::Type::TOWER:
-        sprite.setTextureRect(sf::IntRect(8, 0, 8, 8));
+        sprite.setTextureRect(sf::IntRect(4, 0, 8, 8));
         break;
     default:
-        sprite.setTextureRect(sf::IntRect(0, 0, 8, 8));
+        sprite.setTextureRect(sf::IntRect(0, 0, 4, 4));
         break;
     }
 }
