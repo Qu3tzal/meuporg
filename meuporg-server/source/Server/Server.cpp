@@ -37,8 +37,7 @@ void Server::init()
     m_gameUdpSocket.setBlocking(false);
 
     // Create the worlds.
-    for(unsigned int i(0) ; i < 10 ; i++)
-        m_worlds.push_back(new World());
+    m_worlds.push_back(new World());
 
     // Init the worlds.
     // Multithreading worlds.
@@ -189,13 +188,14 @@ void Server::update(sf::Time dt)
     updateTimeoutPlayers(dt);
 
     // Multithreading worlds.
-    std::vector<std::thread> threads;
+    /*std::vector<std::thread> threads;
 
     for(World* world : m_worlds)
         threads.push_back(std::thread(&World::update, world, dt, this));
 
     for(std::thread& thread : threads)
-        thread.join();
+        thread.join();*/
+    m_worlds[0]->update(dt, this);
 }
 
 void Server::sendUpdate()

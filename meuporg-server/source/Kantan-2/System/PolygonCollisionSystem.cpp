@@ -339,10 +339,10 @@ namespace kantan
                         // Too small velocities must be canceled.
                         if(getLength(fstMovement->velocity) <= 0.1f)
                             fstMovement->velocity = sf::Vector2f(0.f, 0.f);
-
-                        // Register the collision.
-                        m_collisions.push_back(std::make_tuple(fstHitbox->getOwnerId(), sndHitbox->getOwnerId(), projectionVector));
                     }
+
+                    // Register the collision.
+                    m_collisions.push_back(std::make_tuple(fstHitbox->getOwnerId(), sndHitbox->getOwnerId(), projectionVector));
                 }
             }
         }

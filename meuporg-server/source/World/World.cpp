@@ -35,7 +35,7 @@ void World::init(std::string mapFilepath)
     m_collisionSystem.setCollisionResponsePredicate(lambda);
 
     // Init the spatial partitioning.
-    m_collisionSystem.initSpatialPartitioning(sf::Vector2i(20, 20), 100.f, sf::Vector2f(0.f, 0.f));
+    m_collisionSystem.initSpatialPartitioning(sf::Vector2i(1, 1), 3000.f, sf::Vector2f(0.f, 0.f));
 
     // Load map.
     Multithreading::outputMutex.lock();
@@ -749,9 +749,9 @@ kantan::Entity* World::createBullet(sf::Vector2f position, std::size_t emitter, 
     // Configure the components.
     phc->points = {
             position + sf::Vector2f(0.f, 0.f),
-            position + sf::Vector2f(8.f, 0.f),
-            position + sf::Vector2f(8.f, 8.f),
-            position + sf::Vector2f(0.f, 8.f)
+            position + sf::Vector2f(6.f, 0.f),
+            position + sf::Vector2f(6.f, 6.f),
+            position + sf::Vector2f(0.f, 6.f)
         };
     phc->computeAxes();
     phc->isBlocking = true;

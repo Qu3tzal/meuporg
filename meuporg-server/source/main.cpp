@@ -13,9 +13,17 @@ int informationServer_main(Server* server)
     informationServer.init();
 
     sf::Clock serverclock;
+    sf::Time elapsed(sf::Time::Zero);
     while(informationServer.isRunning() && server->isRunning())
     {
-        informationServer.update(serverclock.restart());
+        sf::Time dt = serverclock.restart();
+        elapsed += dt;
+
+        while(elapsed >= ServerConfiguration::Ticktime)
+        {
+            elapsed -= ServerConfiguration::Ticktime;
+            informationServer.update(ServerConfiguration::Ticktime);
+        }
     }
 
     return 0;

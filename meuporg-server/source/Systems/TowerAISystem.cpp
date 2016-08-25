@@ -47,7 +47,7 @@ void TowerAISystem::update(World* world, sf::Time dt, kantan::PolygonCollisionSy
 
         if(taic->state == TowerAIComponent::TowerAIState::LOOKING_FOR_TARGET)
         {
-            std::vector<kantan::Component*> near = collisionSystem->getNear(kantan::getCenter(phc->points), 20.f);
+            std::vector<kantan::Component*> near = collisionSystem->getNear(kantan::getCenter(phc->points), 400.f);
 
             for(kantan::Component* component : near)
             {
@@ -90,7 +90,7 @@ void TowerAISystem::update(World* world, sf::Time dt, kantan::PolygonCollisionSy
                 sf::Vector2f targetCenter = kantan::getCenter(targetPhc->points);
                 sf::Vector2f direction = targetCenter - center;
 
-                if(kantan::squaredEuclidianDistance(center, targetCenter) > 20.f * 20.f)
+                if(kantan::squaredEuclidianDistance(center, targetCenter) > 400.f * 400.f)
                 {
                     taic->state = TowerAIComponent::TowerAIState::LOOKING_FOR_TARGET;
                     continue;
