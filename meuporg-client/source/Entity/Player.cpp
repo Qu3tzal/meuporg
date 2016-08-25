@@ -5,14 +5,14 @@ Player::Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::
     , direction(Direction::DOWN)
     , nameText(name, fonts)
 {
-    setProperty("HpMax", 1);
-    setProperty("Hp", 1);
-    setProperty("XpNeeded", 1);
-    setProperty("Xp", 0.5);
-    setProperty("Level", 1);
-    setProperty("Strengh", 0);
-    setProperty("Agility", 0);
-    setProperty("Resist", 0);
+    setProperty("HpMax", 1, false);
+    setProperty("Hp", 1, false);
+    setProperty("XpNeeded", 1, false);
+    setProperty("Xp", 0.5, false);
+    setProperty("Level", 1, false);
+    setProperty("Strengh", 0, false);
+    setProperty("Agility", 0, false);
+    setProperty("Resist", 0, false);
 }
 
 Player::~Player()
