@@ -24,7 +24,7 @@ Game::Game(sf::RenderWindow* window) : running(true)
 
     textures.load(ResourceId::BULLET, "assets/bullet2.png");
     textures.load(ResourceId::GRAVE, "assets/tombe.png");
-    textures.load(ResourceId::TOWER, "assets/tower2.png");
+    textures.load(ResourceId::TOWER, "assets/tour2.png");
 
     this->window = window;
 }
