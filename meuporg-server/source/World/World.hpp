@@ -26,6 +26,7 @@
 #include "../Systems/LevelUpSystem.hpp"
 #include "../Systems/LifetimeSystem.hpp"
 #include "../Systems/MonsterAISystem.hpp"
+#include "../Systems/TowerAISystem.hpp"
 #include "../Systems/WeaponCooldownSystem.hpp"
 
 #include "../Utils/Maths.hpp"
@@ -84,6 +85,7 @@ class World
         friend MapLoader;
         friend Server;
         friend ClientInputSystem;
+        friend TowerAISystem;
 
         // Returns the entity pointer or nullptr if not found by its id.
         kantan::Entity* getEntity(const std::size_t& id);
@@ -160,6 +162,7 @@ class World
         LevelUpSystem m_levelUpSystem;
         LifetimeSystem m_lifetimeSystem;
         MonsterAISystem m_monsterAISystem;
+        TowerAISystem m_towerAISystem;
         WeaponCooldownSystem m_weaponCooldownSystem;
 
         // Spawn points list.

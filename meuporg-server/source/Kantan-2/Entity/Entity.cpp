@@ -27,12 +27,12 @@ namespace kantan
 	}
 
     /// Id.
-	std::size_t Entity::getId()
+	std::size_t Entity::getId() const
 	{
 		return m_id;
 	}
 
-	std::string Entity::getName()
+	std::string Entity::getName() const
 	{
 		return m_name;
 	}

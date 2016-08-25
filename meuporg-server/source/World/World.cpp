@@ -35,7 +35,7 @@ void World::init(std::string mapFilepath)
     m_collisionSystem.setCollisionResponsePredicate(lambda);
 
     // Init the spatial partitioning.
-    m_collisionSystem.initSpatialPartitioning(sf::Vector2i(100, 100), 20.f, sf::Vector2f(0.f, 0.f));
+    m_collisionSystem.initSpatialPartitioning(sf::Vector2i(20, 20), 100.f, sf::Vector2f(0.f, 0.f));
 
     // Load map.
     Multithreading::outputMutex.lock();
@@ -67,6 +67,7 @@ void World::update(sf::Time dt, Server* server)
 
     // AI.
     m_monsterAISystem.update(dt, m_components["MonsterAI"], m_components["Movement"], m_components["BasicStats"]);
+    m_towerAISystem.update(this, dt, &m_collisionSystem, m_components["TowerAI"], m_entities);
 
     // Rotations.
     //m_rotationSystem.update(dt, m_components["PolygonHitbox"], m_components["Rotation"]);
@@ -526,6 +527,10 @@ void World::cleanEntities(Server* server)
                 {
                     kantan::Component* component = componentPair.second;
 
+                    // Remove the hitbox component from the collision system.
+                    if(component->getName() == "PolygonHitbox")
+                        m_collisionSystem.onComponentRemoved(component);
+
                     removeComponentFrom(component, m_components[component->getName()]);
                 }
 
@@ -616,6 +621,9 @@ kantan::Entity* World::createPlayer(sf::Vector2f position, Client* client, const
     player->addComponent(lsc);
     player->addComponent(wc);
 
+    // Add the hitbox component to the collision system.
+    m_collisionSystem.onComponentAdded(phc);
+
     // Return the entity.
     return player;
 }
@@ -653,6 +661,9 @@ kantan::Entity* World::createNPC(sf::Vector2f position)
     npc->addComponent(bsc);
     npc->addComponent(nc);
 
+    // Add the hitbox component to the collision system.
+    m_collisionSystem.onComponentAdded(phc);
+
     // Return the entity.
     return npc;
 }
@@ -677,6 +688,9 @@ kantan::Entity* World::createBox(sf::Vector2f position)
 
     // Add the components to the entity.
     box->addComponent(phc);
+
+    // Add the hitbox component to the collision system.
+    m_collisionSystem.onComponentAdded(phc);
 
     // Return the entity.
     return box;
@@ -711,6 +725,9 @@ kantan::Entity* World::createMonster(sf::Vector2f position)
     monster->addComponent(mc);
     monster->addComponent(bsc);
     monster->addComponent(maic);
+
+    // Add the hitbox component to the collision system.
+    m_collisionSystem.onComponentAdded(phc);
 
     // Return the entity.
     return monster;
@@ -767,6 +784,9 @@ kantan::Entity* World::createBullet(sf::Vector2f position, std::size_t emitter, 
     bullet->addComponent(dc);
     bullet->addComponent(lc);
 
+    // Add the hitbox component to the collision system.
+    m_collisionSystem.onComponentAdded(phc);
+
     // Return the entity.
     return bullet;
 }
@@ -810,6 +830,9 @@ kantan::Entity* World::createTower(sf::Vector2f position)
     tower->addComponent(bsc);
     tower->addComponent(taic);
     tower->addComponent(wc);
+
+    // Add the hitbox component to the collision system.
+    m_collisionSystem.onComponentAdded(phc);
 
     // Return the entity.
     return tower;

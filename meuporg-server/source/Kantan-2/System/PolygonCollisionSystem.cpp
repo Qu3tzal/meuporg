@@ -34,7 +34,7 @@ namespace kantan
         if(itr != components.end())
             components.erase(itr);
     }
-	
+
 	PolygonCollisionSystem::PolygonCollisionSystem()
     {
         // Default predicate.
@@ -405,7 +405,7 @@ namespace kantan
         // Return the hitboxes list.
         return hitboxes;
     }
-	
+
 	// Sets the collision response predicate.
     void PolygonCollisionSystem::setCollisionResponsePredicate(std::function<bool(std::size_t, std::size_t)> predicate)
     {

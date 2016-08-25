@@ -24,8 +24,8 @@ namespace kantan
 			Entity(std::string name);
 
 			// Id.
-			std::size_t getId();
-			std::string getName();
+			std::size_t getId() const;
+			std::string getName() const;
 
 			// Components.
 			void addComponent(Component* comp);

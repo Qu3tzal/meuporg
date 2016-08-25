@@ -192,6 +192,8 @@
 		<Unit filename="source/Systems/LifetimeSystem.hpp" />
 		<Unit filename="source/Systems/MonsterAISystem.cpp" />
 		<Unit filename="source/Systems/MonsterAISystem.hpp" />
+		<Unit filename="source/Systems/TowerAISystem.cpp" />
+		<Unit filename="source/Systems/TowerAISystem.hpp" />
 		<Unit filename="source/Systems/WeaponCooldownSystem.cpp" />
 		<Unit filename="source/Systems/WeaponCooldownSystem.hpp" />
 		<Unit filename="source/Utils/Maths.hpp" />
