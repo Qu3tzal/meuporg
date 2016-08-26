@@ -23,7 +23,7 @@ NameText::NameText(std::string name, kantan::FontHolder* fonts): ShowHealth(true
         healthBackground.setSize(sf::Vector2f(healthText.getGlobalBounds().width + 20, healthText.getGlobalBounds().height + 20));
         healthBackground.setFillColor(sf::Color(128, 128, 128, 128));
 
-        healthText.setPosition(0, nameBackground.getGlobalBounds().height);
+        healthText.setPosition(0, nameBackground.getGlobalBounds().height + 3);
         healthBackground.setPosition(sf::Vector2f(0, nameBackground.getGlobalBounds().height));
 
         centerOrigin(healthText);
