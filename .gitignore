@@ -138,3 +138,5 @@ meuporg-server/bin/Debug/db/players.sqlite
 meuporg-server/db/players.sqlite
 meuporg-server/db/players.sqlite.old
 meuporg-client/bin/Release/assets/tour2.png
+meuporg-client/bin/Debug/assets/bullet2.png
+meuporg-client/bin/Debug/assets/tour2.png
