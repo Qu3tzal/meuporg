@@ -161,7 +161,7 @@ float EntityWithStats::getProperty(std::string name)
 
 void EntityWithStats::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
-    states.transform *= getTransform();
+    //states.transform *= getTransform();
     window.draw(nameText, states);
     for(sf::Text text : leftDamagesText)
         window.draw(text, states);
