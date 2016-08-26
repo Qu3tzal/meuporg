@@ -6,11 +6,11 @@
 #include <map>
 
 #include "Animation.hpp"
-#include "Entity.hpp"
+#include "EntityWithStats.hpp"
 #include "NameText.hpp"
 
 
-class Player : public Entity
+class Player : public EntityWithStats
 {
     public:
         Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id);
@@ -30,12 +30,6 @@ class Player : public Entity
 
         void calculatePrecision(sf::Vector2f vect);
 
-        void setProperty(std::string name, float value);
-
-        void setProperty(std::string name, float value, bool show);
-
-        float getProperty(std::string name);
-
         void setXpneeded();
 
     protected:
@@ -51,18 +45,7 @@ class Player : public Entity
 
         Direction direction;
 
-        sf::Sprite sprite;
-
         sf::Vector2f velocityNormalized;
-
-        NameText nameText;
-
-        std::map <std::string, float> m_properties;
-
-        std::vector<sf::Text> leftDamagesText;
-        std::vector<sf::Text> rightDamagesText;
-        std::vector<sf::Text> topDamagesText;
-
 
     private:
 };

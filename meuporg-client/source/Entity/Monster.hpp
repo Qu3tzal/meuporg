@@ -6,10 +6,10 @@
 
 #include "../ResourceHolder.hpp"
 #include "../ResourceId.hpp"
-#include "Entity.hpp"
+#include "EntityWithStats.hpp"
 #include "Animation.hpp"
 
-class Monster: public Entity
+class Monster: public EntityWithStats
 {
     public:
         Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id);
@@ -32,8 +32,6 @@ class Monster: public Entity
         virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 
         State state;
-
-        sf::Sprite sprite;
 
         Direction direction;
 

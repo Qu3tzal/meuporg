@@ -27,8 +27,6 @@ class Npc : public Entity
 
         State state;
 
-        sf::Sprite sprite;
-
     private:
 };
 

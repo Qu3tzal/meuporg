@@ -1,9 +1,9 @@
 #ifndef TOWER_HPP
 #define TOWER_HPP
 
-#include "Entity.hpp"
+#include "EntityWithStats.hpp"
 
-class Tower: public Entity
+class Tower: public EntityWithStats
 {
     public:
         Tower(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id);
@@ -17,7 +17,6 @@ class Tower: public Entity
 
         virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 
-        sf::Sprite sprite;
 
     private:
 };

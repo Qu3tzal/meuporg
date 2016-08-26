@@ -61,6 +61,8 @@ class Entity : public sf::Drawable, public sf::Transformable
         // Position
         sf::Vector2f position;
 
+        sf::Sprite sprite;
+
         // Velocity
         sf::Vector2f velocity;
 

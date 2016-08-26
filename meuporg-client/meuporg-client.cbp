@@ -74,6 +74,8 @@
 		<Unit filename="source/Entity/Bullet.hpp" />
 		<Unit filename="source/Entity/Entity.cpp" />
 		<Unit filename="source/Entity/Entity.hpp" />
+		<Unit filename="source/Entity/EntityWithStats.cpp" />
+		<Unit filename="source/Entity/EntityWithStats.hpp" />
 		<Unit filename="source/Entity/Mission.cpp" />
 		<Unit filename="source/Entity/Mission.hpp" />
 		<Unit filename="source/Entity/Monster.cpp" />

@@ -1,6 +1,6 @@
 #include "Monster.hpp"
 
-Monster::Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id): Entity(id, name, Entity::Type::MONSTER, textures, fonts)
+Monster::Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id): EntityWithStats(id, name, fonts, textures, Entity::Type::MONSTER)
     , direction(Direction::DOWN)
 {
     //ctor
@@ -136,6 +136,7 @@ void Monster::update(sf::Time dt)
         sprite.setTexture(textures->get(ResourceId::GRAVE));
         sprite.setTextureRect(sf::IntRect(0, 0, sprite.getTexture()->getSize().x, sprite.getTexture()->getSize().y));
     }
+    EntityWithStats::update(dt);
 
 
 }
@@ -181,4 +182,5 @@ void Monster::draw(sf::RenderTarget& window, sf::RenderStates states) const
 {
     states.transform *= getTransform();
     window.draw(sprite, states);
+    EntityWithStats::draw(window, states);
 }

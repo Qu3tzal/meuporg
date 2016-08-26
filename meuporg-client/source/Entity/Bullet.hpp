@@ -18,7 +18,6 @@ class Bullet : public Entity
 
         virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 
-        sf::Sprite sprite;
 
         Entity::Type luncher;
 
