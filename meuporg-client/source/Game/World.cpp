@@ -149,6 +149,35 @@ void World::updateEntity(sf::Packet* packet)
                     Monster::State state = static_cast<Monster::State>(state_ui);
 
                     monster->setState(state);
+
+                    *packet >> hp
+                            >> maxHp
+                            >> strengh
+                            >> agility
+                            >> resistance;
+
+                    monster->setProperty("Hp", hp);
+                    monster->setProperty("HpMax", maxHp);
+                    monster->setProperty("Strengh", strengh);
+                    monster->setProperty("Agility", agility);
+                    monster->setProperty("Resist", resistance);
+                }
+                break;
+            case Entity::Type::TOWER:
+                {
+                    Tower* tower = static_cast<Tower*>(e);
+
+                    *packet >> hp
+                            >> maxHp
+                            >> strengh
+                            >> agility
+                            >> resistance;
+
+                    tower->setProperty("Hp", hp, false);
+                    tower->setProperty("HpMax", maxHp, false);
+                    tower->setProperty("Strengh", strengh, false);
+                    tower->setProperty("Agility", agility, false);
+                    tower->setProperty("Resist", resistance, false);
                 }
                 break;
             default:
@@ -180,12 +209,12 @@ void World::updateEntity(sf::Packet* packet)
 
                     player->setState(state);
                     player->setProperty("Hp", hp, false);
-                   player->setProperty("HpMax", maxHp, false);
-                   player->setProperty("Strengh", strengh, false);
-                   player->setProperty("Agility", agility, false);
-                   player->setProperty("Resist", resistance, false);
-                   player->setProperty("Xp", xp, false);
-                   player->setProperty("Level", level, false);
+                    player->setProperty("HpMax", maxHp, false);
+                    player->setProperty("Strengh", strengh, false);
+                    player->setProperty("Agility", agility, false);
+                    player->setProperty("Resist", resistance, false);
+                    player->setProperty("Xp", xp, false);
+                    player->setProperty("Level", level, false);
                 }
                 break;
             case Entity::Type::NPC:
@@ -206,6 +235,18 @@ void World::updateEntity(sf::Packet* packet)
                     Monster* monster = static_cast<Monster*>(entity);
 
                     monster->setState(state);
+
+                    *packet >> hp
+                            >> maxHp
+                            >> strengh
+                            >> agility
+                            >> resistance;
+
+                    monster->setProperty("Hp", hp, false);
+                    monster->setProperty("HpMax", maxHp, false);
+                    monster->setProperty("Strengh", strengh, false);
+                    monster->setProperty("Agility", agility, false);
+                    monster->setProperty("Resist", resistance, false);
                 }
                 break;
                case Entity::Type::BULLET:
@@ -219,6 +260,19 @@ void World::updateEntity(sf::Packet* packet)
                case Entity::Type::TOWER:
                 {
                     entity = new Tower(textures, fonts, name, id);
+                    Tower* tower = static_cast<Tower*>(entity);
+
+                    *packet >> hp
+                            >> maxHp
+                            >> strengh
+                            >> agility
+                            >> resistance;
+
+                    tower->setProperty("Hp", hp, false);
+                    tower->setProperty("HpMax", maxHp, false);
+                    tower->setProperty("Strengh", strengh, false);
+                    tower->setProperty("Agility", agility, false);
+                    tower->setProperty("Resist", resistance, false);
                 }
                 break;
             default:

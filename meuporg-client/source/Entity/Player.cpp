@@ -149,11 +149,6 @@ void Player::update(sf::Time dt)
 
     EntityWithStats::update(dt);
 
-    //centerOrigin(nameText);
-    nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, - (nameText.getheight()) - sprite.getOrigin().y);
-    nameText.setHealth(getProperty("Hp"),getProperty("HpMax"));
-
-
 }
 
 void Player::setDirection()

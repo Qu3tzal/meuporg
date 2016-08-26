@@ -61,6 +61,10 @@ void EntityWithStats::update(sf::Time dt)
             topDamagesText.erase(i);
         }
     }
+
+    // centerOrigin(nametext);
+    nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, - (nameText.getheight()) - sprite.getOrigin().y);
+    nameText.setHealth(getProperty("Hp"),getProperty("HpMax"));
 }
 
 void EntityWithStats::setProperty(std::string name, float value, bool show)

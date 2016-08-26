@@ -3,7 +3,11 @@
 Monster::Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id): EntityWithStats(id, name, fonts, textures, Entity::Type::MONSTER)
     , direction(Direction::DOWN)
 {
-    //ctor
+    setProperty("HpMax", 1, false);
+    setProperty("Hp", 1, false);
+    setProperty("Strengh", 0, false);
+    setProperty("Agility", 0, false);
+    setProperty("Resist", 0, false);
 }
 
 Monster::~Monster()
