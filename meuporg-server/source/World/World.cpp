@@ -336,6 +336,9 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
 
             // Set the velocity.
             packet << mc->velocity;
+
+            // Set the stats.
+            packet << bsc->hp << bsc->maxhp << bsc->strength << bsc->agility << bsc->resistance;
         }
         else if(e->getName() == "Bullet")
         {
