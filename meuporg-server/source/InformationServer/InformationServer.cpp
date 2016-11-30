@@ -84,6 +84,14 @@ void InformationServer::update(sf::Time dt)
                         answerNumberOfPlayers(client);
                         std::cout << "[INFORMATION_SERVER] Number of players sent to client (" << client->tcpsocket.getRemoteAddress().toString() << ")." << std::endl;
                         break;
+                    case NetworkValues::PING:
+                        {
+                            int pingId(0);
+                            packet >> pingId;
+                            answerPingRequest(client, pingId);
+                            std::cout << "[INFORMATION_SERVER] Ping answered to client (" << client->tcpsocket.getRemoteAddress().toString() << ")." << std::endl;
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -111,6 +119,18 @@ void InformationServer::answerNumberOfPlayers(Client* client)
     // Prepare the packet.
     sf::Packet packet;
     packet << m_gameserver->getNumberOfPlayers() << m_gameserver->getMaximumPlayersCapacity();
+
+    // Send it.
+    //client->tcpsocket.setBlocking(true);
+    client->tcpsocket.send(packet);
+    //client->tcpsocket.setBlocking(false);
+}
+
+void InformationServer::answerPingRequest(Client* client, int pingId)
+{
+    // Prepare the packet.
+    sf::Packet packet;
+    packet << NetworkValues::PING << pingId;
 
     // Send it.
     //client->tcpsocket.setBlocking(true);

@@ -44,6 +44,9 @@ class InformationServer
         // Answers the number of player to the client.
         void answerNumberOfPlayers(Client* client);
 
+        // Answers the ping request.
+        void answerPingRequest(Client* client, int pingId);
+
     protected:
         // TCP Listener.
         sf::TcpListener m_listener;
