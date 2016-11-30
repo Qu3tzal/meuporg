@@ -6,8 +6,9 @@
 namespace ServerConfiguration
 {
     const unsigned int Version(002);
-    const float TickPerSec(30.f);
+    const float TickPerSec(60.f);
     const sf::Time Ticktime = sf::seconds(1.f / TickPerSec);
+    const sf::Time LoginTicktime = 3.f * Ticktime;
 
     const sf::Time InformationServerTimeout = sf::seconds(5.f);
     const sf::Time LoginServerTimeout = sf::seconds(5.f);

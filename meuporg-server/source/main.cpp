@@ -46,6 +46,7 @@ int main()
 
     sf::Clock serverclock;
     sf::Time elapsed(sf::Time::Zero);
+    sf::Time elapsedSinceLastLogin(sf::Time::Zero);
     sf::Time performancesTimer(sf::Time::Zero);
     unsigned int ticks(0);
 
@@ -53,13 +54,20 @@ int main()
     {
         sf::Time dt = serverclock.restart();
         elapsed += dt;
+        elapsedSinceLastLogin += dt;
         performancesTimer += dt;
+
+        while(elapsedSinceLastLogin >= ServerConfiguration::LoginTicktime)
+        {
+            elapsedSinceLastLogin -= ServerConfiguration::LoginTicktime;
+
+            server.login(ServerConfiguration::LoginTicktime);
+        }
 
         while(elapsed >= ServerConfiguration::Ticktime)
         {
             elapsed -= ServerConfiguration::Ticktime;
 
-            server.login(ServerConfiguration::Ticktime);
             server.receiveInput();
             server.update(ServerConfiguration::Ticktime);
             server.sendUpdate();
