@@ -56,6 +56,15 @@ void TowerAISystem::update(World* world, sf::Time dt, kantan::PolygonCollisionSy
 
                 if(nearEntity->getName() == "Monster")
                 {
+                    // Check if the entity is dead.
+                    BasicStatsComponent* bsc = nearEntity->getComponent<BasicStatsComponent>("BasicStats");
+
+                    if(bsc == nullptr)
+                        continue;
+
+                    if(bsc->isDead)
+                        continue;
+
                     taic->state = TowerAIComponent::TowerAIState::SHOOTING;
                     taic->target = nearEntity->getId();
                 }
