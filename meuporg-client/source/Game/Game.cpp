@@ -6,10 +6,14 @@ Game::Game(sf::RenderWindow* window) : running(true)
     , udpPacketNumberReceive(0)
     , username("")
     , chat(window, &gameServerSocket, &fonts)
-    , world(&textures, &fonts, &username, window, &gameServerSocket, &chat)
+    , ping(0)
+    , world(&textures, &fonts, &username, window, &gameServerSocket, &chat, &ping)
     , loosedPacket(0)
     , timeOutTimer(sf::Time::Zero)
     , timeOut(sf::seconds(5.f))
+    , pingTimer(sf::Time::Zero)
+    , pingCounter(sf::Time::Zero)
+    , pingId(0)
     , state(State::CHARGEMENT)
     , loading(&informationSocket, &serverSocket, &gameServerSocket, &gameServerUdpSocket, &fonts, window, &state, &token, &username)
 {
@@ -263,6 +267,28 @@ void Game::testInput()
     playerInput.MouseY = gameMousePosition.y;
 }
 
+void Game::receiveInformationPacket()
+{
+    sf::Packet packet;
+    while(gameServerSocket.receive(packet) == sf::Socket::Status::Done)
+    {
+        unsigned int netCode(0);
+        packet >> netCode;
+        switch(netCode)
+        case NetworkValues::PING:
+        {
+            long long id;
+            packet >> id;
+            if(id == pingId)
+            {
+                ping = pingCounter.asMilliseconds();
+                pingCounter = sf::Time::Zero;
+            }
+            break;
+        }
+    }
+}
+
 void Game::update(sf::Time dt)
 {
     switch(state)
@@ -282,8 +308,21 @@ void Game::update(sf::Time dt)
             {
                 playerInput.MoveUp = playerInput.MoveDown = playerInput.MoveLeft = playerInput.MoveRight = playerInput.aAttack = playerInput.eAttack = false;
             }
+            if(pingTimer.asSeconds() >= 1)
+            {
+                sf::Packet packet;
+                packet << NetworkValues::PING << ++pingId;
+                informationSocket.send(packet);
+                pingTimer -= sf::seconds(1.f);
+            }
+            else
+            {
+                pingTimer += dt;
+            }
+            pingCounter += dt;
             sendInput();
             receivePacket();
+            receiveInformationPacket();
             world.update(dt);
             chat.update();
         break;

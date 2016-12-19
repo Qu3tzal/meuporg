@@ -1,11 +1,12 @@
 #include "Hud.hpp"
 
-Hud::Hud(kantan::FontHolder* fonts, sf::RenderWindow* window) : player(nullptr)
+Hud::Hud(kantan::FontHolder* fonts, sf::RenderWindow* window,int * ping) : player(nullptr)
     , buttons(window, fonts)
     , tab(Tabs::NONE)
     , stats(fonts)
 {
     this->fonts = fonts;
+    this->ping = ping;
 }
 
 Hud::~Hud()
@@ -15,6 +16,14 @@ Hud::~Hud()
 
 void Hud::init()
 {
+    pingText.setFont((fonts->get(ResourceId::MONOF_56)));
+    pingText.setCharacterSize(16);
+    pingText.setPosition(0, 0);
+
+    std::stringstream ss;
+    ss << *ping;
+    pingText.setString(ss.str());
+
     healthBar.setPosition(sf::Vector2f(25, 15));
     healthBar.setFillColor(sf::Color(255, 0, 0, 128));
 
@@ -62,6 +71,10 @@ void Hud::update(sf::Time dt)
     xpBar.setSize(sf::Vector2f(setRatioXp(), 50));
 
     buttons.update();
+
+    std::stringstream ss;
+    ss << *ping << " ms";
+    pingText.setString(ss.str());
 
     switch(tab)
     {
@@ -121,6 +134,7 @@ void Hud::draw(sf::RenderTarget& window, sf::RenderStates states) const
     window.draw(xpText, states);
 
     window.draw(buttons);
+    window.draw(pingText);
 
     switch(tab)
     {

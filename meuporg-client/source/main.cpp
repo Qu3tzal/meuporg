@@ -15,7 +15,7 @@ int main()
     const std::string TITLE  = "MMPROPPPG V0.2";
 
     sf::RenderWindow window(sf::VideoMode(1280, 800), TITLE);
-    window.setFramerateLimit(120);
+    //window.setFramerateLimit(120);
 
     Game game(&window);
     game.init();

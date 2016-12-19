@@ -1,8 +1,8 @@
 #include "World.hpp"
 
-World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window, sf::TcpSocket* socket, Chat* chat) : m_map(textures)
+World::World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window, sf::TcpSocket* socket, Chat* chat, int * ping) : m_map(textures)
     , player(nullptr)
-    , hud(fonts, window)
+    , hud(fonts, window, ping)
     , dialogs(fonts)
 {
     this->textures = textures;

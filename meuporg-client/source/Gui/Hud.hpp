@@ -15,7 +15,7 @@
 class Hud : public sf::Drawable, public sf::Transformable
 {
     public:
-        Hud(kantan::FontHolder* fonts, sf::RenderWindow* window);
+        Hud(kantan::FontHolder* fonts, sf::RenderWindow* window, int * ping);
         virtual ~Hud();
 
         enum Tabs {NONE, STATS};
@@ -46,6 +46,8 @@ class Hud : public sf::Drawable, public sf::Transformable
          sf::RectangleShape xpBar;
          sf::Text xpText;
 
+         sf::Text pingText;
+
          sf::RectangleShape background;
 
          kantan::FontHolder* fonts;
@@ -55,6 +57,8 @@ class Hud : public sf::Drawable, public sf::Transformable
          Tabs tab;
 
          Statistic stats;
+
+         int * ping;
 
     private:
 };

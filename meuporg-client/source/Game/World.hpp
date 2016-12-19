@@ -24,7 +24,7 @@
 class World : public sf::Drawable, public sf::Transformable
 {
     public:
-        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window, sf::TcpSocket* socket, Chat* chat);
+        World(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string* username, sf::RenderWindow* window, sf::TcpSocket* socket, Chat* chat, int * ping);
         virtual ~World();
 
         void init();

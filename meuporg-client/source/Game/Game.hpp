@@ -61,6 +61,9 @@ class Game
         // Test all inputs
         void testInput();
 
+        // Receive information packet
+        void receiveInformationPacket();
+
     private:
 
         // Timer for the timeout
@@ -103,6 +106,8 @@ class Game
         // FontHolder
         kantan::FontHolder fonts;
 
+        int ping;
+
         // World
         World world;
 
@@ -111,6 +116,12 @@ class Game
         sf::Time timeOutTimer;
 
         sf::Time timeOut;
+
+        sf::Time pingTimer;
+
+        sf::Time pingCounter;
+
+        long long pingId;
 
         State state;
 
