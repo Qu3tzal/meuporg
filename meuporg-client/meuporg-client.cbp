@@ -52,10 +52,8 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++11" />
 			<Add option="-Wall" />
-			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/include" />
-			<Add directory="C:/MinGW/include" />
+			<Add option="-std=c++14" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
@@ -65,8 +63,6 @@
 			<Add library="dxguid" />
 			<Add library="glu32" />
 			<Add library="opengl32" />
-			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/lib" />
-			<Add directory="C:/MinGW/lib" />
 		</Linker>
 		<Unit filename="source/Entity/Animation.cpp" />
 		<Unit filename="source/Entity/Animation.hpp" />
