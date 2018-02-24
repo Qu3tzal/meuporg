@@ -71,7 +71,7 @@ void Chat::up(float height)
 
 void Chat::initText(sf::Text* text, sf::Color color)
 {
-    text->setColor(color);
+    text->setFillColor(color);
     text->setCharacterSize(14);
     text->setFont(fonts->get(ResourceId::MONOF_56));
 }

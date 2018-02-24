@@ -1,5 +1,7 @@
 #include "RotationSystem.hpp"
 
+#include <cmath>
+
 namespace kantan
 {
     // Ctor.

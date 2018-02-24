@@ -18,11 +18,11 @@ void Statistic::init()
     nameText.setPosition(sf::Vector2f(10, 10));
     nameText.setCharacterSize(24);
     nameText.setFont(fonts->get(ResourceId::KENPIXEL));
-    nameText.setColor(sf::Color::White);
+    nameText.setFillColor(sf::Color::White);
 
     statsText.setCharacterSize(16);
     statsText.setFont(fonts->get(ResourceId::KENPIXEL));
-    statsText.setColor(sf::Color::White);
+    statsText.setFillColor(sf::Color::White);
 }
 
 void Statistic::update(Player* p)

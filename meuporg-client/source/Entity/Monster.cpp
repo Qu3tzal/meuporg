@@ -1,5 +1,7 @@
 #include "Monster.hpp"
 
+#include <cmath>
+
 Monster::Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id): EntityWithStats(id, name, fonts, textures, Entity::Type::MONSTER)
     , direction(Direction::DOWN)
 {

@@ -26,7 +26,7 @@ void Loading::init()
 {
     text.setFont(fonts->get(ResourceId::MONOF_56));
     text.setCharacterSize(16);
-    text.setColor(sf::Color::Red);
+    text.setFillColor(sf::Color::Red);
     text.setPosition(575, 450);
     text.setString("");
 
@@ -70,7 +70,7 @@ void Loading::serverConnection()
     sf::Socket::Status status = informationSocket->connect(ip, 22626, sf::seconds(5.f));
     if (status != sf::Socket::Done)
     {
-        text.setColor(sf::Color::Red);
+        text.setFillColor(sf::Color::Red);
         text.setString("Connection timed out");
         return;
     }
@@ -108,12 +108,12 @@ void Loading::connectToServer()
 
     if (status != sf::Socket::Done)
     {
-        text.setColor(sf::Color::Red);
+        text.setFillColor(sf::Color::Red);
         text.setString("Connection timed out");
         return;
     }
 
-    text.setColor(sf::Color::Black);
+    text.setFillColor(sf::Color::Black);
     text.setString("Connection en cours");
 
     packet << NetworkValues::CONNECT << *username << Version;
@@ -127,7 +127,7 @@ void Loading::connectToServer()
     switch(answer)
     {
         case NetworkValues::ACCOUNT_CREATED_RECONNECT :
-            text.setColor(sf::Color::Black);
+            text.setFillColor(sf::Color::Black);
             text.setString("Création du compte");
             serverSocket->disconnect();
 
@@ -136,7 +136,7 @@ void Loading::connectToServer()
             break;
         case NetworkValues::CONNECTION_SUCCESS :
             {
-                text.setColor(sf::Color::Black);
+                text.setFillColor(sf::Color::Black);
                 text.setString("Connection reussi");
 
                 packet >> *token;
@@ -146,23 +146,23 @@ void Loading::connectToServer()
             }
             break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_USER :
-                text.setColor(sf::Color::Red);
+                text.setFillColor(sf::Color::Red);
                 text.setString("Identifiant inconnu");
             break;
         case NetworkValues::CONNECTION_FAIL_VERSION_ERROR :
-            text.setColor(sf::Color::Red);
+            text.setFillColor(sf::Color::Red);
             text.setString("Version invalide");
             break;
         case NetworkValues::CONNECTION_FAIL_SERVER_FULL :
-            text.setColor(sf::Color::Red);
+            text.setFillColor(sf::Color::Red);
             text.setString("Le serveur est complet");
             break;
         case NetworkValues::CONNECTION_FAIL_UNKNOWN_ERROR :
-            text.setColor(sf::Color::Red);
+            text.setFillColor(sf::Color::Red);
             text.setString("Erreur inconnu");
             break;
         case NetworkValues::CONNECTION_FAIL_ALREADY_CONNECTED :
-            text.setColor(sf::Color::Red);
+            text.setFillColor(sf::Color::Red);
             text.setString("Vous êtes déjà connecté");
             break;
     }
@@ -175,7 +175,7 @@ void Loading::connectToGameServer()
 
     if (status != sf::Socket::Done)
     {
-        text.setColor(sf::Color::Red);
+        text.setFillColor(sf::Color::Red);
         text.setString("Connection Timed Out");
         return;
     }
@@ -237,14 +237,14 @@ void Loading::connectToGameServer()
     }
     else if(answer == NetworkValues::CONNECTION_FAIL_WRONG_TOKEN)
     {
-        text.setColor(sf::Color::Red);
+        text.setFillColor(sf::Color::Red);
         text.setString("Token invalide");
         //gameServerSocket->disconnect();
         //connectToGameServer();
     }
     else if(answer == NetworkValues::CONNECTION_FAIL_UNKNOWN_USER)
     {
-        text.setColor(sf::Color::Red);
+        text.setFillColor(sf::Color::Red);
         text.setString("Nom inconnu");
         //gameServerSocket->disconnect();
         //connectToGameServer();

@@ -25,12 +25,12 @@ void Dialog::init()
     text.setPosition(10, 10);
     text.setFont(fonts->get(ResourceId::MONOF_56));
     text.setCharacterSize(16);
-    text.setColor(sf::Color::White);
+    text.setFillColor(sf::Color::White);
 
     nextPageText.setPosition(328, 55);
     nextPageText.setFont(fonts->get(ResourceId::MONOF_56));
     nextPageText.setCharacterSize(16);
-    nextPageText.setColor(sf::Color::White);
+    nextPageText.setFillColor(sf::Color::White);
     nextPageText.setString(arrow);
 }
 
@@ -114,7 +114,7 @@ void Dialog::initChoice()
     title.setPosition(5, 10);
     title.setFont(fonts->get(ResourceId::MONOF_56));
     title.setCharacterSize(16);
-    title.setColor(sf::Color::White);
+    title.setFillColor(sf::Color::White);
     title.setString(choice->title);
 
     for(auto itr = choice->possibilities.begin(); itr != choice->possibilities.end(); itr++)
@@ -123,7 +123,7 @@ void Dialog::initChoice()
         text.setPosition(20, 45 + i * 25);
         text.setFont(fonts->get(ResourceId::MONOF_56));
         text.setCharacterSize(16);
-        text.setColor(sf::Color::White);
+        text.setFillColor(sf::Color::White);
         text.setString(itr->first);
 
         choiceTexts.push_back(text);

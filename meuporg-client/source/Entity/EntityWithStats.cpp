@@ -22,9 +22,9 @@ void EntityWithStats::update(sf::Time dt)
         // Left hitMarker
     for(auto i = leftDamagesText.begin() ; i != leftDamagesText.end();)
     {
-        if(i->getColor().a > 1)
+        if(i->getFillColor().a > 1)
         {
-            i->setColor(sf::Color(i->getColor().r, i->getColor().g, i->getColor().b, i->getColor().a - 2));
+            i->setFillColor(sf::Color(i->getFillColor().r, i->getFillColor().g, i->getFillColor().b, i->getFillColor().a - 2));
             i->setPosition(i->getPosition().x, i->getPosition().y - 1);
             i++;
         }
@@ -36,9 +36,9 @@ void EntityWithStats::update(sf::Time dt)
     // Right hitMarker
     for(auto i = rightDamagesText.begin() ; i != rightDamagesText.end();)
     {
-        if(i->getColor().a > 1)
+        if(i->getFillColor().a > 1)
         {
-            i->setColor(sf::Color(i->getColor().r, i->getColor().g, i->getColor().b, i->getColor().a - 2));
+            i->setFillColor(sf::Color(i->getFillColor().r, i->getFillColor().g, i->getFillColor().b, i->getFillColor().a - 2));
             i->setPosition(i->getPosition().x, i->getPosition().y - 1);
             i++;
         }
@@ -50,9 +50,9 @@ void EntityWithStats::update(sf::Time dt)
     // Top hitMarker
     for(auto i = topDamagesText.begin() ; i != topDamagesText.end();)
     {
-        if(i->getColor().a > 1)
+        if(i->getFillColor().a > 1)
         {
-            i->setColor(sf::Color(i->getColor().r, i->getColor().g, i->getColor().b, i->getColor().a - 2));
+            i->setFillColor(sf::Color(i->getFillColor().r, i->getFillColor().g, i->getFillColor().b, i->getFillColor().a - 2));
             i->setPosition(i->getPosition().x, i->getPosition().y - 1);
             i++;
         }
@@ -84,7 +84,7 @@ void EntityWithStats::setProperty(std::string name, float value, bool show)
 
                 if(value > health)
                 {
-                    text.setColor(sf::Color(0, 255, 0, 255));
+                    text.setFillColor(sf::Color(0, 255, 0, 255));
                     std::stringstream ss;
                     float nb = value - health;
                     ss << "+ " << nb;
@@ -92,7 +92,7 @@ void EntityWithStats::setProperty(std::string name, float value, bool show)
                 }
                 else
                 {
-                    text.setColor(sf::Color(255, 0, 0, 255));
+                    text.setFillColor(sf::Color(255, 0, 0, 255));
                     std::stringstream ss;
                     float nb = health - value;
                     ss << "- " << nb;
@@ -114,7 +114,7 @@ void EntityWithStats::setProperty(std::string name, float value, bool show)
                     text.setFont(fonts->get(ResourceId::KENPIXEL));
                     text.setCharacterSize(15);
 
-                    text.setColor(sf::Color(0, 0, 255, 255));
+                    text.setFillColor(sf::Color(0, 0, 255, 255));
                     std::stringstream ss;
                     float nb = value - xp;
                     ss << "+ " << nb << " XP";
@@ -135,7 +135,7 @@ void EntityWithStats::setProperty(std::string name, float value, bool show)
                 text.setFont(fonts->get(ResourceId::KENPIXEL));
                 text.setCharacterSize(20);
 
-                text.setColor(sf::Color(255, 215, 0, 255));
+                text.setFillColor(sf::Color(255, 215, 0, 255));
                 std::stringstream ss;
                 ss << "LEVEL UP!";
                 text.setString(ss.str());

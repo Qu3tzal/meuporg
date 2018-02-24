@@ -1,5 +1,7 @@
 #include "Entity.hpp"
 
+#include <cmath>
+
 Entity::Entity(int id, std::string name, Entity::Type type, kantan::TextureHolder* textures, kantan::FontHolder* fonts)
 {
     this->id = id;

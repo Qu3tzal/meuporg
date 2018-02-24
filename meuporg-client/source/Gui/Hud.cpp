@@ -30,7 +30,7 @@ void Hud::init()
     healthText.setFont(fonts->get(ResourceId::MONOF_56));
     healthText.setCharacterSize(16);
     healthText.setPosition(135, 35 - healthText.getGlobalBounds().height/2);
-    healthText.setColor(sf::Color::White);
+    healthText.setFillColor(sf::Color::White);
 
     xpBar.setPosition(sf::Vector2f(25, 80));
     xpBar.setFillColor(sf::Color(0, 128, 255, 128));
@@ -38,7 +38,7 @@ void Hud::init()
     xpText.setFont(fonts->get(ResourceId::MONOF_56));
     xpText.setCharacterSize(16);
     xpText.setPosition(135, 105 - healthText.getGlobalBounds().height/2);
-    xpText.setColor(sf::Color::White);
+    xpText.setFillColor(sf::Color::White);
 
     background.setPosition(0, 0);
     background.setSize(sf::Vector2f(350, 145));

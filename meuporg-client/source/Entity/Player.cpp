@@ -1,5 +1,7 @@
 #include "Player.hpp"
 
+#include <cmath>
+
 Player::Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id)
     : EntityWithStats(id, name, fonts, textures, Entity::Type::PLAYER)
     , direction(Direction::DOWN)

@@ -1,6 +1,7 @@
 #include "PolygonHitboxComponent.hpp"
 
 #include <string>
+#include <cmath>
 
 namespace kantan
 {

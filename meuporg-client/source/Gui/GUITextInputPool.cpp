@@ -32,11 +32,11 @@ void GUITextInputPool::addTextInput(std::string name, sf::Vector2f centerPositio
     text.setString("");
     placeholderText.setString(placeholderTextString);
 
-    text.setColor(textColor);
+    text.setFillColor(textColor);
 
     sf::Color placeholderColor = textColor;
     placeholderColor.a -= 80;
-    placeholderText.setColor(placeholderColor);
+    placeholderText.setFillColor(placeholderColor);
 
     centerOrigin(text);
     centerOrigin(placeholderText);
@@ -212,15 +212,14 @@ void GUITextInputPool::draw(sf::RenderTarget& window, sf::RenderStates states) c
     if(mode == 1 && m_focusedTextName == "")
         return;
 
-        for(std::pair<std::string, TextInput> b_pair : m_texts)
-        {
-            window.draw(b_pair.second.shape, states);
+    for(std::pair<std::string, TextInput> b_pair : m_texts)
+    {
+        window.draw(b_pair.second.shape, states);
 
-            // We display the text only if we are focused or we have something already written.
-            if(b_pair.first == m_focusedTextName || b_pair.second.text.getString() != "")
-                window.draw(b_pair.second.text, states);
-            else
-                window.draw(b_pair.second.placeholderText, states);
-        }
-
+        // We display the text only if we are focused or we have something already written.
+        if(b_pair.first == m_focusedTextName || b_pair.second.text.getString() != "")
+            window.draw(b_pair.second.text, states);
+        else
+            window.draw(b_pair.second.placeholderText, states);
+    }
 }
