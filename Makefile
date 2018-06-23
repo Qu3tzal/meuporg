@@ -1,13 +1,12 @@
 SRC_DIR := meuporg-server/source/
-OBJ_DIR := meuporg-server/
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
-OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
+OBJ_FILES := $(SRC_FILES:.cpp=.o)
 
 all: $(OBJ_FILES)
 	$(CXX) -std=c++14 -Wall -o meuporg-server
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-   $(CXX) -std=c++14 -Wall -c -o $@ $<
+   $(CXX) -lsfml-system-d -lsfml-graphics-d -lsfml-window-d -lsfml-audio-d -lsfml-network-d -std=c++14 -Wall -c -o $@ $<
    
 clean:
 	rm meuporg-server/meuporg-server
