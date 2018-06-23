@@ -1,5 +1,5 @@
 SRC_DIR := meuporg-server/source/
-SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
+SRC_FILES := $(wildcard $(SRC_DIR)/**/*.cpp)
 OBJ_FILES := $(SRC_FILES:.cpp=.o)
 
 all: $(OBJ_FILES)
