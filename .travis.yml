@@ -5,3 +5,4 @@ before_install:
     - sudo apt-get install -y libsfml-dev
 branches:
     only: royale
+script: make
