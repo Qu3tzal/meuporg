@@ -1,5 +1,5 @@
 SRC_DIR := meuporg-server/source/
-SRC_FILES := $(wildcard $(SRC_DIR)/**/*.cpp)
+SRC_FILES := $(wildcard $(SRC_DIR)/**/*.cpp)$(wildcard $(SRC_DIR)/*.cpp)
 HEADER_FILES := $(wildcard $(SRC_DIR)/**/*.hpp)
 OBJ_FILES := $(SRC_FILES:.cpp=.o)
 CXXFLAGS := -std=c++11 -Wall -ISFML-2.5.0/include -LSFML-2.5.0/lib
