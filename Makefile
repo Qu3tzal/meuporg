@@ -8,7 +8,7 @@ all: $(OBJ_FILES)
 	$(CXX) $(CXX_FLAGS) $(LDFLAGS) $^ -o meuporg-server/meuporg-server.debug
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-   $(CXX) $(CXXFLAGS) $(LDFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -c -o $@ $<
    
 clean:
 	rm meuporg-server/meuporg-server
