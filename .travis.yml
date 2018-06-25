@@ -14,7 +14,8 @@ matrix:
 sudo: required
 before_install:
     - sudo apt-get update
-    - sudo apt-get install -y libsfml-dev
+    - wget https://www.sfml-dev.org/files/SFML-2.5.0-linux-gcc-64-bit.tar.gz
+    - tar -xvzf SFML-2.5.0-linux-gcc-64-bit.tar.gz
 branches:
     only: royale
 script: make
