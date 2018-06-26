@@ -2,7 +2,7 @@
 #define ENTITYWITHSTATS_HPP
 
 #include "Entity.hpp"
-#include "NameText.hpp"
+#include "../Gui/NameText.hpp"
 
 class EntityWithStats : public Entity
 {
