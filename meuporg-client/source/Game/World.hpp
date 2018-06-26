@@ -7,19 +7,19 @@
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
 
-#include "Entity.hpp"
-#include "Player.hpp"
-#include "Monster.hpp"
-#include "Npc.hpp"
+#include "../Entity/Entity.hpp"
+#include "../Entity/Player.hpp"
+#include "../Entity/Monster.hpp"
+#include "../Entity/Npc.hpp"
 #include "../ResourceHolder.hpp"
 #include "../SFMLPacketUtils.hpp"
 #include "Map.hpp"
-#include "Hud.hpp"
-#include "DialogManager.hpp"
-#include "Bullet.hpp"
-#include "Tower.hpp"
+#include "../Gui/Hud.hpp"
+#include "../Gui/DialogManager.hpp"
+#include "../Entity/Bullet.hpp"
+#include "../Entity/Tower.hpp"
 #include "../NetworkValues.hpp"
-#include "Chat.hpp"
+#include "../Gui/Chat.hpp"
 
 class World : public sf::Drawable, public sf::Transformable
 {
