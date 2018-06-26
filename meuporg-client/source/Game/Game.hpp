@@ -11,7 +11,7 @@
 #include "../NetworkValues.hpp"
 #include "../PlayerInput.hpp"
 #include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
-#include "../Chat/Chat.hpp"
+#include "../Gui/Chat.hpp"
 #include "../ResourceHolder.hpp"
 #include "World.hpp"
 #include "../ResourceId.hpp"
