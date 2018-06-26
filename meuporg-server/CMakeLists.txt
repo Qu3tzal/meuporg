@@ -87,4 +87,4 @@ add_executable(meuporg-royale-server
               source/World/World.cpp
               source/sqlite/sqlite3.c
               )
-target_link_libraries(meuporg-royale-server sfml-system-d sfml-window-d sfml-graphics-d sfml-network-d sfml-audio-d pthread)
+target_link_libraries(meuporg-royale-server sfml-system-d sfml-window-d sfml-graphics-d sfml-network-d sfml-audio-d pthread dl)
