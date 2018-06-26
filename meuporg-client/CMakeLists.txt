@@ -12,8 +12,8 @@ include_directories(source/Menu)
 include_directories(source/RandomNumberGenerator)
 
 
-include_directories(./SFML-2.5.0/include)
-link_directories(./SFML-2.5.0/lib)
+include_directories(../SFML-2.5.0/include)
+link_directories(../SFML-2.5.0/lib)
 
 add_executable(meuporg-royale-client
               source/main.cpp
