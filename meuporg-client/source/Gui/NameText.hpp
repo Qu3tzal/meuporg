@@ -6,7 +6,7 @@
 #include "../ResourceHolder.hpp"
 #include "../Gui/GraphicsUtils.hpp"
 #include "../ResourceId.hpp"
-#include "sstream"
+#include <sstream>
 
 class NameText : public sf::Drawable, public sf::Transformable
 {
