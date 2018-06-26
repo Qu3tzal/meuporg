@@ -15,7 +15,8 @@ before_install:
   - sudo apt-get update && sudo apt-get -y install build-essential make cmake libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libudev-dev libjpeg8-dev libjpeg-turbo8-dev libsndfile1-dev libopenal-dev
   - git clone https://github.com/SFML/SFML.git
   - cd SFML
-  - cmake . && make && sudo make install && cd ..
+  - cmake . -DCMAKE_BUILD_TYPE=Release && make && sudo make install
+  - cmake . -DCMAKE_BUILD_TYPE=Debug && make && sudo make install && cd ..
 branches:
     only: royale
 script:
