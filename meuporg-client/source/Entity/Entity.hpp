@@ -11,7 +11,7 @@ class Entity : public sf::Drawable, public sf::Transformable
     public:
 
         // enum of type
-        enum Type {PLAYER, NPC, MONSTER, BULLET, TOWER};
+        enum Type {PLAYER, NPC, MONSTER, BULLET, TOWER, BOX};
 
         Entity(int id, std::string name, Type type, kantan::TextureHolder* textures, kantan::FontHolder* fonts);
 
