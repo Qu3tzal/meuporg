@@ -22,7 +22,7 @@ sf::Packet& operator >>(sf::Packet& packet, sf::Time& time)
 }
 
 // Writing.
-sf::Packet& operator >>(sf::Packet& packet, const std::size_t& x)
+sf::Packet& operator <<(sf::Packet& packet, const std::size_t& x)
 {
     sf::Uint32 ui32b;
     ui32b = (unsigned int)(x);
