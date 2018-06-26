@@ -7,7 +7,7 @@
 
 #include "../ResourceHolder.hpp"
 #include "../ResourceId.hpp"
-#include "Player.hpp"
+#include "../Entity/Player.hpp"
 #include "GUIButtonPool.hpp"
 #include "Statistic.hpp"
 
