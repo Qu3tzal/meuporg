@@ -9,7 +9,6 @@ matrix:
           packages:
             - g++-7
           sources: &sources
-            - llvm-toolchain-precise-3.8
             - ubuntu-toolchain-r-test
 sudo: required
 before_install:
