@@ -13,9 +13,11 @@ matrix:
             - ubuntu-toolchain-r-test
 sudo: required
 before_install:
-    - sudo apt-get update
-    - wget https://www.sfml-dev.org/files/SFML-2.5.0-linux-gcc-64-bit.tar.gz
-    - tar -xvzf SFML-2.5.0-linux-gcc-64-bit.tar.gz
+  - sudo apt update && apt -y install build-essential make cmake libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libudev-dev libjpeg62-turbo-dev libsndfile1-dev libopenal-dev
+  - git clone https://github.com/SFML/SFML.git
+  - cd SFML
+  - cmake . && make && sudo make install
 branches:
     only: royale
-script: make
+script:
+  - cmake . && make
