@@ -7,7 +7,7 @@
 
 #include "Animation.hpp"
 #include "EntityWithStats.hpp"
-#include "NameText.hpp"
+#include "../Gui/NameText.hpp"
 
 
 class Player : public EntityWithStats
