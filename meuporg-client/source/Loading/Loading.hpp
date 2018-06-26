@@ -6,8 +6,8 @@
 #include <SFML/Network.hpp>
 
 #include "../ResourceHolder.hpp"
-#include "GUITextInputPool.hpp"
-#include "GUIButtonPool.hpp"
+#include "../Gui/GUITextInputPool.hpp"
+#include "../Gui/GUIButtonPool.hpp"
 #include "../ResourceId.hpp"
 #include "../State.hpp"
 #include <iostream>
