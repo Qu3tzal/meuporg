@@ -4,87 +4,87 @@ project(meuporg-royale-server)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 set(CMAKE_CXX_STANDARD 11)
 
-include_directories(meuporg-server/source)
-include_directories(meuporg-server/source/Components)
-include_directories(meuporg-server/source/Database)
-include_directories(meuporg-server/source/InformationServer)
-include_directories(meuporg-server/source/Kantan-2)
-include_directories(meuporg-server/source/Kantan-2/Component)
-include_directories(meuporg-server/source/Kantan-2/Entity)
-include_directories(meuporg-server/source/Kantan-2/Event)
-include_directories(meuporg-server/source/Kantan-2/GUI)
-include_directories(meuporg-server/source/Kantan-2/ResourceHolder)
-include_directories(meuporg-server/source/Kantan-2/System)
-include_directories(meuporg-server/source/Kantan-2/Utils)
-include_directories(meuporg-server/source/LoginServer)
-include_directories(meuporg-server/source/MapLoader)
-include_directories(meuporg-server/source/RandomNumberGenerator)
-include_directories(meuporg-server/source/Server)
-include_directories(meuporg-server/source/Systems)
-include_directories(meuporg-server/source/Utils)
-include_directories(meuporg-server/source/World)
-include_directories(meuporg-server/source/sqlite)
+include_directories(source)
+include_directories(source/Components)
+include_directories(source/Database)
+include_directories(source/InformationServer)
+include_directories(source/Kantan-2)
+include_directories(source/Kantan-2/Component)
+include_directories(source/Kantan-2/Entity)
+include_directories(source/Kantan-2/Event)
+include_directories(source/Kantan-2/GUI)
+include_directories(source/Kantan-2/ResourceHolder)
+include_directories(source/Kantan-2/System)
+include_directories(source/Kantan-2/Utils)
+include_directories(source/LoginServer)
+include_directories(source/MapLoader)
+include_directories(source/RandomNumberGenerator)
+include_directories(source/Server)
+include_directories(source/Systems)
+include_directories(source/Utils)
+include_directories(source/World)
+include_directories(source/sqlite)
 
 include_directories(./SFML-2.5.0/include)
 link_directories(./SFML-2.5.0/lib)
 
 add_executable(meuporg-royale-server
-              meuporg-server/source/main.cpp
-              meuporg-server/source/Components/BasicStatsComponent.cpp
-              meuporg-server/source/Components/ClientLinkComponent.cpp
-              meuporg-server/source/Components/DamageComponent.cpp
-              meuporg-server/source/Components/LevelStatsComponent.cpp
-              meuporg-server/source/Components/LifetimeComponent.cpp
-              meuporg-server/source/Components/MonsterAIComponent.cpp
-              meuporg-server/source/Components/NameComponent.cpp
-              meuporg-server/source/Components/StaticMarkerComponent.cpp
-              meuporg-server/source/Components/TowerAIComponent.cpp
-              meuporg-server/source/Components/WeaponComponent.cpp
-              meuporg-server/source/Database/Database.cpp
-              meuporg-server/source/InformationServer/InformationServer.cpp
-              meuporg-server/source/Kantan-2/Component/AABBHitboxComponent.cpp
-              meuporg-server/source/Kantan-2/Component/AnimationComponent.cpp
-              meuporg-server/source/Kantan-2/Component/BatchedSpriteComponent.cpp
-              meuporg-server/source/Kantan-2/Component/Component.cpp
-              meuporg-server/source/Kantan-2/Component/DeletionMarkerComponent.cpp
-              meuporg-server/source/Kantan-2/Component/MovementComponent.cpp
-              meuporg-server/source/Kantan-2/Component/ParticleEffectComponent.cpp
-              meuporg-server/source/Kantan-2/Component/PolygonHitboxComponent.cpp
-              meuporg-server/source/Kantan-2/Component/RectShapeComponent.cpp
-              meuporg-server/source/Kantan-2/Component/RotationComponent.cpp
-              meuporg-server/source/Kantan-2/Component/SpriteComponent.cpp
-              meuporg-server/source/Kantan-2/Entity/Entity.cpp
-              meuporg-server/source/Kantan-2/Event/Event.cpp
-              meuporg-server/source/Kantan-2/GUI/GUIButtonPool.cpp
-              meuporg-server/source/Kantan-2/GUI/GUIGraph.cpp
-              meuporg-server/source/Kantan-2/GUI/GUITextInputPool.cpp
-              meuporg-server/source/Kantan-2/System/AABBCollisionSystem.cpp
-              meuporg-server/source/Kantan-2/System/AnimationSystem.cpp
-              meuporg-server/source/Kantan-2/System/BatchedSpriteRenderSystem.cpp
-              meuporg-server/source/Kantan-2/System/ParticleEffectRenderSystem.cpp
-              meuporg-server/source/Kantan-2/System/ParticleEffectUpdateSystem.cpp
-              meuporg-server/source/Kantan-2/System/PolygonCollisionSystem.cpp
-              meuporg-server/source/Kantan-2/System/RectShapeRenderSystem.cpp
-              meuporg-server/source/Kantan-2/System/RotationSystem.cpp
-              meuporg-server/source/Kantan-2/System/SpriteRenderSystem.cpp
-              meuporg-server/source/Kantan-2/System/SynchronizeBatchedSpriteSystem.cpp
-              meuporg-server/source/Kantan-2/System/SynchronizeRectShapeSystem.cpp
-              meuporg-server/source/Kantan-2/System/SynchronizeSpriteSystem.cpp
-              meuporg-server/source/Kantan-2/System/System.cpp
-              meuporg-server/source/Kantan-2/Utils/MathUtils.cpp
-              meuporg-server/source/Kantan-2/Utils/StringUtils.cpp
-              meuporg-server/source/LoginServer/LoginServer.cpp
-              meuporg-server/source/MapLoader/MapLoader.cpp
-              meuporg-server/source/RandomNumberGenerator/RandomNumberGenerator.cpp
-              meuporg-server/source/Server/Server.cpp
-              meuporg-server/source/Systems/ClientInputSystem.cpp
-              meuporg-server/source/Systems/LevelUpSystem.cpp
-              meuporg-server/source/Systems/LifetimeSystem.cpp
-              meuporg-server/source/Systems/MonsterAISystem.cpp
-              meuporg-server/source/Systems/TowerAISystem.cpp
-              meuporg-server/source/Systems/WeaponCooldownSystem.cpp
-              meuporg-server/source/Utils/SFMLPacketUtils.cpp
-              meuporg-server/source/World/World.cpp
-              meuporg-server/source/sqlite/sqlite3.c
+              source/main.cpp
+              source/Components/BasicStatsComponent.cpp
+              source/Components/ClientLinkComponent.cpp
+              source/Components/DamageComponent.cpp
+              source/Components/LevelStatsComponent.cpp
+              source/Components/LifetimeComponent.cpp
+              source/Components/MonsterAIComponent.cpp
+              source/Components/NameComponent.cpp
+              source/Components/StaticMarkerComponent.cpp
+              source/Components/TowerAIComponent.cpp
+              source/Components/WeaponComponent.cpp
+              source/Database/Database.cpp
+              source/InformationServer/InformationServer.cpp
+              source/Kantan-2/Component/AABBHitboxComponent.cpp
+              source/Kantan-2/Component/AnimationComponent.cpp
+              source/Kantan-2/Component/BatchedSpriteComponent.cpp
+              source/Kantan-2/Component/Component.cpp
+              source/Kantan-2/Component/DeletionMarkerComponent.cpp
+              source/Kantan-2/Component/MovementComponent.cpp
+              source/Kantan-2/Component/ParticleEffectComponent.cpp
+              source/Kantan-2/Component/PolygonHitboxComponent.cpp
+              source/Kantan-2/Component/RectShapeComponent.cpp
+              source/Kantan-2/Component/RotationComponent.cpp
+              source/Kantan-2/Component/SpriteComponent.cpp
+              source/Kantan-2/Entity/Entity.cpp
+              source/Kantan-2/Event/Event.cpp
+              source/Kantan-2/GUI/GUIButtonPool.cpp
+              source/Kantan-2/GUI/GUIGraph.cpp
+              source/Kantan-2/GUI/GUITextInputPool.cpp
+              source/Kantan-2/System/AABBCollisionSystem.cpp
+              source/Kantan-2/System/AnimationSystem.cpp
+              source/Kantan-2/System/BatchedSpriteRenderSystem.cpp
+              source/Kantan-2/System/ParticleEffectRenderSystem.cpp
+              source/Kantan-2/System/ParticleEffectUpdateSystem.cpp
+              source/Kantan-2/System/PolygonCollisionSystem.cpp
+              source/Kantan-2/System/RectShapeRenderSystem.cpp
+              source/Kantan-2/System/RotationSystem.cpp
+              source/Kantan-2/System/SpriteRenderSystem.cpp
+              source/Kantan-2/System/SynchronizeBatchedSpriteSystem.cpp
+              source/Kantan-2/System/SynchronizeRectShapeSystem.cpp
+              source/Kantan-2/System/SynchronizeSpriteSystem.cpp
+              source/Kantan-2/System/System.cpp
+              source/Kantan-2/Utils/MathUtils.cpp
+              source/Kantan-2/Utils/StringUtils.cpp
+              source/LoginServer/LoginServer.cpp
+              source/MapLoader/MapLoader.cpp
+              source/RandomNumberGenerator/RandomNumberGenerator.cpp
+              source/Server/Server.cpp
+              source/Systems/ClientInputSystem.cpp
+              source/Systems/LevelUpSystem.cpp
+              source/Systems/LifetimeSystem.cpp
+              source/Systems/MonsterAISystem.cpp
+              source/Systems/TowerAISystem.cpp
+              source/Systems/WeaponCooldownSystem.cpp
+              source/Utils/SFMLPacketUtils.cpp
+              source/World/World.cpp
+              source/sqlite/sqlite3.c
               )
 target_link_libraries(meuporg-royale-server sfml-system-d sfml-window-d sfml-graphics-d sfml-network-d sfml-audio-d)
