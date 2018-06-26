@@ -34,8 +34,8 @@ void World::init(std::string mapFilepath)
     auto lambda = std::bind(&World::collisionResponsePredicate, this, std::placeholders::_1, std::placeholders::_2);
     m_collisionSystem.setCollisionResponsePredicate(lambda);
 
-    // Init the spatial partitioning.
-    m_collisionSystem.initSpatialPartitioning(sf::Vector2i(1, 1), 3000.f, sf::Vector2f(0.f, 0.f));
+    // Disable the spatial partitioning.
+    m_collisionSystem.initSpatialPartitioning(sf::Vector2i(0, 0), 3000.f, sf::Vector2f(0.f, 0.f));
 
     // Load map.
     Multithreading::outputMutex.lock();
