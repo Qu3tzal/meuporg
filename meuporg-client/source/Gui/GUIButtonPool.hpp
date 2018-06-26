@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GraphicsUtils.hpp"
-#include <../ResourceHolder.hpp>
+#include "../ResourceHolder.hpp"
 /**
     Button struct.
     Stores the data relative to a button.
