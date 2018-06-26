@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <SFML/Network.hpp>
-#include <Game.hpp>
+#include "Game/Game.hpp"
 #include <SFML/Graphics.hpp>
 
 int main()
