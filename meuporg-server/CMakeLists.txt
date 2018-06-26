@@ -25,8 +25,8 @@ include_directories(source/Utils)
 include_directories(source/World)
 include_directories(source/sqlite)
 
-include_directories(./SFML-2.5.0/include)
-link_directories(./SFML-2.5.0/lib)
+include_directories(../SFML-2.5.0/include)
+link_directories(../SFML-2.5.0/lib)
 
 add_executable(meuporg-royale-server
               source/main.cpp
