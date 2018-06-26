@@ -7,7 +7,7 @@
 
 #include "../ResourceHolder.hpp"
 #include "../ResourceId.hpp"
-#include "Player.hpp"
+#include "../Entity/Player.hpp"
 
 class Statistic : public sf::Drawable, public sf::Transformable
 {
