@@ -11,12 +11,12 @@
 #include "../NetworkValues.hpp"
 #include "../PlayerInput.hpp"
 #include "../RandomNumberGenerator/RandomNumberGenerator.hpp"
-#include "Chat.hpp"
+#include "../Chat/Chat.hpp"
 #include "../ResourceHolder.hpp"
 #include "World.hpp"
 #include "../ResourceId.hpp"
-#include "Loading.hpp"
-#include "Menu.hpp"
+#include "../Loading/Loading.hpp"
+#include "../Menu/Menu.hpp"
 #include "../State.hpp"
 
 
