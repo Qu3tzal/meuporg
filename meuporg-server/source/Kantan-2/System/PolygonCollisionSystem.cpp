@@ -358,7 +358,7 @@ namespace kantan
     std::vector<kantan::Component*> PolygonCollisionSystem::getNear(sf::Vector2f position, float radius)
     {
         // Early check.
-        if(radius <= 0.f)
+        if(radius <= 0.f || m_cellMapSize == sf::Vector2i(0, 0))
             return {};
 
         // Hitboxes list.
