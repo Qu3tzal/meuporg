@@ -26,9 +26,9 @@ class Hud : public sf::Drawable, public sf::Transformable
 
         void handleEvent(sf::Event e);
 
-        unsigned int setRatioHp();
+        sf::Uint64 setRatioHp();
 
-        unsigned int setRatioXp();
+        sf::Uint64 setRatioXp();
 
         void setPlayer(Player* p);
 

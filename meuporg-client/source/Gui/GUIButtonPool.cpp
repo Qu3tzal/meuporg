@@ -11,7 +11,7 @@ GUIButtonPool::~GUIButtonPool()
 {
 }
 
-void GUIButtonPool::addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn)
+void GUIButtonPool::addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, sf::Uint64 fontId, sf::Uint64 charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn)
 {
     sf::Text text;
     text.setFont(fonts->get(fontId));

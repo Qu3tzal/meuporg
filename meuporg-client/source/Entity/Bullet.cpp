@@ -1,6 +1,6 @@
 #include "Bullet.hpp"
 
-Bullet::Bullet(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id, Entity::Type luncher)
+Bullet::Bullet(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, sf::Uint64 id, Entity::Type luncher)
     : Entity(id, name, Entity::Type::BULLET, textures, fonts)
 {
     this->luncher = luncher;

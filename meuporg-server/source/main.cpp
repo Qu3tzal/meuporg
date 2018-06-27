@@ -48,7 +48,7 @@ int main()
     sf::Time elapsed(sf::Time::Zero);
     sf::Time elapsedSinceLastLogin(sf::Time::Zero);
     sf::Time performancesTimer(sf::Time::Zero);
-    unsigned int ticks(0);
+    sf::Uint64 ticks(0);
 
     while(server.isRunning())
     {

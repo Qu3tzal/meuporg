@@ -61,10 +61,10 @@ class Server
         void sendUpdate();
 
         // Returns the number of players currently online.
-        unsigned int getNumberOfPlayers() const;
+        sf::Uint64 getNumberOfPlayers() const;
 
         // Return the maximum players capacity of the server.
-        unsigned int getMaximumPlayersCapacity() const;
+        sf::Uint64 getMaximumPlayersCapacity() const;
 
         // Returns the list of clients.
         std::vector<Client*>* getClients();
@@ -104,7 +104,7 @@ class Server
         void notifyPlayerDisconnected(std::string username);
 
         // Notifies everyone the entity has been removed.
-        void notifyEntityRemoved(unsigned int entityId);
+        void notifyEntityRemoved(sf::Uint64 entityId);
 
         // Returns true if the given string is a chat command.
         bool isChatCommand(std::string command);
@@ -132,8 +132,8 @@ class Server
         Database m_database;
 
         // Number of players connected and maximum number of players.
-        unsigned int m_numberOfPlayers;
-        unsigned int m_maximumPlayersCapacity;
+        sf::Uint64 m_numberOfPlayers;
+        sf::Uint64 m_maximumPlayersCapacity;
 
         // List of the clients.
         std::vector<Client*> m_clients;

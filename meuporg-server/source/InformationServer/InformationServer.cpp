@@ -70,7 +70,7 @@ void InformationServer::update(sf::Time dt)
             if(client->tcpsocket.receive(packet) == sf::TcpSocket::Status::Done)
             {
                 // Extract the network code.
-                unsigned int networkcode;
+                sf::Uint64 networkcode;
                 packet >> networkcode;
 
                 // Analyse it.

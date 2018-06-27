@@ -104,7 +104,7 @@ void Server::login(sf::Time dt)
         sf::Packet packet;
         if(pendingSocket->tcpSocket->receive(packet) == sf::TcpSocket::Status::Done)
         {
-            unsigned int networkCode(0);
+            sf::Uint64 networkCode(0);
             packet >> networkCode;
 
             if(networkCode != NetworkValues::CONNECT)
@@ -212,12 +212,12 @@ void Server::sendUpdate()
     }
 }
 
-unsigned int Server::getNumberOfPlayers() const
+sf::Uint64 Server::getNumberOfPlayers() const
 {
     return m_numberOfPlayers;
 }
 
-unsigned int Server::getMaximumPlayersCapacity() const
+sf::Uint64 Server::getMaximumPlayersCapacity() const
 {
     return m_maximumPlayersCapacity;
 }
@@ -308,7 +308,7 @@ void Server::disconnectPlayer(std::string username, std::string reason)
 
 void Server::updateNumberOfPlayers()
 {
-    unsigned int numberOfPlayers(0);
+    sf::Uint64 numberOfPlayers(0);
 
     // Count the number of accounts linked with a connected client.
     std::for_each(m_accounts.begin(), m_accounts.end(), [&numberOfPlayers](std::pair<std::string, Account*> entry){
@@ -372,7 +372,7 @@ void Server::receiveInputThroughTCP()
                 client->timeout = sf::Time::Zero;
 
                 // Extract network code.
-                unsigned int networkCode;
+                sf::Uint64 networkCode;
                 packet >> networkCode;
 
                 switch(networkCode)
@@ -514,7 +514,7 @@ void Server::receiveInputThroughUDP()
     {
         // Treat the packet.
         // Extract the network code.
-        unsigned int networkCode;
+        sf::Uint64 networkCode;
         packet >> networkCode;
 
         // Evaluate the network code.
@@ -622,7 +622,7 @@ void Server::receiveInputThroughUDP()
                             m_accounts.at(username)->linkedClient->timeout = sf::Time::Zero;
 
                             // Extract udp packet id.
-                            unsigned long long udpPacketId(0);
+                            sf::Uint64 udpPacketId(0);
                             packet >> udpPacketId;
 
                             // Skip packet if we already received newer inputs.
@@ -712,7 +712,7 @@ void Server::notifyPlayerDisconnected(std::string username)
 }
 
 // Notifies everyone the entity has been removed.
-void Server::notifyEntityRemoved(unsigned int entityId)
+void Server::notifyEntityRemoved(sf::Uint64 entityId)
 {
     sf::Packet packet;
 

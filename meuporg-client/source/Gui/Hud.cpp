@@ -92,7 +92,7 @@ void Hud::handleEvent(sf::Event e)
     buttons.handleEvent(e);
 }
 
-unsigned int Hud::setRatioHp()
+sf::Uint64 Hud::setRatioHp()
 {
     if(player != nullptr)
     {
@@ -105,7 +105,7 @@ unsigned int Hud::setRatioHp()
     return 300;
 }
 
-unsigned int Hud::setRatioXp()
+sf::Uint64 Hud::setRatioXp()
 {
     if(player != nullptr)
     {

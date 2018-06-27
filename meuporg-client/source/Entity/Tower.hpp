@@ -6,7 +6,7 @@
 class Tower: public EntityWithStats
 {
     public:
-        Tower(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id);
+        Tower(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, sf::Uint64 id);
         virtual ~Tower();
 
         virtual void init();

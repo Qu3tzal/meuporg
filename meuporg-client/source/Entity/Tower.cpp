@@ -1,6 +1,6 @@
 #include "Tower.hpp"
 
-Tower::Tower(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id):
+Tower::Tower(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, sf::Uint64 id):
      EntityWithStats(id, name, fonts, textures, Entity::Type::TOWER)
 {
     setProperty("HpMax", 1, false);

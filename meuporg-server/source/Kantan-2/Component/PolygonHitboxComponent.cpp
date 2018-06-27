@@ -50,7 +50,7 @@ namespace kantan
         // Draw sides.
         sf::VertexArray va(sf::PrimitiveType::Lines);
 
-        for(unsigned int i(1) ; i < points.size() ; i++)
+        for(sf::Uint64 i(1) ; i < points.size() ; i++)
         {
             sf::Vertex fst, snd;
 

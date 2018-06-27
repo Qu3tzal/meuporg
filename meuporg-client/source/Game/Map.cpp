@@ -13,7 +13,7 @@ Map::~Map()
 bool Map::loadLevelFromFile(std::string filename)
 {
     std::ifstream file(filename);
-    std::vector<std::vector<unsigned int>> tiles;
+    std::vector<std::vector<sf::Uint64>> tiles;
 
     if(!file)
         return false;
@@ -21,13 +21,13 @@ bool Map::loadLevelFromFile(std::string filename)
     file >> m_size.x >> m_size.y;
 
     // Read tilemap data.
-    for(unsigned int i(0) ; i < m_size.y ; ++i)
+    for(sf::Uint64 i(0) ; i < m_size.y ; ++i)
     {
-        tiles.push_back(std::vector<unsigned int>());
+        tiles.push_back(std::vector<sf::Uint64>());
 
-        for(unsigned int j(0) ; j < m_size.x ; ++j)
+        for(sf::Uint64 j(0) ; j < m_size.x ; ++j)
         {
-            unsigned int type(0);
+            sf::Uint64 type(0);
             file >> type;
 
             tiles[i].push_back(type);
@@ -43,16 +43,16 @@ void Map::createMap(int mapId)
     {
     case 0:
         {
-            std::vector<std::vector<unsigned int>> tiles;
+            std::vector<std::vector<sf::Uint64>> tiles;
             m_size = sf::Vector2f(40, 25);
 
-            for(unsigned int i(0) ; i <= m_size.y ; i++)
+            for(sf::Uint64 i(0) ; i <= m_size.y ; i++)
             {
-                tiles.push_back(std::vector<unsigned int>());
+                tiles.push_back(std::vector<sf::Uint64>());
 
-                for(unsigned int j(0) ; j <= m_size.x ; j++)
+                for(sf::Uint64 j(0) ; j <= m_size.x ; j++)
                 {
-                    unsigned int type(0);
+                    sf::Uint64 type(0);
                     if(i == 0)
                     {
                         type = 1;
@@ -85,7 +85,7 @@ void Map::createMap(int mapId)
 
 }
 
-void Map::initTileMap(std::vector<std::vector<unsigned int>> tiles)
+void Map::initTileMap(std::vector<std::vector<sf::Uint64>> tiles)
 {
     tileMap = TileMap(m_size.x, m_size.y);
 

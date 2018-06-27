@@ -12,7 +12,7 @@
 class Monster: public EntityWithStats
 {
     public:
-        Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id);
+        Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, sf::Uint64 id);
         virtual ~Monster();
 
         enum State {IDLE, WALKING, DEAD};

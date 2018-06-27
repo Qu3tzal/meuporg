@@ -32,11 +32,11 @@ void Chat::write(std::string message, sf::Color color)
 
     std::string str = logChat[logChat.size()-1];
 
-    unsigned int maxSize(40);
+    sf::Uint64 maxSize(40);
 
     if(str.length() >= maxSize)
     {
-        for(unsigned int j = 1 ; j <= (unsigned int)(str.length()/maxSize); j++)
+        for(sf::Uint64 j = 1 ; j <= (sf::Uint64)(str.length()/maxSize); j++)
         {
             str.insert(j * maxSize , "\n");
         }

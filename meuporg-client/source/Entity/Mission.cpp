@@ -1,6 +1,6 @@
 #include "Mission.hpp"
 
-Mission::Mission(unsigned int id)
+Mission::Mission(sf::Uint64 id)
 {
     this->missionId = id;
 }
@@ -25,7 +25,7 @@ void Mission::addText(std::string str)
     text.push_back(str);
 }
 
-unsigned int Mission::getMissionId() const
+sf::Uint64 Mission::getMissionId() const
 {
     return this->missionId;
 }

@@ -1,6 +1,6 @@
 #include "EntityWithStats.hpp"
 
-EntityWithStats::EntityWithStats(unsigned int id, std::string name, kantan::FontHolder* fonts, kantan::TextureHolder* textures, Entity::Type type)
+EntityWithStats::EntityWithStats(sf::Uint64 id, std::string name, kantan::FontHolder* fonts, kantan::TextureHolder* textures, Entity::Type type)
     : Entity(id, name, type, textures, fonts)
     , nameText(name, fonts)
 {

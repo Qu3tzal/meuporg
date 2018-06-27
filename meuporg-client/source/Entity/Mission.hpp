@@ -3,17 +3,18 @@
 
 #include <string>
 #include <vector>
+#include <SFML/System.hpp>
 
 class Mission
 {
     public:
-        Mission(unsigned int missionId);
+        Mission(sf::Uint64 missionId);
 
         virtual ~Mission();
 
         void init();
 
-        unsigned int getMissionId() const;
+        sf::Uint64 getMissionId() const;
 
         void addText(std::string str);
 
@@ -25,12 +26,12 @@ class Mission
 
     protected:
 
-        unsigned int missionId;
+        sf::Uint64 missionId;
 
         std::vector<std::string> text;
 
         // the text index
-        unsigned int index;
+        sf::Uint64 index;
 
 
     private:

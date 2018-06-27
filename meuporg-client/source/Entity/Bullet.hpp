@@ -6,7 +6,7 @@
 class Bullet : public Entity
 {
     public:
-        Bullet(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id, Entity::Type luncher);
+        Bullet(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, sf::Uint64 id, Entity::Type luncher);
         virtual ~Bullet();
 
         virtual void init();

@@ -2,6 +2,7 @@
 #define KANTAN_EVENT
 
 #include <queue>
+#include <SFML/System.hpp>
 
 namespace kantan
 {
@@ -22,11 +23,11 @@ namespace kantan
     {
         public:
             // Ctor/dtor.
-            Event(unsigned int eventType);
+            Event(sf::Uint64 eventType);
             ~Event();
 
             // Event type.
-            unsigned int getEventType();
+            sf::Uint64 getEventType();
 
             // Event data.
             template<typename T>
@@ -35,7 +36,7 @@ namespace kantan
 
         protected:
             // Event type.
-            unsigned int m_type;
+            sf::Uint64 m_type;
 
             // Event data.
             EventData* m_data;

@@ -21,13 +21,13 @@ namespace kantan
             std::vector<sf::IntRect> frames;
 
             // Current frame index.
-            unsigned int currentFrame;
+            sf::Uint64 currentFrame;
 
             // Time since last frame.
             sf::Time lastFrame;
 
             // Number of frame per seconds.
-            unsigned int fps;
+            sf::Uint64 fps;
     };
 } // namespace kantan.
 

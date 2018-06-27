@@ -52,7 +52,7 @@ void World::update(sf::Time dt)
     dialogs.update(dt);
 }
 
-void World::removeEntity(unsigned int entityId)
+void World::removeEntity(sf::Uint64 entityId)
 {
     std::vector<Entity*>::iterator it;
     for(it = entities.begin() ; it != entities.end() ; )
@@ -73,10 +73,10 @@ void World::removeEntity(unsigned int entityId)
 
 void World::updateEntity(sf::Packet* packet)
 {
-    unsigned int id(0);
-    unsigned int type_ui;
-    unsigned int state_ui;
-    unsigned int worldId(0);
+    sf::Uint64 id(0);
+    sf::Uint64 type_ui;
+    sf::Uint64 state_ui;
+    sf::Uint64 worldId(0);
 
     // basic stats
     float hp;
@@ -251,7 +251,7 @@ void World::updateEntity(sf::Packet* packet)
                 break;
                case Entity::Type::BULLET:
                 {
-                    unsigned int luncherId(0);
+                    sf::Uint64 luncherId(0);
                     *packet >> luncherId;
                     Entity* e = getEntityById(luncherId);
                     entity = new Bullet(textures, fonts, name, id, e->getType());
@@ -297,7 +297,7 @@ void World::updateEntity(sf::Packet* packet)
 
 }
 
-void World::sendRespawnRequest(unsigned int spawnId)
+void World::sendRespawnRequest(sf::Uint64 spawnId)
 {
     sf::Packet packet;
     packet << NetworkValues::RESPAWN << spawnId;
@@ -305,7 +305,7 @@ void World::sendRespawnRequest(unsigned int spawnId)
     socket->send(packet);
 }
 
-void World::entityKilled(unsigned int id)
+void World::entityKilled(sf::Uint64 id)
 {
     if(id == player->getId())
     {
@@ -319,7 +319,7 @@ void World::entityKilled(unsigned int id)
 }
 
 
-void World::addEntity(unsigned int id, Entity::Type type, std::string name, sf::Vector2f position, sf::Vector2f velocity)
+void World::addEntity(sf::Uint64 id, Entity::Type type, std::string name, sf::Vector2f position, sf::Vector2f velocity)
 {
 
 }
@@ -340,7 +340,7 @@ void World::changeWorld(int worldId, int mapId)
     loadMap(mapId);
 }
 
-Entity* World::getEntityById(unsigned int id)
+Entity* World::getEntityById(sf::Uint64 id)
 {
     for(Entity* e : entities)
     {

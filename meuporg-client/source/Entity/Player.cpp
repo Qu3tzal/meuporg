@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-Player::Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id)
+Player::Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, sf::Uint64 id)
     : EntityWithStats(id, name, fonts, textures, Entity::Type::PLAYER)
     , direction(Direction::DOWN)
 {

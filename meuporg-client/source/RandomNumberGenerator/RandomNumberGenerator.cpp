@@ -6,7 +6,7 @@ RandomNumberGenerator::RandomNumberGenerator()
 
 RandomNumberGenerator::~RandomNumberGenerator(){}
 
-unsigned int RandomNumberGenerator::generate()
+sf::Uint64 RandomNumberGenerator::generate()
 {
     return m_rng();
 }
