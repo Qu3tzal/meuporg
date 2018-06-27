@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.5)
 project(meuporg-royale-client)
 
 set(CMAKE_CXX_STANDARD_REQUIRED true)
@@ -12,8 +12,8 @@ include_directories(source/Menu)
 include_directories(source/RandomNumberGenerator)
 
 
-include_directories(../SFML/include)
-link_directories(../SFML/lib)
+include_directories(../../SFML/include)
+link_directories(../../SFML/lib)
 
 add_executable(meuporg-royale-client
               source/main.cpp
