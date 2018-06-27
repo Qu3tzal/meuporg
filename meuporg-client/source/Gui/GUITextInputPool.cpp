@@ -15,7 +15,7 @@ GUITextInputPool::~GUITextInputPool()
 {
 }
 
-void GUITextInputPool::addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, sf::Uint64 fontId, sf::Uint64 charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor)
+void GUITextInputPool::addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor)
 {
     if(mode == 1 && m_texts.size() >= 1)
         return;

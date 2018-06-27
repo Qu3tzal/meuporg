@@ -14,7 +14,7 @@ void Animation::addTextRect(sf::IntRect subrect, sf::Vector2f offset)
 }
 
 /** Timing. */
-void Animation::setSpeed(sf::Uint64 FPS)
+void Animation::setSpeed(unsigned int FPS)
 {
     m_interval = sf::seconds(1.f / (float)(FPS));
 }

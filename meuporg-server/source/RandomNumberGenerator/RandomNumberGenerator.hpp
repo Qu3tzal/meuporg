@@ -3,7 +3,6 @@
 
 #include <random>
 #include <ctime>
-#include <SFML/System.hpp>
 
 /*
     RandomNumberGenerator class.
@@ -18,7 +17,7 @@ class RandomNumberGenerator
         // Dtor.
         virtual ~RandomNumberGenerator();
 
-        sf::Uint64 generate();
+        unsigned int generate();
 
     protected:
         // Generator.

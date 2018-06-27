@@ -23,9 +23,9 @@ class Entity : public sf::Drawable, public sf::Transformable
         // Update the entity
         virtual void update(sf::Time dt) = 0;
 
-        sf::Uint64 getId() const;
+        unsigned int getId() const;
 
-        void setId(sf::Uint64 id);
+        void setId(unsigned int id);
 
         std::string getName() const;
 
@@ -51,7 +51,7 @@ class Entity : public sf::Drawable, public sf::Transformable
 
     protected:
         // id
-        sf::Uint64 id;
+        unsigned int id;
 
         // Type
         Type type;

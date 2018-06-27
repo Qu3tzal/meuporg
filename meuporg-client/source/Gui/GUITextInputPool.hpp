@@ -38,7 +38,7 @@ class GUITextInputPool : public sf::Drawable, public sf::Transformable
         virtual ~GUITextInputPool();
 
         // Adds a text input with the given parameters.
-        void addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, sf::Uint64 fontId, sf::Uint64 charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor);
+        void addTextInput(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string placeholderTextString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color textColor, sf::Color borderLineColor, sf::Color focusedBorderLineColor);
 
 		// Adds this text input.
 		void addTextInput(std::string name, TextInput textInput);

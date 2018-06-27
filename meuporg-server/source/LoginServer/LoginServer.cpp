@@ -89,7 +89,7 @@ void LoginServer::login(sf::Time dt)
                 client->timeout = sf::Time::Zero;
 
                 // Decompose packet.
-                sf::Uint64 networkCode;
+                unsigned int networkCode;
                 packet >> networkCode;
 
                 if(networkCode != NetworkValues::CONNECT)

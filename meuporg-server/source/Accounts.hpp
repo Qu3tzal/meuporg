@@ -13,7 +13,7 @@ struct Client
     std::shared_ptr<sf::TcpSocket> gameTcp;
 
     sf::IpAddress ip;
-    sf::Uint64 udpPort;
+    unsigned int udpPort;
 
     sf::Time timeout = sf::Time::Zero;
 
@@ -23,13 +23,13 @@ struct Client
     bool ingame = false;
     int currentWorld = -1;
 
-    sf::Uint64 gameVersion = 0;
+    unsigned int gameVersion = 0;
     std::string username = "";
 
     PlayerInput inputs = {false, false, false, false};
-    sf::Uint64 lastPacketIdReceived = 0;
-    sf::Uint64 lastPacketIdSent = 0;
-    sf::Uint64 lostPackets = 0;
+    unsigned long long lastPacketIdReceived = 0;
+    unsigned long long lastPacketIdSent = 0;
+    unsigned long long lostPackets = 0;
 };
 
 // Account structure.

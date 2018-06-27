@@ -18,7 +18,7 @@ class Animation
 
         /** Timing. */
         // Sets the speed (in number of frames per second).
-        void setSpeed(sf::Uint64 FPS);
+        void setSpeed(unsigned int FPS);
 
         // Returns the number of frames.
         std::size_t length() const;

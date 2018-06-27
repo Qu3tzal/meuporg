@@ -1,14 +1,14 @@
 #include "TileMap.hpp"
 
-TileMap::TileMap(sf::Uint64 width, sf::Uint64 height)
+TileMap::TileMap(unsigned int width, unsigned int height)
     : m_vertices(sf::Quads, width * height * 4)
     , m_width(width)
     , m_height(height)
 {
-    for(sf::Uint64 i(0) ; i < m_height ; ++i)
+    for(unsigned int i(0) ; i < m_height ; ++i)
     {
-        std::vector<sf::Uint64> m_row;
-        for(sf::Uint64 j(0) ; j < m_width ; ++j)
+        std::vector<unsigned int> m_row;
+        for(unsigned int j(0) ; j < m_width ; ++j)
         {
             sf::Vertex* tile = &m_vertices[(i * m_width + j) * 4];
             tile[0].position = sf::Vector2f(32 * j, 32 * i);
@@ -32,26 +32,26 @@ void TileMap::setTexturePtr(sf::Texture* ptr)
     m_texturePtr = ptr;
 }
 
-void TileMap::addTextureRect(sf::Uint64 code, sf::IntRect textureRect)
+void TileMap::addTextureRect(unsigned int code, sf::IntRect textureRect)
 {
     m_textureRectCode[code] = textureRect;
 }
 
-void TileMap::setTileData(std::vector<std::vector<sf::Uint64>> tileData)
+void TileMap::setTileData(std::vector<std::vector<unsigned int>> tileData)
 {
     m_tileData = tileData;
 }
 
-void TileMap::setTileData(sf::Vector2u index, sf::Uint64 value)
+void TileMap::setTileData(sf::Vector2u index, unsigned int value)
 {
     m_tileData[index.x][index.y] = value;
 }
 
 void TileMap::update()
 {
-    for(sf::Uint64 i(0) ; i < m_height ; ++i)
+    for(unsigned int i(0) ; i < m_height ; ++i)
     {
-        for(sf::Uint64 j(0) ; j < m_width ; ++j)
+        for(unsigned int j(0) ; j < m_width ; ++j)
         {
             sf::IntRect textureRect = m_textureRectCode[m_tileData[i][j]];
             sf::Vertex* tile = &m_vertices[(i * m_width + j) * 4];

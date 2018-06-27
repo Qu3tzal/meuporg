@@ -7,7 +7,7 @@
 class EntityWithStats : public Entity
 {
     public:
-        EntityWithStats(sf::Uint64 id, std::string name, kantan::FontHolder* fonts, kantan::TextureHolder* textures, Entity::Type type);
+        EntityWithStats(unsigned int id, std::string name, kantan::FontHolder* fonts, kantan::TextureHolder* textures, Entity::Type type);
         virtual ~EntityWithStats();
 
         void setProperty(std::string name, float value, bool show);

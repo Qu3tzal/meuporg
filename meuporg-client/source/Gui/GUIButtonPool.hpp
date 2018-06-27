@@ -35,7 +35,7 @@ class GUIButtonPool : public sf::Drawable, public sf::Transformable
         virtual ~GUIButtonPool();
 
         // Adds a button with the given parameters.
-        void addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, sf::Uint64 fontId, sf::Uint64 charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn);
+        void addButton(std::string name, sf::Vector2f centerPosition, sf::Vector2f size, std::string textString, unsigned int fontId, unsigned int charSize, sf::Color backgroundColor, sf::Color hoverBackgroundColor, std::function<void()> fn);
 
 		// Adds this button.
 		void addButton(std::string name, Button button);

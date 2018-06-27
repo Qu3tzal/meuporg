@@ -5,7 +5,7 @@
 
 namespace ServerConfiguration
 {
-    const sf::Uint64 Version(002);
+    const unsigned int Version(002);
     const float TickPerSec(60.f);
     const sf::Time Ticktime = sf::seconds(1.f / TickPerSec);
     const sf::Time LoginTicktime = 3.f * Ticktime;
@@ -15,10 +15,10 @@ namespace ServerConfiguration
     const sf::Time PendingSocketTimeout = sf::seconds(5.f);
     const sf::Time GameServerTimeout = sf::seconds(5.f);
 
-    const sf::Uint64 InformationPort(22626);
-    const sf::Uint64 LoginPort(22625);
-    const sf::Uint64 GameTCPPort(22624);
-    const sf::Uint64 GameUDPPort(22623);
+    const unsigned int InformationPort(22626);
+    const unsigned int LoginPort(22625);
+    const unsigned int GameTCPPort(22624);
+    const unsigned int GameUDPPort(22623);
 } // namespace ServerConfiguration.
 
 #endif // SERVERCONFIGURATION_HPP_INCLUDED

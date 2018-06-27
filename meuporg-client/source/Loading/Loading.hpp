@@ -75,7 +75,7 @@ class Loading : public sf::Drawable, sf::Transformable
     private:
 
         // The version of the client
-        const sf::Uint64 Version;
+        const unsigned int Version;
 };
 
 #endif // LOADING_HPP

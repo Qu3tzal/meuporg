@@ -21,7 +21,7 @@ class Map : public sf::Drawable, sf::Transformable
 
         bool loadLevelFromFile(std::string path);
 
-        void initTileMap(std::vector<std::vector<sf::Uint64>> tiles);
+        void initTileMap(std::vector<std::vector<unsigned int>> tiles);
 
         void createMap(int mapId);
 

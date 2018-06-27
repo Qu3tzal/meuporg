@@ -12,7 +12,7 @@ namespace kantan
     }
 
     /// Ctor/dtor.
-    Event::Event(sf::Uint64 eventType)
+    Event::Event(unsigned int eventType)
         : m_type(eventType)
         , m_data(nullptr)
     {
@@ -25,7 +25,7 @@ namespace kantan
     }
 
     /// Event type.
-    sf::Uint64 Event::getEventType()
+    unsigned int Event::getEventType()
     {
         return m_type;
     }

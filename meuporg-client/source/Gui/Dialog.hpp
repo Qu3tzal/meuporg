@@ -58,7 +58,7 @@ class Dialog : public sf::Drawable, public sf::Transformable
 
         sf::Text nextPageText;
 
-        sf::Uint64 itr;
+        unsigned int itr;
 
         std::vector<std::string> texts;
 

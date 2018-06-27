@@ -25,12 +25,12 @@ void Entity::update(sf::Time dt)
     }
 }
 
-sf::Uint64 Entity::getId() const
+unsigned int Entity::getId() const
 {
     return id;
 }
 
-void Entity::setId(sf::Uint64 id)
+void Entity::setId(unsigned int id)
 {
     this->id = id;
 }

@@ -33,13 +33,13 @@ class World : public sf::Drawable, public sf::Transformable
 
         void handleEvent(sf::Event e);
 
-        void removeEntity(sf::Uint64 entityId);
+        void removeEntity(unsigned int entityId);
 
         void updateEntity(sf::Packet* packet);
 
-        void addEntity(sf::Uint64 id, Entity::Type type, std::string name, sf::Vector2f position, sf::Vector2f velocity);
+        void addEntity(unsigned int id, Entity::Type type, std::string name, sf::Vector2f position, sf::Vector2f velocity);
 
-        Entity* getEntityById(sf::Uint64 id);
+        Entity* getEntityById(unsigned int id);
 
         void loadMap(std::string path);
 
@@ -49,9 +49,9 @@ class World : public sf::Drawable, public sf::Transformable
 
         void changeWorld(int worldId, int mapId);
 
-        void sendRespawnRequest(sf::Uint64 spawnId);
+        void sendRespawnRequest(unsigned int spawnId);
 
-        void entityKilled(sf::Uint64 id);
+        void entityKilled(unsigned int id);
 
         void setStaticView() const;
 
@@ -79,9 +79,9 @@ class World : public sf::Drawable, public sf::Transformable
 
         DialogManager dialogs;
 
-        sf::Uint64 worldId;
+        unsigned int worldId;
 
-        sf::Uint64 mapId;
+        unsigned int mapId;
 
         sf::TcpSocket* socket;
 

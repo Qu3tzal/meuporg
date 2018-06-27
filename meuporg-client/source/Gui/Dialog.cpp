@@ -136,20 +136,20 @@ void Dialog::initChoice()
 
 void Dialog::setText(std::string str)
 {
-    sf::Uint64 maxSize(40);
-    sf::Uint64 maxLine(3);
+    unsigned int maxSize(40);
+    unsigned int maxLine(3);
 
     if(str.length() >= maxSize)
     {
 
-        for(sf::Uint64 j = 1 ; j <= (sf::Uint64)(str.length()/maxSize); j++)
+        for(unsigned int j = 1 ; j <= (unsigned int)(str.length()/maxSize); j++)
         {
             str.insert(j * maxSize , "\n");
         }
     }
 
-    sf::Uint64 nb = 0;
-    for(sf::Uint64 j = 0 ; j < str.length(); j++)
+    unsigned int nb = 0;
+    for(unsigned int j = 0 ; j < str.length(); j++)
     {
         if(str.at(j) == '\n')
         {

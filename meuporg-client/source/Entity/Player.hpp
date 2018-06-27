@@ -13,7 +13,7 @@
 class Player : public EntityWithStats
 {
     public:
-        Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, sf::Uint64 id);
+        Player(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id);
         virtual ~Player();
 
         enum State {IDLE, WALKING, DEAD};

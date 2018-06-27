@@ -177,7 +177,7 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
     if(client->currentWorld != m_id)
         return;
 
-    sf::Uint64 packetId = client->lastPacketIdSent;
+    unsigned long long packetId = client->lastPacketIdSent;
 
     for(kantan::Entity* e : m_entities)
     {

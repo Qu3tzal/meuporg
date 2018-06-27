@@ -30,8 +30,8 @@ namespace kantan
 		float maxx(1);
 		float maxy(1);
 
-		sf::Uint64 start(0);
-		sf::Uint64 end(std::min(m_numberOfPoints, m_values.size() - 1));
+		unsigned int start(0);
+		unsigned int end(std::min(m_numberOfPoints, m_values.size() - 1));
 
 		if(m_numberOfPoints < m_values.size())
 		{
@@ -39,7 +39,7 @@ namespace kantan
 			end = start + m_numberOfPoints;
 		}
 
-		for(sf::Uint64 i(start) ; i < end ; ++i)
+		for(unsigned int i(start) ; i < end ; ++i)
 		{
 			if(m_values[i].x - m_values[start].x > maxx)
 				maxx = m_values[i].x;
@@ -48,7 +48,7 @@ namespace kantan
 				maxy = m_values[i].y;
 		}
 
-		for(sf::Uint64 i(start) ; i < end ; ++i)
+		for(unsigned int i(start) ; i < end ; ++i)
 		{
 			sf::Vertex point;
 			point.color = sf::Color::Green;

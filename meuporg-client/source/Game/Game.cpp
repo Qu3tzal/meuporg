@@ -70,7 +70,7 @@ void Game::receivePacket()
     //if(status == sf::Socket::Status::Done)
     while(gameServerSocket.receive(packet) == sf::Socket::Status::Done)
     {
-        sf::Uint64 netCode(0);
+        unsigned int netCode(0);
         packet >> netCode;
 
         switch(netCode)
@@ -90,7 +90,7 @@ void Game::receivePacket()
     while(gameServerUdpSocket.receive(packet, ip, remotePort) == sf::Socket::Status::Done)
     {
         timeOutTimer = sf::Time::Zero;
-        sf::Uint64 netCode(0);
+        unsigned int netCode(0);
         packet >> netCode;
 
         switch(netCode)
@@ -116,7 +116,7 @@ void Game::receivePacket()
 
 void Game::notificationPacket(sf::Packet* packet)
 {
-    sf::Uint64 notifyType(0);
+    unsigned int notifyType(0);
     *packet >> notifyType;
 
     switch(notifyType)
@@ -165,7 +165,7 @@ void Game::notificationPacket(sf::Packet* packet)
             break;
         case NetworkValues::ENTITY_REMOVED :
             {
-                sf::Uint64 entityId(0);
+                unsigned int entityId(0);
                 unsigned long long id(0);
                 *packet >> id
                         >> entityId;
@@ -175,34 +175,34 @@ void Game::notificationPacket(sf::Packet* packet)
             break;
         case NetworkValues::LEVEL_UP :
             {
-                sf::Uint64 entityId(0);
+                unsigned int entityId(0);
                 *packet >> entityId;
                 std::string name = world.getEntityById(entityId)->getName();
                 float level(0);
                 *packet >> level;
                 std::stringstream ss;
-                ss << name << " viens de monter level " << (sf::Uint64)level;
+                ss << name << " viens de monter level " << (unsigned int)level;
                 chat.write(ss.str(), sf::Color::Yellow);
             }
             break;
         case NetworkValues::PLAYER_MOVED_TO_WORLD:
             {
-                sf::Uint64 worldId(0);
-                sf::Uint64 mapId(0);
+                unsigned int worldId(0);
+                unsigned int mapId(0);
 
                 *packet >> worldId
                         >> mapId;
                 world.changeWorld(worldId, mapId);
 
                 std::stringstream ss;
-                ss << "Vous vous teléportez au monde: " << (sf::Uint64)worldId;
+                ss << "Vous vous teléportez au monde: " << (unsigned int)worldId;
                 chat.write(ss.str(), sf::Color::Yellow);
             }
             break;
         case NetworkValues::KILL:
             {
-                sf::Uint64 killerId(0);
-                sf::Uint64 killedId(0);
+                unsigned int killerId(0);
+                unsigned int killedId(0);
 
                 *packet >> killerId
                         >> killedId;
@@ -272,7 +272,7 @@ void Game::receiveInformationPacket()
     sf::Packet packet;
     while(gameServerSocket.receive(packet) == sf::Socket::Status::Done)
     {
-        sf::Uint64 netCode(0);
+        unsigned int netCode(0);
         packet >> netCode;
         switch(netCode)
         case NetworkValues::PING:

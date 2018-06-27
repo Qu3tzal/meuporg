@@ -1,6 +1,6 @@
 #include "Npc.hpp"
 
-Npc::Npc(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, sf::Uint64 id) : Entity(id, name, Entity::Type::NPC, textures, fonts)
+Npc::Npc(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id) : Entity(id, name, Entity::Type::NPC, textures, fonts)
 {
     //ctor
 }

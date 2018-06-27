@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-Monster::Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, sf::Uint64 id): EntityWithStats(id, name, fonts, textures, Entity::Type::MONSTER)
+Monster::Monster(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id): EntityWithStats(id, name, fonts, textures, Entity::Type::MONSTER)
     , direction(Direction::DOWN)
 {
     setProperty("HpMax", 1, false);

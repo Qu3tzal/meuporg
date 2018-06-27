@@ -10,7 +10,7 @@
 class Npc : public Entity
 {
     public:
-        Npc(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, sf::Uint64 id);
+        Npc(kantan::TextureHolder* textures, kantan::FontHolder* fonts, std::string name, unsigned int id);
         virtual ~Npc();
 
         enum State {};

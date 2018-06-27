@@ -89,9 +89,9 @@ void Loading::serverConnection()
     sf::Packet playerNumberPacket;
     informationSocket->receive(playerNumberPacket);
 
-    sf::Uint64 serverVersion;
-    sf::Uint64 playerNumber;
-    sf::Uint64 maximumPlayer;
+    unsigned int serverVersion;
+    unsigned int playerNumber;
+    unsigned int maximumPlayer;
 
     serverVersionPacket >> serverVersion;
     playerNumberPacket >> playerNumber >> maximumPlayer;
@@ -122,7 +122,7 @@ void Loading::connectToServer()
 
     serverSocket->receive(packet);
 
-    sf::Uint64 answer;
+    unsigned int answer;
     packet >> answer;
     switch(answer)
     {
@@ -187,7 +187,7 @@ void Loading::connectToGameServer()
     packet.clear();
     gameServerSocket->receive(packet);
 
-    sf::Uint64 answer;
+    unsigned int answer;
     packet >> answer;
 
     if(answer == NetworkValues::OKAY)
