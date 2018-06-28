@@ -31,6 +31,7 @@ link_directories(../SFML/lib)
 add_executable(meuporg-royale-server
               source/main.cpp
               source/Components/BasicStatsComponent.cpp
+              source/Components/BonusComponent.cpp
               source/Components/ClientLinkComponent.cpp
               source/Components/DamageComponent.cpp
               source/Components/LevelStatsComponent.cpp
