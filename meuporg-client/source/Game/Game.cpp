@@ -284,7 +284,6 @@ void Game::receiveInformationPacket()
                 if(id == pingId)
                 {
                     ping = static_cast<int>(pingCounter.asMilliseconds());
-                    std::cout << "ping is : " << pingCounter.asMilliseconds() << std::endl;
                     pingCounter = sf::Time::Zero;
                 }
                 break;
