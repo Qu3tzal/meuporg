@@ -43,6 +43,8 @@ int main()
         dt = clientClock.restart();
         elapsed += dt;
 
+        game.updatePing(dt);
+
         if(elapsed.asSeconds() > TickRate)
         {
             elapsed -= TickRateTime;

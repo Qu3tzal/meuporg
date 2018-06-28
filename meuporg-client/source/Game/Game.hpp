@@ -48,6 +48,9 @@ class Game
         // Notification packet
         void notificationPacket(sf::Packet* packet);
 
+        // Update the ping
+        void updatePing(sf::Time dt);
+
     protected:
         // Disconnect to the serveur
         void disconnectToGameServer();

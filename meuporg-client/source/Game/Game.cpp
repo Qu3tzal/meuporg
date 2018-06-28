@@ -312,20 +312,9 @@ void Game::update(sf::Time dt)
                 playerInput.MoveUp = playerInput.MoveDown = playerInput.MoveLeft = playerInput.MoveRight = playerInput.aAttack = playerInput.eAttack = false;
             }
 
-            if(pingTimer.asSeconds() >= 1)
-            {
-                sf::Packet packet;
-                packet << NetworkValues::PING << ++pingId;
-                informationSocket.send(packet);
-                pingTimer -= sf::seconds(1.f);
-                pingCounter = sf::Time::Zero;
-            }
-
-            pingTimer += dt;
-            pingCounter += dt;
             sendInput();
             receivePacket();
-            receiveInformationPacket();
+
             world.update(dt);
             chat.update();
         break;
@@ -334,6 +323,24 @@ void Game::update(sf::Time dt)
     {
         std::cout << "Connection timed out" << std::endl;
         running = false;
+    }
+}
+
+void Game::updatePing(sf::Time dt)
+{
+    if(State::JEU) {
+        if(pingTimer.asSeconds() >= 1)
+        {
+            sf::Packet packet;
+            packet << NetworkValues::PING << ++pingId;
+            informationSocket.send(packet);
+            pingTimer -= sf::seconds(1.f);
+            pingCounter = sf::Time::Zero;
+        }
+
+        pingTimer += dt;
+        pingCounter += dt;
+        receiveInformationPacket();
     }
 }
 
