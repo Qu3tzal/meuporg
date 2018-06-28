@@ -328,7 +328,7 @@ void Game::update(sf::Time dt)
 
 void Game::updatePing(sf::Time dt)
 {
-    if(State::JEU) {
+    if(state == State::JEU) {
         if(pingTimer.asSeconds() >= 1)
         {
             sf::Packet packet;
