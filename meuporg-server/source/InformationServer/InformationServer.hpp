@@ -45,7 +45,7 @@ class InformationServer
         void answerNumberOfPlayers(Client* client);
 
         // Answers the ping request.
-        void answerPingRequest(Client* client, int pingId);
+        void answerPingRequest(Client* client, long long pingId);
 
     protected:
         // TCP Listener.

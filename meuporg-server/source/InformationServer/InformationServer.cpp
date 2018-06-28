@@ -73,6 +73,9 @@ void InformationServer::update(sf::Time dt)
                 unsigned int networkcode;
                 packet >> networkcode;
 
+                // Reset client timeout.
+                client->timeout = sf::Time::Zero;
+
                 // Analyse it.
                 switch(networkcode)
                 {
@@ -86,7 +89,7 @@ void InformationServer::update(sf::Time dt)
                         break;
                     case NetworkValues::PING:
                         {
-                            int pingId(0);
+                            long long pingId(0);
                             packet >> pingId;
                             answerPingRequest(client, pingId);
                             std::cout << "[INFORMATION_SERVER] Ping answered to client (" << client->tcpsocket.getRemoteAddress().toString() << ")." << std::endl;
@@ -126,7 +129,7 @@ void InformationServer::answerNumberOfPlayers(Client* client)
     //client->tcpsocket.setBlocking(false);
 }
 
-void InformationServer::answerPingRequest(Client* client, int pingId)
+void InformationServer::answerPingRequest(Client* client, long long pingId)
 {
     // Prepare the packet.
     sf::Packet packet;

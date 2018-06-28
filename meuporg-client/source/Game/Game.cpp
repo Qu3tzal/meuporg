@@ -195,7 +195,7 @@ void Game::notificationPacket(sf::Packet* packet)
                 world.changeWorld(worldId, mapId);
 
                 std::stringstream ss;
-                ss << "Vous vous teléportez au monde: " << (unsigned int)worldId;
+                ss << "Vous vous telï¿½portez au monde: " << (unsigned int)worldId;
                 chat.write(ss.str(), sf::Color::Yellow);
             }
             break;
@@ -212,7 +212,7 @@ void Game::notificationPacket(sf::Packet* packet)
 
                 std::stringstream ss;
 
-                ss << killer << " a tué: " << killed << " !";
+                ss << killer << " a tuï¿½: " << killed << " !";
                 chat.write(ss.str(), sf::Color::Red);
                 world.entityKilled(killedId);
             }
@@ -270,21 +270,24 @@ void Game::testInput()
 void Game::receiveInformationPacket()
 {
     sf::Packet packet;
-    while(gameServerSocket.receive(packet) == sf::Socket::Status::Done)
+    informationSocket.setBlocking(false);
+    while(informationSocket.receive(packet) == sf::Socket::Status::Done)
     {
         unsigned int netCode(0);
         packet >> netCode;
-        switch(netCode)
-        case NetworkValues::PING:
-        {
-            long long id;
-            packet >> id;
-            if(id == pingId)
+        switch(netCode) {
+            case NetworkValues::PING:
             {
-                ping = pingCounter.asMilliseconds();
-                pingCounter = sf::Time::Zero;
+                long long id;
+                packet >> id;
+
+                if(id == pingId)
+                {
+                    ping = pingCounter.asMilliseconds();
+                    pingCounter = sf::Time::Zero;
+                }
+                break;
             }
-            break;
         }
     }
 }
@@ -308,6 +311,7 @@ void Game::update(sf::Time dt)
             {
                 playerInput.MoveUp = playerInput.MoveDown = playerInput.MoveLeft = playerInput.MoveRight = playerInput.aAttack = playerInput.eAttack = false;
             }
+            
             if(pingTimer.asSeconds() >= 1)
             {
                 sf::Packet packet;
@@ -315,10 +319,8 @@ void Game::update(sf::Time dt)
                 informationSocket.send(packet);
                 pingTimer -= sf::seconds(1.f);
             }
-            else
-            {
-                pingTimer += dt;
-            }
+
+            pingTimer += dt;
             pingCounter += dt;
             sendInput();
             receivePacket();

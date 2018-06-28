@@ -10,7 +10,7 @@ namespace ServerConfiguration
     const sf::Time Ticktime = sf::seconds(1.f / TickPerSec);
     const sf::Time LoginTicktime = 3.f * Ticktime;
 
-    const sf::Time InformationServerTimeout = sf::seconds(5.f);
+    const sf::Time InformationServerTimeout = sf::seconds(30.f);
     const sf::Time LoginServerTimeout = sf::seconds(5.f);
     const sf::Time PendingSocketTimeout = sf::seconds(5.f);
     const sf::Time GameServerTimeout = sf::seconds(5.f);
