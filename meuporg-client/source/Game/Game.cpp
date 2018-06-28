@@ -283,7 +283,8 @@ void Game::receiveInformationPacket()
 
                 if(id == pingId)
                 {
-                    ping = pingCounter.asMilliseconds();
+                    ping = static_cast<int>(pingCounter.asMilliseconds());
+                    std::cout << "ping is : " << pingCounter.asMilliseconds() << std::endl;
                     pingCounter = sf::Time::Zero;
                 }
                 break;
@@ -311,13 +312,14 @@ void Game::update(sf::Time dt)
             {
                 playerInput.MoveUp = playerInput.MoveDown = playerInput.MoveLeft = playerInput.MoveRight = playerInput.aAttack = playerInput.eAttack = false;
             }
-            
+
             if(pingTimer.asSeconds() >= 1)
             {
                 sf::Packet packet;
                 packet << NetworkValues::PING << ++pingId;
                 informationSocket.send(packet);
                 pingTimer -= sf::seconds(1.f);
+                pingCounter = sf::Time::Zero;
             }
 
             pingTimer += dt;
