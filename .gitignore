@@ -35,6 +35,7 @@
 *.cbp
 *.depend
 *.layout
+meuporg-*/.idea/*
 
 # Database
 meuporg-server/db/*.sqlite
@@ -44,3 +45,9 @@ meuporg-*/bin/**
 
 # Objects folders
 meuporg-*/obj/**
+
+# CMake folders
+meuporg-*/cmake-*
+meuporg-*/CMake*
+*.cmake
+Makefile
