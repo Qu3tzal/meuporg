@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 project(meuporg-royale-client)
 
 set(CMAKE_CXX_STANDARD_REQUIRED true)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -m64")
 
 include_directories(source)
 include_directories(source/Entity)
@@ -14,6 +15,8 @@ include_directories(source/RandomNumberGenerator)
 
 include_directories(../../SFML/include)
 link_directories(../../SFML/lib)
+include_directories(C:/mingw-w64/x86_64-7.3.0-win32-seh-rt_v5-rev0/mingw64/include)
+link_directories(C:/mingw-w64/x86_64-7.3.0-win32-seh-rt_v5-rev0/mingw64/lib)
 
 add_executable(meuporg-royale-client
               source/main.cpp
@@ -46,3 +49,7 @@ add_executable(meuporg-royale-client
               source/RandomNumberGenerator/RandomNumberGenerator.cpp
               )
 target_link_libraries(meuporg-royale-client sfml-system-d sfml-window-d sfml-graphics-d sfml-network-d sfml-audio-d)
+
+if(UNIX)
+    target_link_libraries(meuporg-royale-server dl)
+endif(UNIX)

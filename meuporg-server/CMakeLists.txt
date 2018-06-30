@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 project(meuporg-royale-server)
 
 set(CMAKE_CXX_STANDARD_REQUIRED true)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -m64")
 
 include_directories(source)
 include_directories(source/Components)
@@ -25,7 +26,9 @@ include_directories(source/Utils)
 include_directories(source/World)
 include_directories(source/sqlite)
 
+include_directories(C:/mingw-w64/x86_64-7.3.0-win32-seh-rt_v5-rev0/mingw64/include)
 include_directories(../SFML/include)
+link_directories(C:/mingw-w64/x86_64-7.3.0-win32-seh-rt_v5-rev0/mingw64/lib)
 link_directories(../SFML/lib)
 
 add_executable(meuporg-royale-server
@@ -88,4 +91,8 @@ add_executable(meuporg-royale-server
               source/World/World.cpp
               source/sqlite/sqlite3.c
               )
-target_link_libraries(meuporg-royale-server sfml-system-d sfml-window-d sfml-graphics-d sfml-network-d sfml-audio-d pthread dl)
+target_link_libraries(meuporg-royale-server sfml-system-d sfml-window-d sfml-graphics-d sfml-network-d sfml-audio-d pthread)
+
+if(UNIX)
+    target_link_libraries(meuporg-royale-server dl)
+endif(UNIX)
