@@ -138,7 +138,7 @@ class World
 
     protected:
         // ID.
-        int m_id;
+        unsigned int m_id;
 
         // Map id.
         int m_mapId;
