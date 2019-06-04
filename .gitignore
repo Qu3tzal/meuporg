@@ -51,3 +51,6 @@ meuporg-*/cmake-*
 meuporg-*/CMake*
 *.cmake
 Makefile
+
+# Build folders
+meuporg-*/build/
