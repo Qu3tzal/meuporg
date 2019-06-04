@@ -379,7 +379,7 @@ void Server::receiveInputThroughTCP()
                 {
                     case NetworkValues::RESPAWN:
                         {
-                            std::size_t spawnId;
+							unsigned int spawnId;
                             packet >> spawnId;
 
                             // Find the targeted world.
