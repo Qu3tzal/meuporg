@@ -992,10 +992,16 @@ void World::onKill(unsigned int killerId, unsigned int killedId)
     kantan::Entity* killedEntity = getEntity(killedId);
 
     // Deactivate hitbox.
-    kantan::PolygonHitboxComponent* phc = killedEntity->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
+	kantan::PolygonHitboxComponent* phc = killedEntity->getComponent<kantan::PolygonHitboxComponent>("PolygonHitbox");
 
-    if(phc != nullptr)
-        phc->isBlocking = false;
+	if(phc != nullptr)
+		phc->isBlocking = false;
+
+	// Deactivate movement.
+	kantan::MovementComponent* mc = killedEntity->getComponent<kantan::MovementComponent>("Movement");
+
+	if(mc != nullptr)
+		mc->velocity = mc->acceleration = sf::Vector2f(0.f, 0.f);
 
     // Set dead state.
     BasicStatsComponent* bsc = killedEntity->getComponent<BasicStatsComponent>("BasicStats");
