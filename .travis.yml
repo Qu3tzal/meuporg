@@ -17,8 +17,8 @@ before_install:
   - cd SFML
   - cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=-m64 && make && sudo make install
   - cmake . -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=-m64 && make && sudo make install && cd ..
-branches:
-    only: royale
+#branches:
+#    only: royale
 script:
   - cd meuporg-client && mkdir build && cd build && cmake .. && make && cd ../..
   - cd meuporg-server && mkdir build && cd build && cmake .. && make && cd ../..
