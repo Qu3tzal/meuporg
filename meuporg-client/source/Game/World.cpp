@@ -31,8 +31,8 @@ void World::init()
 
     hud.init();
     hud.setPosition(sf::Vector2f(410, 655));
-    loadMap(0);
-    //loadMap("assets/map/map1.txt");
+    //loadMap(0);
+    loadMap("assets/map/map1.txt");
     for(Entity* e : entities)
     {
         e->init();
@@ -336,7 +336,10 @@ void World::changeWorld(unsigned int worldId, unsigned int mapId)
     player = nullptr;
     hud.setPlayer(nullptr);
 
-    loadMap(mapId);
+    std::stringstream ss;
+    ss << "assets/map/map" << mapId << ".txt";
+    //loadMap(mapId);
+    loadMap(ss.str());
 }
 
 Entity* World::getEntityById(unsigned int id)

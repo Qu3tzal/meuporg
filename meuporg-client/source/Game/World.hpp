@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
+#include <sstream>
 
 #include "../Entity/Entity.hpp"
 #include "../Entity/Player.hpp"
