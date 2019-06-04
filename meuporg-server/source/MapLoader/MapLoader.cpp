@@ -2,7 +2,7 @@
 #include "../World/World.hpp"
 
 MapLoader::MapLoader(std::string mapFilepath, World* world)
-    : m_mapId(-1)
+    : m_mapId(0)
 {
     // Perf clock.
     sf::Clock clock;
@@ -59,7 +59,7 @@ MapLoader::~MapLoader()
 
 }
 
-int MapLoader::getMapId() const
+unsigned int MapLoader::getMapId() const
 {
     return m_mapId;
 }

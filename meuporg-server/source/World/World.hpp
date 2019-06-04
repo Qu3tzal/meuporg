@@ -141,7 +141,7 @@ class World
         unsigned int m_id;
 
         // Map id.
-        int m_mapId;
+		unsigned int m_mapId;
 
         // Inner clock.
         sf::Clock m_worldClock;

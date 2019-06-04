@@ -22,14 +22,14 @@ class MapLoader
         virtual ~MapLoader();
 
         // Returns the map id.
-        int getMapId() const;
+		unsigned int getMapId() const;
 
         // Returns the time it took to load the map.
         sf::Time getLoadingTime() const;
 
     protected:
         // Map id.
-        int m_mapId;
+        unsigned int m_mapId;
 
         // Loading time.
         sf::Time m_loadingTime;
