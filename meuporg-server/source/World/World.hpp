@@ -134,7 +134,7 @@ class World
         void addSpawnPoint(sf::Vector2f spawn);
 
         // Respawns an entity.
-        void respawn(unsigned int entityId, unsigned int spawnId = 0);
+        void respawn(unsigned int entityId, unsigned int spawnId);
 
     protected:
         // ID.

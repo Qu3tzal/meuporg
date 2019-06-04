@@ -21,7 +21,7 @@ struct Client
     bool gameTcpConnected = false;
     bool gameUdpConnected = false;
     bool ingame = false;
-    int currentWorld = -1;
+    unsigned int currentWorld = 0;
 
     unsigned int gameVersion = 0;
     std::string username = "";
