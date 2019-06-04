@@ -2,7 +2,7 @@
 
 namespace kantan
 {
-    ParticleEffectComponent::ParticleEffectComponent(unsigned long long ownerId)
+    ParticleEffectComponent::ParticleEffectComponent(unsigned int ownerId)
                 : kantan::Component(std::string("ParticleEffect"), ownerId)
     {}
 

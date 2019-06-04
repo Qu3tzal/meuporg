@@ -4,7 +4,7 @@
 
 namespace kantan
 {
-    RectShapeComponent::RectShapeComponent(unsigned long long ownerId)
+    RectShapeComponent::RectShapeComponent(unsigned int ownerId)
          : kantan::Component(std::string("RectShape"), ownerId)
     {}
 } // namespace kantan.

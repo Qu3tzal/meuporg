@@ -38,7 +38,7 @@ namespace kantan
 	PolygonCollisionSystem::PolygonCollisionSystem()
     {
         // Default predicate.
-        m_predicate = [](unsigned long long, unsigned long long){return true;};
+        m_predicate = [](unsigned int, unsigned int){return true;};
     }
 
     bool PolygonCollisionSystem::detectCollision(kantan::PolygonHitboxComponent* a, kantan::PolygonHitboxComponent* b, sf::Vector2f& projectionVector)
@@ -184,8 +184,8 @@ namespace kantan
     void PolygonCollisionSystem::onComponentRemoved(kantan::Component* component)
     {
         // The component may be living in multiple cells.
-        for(unsigned long long i(0) ; i < m_cellMap.size() ; i++)
-            for(unsigned long long j(0) ; j < m_cellMap[i].size() ; j++)
+        for(unsigned int i(0) ; i < m_cellMap.size() ; i++)
+            for(unsigned int j(0) ; j < m_cellMap[i].size() ; j++)
                 m_cellMap[i][j].removeComponent(component);
     }
 
@@ -193,9 +193,9 @@ namespace kantan
     {
         kantan::PolygonHitboxComponent* hitbox = static_cast<kantan::PolygonHitboxComponent*>(component);
 
-        for(unsigned long long i(0) ; i < m_cellMap.size() ; i++)
+        for(unsigned int i(0) ; i < m_cellMap.size() ; i++)
         {
-            for(unsigned long long j(0) ; j < m_cellMap[i].size() ; j++)
+            for(unsigned int j(0) ; j < m_cellMap[i].size() ; j++)
             {
                 if(SPCell::intersects(hitbox, m_cellMap[i][j].AABB))
                 {
@@ -231,9 +231,9 @@ namespace kantan
     void PolygonCollisionSystem::updateSpatialPartitioning()
     {
         // Check for each cell if the component is still in the right cells.
-        for(unsigned long long i(0) ; i < m_cellMap.size() ; i++)
+        for(unsigned int i(0) ; i < m_cellMap.size() ; i++)
         {
-            for(unsigned long long j(0) ; j < m_cellMap[i].size() ; j++)
+            for(unsigned int j(0) ; j < m_cellMap[i].size() ; j++)
             {
                 for(kantan::Component* component : m_cellMap[i][j].components)
                 {
@@ -263,8 +263,8 @@ namespace kantan
         updateSpatialPartitioning();
 
         // Resolve collisions per cell.
-        for(unsigned long long i(0) ; i < m_cellMap.size() ; i++)
-            for(unsigned long long j(0) ; j < m_cellMap[i].size() ; j++)
+        for(unsigned int i(0) ; i < m_cellMap.size() ; i++)
+            for(unsigned int j(0) ; j < m_cellMap[i].size() ; j++)
                 resolveCollisions(elapsed, m_cellMap[i][j].components, movementComponents);
     }
 
@@ -301,7 +301,7 @@ namespace kantan
             transform.translate(fstMovement->velocity * elapsed.asSeconds());
 
             // Apply the movement transformation.
-            for(unsigned long long i(0) ; i < fstHitbox->points.size() ; i++)
+            for(unsigned int i(0) ; i < fstHitbox->points.size() ; i++)
                 fstHitbox->points[i] = transform.transformPoint(fstHitbox->points[i]);
 
             for(kantan::Component* component : polygonHitboxComponents)
@@ -327,7 +327,7 @@ namespace kantan
                         transform.translate(-projectionVector);
 
                         // Apply the movement transformation.
-                        for(unsigned long long i(0) ; i < fstHitbox->points.size() ; i++)
+                        for(unsigned int i(0) ; i < fstHitbox->points.size() ; i++)
                             fstHitbox->points[i] = transform.transformPoint(fstHitbox->points[i]);
 
                         // Bouncing.
@@ -349,7 +349,7 @@ namespace kantan
     }
 
     // Returns the collisions record.
-    std::vector<std::tuple<unsigned long long, unsigned long long, sf::Vector2f>> PolygonCollisionSystem::getCollisionRecord()
+    std::vector<std::tuple<unsigned int, unsigned int, sf::Vector2f>> PolygonCollisionSystem::getCollisionRecord()
     {
         return m_collisions;
     }
@@ -407,7 +407,7 @@ namespace kantan
     }
 
 	// Sets the collision response predicate.
-    void PolygonCollisionSystem::setCollisionResponsePredicate(std::function<bool(unsigned long long, unsigned long long)> predicate)
+    void PolygonCollisionSystem::setCollisionResponsePredicate(std::function<bool(unsigned int, unsigned int)> predicate)
     {
         m_predicate = predicate;
     }

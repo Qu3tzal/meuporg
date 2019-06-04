@@ -66,7 +66,7 @@ namespace kantan
 		target.draw(m_vertexArray);
 	}
 
-	void GUIGraph::setNumberOfPoints(unsigned long long numberOfPoints)
+	void GUIGraph::setNumberOfPoints(unsigned int numberOfPoints)
 	{
 		m_numberOfPoints = numberOfPoints;
 	}

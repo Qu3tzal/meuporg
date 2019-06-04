@@ -11,7 +11,7 @@ class LevelStatsComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		LevelStatsComponent(unsigned long long ownerId);
+		LevelStatsComponent(unsigned int ownerId);
 
 		// Attribute.
 		float xp;

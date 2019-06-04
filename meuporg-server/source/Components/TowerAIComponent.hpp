@@ -19,11 +19,11 @@ class TowerAIComponent : public kantan::Component
 	
 	public:
 		// Ctor.
-		TowerAIComponent(unsigned long long ownerId);
+		TowerAIComponent(unsigned int ownerId);
 
 		// Attribute.
 		TowerAIState state;
-		unsigned long long target;
+		unsigned int target;
 };
 
 #endif // TOWERAICOMPONENT_HPP_INCLUDED

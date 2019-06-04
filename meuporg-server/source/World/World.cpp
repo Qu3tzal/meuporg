@@ -177,7 +177,7 @@ void World::sendUpdate(Client* client, sf::UdpSocket& socket)
     if(client->currentWorld != m_id)
         return;
 
-    unsigned long long packetId = client->lastPacketIdSent;
+    unsigned int packetId = client->lastPacketIdSent;
 
     for(kantan::Entity* e : m_entities)
     {
@@ -446,7 +446,7 @@ void World::giveXpTo(std::string username, float amount)
     }
 }
 
-void World::onRespawn(Client* client, unsigned long long spawnId)
+void World::onRespawn(Client* client, unsigned int spawnId)
 {
     for(kantan::Component* component : m_components["ClientLink"])
     {
@@ -459,7 +459,7 @@ void World::onRespawn(Client* client, unsigned long long spawnId)
     }
 }
 
-kantan::Entity* World::getEntity(const unsigned long long& id)
+kantan::Entity* World::getEntity(const unsigned int& id)
 {
     auto itr = std::find_if(m_entities.begin(), m_entities.end(), [&](kantan::Entity* e){
                         return e->getId() == id;
@@ -510,7 +510,7 @@ void World::performancesCheck(sf::Time serverdt)
 
 void World::cleanEntities(Server* server)
 {
-    for(unsigned long long i(0) ; i < m_components["DeletionMarker"].size() ;)
+    for(unsigned int i(0) ; i < m_components["DeletionMarker"].size() ;)
     {
         kantan::Component* c = m_components["DeletionMarker"][i];
         kantan::DeletionMarkerComponent* dmc = static_cast<kantan::DeletionMarkerComponent*>(c);
@@ -736,7 +736,7 @@ kantan::Entity* World::createMonster(sf::Vector2f position)
     return monster;
 }
 
-kantan::Entity* World::createBullet(sf::Vector2f position, unsigned long long emitter, sf::Vector2f direction, float maxSpeed, float damage, sf::Time projectileLifetime)
+kantan::Entity* World::createBullet(sf::Vector2f position, unsigned int emitter, sf::Vector2f direction, float maxSpeed, float damage, sf::Time projectileLifetime)
 {
     // Create the entity.
     kantan::Entity* bullet = createEntity("Bullet");
@@ -766,7 +766,7 @@ kantan::Entity* World::createBullet(sf::Vector2f position, unsigned long long em
     dc->damage = damage;
 
     lc->maxlifetime = projectileLifetime;
-    lc->callback = [&](unsigned long long entityId){
+    lc->callback = [&](unsigned int entityId){
             // Find the entity.
             auto itr = std::find_if(m_entities.begin(), m_entities.end(), [&](kantan::Entity* e) -> bool {
                                         return e->getId() == entityId;
@@ -859,7 +859,7 @@ void World::notifyLevelUp(LevelStatsComponent* lsc)
 }
 
 // Notifies all the clients of the kill.
-void World::notifyKill(unsigned long long killerId, unsigned long long killedId)
+void World::notifyKill(unsigned int killerId, unsigned int killedId)
 {
     sf::Packet packet;
     packet << NetworkValues::NOTIFY << NetworkValues::KILL << killerId << killedId;
@@ -880,7 +880,7 @@ void World::notifyKill(unsigned long long killerId, unsigned long long killedId)
 }
 
 // Predicate for the physics engine.
-bool World::collisionResponsePredicate(const unsigned long long& firstEntityId, const unsigned long long& secondEntityId)
+bool World::collisionResponsePredicate(const unsigned int& firstEntityId, const unsigned int& secondEntityId)
 {
     // Get the entities.
     kantan::Entity* firstEntity = getEntity(firstEntityId);
@@ -897,7 +897,7 @@ bool World::collisionResponsePredicate(const unsigned long long& firstEntityId, 
         DamageComponent* dc = firstEntity->getComponent<DamageComponent>("Damage");
 
         if(dc != nullptr)
-            if(dc->emitter != -1 && (unsigned long long)(dc->emitter) == secondEntityId)
+            if(dc->emitter != -1 && (unsigned int)(dc->emitter) == secondEntityId)
                 return false;
     }
     else if(secondEntity->getName() == "Bullet")
@@ -906,7 +906,7 @@ bool World::collisionResponsePredicate(const unsigned long long& firstEntityId, 
         DamageComponent* dc = secondEntity->getComponent<DamageComponent>("Damage");
 
         if(dc != nullptr)
-            if(dc->emitter != -1 && (unsigned long long)(dc->emitter) == firstEntityId)
+            if(dc->emitter != -1 && (unsigned int)(dc->emitter) == firstEntityId)
                 return false;
     }
 
@@ -914,9 +914,9 @@ bool World::collisionResponsePredicate(const unsigned long long& firstEntityId, 
     return true;
 }
 
-void World::checkCollisionEffects(const std::vector<std::tuple<unsigned long long, unsigned long long, sf::Vector2f>>& collisionRecord)
+void World::checkCollisionEffects(const std::vector<std::tuple<unsigned int, unsigned int, sf::Vector2f>>& collisionRecord)
 {
-    for(const std::tuple<unsigned long long, unsigned long long, sf::Vector2f>& collisionPair : collisionRecord)
+    for(const std::tuple<unsigned int, unsigned int, sf::Vector2f>& collisionPair : collisionRecord)
     {
         // Get the entities.
         kantan::Entity* firstEntity = getEntity(std::get<0>(collisionPair));
@@ -958,7 +958,7 @@ void World::checkCollisionEffects(const std::vector<std::tuple<unsigned long lon
             if(dc == nullptr)
                 continue;
 
-            if(dc->emitter != -1 && (unsigned long long)(dc->emitter) == target->getId())
+            if(dc->emitter != -1 && (unsigned int)(dc->emitter) == target->getId())
                 continue;
 
             // Deal damages to the target.
@@ -987,7 +987,7 @@ void World::checkCollisionEffects(const std::vector<std::tuple<unsigned long lon
 }
 
 // Manages the effect of a death.
-void World::onKill(unsigned long long killerId, unsigned long long killedId)
+void World::onKill(unsigned int killerId, unsigned int killedId)
 {
     kantan::Entity* killedEntity = getEntity(killedId);
 
@@ -1017,7 +1017,7 @@ void World::addSpawnPoint(sf::Vector2f spawn)
     m_spawns.push_back(spawn);
 }
 
-void World::respawn(unsigned long long entityId, unsigned long long spawnId)
+void World::respawn(unsigned int entityId, unsigned int spawnId)
 {
     kantan::Entity* entity = getEntity(entityId);
 

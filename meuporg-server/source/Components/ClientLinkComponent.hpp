@@ -12,7 +12,7 @@ class ClientLinkComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		ClientLinkComponent(unsigned long long ownerId);
+		ClientLinkComponent(unsigned int ownerId);
 
 		// Attribute.
 		Client* client;

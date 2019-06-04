@@ -14,7 +14,7 @@ namespace kantan
     {
         public:
             // Ctor.
-            SpriteComponent(unsigned long long ownerId);
+            SpriteComponent(unsigned int ownerId);
 
             // Attribute.
             sf::Sprite sprite;

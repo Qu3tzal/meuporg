@@ -14,7 +14,7 @@ class BonusComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		BonusComponent(unsigned long long ownerId);
+		BonusComponent(unsigned int ownerId);
 
 		// Attribute.
 		std::function<void(BasicStatsComponent*)> effect;

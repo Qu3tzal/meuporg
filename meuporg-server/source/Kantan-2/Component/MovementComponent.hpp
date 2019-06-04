@@ -14,7 +14,7 @@ namespace kantan
     {
         public:
             // Ctor.
-            MovementComponent(unsigned long long ownerId);
+            MovementComponent(unsigned int ownerId);
 
             // Attributes.
             sf::Vector2f acceleration;

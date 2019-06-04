@@ -17,14 +17,14 @@ namespace kantan
         public:
             // Returns the entity with the given id.
             // Returns nullptr if not found.
-            static Entity* getEntityWithId(unsigned long long id, std::vector<Entity*>& entities);
+            static Entity* getEntityWithId(unsigned int id, std::vector<Entity*>& entities);
 
 		public:
 			// Ctor.
 			Entity(std::string name);
 
 			// Id.
-			unsigned long long getId() const;
+			unsigned int getId() const;
 			std::string getName() const;
 
 			// Components.
@@ -39,7 +39,7 @@ namespace kantan
 
 		protected:
 			// Id.
-			unsigned long long m_id;
+			unsigned int m_id;
 			std::string m_name;
 
 			// Components.
@@ -47,7 +47,7 @@ namespace kantan
 
 		/// Static :
 		protected:
-			static unsigned long long m_lastid;
+			static unsigned int m_lastid;
 	};
 
 	/// Components.

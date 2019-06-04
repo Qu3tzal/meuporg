@@ -14,7 +14,7 @@ namespace kantan
     {
         public:
             // Ctor.
-            BatchedSpriteComponent(unsigned long long ownerId);
+            BatchedSpriteComponent(unsigned int ownerId);
 
             // Attribute.
             sf::Texture* texturePtr;

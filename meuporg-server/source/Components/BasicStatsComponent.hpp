@@ -11,7 +11,7 @@ class BasicStatsComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		BasicStatsComponent(unsigned long long ownerId);
+		BasicStatsComponent(unsigned int ownerId);
 
 		// Attribute.
 		bool isDead;

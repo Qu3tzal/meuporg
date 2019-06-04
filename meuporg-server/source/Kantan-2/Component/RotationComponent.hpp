@@ -14,7 +14,7 @@ namespace kantan
     {
         public:
             // Ctor.
-            RotationComponent(unsigned long long ownerId);
+            RotationComponent(unsigned int ownerId);
 
             // Attributes.
 			float rotationAcceleration;
