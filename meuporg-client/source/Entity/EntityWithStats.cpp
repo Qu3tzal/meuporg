@@ -63,7 +63,7 @@ void EntityWithStats::update(sf::Time dt)
     }
 
     // centerOrigin(nametext);
-    nameText.setPosition(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x, - (nameText.getheight()) - sprite.getOrigin().y);
+    nameText.setPosition((int)(sprite.getGlobalBounds().width / 2 - sprite.getOrigin().x), (int)(- (nameText.getheight()) - sprite.getOrigin().y));
     nameText.setHealth(getProperty("Hp"),getProperty("HpMax"));
 }
 
@@ -98,7 +98,7 @@ void EntityWithStats::setProperty(std::string name, float value, bool show)
                     ss << "- " << nb;
                     text.setString(ss.str());
                 }
-                text.setPosition(- (text.getGlobalBounds().width + 5 ), sprite.getGlobalBounds().height / 2);
+                text.setPosition((int)(- (text.getGlobalBounds().width + 5 )), (int)(sprite.getGlobalBounds().height / 2));
                 leftDamagesText.push_back(text);
 
              }
@@ -120,7 +120,7 @@ void EntityWithStats::setProperty(std::string name, float value, bool show)
                     ss << "+ " << nb << " XP";
                     text.setString(ss.str());
 
-                    text.setPosition(sprite.getGlobalBounds().width + 5 , sprite.getGlobalBounds().height / 2);
+                    text.setPosition((int)(sprite.getGlobalBounds().width + 5 ),(int)( sprite.getGlobalBounds().height / 2));
                     rightDamagesText.push_back(text);
                 }
              }
@@ -141,7 +141,7 @@ void EntityWithStats::setProperty(std::string name, float value, bool show)
                 text.setString(ss.str());
 
                 centerOrigin(text);
-                text.setPosition(sprite.getGlobalBounds().width / 2,  - (text.getGlobalBounds().height + 5));
+                text.setPosition((int)(sprite.getGlobalBounds().width / 2), (int)( - (text.getGlobalBounds().height + 5)));
                 topDamagesText.push_back(text);
              }
          }

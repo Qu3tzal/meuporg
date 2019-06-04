@@ -120,7 +120,7 @@ void Dialog::initChoice()
     for(auto itr = choice->possibilities.begin(); itr != choice->possibilities.end(); itr++)
     {
         sf::Text text;
-        text.setPosition(20, 45 + i * 25);
+        text.setPosition(20, (int)(45 + i * 25));
         text.setFont(fonts->get(ResourceId::MONOF_56));
         text.setCharacterSize(16);
         text.setFillColor(sf::Color::White);
