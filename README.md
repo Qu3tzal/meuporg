@@ -8,8 +8,11 @@ Checkout the `royale`  branch to see how we are turning this amazing MMORPG into
 To compile the SFML
 
 to clone the repo with the SFML
-git clone --recursive https://github.com/Qu3tzal/meuporg.git
 
+```
+git clone --recursive https://github.com/Qu3tzal/meuporg.git
+```
+To compile the SFML
 ```
 cd SFML
 cmake . -DCMAKE_BUILD_TYPE=Debug && make
