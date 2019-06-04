@@ -47,7 +47,7 @@ class World : public sf::Drawable, public sf::Transformable
 
         Player* getPlayer(std::string playerName);
 
-        void changeWorld(int worldId, int mapId);
+        void changeWorld(unsigned int worldId, unsigned int mapId);
 
         void sendRespawnRequest(unsigned int spawnId);
 
