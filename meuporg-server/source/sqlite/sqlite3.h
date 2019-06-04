@@ -273,7 +273,7 @@ typedef struct sqlite3 sqlite3;
   typedef unsigned __int64 sqlite_uint64;
 #else
   typedef long long int sqlite_int64;
-  typedef unsigned int int sqlite_uint64;
+  typedef unsigned long long int sqlite_uint64;
 #endif
 typedef sqlite_int64 sqlite3_int64;
 typedef sqlite_uint64 sqlite3_uint64;
