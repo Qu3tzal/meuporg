@@ -20,5 +20,5 @@ before_install:
 branches:
     only: royale
 script:
-  - cd meuporg-server && mkdir build && cd build && cmake .. && make && cd ..
-  - cd meuporg-client && mkdir build && cd build && cmake .. && make && cd ..
+  - cd meuporg-server && mkdir build && cd build && cmake .. && make && cd ../..
+  - cd meuporg-client && mkdir build && cd build && cmake .. && make && cd ../..
