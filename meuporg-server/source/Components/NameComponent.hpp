@@ -11,7 +11,7 @@ class NameComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		NameComponent(std::size_t ownerId);
+		NameComponent(unsigned int ownerId);
 
 		// Attribute.
 		int id;

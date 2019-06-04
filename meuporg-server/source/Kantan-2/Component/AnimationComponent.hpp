@@ -14,7 +14,7 @@ namespace kantan
     {
         public:
             // Ctor.
-            AnimationComponent(std::size_t ownerId);
+            AnimationComponent(unsigned int ownerId);
 
             /// Attributes.
             // The frames subrects.

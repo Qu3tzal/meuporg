@@ -1,6 +1,6 @@
 #include "BasicStatsComponent.hpp"
 
-BasicStatsComponent::BasicStatsComponent(std::size_t ownerId)
+BasicStatsComponent::BasicStatsComponent(unsigned int ownerId)
      : kantan::Component(std::string("BasicStats"), ownerId)
      , isDead(false)
      , hp(1.f)

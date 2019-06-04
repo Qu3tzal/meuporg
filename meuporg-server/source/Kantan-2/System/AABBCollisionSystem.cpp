@@ -78,7 +78,7 @@ namespace kantan
                     }
 
                     // Record the collision.
-                    m_collisions.push_back(std::pair<std::size_t, std::size_t>(fstHitbox->getOwnerId(), sndHitbox->getOwnerId()));
+                    m_collisions.push_back(std::pair<unsigned int, unsigned int>(fstHitbox->getOwnerId(), sndHitbox->getOwnerId()));
 
                     // Change the velocity for the next entity check if both hitboxes are blocking.
                     if(fstHitbox->isBlocking && sndHitbox->isBlocking)
@@ -96,7 +96,7 @@ namespace kantan
     }
 
     // Returns the collisions record.
-    std::vector<std::pair<std::size_t, std::size_t>> AABBCollisionSystem::getCollisionRecord()
+    std::vector<std::pair<unsigned int, unsigned int>> AABBCollisionSystem::getCollisionRecord()
     {
         return m_collisions;
     }

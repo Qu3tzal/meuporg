@@ -27,9 +27,9 @@ struct Client
     std::string username = "";
 
     PlayerInput inputs = {false, false, false, false};
-    unsigned long long lastPacketIdReceived = 0;
-    unsigned long long lastPacketIdSent = 0;
-    unsigned long long lostPackets = 0;
+    unsigned int lastPacketIdReceived = 0;
+    unsigned int lastPacketIdSent = 0;
+    unsigned int lostPackets = 0;
 };
 
 // Account structure.

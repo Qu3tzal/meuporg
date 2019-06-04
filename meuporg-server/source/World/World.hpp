@@ -78,7 +78,7 @@ class World
         void giveXpTo(std::string username, float amount);
 
         // Called when the server receives a RESPAWN request.
-        void onRespawn(Client* client, std::size_t spawnId);
+        void onRespawn(Client* client, unsigned int spawnId);
 
     protected:
         // Needs this friendship to access createXXX methods.
@@ -88,7 +88,7 @@ class World
         friend TowerAISystem;
 
         // Returns the entity pointer or nullptr if not found by its id.
-        kantan::Entity* getEntity(const std::size_t& id);
+        kantan::Entity* getEntity(const unsigned int& id);
 
         // Checks the performances of the world thread.
         void performancesCheck(sf::Time serverdt);
@@ -105,36 +105,36 @@ class World
 
         // Creates a component.
         template<typename T>
-        T* createComponent(std::size_t ownerId);
+        T* createComponent(unsigned int ownerId);
 
         // createXXX methods.
         kantan::Entity* createPlayer(sf::Vector2f position, Client* client, const PlayerData& playerData);
         kantan::Entity* createNPC(sf::Vector2f position);
         kantan::Entity* createBox(sf::Vector2f position);
         kantan::Entity* createMonster(sf::Vector2f position);
-        kantan::Entity* createBullet(sf::Vector2f position, std::size_t emitter, sf::Vector2f direction, float maxSpeed, float damage, sf::Time projectileLifetime);
+        kantan::Entity* createBullet(sf::Vector2f position, unsigned int emitter, sf::Vector2f direction, float maxSpeed, float damage, sf::Time projectileLifetime);
         kantan::Entity* createTower(sf::Vector2f position);
 
         // Notifies all the clients of the level up.
         void notifyLevelUp(LevelStatsComponent* lsc);
 
         // Notifies all the clients of the kill.
-        void notifyKill(std::size_t killerId, std::size_t killedId);
+        void notifyKill(unsigned int killerId, unsigned int killedId);
 
         // Predicate for the physics engine.
-        bool collisionResponsePredicate(const std::size_t& firstEntityId, const std::size_t& secondEntityId);
+        bool collisionResponsePredicate(const unsigned int& firstEntityId, const unsigned int& secondEntityId);
 
         // Checks the collisions.
-        void checkCollisionEffects(const std::vector<std::tuple<std::size_t, std::size_t, sf::Vector2f>>& collisionRecord);
+        void checkCollisionEffects(const std::vector<std::tuple<unsigned int, unsigned int, sf::Vector2f>>& collisionRecord);
 
         // Manages the effect of a death.
-        void onKill(std::size_t killerId, std::size_t killedId);
+        void onKill(unsigned int killerId, unsigned int killedId);
 
         // Adds a spawn point.
         void addSpawnPoint(sf::Vector2f spawn);
 
         // Respawns an entity.
-        void respawn(std::size_t entityId, std::size_t spawnId = 0);
+        void respawn(unsigned int entityId, unsigned int spawnId = 0);
 
     protected:
         // ID.
@@ -186,7 +186,7 @@ bool World::removeComponentFrom(kantan::Component* c, std::vector<T*>& component
 }
 
 template<typename T>
-T* World::createComponent(std::size_t ownerId)
+T* World::createComponent(unsigned int ownerId)
 {
     T* component = new T(ownerId);
     m_components[component->getName()].push_back(component);

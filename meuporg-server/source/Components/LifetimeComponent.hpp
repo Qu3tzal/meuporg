@@ -12,13 +12,13 @@ class LifetimeComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		LifetimeComponent(std::size_t ownerId);
+		LifetimeComponent(unsigned int ownerId);
 
 		// Attributes.
 		sf::Time maxlifetime;
 		sf::Time lifetime;
 
-		std::function<void(std::size_t)> callback;
+		std::function<void(unsigned int)> callback;
 };
 
 #endif // LIFETIMECOMPONENT_HPP_INCLUDED

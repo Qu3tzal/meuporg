@@ -16,7 +16,7 @@ namespace kantan
             // Returns the component with the same owner id.
             // Returns nullptr if none.
             template<typename T>
-            static T* getFirstComponentOwnedBy(std::size_t ownerId, std::vector<kantan::Component*>& components)
+            static T* getFirstComponentOwnedBy(unsigned int ownerId, std::vector<kantan::Component*>& components)
             {
                 // We look for the corresponding component, if it exists.
                 auto cItr = std::find_if(components.begin(),
@@ -40,7 +40,7 @@ namespace kantan
 
 		public:
 			// Ctor.
-			Component(std::string name = "Unknown", std::size_t ownerId = (-1));
+			Component(std::string name = "Unknown", unsigned int ownerId = (-1));
 
 			// Dtor.
 			virtual ~Component();
@@ -49,14 +49,14 @@ namespace kantan
 			std::string getName() const;
 
 			// Owner id.
-			std::size_t getOwnerId() const;
+			unsigned int getOwnerId() const;
 
 		protected:
 		    // The name of the component.
 			std::string m_name;
 
 			// The id of the entity owning the component.
-            std::size_t m_ownerId;
+            unsigned int m_ownerId;
 	};
 
 } // namespace kantan.

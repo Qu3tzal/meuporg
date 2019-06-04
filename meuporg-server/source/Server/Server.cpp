@@ -379,7 +379,7 @@ void Server::receiveInputThroughTCP()
                 {
                     case NetworkValues::RESPAWN:
                         {
-                            std::size_t spawnId;
+							unsigned int spawnId;
                             packet >> spawnId;
 
                             // Find the targeted world.
@@ -622,7 +622,7 @@ void Server::receiveInputThroughUDP()
                             m_accounts.at(username)->linkedClient->timeout = sf::Time::Zero;
 
                             // Extract udp packet id.
-                            unsigned long long udpPacketId(0);
+                            unsigned int udpPacketId(0);
                             packet >> udpPacketId;
 
                             // Skip packet if we already received newer inputs.

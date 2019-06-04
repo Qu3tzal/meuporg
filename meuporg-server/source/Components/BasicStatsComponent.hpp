@@ -11,7 +11,7 @@ class BasicStatsComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		BasicStatsComponent(std::size_t ownerId);
+		BasicStatsComponent(unsigned int ownerId);
 
 		// Attribute.
 		bool isDead;

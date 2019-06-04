@@ -10,7 +10,7 @@ inline const sf::Vector2<T> getCenter(std::vector<sf::Vector2<T>> points)
 {
     sf::Vector2<T> gravityCenter(0.f, 0.f);
 
-    for(std::size_t i(0) ; i < points.size() ; i++)
+    for(unsigned int i(0) ; i < points.size() ; i++)
         gravityCenter += points[i];
 
     gravityCenter /= (T)points.size();

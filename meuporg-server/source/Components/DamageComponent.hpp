@@ -11,7 +11,7 @@ class DamageComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		DamageComponent(std::size_t ownerId);
+		DamageComponent(unsigned int ownerId);
 
 		// Attributes.
 		int emitter;

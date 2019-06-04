@@ -4,7 +4,7 @@
 
 namespace kantan
 {
-    DeletionMarkerComponent::DeletionMarkerComponent(std::size_t ownerId)
+    DeletionMarkerComponent::DeletionMarkerComponent(unsigned int ownerId)
          : kantan::Component(std::string("DeletionMarker"), ownerId)
          , marked(false)
     {}

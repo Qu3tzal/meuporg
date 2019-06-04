@@ -4,7 +4,7 @@
 
 namespace kantan
 {
-    AnimationComponent::AnimationComponent(std::size_t ownerId)
+    AnimationComponent::AnimationComponent(unsigned int ownerId)
                 : kantan::Component(std::string("Animation"), ownerId)
                 , currentFrame(0)
                 , lastFrame(sf::Time::Zero)

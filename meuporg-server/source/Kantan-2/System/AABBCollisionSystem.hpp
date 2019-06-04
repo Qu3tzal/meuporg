@@ -24,11 +24,11 @@ namespace kantan
             virtual void update(sf::Time elapsed, std::vector<kantan::Component*>& aabbHitboxComponents, std::vector<kantan::Component*>& movementComponents);
 
             // Returns the collisions record.
-            std::vector<std::pair<std::size_t, std::size_t>> getCollisionRecord();
+            std::vector<std::pair<unsigned int, unsigned int>> getCollisionRecord();
 
         protected:
             // Record of the collisions.
-            std::vector<std::pair<std::size_t, std::size_t>> m_collisions;
+            std::vector<std::pair<unsigned int, unsigned int>> m_collisions;
     };
 } // namespace kantan.
 

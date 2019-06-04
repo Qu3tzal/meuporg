@@ -5,7 +5,7 @@
 
 namespace kantan
 {
-    PolygonHitboxComponent::PolygonHitboxComponent(std::size_t ownerId, std::vector<sf::Vector2f> npoints)
+    PolygonHitboxComponent::PolygonHitboxComponent(unsigned int ownerId, std::vector<sf::Vector2f> npoints)
                 : kantan::Component(std::string("PolygonHitbox"), ownerId)
 				, points(npoints)
                 , isBlocking(true)
@@ -18,7 +18,7 @@ namespace kantan
     {
         axes.clear();
 
-        for(std::size_t i(0) ; i < points.size() ; i++)
+        for(unsigned int i(0) ; i < points.size() ; i++)
 		{
 			sf::Vector2f a(0.f, 0.f), b(0.f, 0.f);
 

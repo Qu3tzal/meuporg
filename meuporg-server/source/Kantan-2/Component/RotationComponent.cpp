@@ -4,7 +4,7 @@
 
 namespace kantan
 {
-    RotationComponent::RotationComponent(std::size_t ownerId)
+    RotationComponent::RotationComponent(unsigned int ownerId)
             : kantan::Component(std::string("Rotation"), ownerId)
             , rotationAcceleration(0.f)
             , rotationVelocity(0.f)

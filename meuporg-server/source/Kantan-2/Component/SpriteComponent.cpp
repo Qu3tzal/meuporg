@@ -4,7 +4,7 @@
 
 namespace kantan
 {
-    SpriteComponent::SpriteComponent(std::size_t ownerId)
+    SpriteComponent::SpriteComponent(unsigned int ownerId)
          : kantan::Component(std::string("Sprite"), ownerId)
     {}
 } // namespace kantan.
