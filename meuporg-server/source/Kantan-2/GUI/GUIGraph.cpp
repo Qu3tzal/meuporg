@@ -31,7 +31,7 @@ namespace kantan
 		float maxy(1);
 
 		unsigned int start(0);
-		unsigned int end(std::min(m_numberOfPoints, m_values.size() - 1));
+		unsigned int end(std::min(m_numberOfPoints, (unsigned int)m_values.size() - 1));
 
 		if(m_numberOfPoints < m_values.size())
 		{
