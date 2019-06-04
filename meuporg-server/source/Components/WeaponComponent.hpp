@@ -11,7 +11,7 @@ class WeaponComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		WeaponComponent(std::size_t ownerId);
+		WeaponComponent(unsigned long long ownerId);
 
 		// Attributes.
 		std::string name;

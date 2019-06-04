@@ -12,7 +12,7 @@ class StaticMarkerComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		StaticMarkerComponent(std::size_t ownerId);
+		StaticMarkerComponent(unsigned long long ownerId);
 
 		// Attribute.
 		bool isStatic;

@@ -14,7 +14,7 @@ namespace kantan
     {
         public:
             // Ctor.
-            RectShapeComponent(std::size_t ownerId);
+            RectShapeComponent(unsigned long long ownerId);
 
             // Attribute.
             sf::RectangleShape shape;

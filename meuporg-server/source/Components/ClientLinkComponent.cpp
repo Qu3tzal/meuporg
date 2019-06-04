@@ -1,6 +1,6 @@
 #include "ClientLinkComponent.hpp"
 
-ClientLinkComponent::ClientLinkComponent(std::size_t ownerId)
+ClientLinkComponent::ClientLinkComponent(unsigned long long ownerId)
      : kantan::Component(std::string("ClientLink"), ownerId)
      , client(nullptr)
      , dbid(-1)

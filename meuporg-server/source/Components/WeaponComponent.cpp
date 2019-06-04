@@ -1,6 +1,6 @@
 #include "WeaponComponent.hpp"
 
-WeaponComponent::WeaponComponent(std::size_t ownerId)
+WeaponComponent::WeaponComponent(unsigned long long ownerId)
      : kantan::Component(std::string("Weapon"), ownerId)
 	 , name("DefaultWeapon")
 	 , baseDamage(1.f)

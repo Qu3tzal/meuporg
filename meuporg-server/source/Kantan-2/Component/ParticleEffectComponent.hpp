@@ -28,14 +28,14 @@ namespace kantan
     {
         public:
             // Ctor.
-            ParticleEffectComponent(std::size_t ownerId);
+            ParticleEffectComponent(unsigned long long ownerId);
 
             // Attributes.
             std::function<sf::Color(const Particle&, const sf::Vector2f&)> colorFunction;
             std::function<sf::Vector2f(const Particle&, const sf::Vector2f&)> velocityFunction;
 
             sf::Time maxLifetime;
-            std::size_t numberOfParticles;
+            unsigned long long numberOfParticles;
             std::vector<Particle> particles;
             sf::Vector2f emissionCenter;
     };

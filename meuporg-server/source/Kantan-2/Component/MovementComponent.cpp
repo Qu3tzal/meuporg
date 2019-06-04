@@ -4,7 +4,7 @@
 
 namespace kantan
 {
-    MovementComponent::MovementComponent(std::size_t ownerId)
+    MovementComponent::MovementComponent(unsigned long long ownerId)
             : kantan::Component(std::string("Movement"), ownerId)
             , maximumSpeed(700.f)
     {}

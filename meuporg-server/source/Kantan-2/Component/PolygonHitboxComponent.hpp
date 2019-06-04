@@ -14,7 +14,7 @@ namespace kantan
     {
         public:
             // Ctor.
-            PolygonHitboxComponent(std::size_t ownerId, std::vector<sf::Vector2f> points = {});
+            PolygonHitboxComponent(unsigned long long ownerId, std::vector<sf::Vector2f> points = {});
 
             // Computes the axes from the points.
             void computeAxes();

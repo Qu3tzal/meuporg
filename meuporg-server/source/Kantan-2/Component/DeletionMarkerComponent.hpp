@@ -12,7 +12,7 @@ namespace kantan
     {
         public:
             // Ctor.
-            DeletionMarkerComponent(std::size_t ownerId);
+            DeletionMarkerComponent(unsigned long long ownerId);
 
             // Attribute.
             bool marked;

@@ -4,7 +4,7 @@
 
 namespace kantan
 {
-    BatchedSpriteComponent::BatchedSpriteComponent(std::size_t ownerId)
+    BatchedSpriteComponent::BatchedSpriteComponent(unsigned long long ownerId)
          : kantan::Component(std::string("BatchedSprite"), ownerId)
          , texturePtr(nullptr)
          , rotation(0.f)

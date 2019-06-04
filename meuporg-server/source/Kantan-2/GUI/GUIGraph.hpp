@@ -12,7 +12,7 @@ namespace kantan
 			virtual ~GUIGraph();
 
 			void setSize(float x, float y);
-			void setNumberOfPoints(std::size_t numberOfPoints);
+			void setNumberOfPoints(unsigned long long numberOfPoints);
 			void addValue(float x, float y);
 			void update(sf::Time dt);
 
@@ -22,7 +22,7 @@ namespace kantan
 		protected:
 			std::vector<sf::Vector2f> m_values;
 
-			std::size_t m_numberOfPoints;
+			unsigned long long m_numberOfPoints;
 			sf::Vector2f m_size;
 			sf::VertexArray m_vertexArray;
 	};

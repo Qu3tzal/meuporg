@@ -4,9 +4,9 @@
 namespace kantan
 {
     /// Static.
-    std::size_t Entity::m_lastid = 0;
+    unsigned long long Entity::m_lastid = 0;
 
-    Entity* Entity::getEntityWithId(std::size_t id, std::vector<Entity*>& entities)
+    Entity* Entity::getEntityWithId(unsigned long long id, std::vector<Entity*>& entities)
     {
         auto itr = std::find_if(entities.begin(), entities.end(), [id](kantan::Entity* e){
                                     return e->getId() == id;
@@ -27,7 +27,7 @@ namespace kantan
 	}
 
     /// Id.
-	std::size_t Entity::getId() const
+	unsigned long long Entity::getId() const
 	{
 		return m_id;
 	}

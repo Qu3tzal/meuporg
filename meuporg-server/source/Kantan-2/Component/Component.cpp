@@ -3,7 +3,7 @@
 namespace kantan
 {
     /// Ctor.
-    Component::Component(std::string name, std::size_t ownerId)
+    Component::Component(std::string name, unsigned long long ownerId)
 		: m_name(name)
 		, m_ownerId(ownerId)
     {}
@@ -19,7 +19,7 @@ namespace kantan
 	}
 
 	/// Owner id.
-	std::size_t Component::getOwnerId() const
+	unsigned long long Component::getOwnerId() const
 	{
         return m_ownerId;
 	}

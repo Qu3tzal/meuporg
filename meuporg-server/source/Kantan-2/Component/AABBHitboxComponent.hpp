@@ -15,7 +15,7 @@ namespace kantan
     {
         public:
             // Ctor.
-            AABBHitboxComponent(std::size_t ownerId);
+            AABBHitboxComponent(unsigned long long ownerId);
 
             // Attributes.
             sf::FloatRect hitbox;

@@ -2,7 +2,7 @@
 
 namespace kantan
 {
-    AABBHitboxComponent::AABBHitboxComponent(std::size_t ownerId)
+    AABBHitboxComponent::AABBHitboxComponent(unsigned long long ownerId)
                 : kantan::Component(std::string("AABBHitbox"), ownerId)
                 , isBlocking(true)
     {}

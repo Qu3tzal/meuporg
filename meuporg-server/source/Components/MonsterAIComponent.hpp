@@ -11,7 +11,7 @@ class MonsterAIComponent : public kantan::Component
 {
 	public:
 		// Ctor.
-		MonsterAIComponent(std::size_t ownerId);
+		MonsterAIComponent(unsigned long long ownerId);
 
 		// Attribute.
 		int direction;

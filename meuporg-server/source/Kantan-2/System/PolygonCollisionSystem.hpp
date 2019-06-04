@@ -75,17 +75,17 @@ namespace kantan
             void resolveCollisions(sf::Time elapsed, std::vector<kantan::Component*>& polygonHitboxComponents, std::vector<kantan::Component*>& movementComponents);
 
             // Returns the collisions record.
-            std::vector<std::tuple<std::size_t, std::size_t, sf::Vector2f>> getCollisionRecord();
+            std::vector<std::tuple<unsigned long long, unsigned long long, sf::Vector2f>> getCollisionRecord();
 
             // Returns hitboxes near a position.
             std::vector<kantan::Component*> getNear(sf::Vector2f position, float radius);
 			
 			// Sets the collision response predicate.
-            void setCollisionResponsePredicate(std::function<bool(std::size_t, std::size_t)> predicate);
+            void setCollisionResponsePredicate(std::function<bool(unsigned long long, unsigned long long)> predicate);
 
         protected:
             // Record of the collisions.
-            std::vector<std::tuple<std::size_t, std::size_t, sf::Vector2f>> m_collisions;
+            std::vector<std::tuple<unsigned long long, unsigned long long, sf::Vector2f>> m_collisions;
 
             // Spatial partitioning.
             sf::Vector2i m_cellMapSize;
@@ -95,7 +95,7 @@ namespace kantan
             std::vector<std::vector<SPCell>> m_cellMap;
 			
 			// Predicate.
-            std::function<bool(std::size_t, std::size_t)> m_predicate;
+            std::function<bool(unsigned long long, unsigned long long)> m_predicate;
     };
 } // namespace kantan.
 

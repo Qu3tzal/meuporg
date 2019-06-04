@@ -47,9 +47,9 @@ namespace kantan
     /*
         Useful typedef.
     */
-    typedef ResourceHolder<sf::Texture, std::size_t> TextureHolder;
-    typedef ResourceHolder<sf::Font, std::size_t> FontHolder;
-    typedef ResourceHolder<sf::SoundBuffer, std::size_t> SoundBufferHolder;
+    typedef ResourceHolder<sf::Texture, unsigned long long> TextureHolder;
+    typedef ResourceHolder<sf::Font, unsigned long long> FontHolder;
+    typedef ResourceHolder<sf::SoundBuffer, unsigned long long> SoundBufferHolder;
 } // namespace kantan.
 
 #endif // KANTAN_RESOURCE_HOLDER
