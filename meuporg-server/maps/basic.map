@@ -1,2 +1,7 @@
 id 1
-spawn 640.f 400.f
+spawn 640.f -400.f
+entity tower 640.f -360.f
+entity monster 100.f -360.f
+entity monster 1180.f -360.f
+entity monster 640.f -100.f
+entity monster 640.f -600.f

@@ -455,7 +455,7 @@ void World::onRespawn(Client* client, unsigned int spawnId)
         if(clc == nullptr || clc->client != client)
             continue;
 
-        return respawn(clc->getOwnerId());
+        return respawn(clc->getOwnerId(), spawnId);
     }
 }
 
