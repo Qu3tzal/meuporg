@@ -13,8 +13,8 @@ include_directories(source/Menu)
 include_directories(source/RandomNumberGenerator)
 
 
-include_directories(../../SFML/include)
-link_directories(../../SFML/lib)
+include_directories(../SFML/include)
+link_directories(../SFML/lib)
 include_directories(C:/mingw-w64/x86_64-7.3.0-win32-seh-rt_v5-rev0/mingw64/include)
 link_directories(C:/mingw-w64/x86_64-7.3.0-win32-seh-rt_v5-rev0/mingw64/lib)
 
@@ -51,5 +51,5 @@ add_executable(meuporg-royale-client
 target_link_libraries(meuporg-royale-client sfml-system-d sfml-window-d sfml-graphics-d sfml-network-d sfml-audio-d)
 
 if(UNIX)
-    target_link_libraries(meuporg-royale-server dl)
+    target_link_libraries(meuporg-royale-client dl)
 endif(UNIX)
