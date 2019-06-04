@@ -622,7 +622,7 @@ void Server::receiveInputThroughUDP()
                             m_accounts.at(username)->linkedClient->timeout = sf::Time::Zero;
 
                             // Extract udp packet id.
-                            unsigned int udpPacketId(0);
+                            unsigned long long udpPacketId(0);
                             packet >> udpPacketId;
 
                             // Skip packet if we already received newer inputs.
