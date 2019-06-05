@@ -5,21 +5,21 @@ Best #meuporg.
 
 Checkout the `royale`  branch to see how we are turning this amazing MMORPG into an awesome Battle Royale !
 
-To compile the SFML
+# Clone the SFML
 
 to clone the repo with the SFML
 
 ```
 git clone --recursive https://github.com/Qu3tzal/meuporg.git
 ```
-To compile the SFML
+# Compile the SFML
 ```
 cd SFML
 cmake . -DCMAKE_BUILD_TYPE=Debug && make
 cmake . -DCMAKE_BUILD_TYPE=Release && make
 ```
 
-To compile the client 
+# Compile the client 
 
 ```
 cd meuporg-client
@@ -28,7 +28,7 @@ cd build
 cmake ..
 make
 ```
-To compile the server 
+# Compile the server 
 
 ```
 cd meuporg-server
