@@ -92,7 +92,7 @@ void InformationServer::update(sf::Time dt)
                             long long pingId(0);
                             packet >> pingId;
                             answerPingRequest(client, pingId);
-                            std::cout << "[INFORMATION_SERVER] Ping answered to client (" << client->tcpsocket.getRemoteAddress().toString() << ")." << std::endl;
+                            //std::cout << "[INFORMATION_SERVER] Ping answered to client (" << client->tcpsocket.getRemoteAddress().toString() << ")." << std::endl;
                         }
                         break;
                     default:
